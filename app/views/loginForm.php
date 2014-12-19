@@ -7,8 +7,8 @@ app/views/loginForm.php
     <title>Simple Login Form in Laravel</title>
     <meta charset="UTF-8" />
     <?php
-        echo HTML::style('css/reset.css');
-        echo HTML::style('css/structure.css');
+        echo HTML::style('assets/css/bootstrap.css');
+        echo HTML::style('assets/css/bootstrap-responsive.css');
     ?>
   </head>
   <body>
