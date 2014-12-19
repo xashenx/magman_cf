@@ -6,8 +6,9 @@ class HomePageController extends BaseController {
      */
     public function index()
     {
-      $comic = Comic::where('name', 'LIKE', '%città%')
-        ->get();
+      $comic = ComicUser::find(1)->comic->series;
+      //$comic = Comic::where('name', 'LIKE', '%città%')
+       // ->get();
         return View::make('homePage', array('comic' => $comic));
     }
 

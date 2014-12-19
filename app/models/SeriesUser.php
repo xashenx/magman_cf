@@ -9,12 +9,12 @@ class SeriesUser extends Eloquent {
    */
   protected $table = 'series_user';
 
-  public function User() {
+  public function user() {
     return $this->hasMany('User'); // this matches the Eloquent model
   }
 
-  public function Series() {
-    return $this->hasMany('Series'); // this matches the Eloquent model
+  public function series() {
+    return $this->hasMany('Series', 'id', 'series_id'); // this matches the Eloquent model
   }
 
 }

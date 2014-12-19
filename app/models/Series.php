@@ -10,11 +10,11 @@ class Series extends Eloquent {
   protected $table = 'series';
 
   public function comic() {
-    return $this->belongsTo('Comic');
+    return $this->belongsTo('Comic', 'id', 'series_id');
   }
 
   public function series_user() {
-    return $this->belongsTo('SeriesUser');
+    return $this->belongsTo('SeriesUser', 'id', 'series_id');
   }
 
 

@@ -9,12 +9,12 @@ class ComicUser extends Eloquent {
    */
   protected $table = 'comic_user';
 
-  public function User() {
+  public function user() {
     return $this->hasMany('User'); // this matches the Eloquent model
   }
 
-  public function Comic() {
-    return $this->hasMany('Comic'); // this matches the Eloquent model
+  public function comic() {
+    return $this->hasOne('Comic', 'id', 'comic_id'); // this matches the Eloquent model
   }
 }
 ?>
