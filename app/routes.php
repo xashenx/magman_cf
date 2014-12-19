@@ -53,7 +53,13 @@ Route::get('logout', function()
 
 /* Internal Page */
 
-Route::get('home', array('before' => 'auth', function()
+Route::group(array('before' => 'auth'), function()
 {
-    return View::make('homePage');
-}));
+
+  //return URL::action('HomePageController@index');
+  Route::get('home', 'HomePageController@index');
+  //return View::make('homePage');
+  //return Comic::where('name', 'LIKE', '%città%')
+  //  ->get();
+});
+

@@ -5,6 +5,11 @@
   </head>
   <body>
     <h1>Hello Admin!</h1>
+    <p>
+      <?php
+        echo $comic;
+      ?>
+    </p>
     <a href="logout">Logout</a>
   </body>
 </html>
