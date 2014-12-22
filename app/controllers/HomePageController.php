@@ -4,11 +4,12 @@ class HomePageController extends BaseController {
 	/**
 	 * Show the profile for the given user.
 	 */
+	protected $layout = 'layouts.master';
 	public function index() {
-		$comic = ComicUser::find(1) -> comic;
+		$comic = ComicUser::find(1) -> comic -> series;
 		//$comic = Comic::where('name', 'LIKE', '%città%')
 		// ->get();
-		return View::make('homePage', array('comic' => $comic));
+		$this -> layout -> content = View::make('homePage', array('comic' => $comic));
 	}
 
 	/*
@@ -23,7 +24,7 @@ class HomePageController extends BaseController {
 		// ->get();
 		// return View::make('admin/adminHomePage', array('comic' => $comic));
 		// $user = Auth::user();
-		return View::make('admin/adminHomePage');
+		$this -> layout -> content = View::make('admin/adminHomePage');
 	}
 
 	/*
@@ -33,7 +34,7 @@ class HomePageController extends BaseController {
 		$comic = ComicUser::find(2) -> comic;
 		//$comic = Comic::where('name', 'LIKE', '%città%')
 		// ->get();
-		return View::make('user/userHomePage', array('comic' => $comic));
+		$this -> layout -> content = View::make('user/userHomePage', array('comic' => $comic));
 	}
 
 }
