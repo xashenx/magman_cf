@@ -60,7 +60,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 	
 	public function availableComics(){
-		return $this->listComics()->where('state_id','=','2');
+		return $this->listComics()->where('state_id','=','1');
 	}
 	// public function available(){
 		// return $this->listComics();

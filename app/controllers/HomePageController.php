@@ -24,8 +24,8 @@ class HomePageController extends BaseController {
 		// ->get();
 		// return View::make('admin/adminHomePage', array('comic' => $comic));
 		// $user = Auth::user();
-		$comic = ComicUser::find(1) -> comic -> series;
-		$this -> layout -> content = View::make('admin/homePage', array('comic' => $comic));
+		// $comic = ComicUser::find(1) -> comic -> series;
+		$this -> layout -> content = View::make('admin/homePage');
 	}
 
 	/*

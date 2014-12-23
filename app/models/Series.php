@@ -27,5 +27,6 @@ class Series extends Eloquent {
 		return $this -> hasMany('SeriesUser')->where('active','=','1');
 		// this matches the Eloquent model
 	}
+	
 }
 ?>

@@ -50,6 +50,11 @@
 		<!--End Advanced Tables -->
 	</div>
 </div>
+<div class="col-md-6">
+	{{ Form::open(array('url' => 'boxes')) }}
+	{{ Form::submit('Click Me!') }}
+	{{ Form::close() }}
+</div>
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
 <script src="assets/js/jquery.js"></script>
