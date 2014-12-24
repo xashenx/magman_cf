@@ -207,14 +207,15 @@ max-width:170px;
 
 .navbar-cls-top .navbar-brand {
 	color: #fff;
-  background: #C90000;
-  padding-top: 25px;
+  background: #202020;
+  padding-top: 5px;
   width: 260px;
   text-align: center;
-  height: 60px;
+  height: 70px;
   font-size: 30px;
   font-weight: 700;
 }
+
 .active-menu {
     background-color:#C90000!important;
 }
@@ -231,6 +232,10 @@ max-width:170px;
     content: "\f107";
 }
 
+.red-line {
+  background-color: #a70303;
+  height: 5px;
+}
 
 .nav-second-level li,
 .nav-third-level li {
@@ -250,6 +255,12 @@ max-width:170px;
 .sidebar-collapse .nav {
 	padding:0;
 }
+
+.sidebar-icon {
+  width:50px;
+  margin-right:10px;
+}
+
 .sidebar-collapse .nav > li > a {
 	color:#fff;
 	background:#202020;
@@ -303,18 +314,16 @@ max-width:170px;
 .navbar-side {
 	border:none;
 	background-color: #202020;
-
 }
 .navbar-cls-top {
 	background:#4D4D4D;
 	border-bottom:none;
 
 }
+
 .navbar-cls-top .navbar-brand:hover {
-
-background: #C90000;
-color:#fff;
-
+  background: #202020;
+  color:#fff;
 }
 
 .navbar-default {
