@@ -56,7 +56,7 @@
               <a  href="chart.html"><i class="fa fa-th-large fa-3x sidebar-icon"></i> Serie</a>
             </li>
             <li>
-              <a  href="tab-panel.html"><i class="fa fa-user fa-3x sidebar-icon"></i> Utente</a>
+              <a  href="addBox"><i class="fa fa-user fa-3x sidebar-icon"></i> Utente</a>
             </li>
             <li>
               <a href="#"><i class="fa fa-gear fa-3x sidebar-icon"></i> Gestione parametri fissi<span class="fa arrow"></span></a>
