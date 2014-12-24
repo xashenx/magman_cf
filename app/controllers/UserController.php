@@ -1,6 +1,7 @@
 <?php
 class UserController extends BaseController {
 	protected $layout = 'layouts.master';
+	
 	/**
 	 * Show the page for the addiction of a series.
 	 */
@@ -35,7 +36,14 @@ class UserController extends BaseController {
 				$due += round($comic->price,2);
 		}
 		return $due-($due*$discount/100);
-	}
+	}	
 	
+	/*
+	 * Displays the series page
+	 */
+	public function listSeries() {
+		$series = Series::where('active','=','1')->get();
+		$this -> layout -> content = View::make('user/listSeries', array('series' => $series));
+	}
 }
 ?>

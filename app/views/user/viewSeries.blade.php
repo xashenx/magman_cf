@@ -13,11 +13,7 @@
 					<li class="">
 						<a href="#numbers" data-toggle="tab">Numeri</a>
 					</li>
-					<li class="">
-						<a href="#edit" data-toggle="tab">Modifica</a>
-					</li>
 				</ul>
-
 				<div class="tab-content">
 					<div class="tab-pane fade active in" id="details">
 						<!-- <h4>Details Tab</h4> -->
@@ -58,13 +54,9 @@
 												</tr>
 											</thead>
 											<tbody>
-												@foreach ($series->listComics as $comic)
-												@if($comic->active)
+												@foreach ($comics as $comic)
 												<tr class="odd gradeX">
-													@else
-												<tr class="danger">
-													@endif
-													<td>{{$comic->number}}</td>
+													<td>{{$comic->number}}</td>													
 													<td><a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a></td>
 													<td>{{round($comic->price,2)}}</td>
 													<td>{{$comic->available}}</td>
@@ -77,40 +69,6 @@
 								</div>
 							</div>
 							<!--End Advanced Tables -->
-						</p>
-					</div>
-					<div class="tab-pane fade" id="edit">
-						<!-- <h4>Edit Tab</h4> -->
-						<p>
-							{{ Form::model($series, array('action' => 'SeriesController@update')) }}
-							<div>
-								{{ Form::label('name', 'Name') }}
-								{{ Form::text('name') }}
-							</div>
-							<div>
-								{{ Form::label('version','Version') }}
-								{{ Form::text('version') }}
-							</div>
-							<div>
-								{{ Form::label('author', 'Author') }}
-								{{ Form::text('author') }}
-							</div>
-							<div>
-								{{ Form::label('type_id', 'Type_id') }}
-								{{ Form::text('type_id') }}
-							</div>
-							<div>
-								{{ Form::label('subtype_id', 'subtype_id') }}
-								{{ Form::text('subtype_id') }}
-							</div>
-							<div>
-								{{ Form::label('active', 'Attivo') }}
-								{{ Form::checkbox('active', 'value'); }}
-							</div>
-							<div>
-								{{ Form::submit('Aggiorna') }}
-							</div>
-							{{ Form::close() }}
 						</p>
 					</div>
 				</div>

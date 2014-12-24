@@ -1,49 +1,35 @@
 @section('content')
-<p>
-	Gestione Caselle
-</p>
 <div class="row">
 	<div class="col-md-12">
 		<!-- Advanced Tables -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Caselle
+				Visualizza serie
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">
 					<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 						<thead>
 							<tr>
-								<th># Casella</th>
-								<th>Casellante</th>
-								<th>Fumetti disponibili</th>
-								<th>Scontistica</th>
-								<th>Dovuto sul disponibile</th>
-								<th>Ultimo Acquisto</th>
+								<th>Nome</th>
+								<th>Serie</th>
+								<th>Autore</th>
+								<th>Numeri Usciti</th>
 							</tr>
 						</thead>
 						<tbody>
-
-							@foreach ($boxes as $box)
-							@if($box->active)
+							@foreach ($series as $serie)
+							@if ($serie->concluded == 1)
+							<tr class="success">
+								@elseif ($serie->active == 1)
 							<tr class="odd gradeX">
 								@else
 							<tr class="danger">
 								@endif
-								<td>{{$box->number}}</td>
-								<td><a href="boxes/{{$box->id}}">{{$box->name}} {{$box->surname}}</a></td>
-								@if (count($box->availableComics) > 0)
-								<!-- <td>{{$box->availableComics}}</td> -->
-								<td>{{array_get($available,$box->id)}}</td>
-								<td>{{$box->discount}}</td>
-								<td>{{array_get($due,$box->id)}}</td>
-								<td>{{$box->lastBuy->max('buy_time')}}</td>
-								@else
-								<td>0</td>
-								<td>{{$box->discount}}</td>
-								<td>0</td>
-								<td>{{$box->lastBuy->max('buy_time')}}</td>
-								@endif
+								<td><a href="series/{{$serie->id}}">{{$serie->name}}</a></td>
+								<td>{{$serie->version}}</td>
+								<td>{{$serie->author}}</td>
+								<td>{{$serie->listComics->max('number')}}</td>
 							</tr>
 							@endforeach
 							</tr>
@@ -55,11 +41,6 @@
 		</div>
 		<!--End Advanced Tables -->
 	</div>
-</div>
-<div class="col-md-6">
-	{{ Form::open(array('url' => 'boxes')) }}
-	{{ Form::submit('Click Me!') }}
-	{{ Form::close() }}
 </div>
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->

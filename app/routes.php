@@ -1,19 +1,18 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
+ |--------------------------------------------------------------------------
+ | Application Routes
+ |--------------------------------------------------------------------------
+ |
+ | Here is where you can register all of the routes for an application.
+ | It's a breeze. Simply tell Laravel the URIs it should respond to
+ | and give it the Closure to execute when that URI is requested.
+ |
+ */
 
-			Route::resource('series.update','SeriesController');
-Route::get('example', function(){
-  return View::make('example');
+Route::get('example', function() {
+	return View::make('example');
 });
 
 Route::get('/', function() {
@@ -60,15 +59,16 @@ Route::group(array('before' => 'auth'), function() {
 			Route::get('addBox', 'AdminController@addBox');
 			Route::get('series', 'AdminController@manageSeries');
 			Route::get('boxes', 'AdminController@manageBoxes');
-			Route::get('boxes/{id}', 'AdminL2Controller@manageBox')->where('id', '[0-9]+');
-			Route::get('series/{series_id}', 'AdminL2Controller@manageSerie')->where('id', '[0-9]+');
-			Route::get('series/{series_id}/{comic_id}', 'AdminL3Controller@manageComic')
-			->where('series_id', '[0-9]+')->where('comic_id','[0-9]+');
-			Route::get('series.update','AdminController@updateSeries');
-			Route::resource('series.update','SeriesController');
+			Route::get('boxes/{box_id}', 'AdminL2Controller@manageBox') -> where('box_id', '[0-9]+');
+			Route::get('series/{series_id}', 'AdminL2Controller@manageSerie') -> where('id', '[0-9]+');
+			Route::get('series/{series_id}/{comic_id}', 'AdminL3Controller@manageComic') -> where('series_id', '[0-9]+') -> where('comic_id', '[0-9]+');
+			Route::post('updateSeries', 'SeriesController');
+			Route::post('updateUser', 'AdminL2Controller@updateUser');
 		} else {
 			Route::get('home', 'UserController@userHome');
 			Route::get('box', 'UserController@box');
+			Route::get('series', 'UserController@listSeries');
+			Route::get('series/{series_id}', 'UserL2Controller@viewSeries') -> where('id', '[0-9]+');
 		}
 	}
 	//return URL::action('HomePageController@index');

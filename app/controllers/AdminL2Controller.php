@@ -4,8 +4,10 @@ class AdminL2Controller extends BaseController {
 	
 	public function manageSerie($series_id) {
 		$series = Series::find($series_id);
-		// $comic = Comic::get(1);
-		$this -> layout -> content = View::make('admin/viewSeries', array('series' => $series));
+		if($series != null)
+			$this -> layout -> content = View::make('admin/viewSeries', array('series' => $series));
+		else
+			return Redirect::to('series');
 	}
 	
 	public function manageComic($series_id,$comic_id) {
@@ -16,14 +18,12 @@ class AdminL2Controller extends BaseController {
 	/*
 	 * Displays the box managment page
 	 */
-	public function manageBox($id) {
-		// User::newUser('fabrizio@magman.it', Hash::make('fabrizio'),'Fabrizio','Zeni','3','2','45');
-		// $boxes = User::all();
-		// $available = $this->buildAvailableArray($boxes);
-		// $due = $this->buildDueArray($boxes);
-		// return View::make('admin/manageBoxes');
-		echo $id;
-		$this -> layout -> content = View::make('admin/homePage');
+	public function manageBox($box_id) {
+		$user = User::find($box_id);
+		if($user != null)
+			$this -> layout -> content = View::make('admin/viewBox', array('user' => $user));
+		else
+			return Redirect::to('boxes');
 	}
 
 	public function buildAvailableArray($boxes){
@@ -59,5 +59,20 @@ class AdminL2Controller extends BaseController {
 		return $due;
 	}
 
+	public function updateUser(){
+		$id = Input::get('id');
+		$user = User::find($id);
+		$user->name = Input::get('name');
+		$user->surname = Input::get('surname');
+		$user->number = Input::get('number');
+		$user->password = Input::get('password');
+		$user->discount = Input::get('discount');
+		if(Input::get('active'))
+			$user->active = 1;
+		else
+			$user->active = 0;
+		$user->save();
+		return Redirect::to('boxes/' . $id);
+	}
 }
 ?>
