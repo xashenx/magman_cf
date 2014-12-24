@@ -67,7 +67,7 @@ Route::group(array('before' => 'auth'), function() {
 			Route::get('series.update','AdminController@updateSeries');
 			Route::resource('series.update','SeriesController');
 		} else {
-			Route::get('home', 'HomePageController@userHome');
+			Route::get('home', 'UserController@userHome');
 			Route::get('box', 'UserController@box');
 		}
 	}

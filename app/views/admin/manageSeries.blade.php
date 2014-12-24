@@ -16,6 +16,7 @@
 								<th>Nome</th>
 								<th>Serie</th>
 								<th>Autore</th>
+								<th>Numeri Usciti</th>
 								<th># Casellanti</th>
 							</tr>
 						</thead>
@@ -28,9 +29,10 @@
 							@else
 							<tr class="danger">
 							@endif
-								<td>{{$serie->name}}</td>
+								<td><a href="series/{{$serie->id}}">{{$serie->name}}</a></td>
 								<td>{{$serie->version}}</td>
 								<td>{{$serie->author}}</td>
+								<td>{{$serie->listComics->max('number')}}</td>
 								<td>{{count($serie->inBoxes)}}</td>
 							</tr>
 							@endforeach

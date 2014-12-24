@@ -9,7 +9,7 @@ class UserController extends BaseController {
 		$series = SeriesUser::where('user_id','=',Auth::id())->get();
 		// $comics = ComicUser::where('user_id','=',Auth::id())->get();
 		// $comics = ComicUser::where('user_id','=',Auth::id())->get();
-		$comics = ComicUser::whereRaw('state_id < 3 and user_id = ' . Auth::id())->get();
+		$comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . Auth::id())->get();
 		// $comics = $comics->where('state_id','<','3')->get();
 		$user = User::find(Auth::id());
 		// ->where('state_id','=','1')->get();
@@ -24,17 +24,14 @@ class UserController extends BaseController {
 	 * Displays the home page for an user of the platform
 	 */
 	public function userHome() {
-		$comic = ComicUser::find(2) -> comic;
-		//$comic = Comic::where('name', 'LIKE', '%città%')
-		// ->get();
-		return View::make('user/homePage', array('comic' => $comic));
+		$this -> layout -> content = View::make('user/homePage');
 	}
 	
 	public function due($user){
 		$due = 0;
-		$discount = $user->discount;
-		foreach ($user->listComics as $comic) {
-			if($comic->comic->available > 1 and $comic->state_id < 3)
+		$discount = $user->discount; 
+		foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
+			if($comic->comic->available > 1)
 				$due += round($comic->price,2);
 		}
 		return $due-($due*$discount/100);
