@@ -31,6 +31,10 @@ class AdminController extends BaseController {
 		$this -> layout -> content = View::make('admin/manageSeries', array('series' => $series));
 	}
 
+	public function updateSeries($series){
+		
+	}
+
 	/*
 	 * Displays the boxes managment page
 	 */
@@ -43,7 +47,7 @@ class AdminController extends BaseController {
 		$this -> layout -> content = View::make('admin/manageBoxes',
 		 array('boxes' => $boxes,'available' => $available,'due' => $due));
 	}
-
+	
 	// public function buildBoxesArrays($boxes){
 		// $return_array= $available = $due = null;
 		// foreach ($boxes as $box) {

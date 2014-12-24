@@ -24,7 +24,7 @@ class Series extends Eloquent {
 
 	public function inBoxes() {
 		// return $this -> hasMany('SeriesUser', 'series_id', 'id');
-		return $this -> hasMany('SeriesUser')->where('active','=','1');
+		return $this->hasMany('SeriesUser')->where('active','=','1');
 		// this matches the Eloquent model
 	}
 	

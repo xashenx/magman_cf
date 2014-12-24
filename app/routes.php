@@ -10,6 +10,8 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+
+			Route::resource('series.update','SeriesController');
 Route::get('example', function(){
   return View::make('example');
 });
@@ -58,6 +60,12 @@ Route::group(array('before' => 'auth'), function() {
 			Route::get('addBox', 'AdminController@addBox');
 			Route::get('series', 'AdminController@manageSeries');
 			Route::get('boxes', 'AdminController@manageBoxes');
+			Route::get('boxes/{id}', 'AdminL2Controller@manageBox')->where('id', '[0-9]+');
+			Route::get('series/{series_id}', 'AdminL2Controller@manageSerie')->where('id', '[0-9]+');
+			Route::get('series/{series_id}/{comic_id}', 'AdminL3Controller@manageComic')
+			->where('series_id', '[0-9]+')->where('comic_id','[0-9]+');
+			Route::get('series.update','AdminController@updateSeries');
+			Route::resource('series.update','SeriesController');
 		} else {
 			Route::get('home', 'HomePageController@userHome');
 			Route::get('box', 'UserController@box');
@@ -69,3 +77,5 @@ Route::group(array('before' => 'auth'), function() {
 	//return Comic::where('name', 'LIKE', '%città%')
 	//  ->get();
 });
+
+// App::abort(404);
