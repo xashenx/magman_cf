@@ -58,6 +58,7 @@ Route::group(array('before' => 'auth'), function() {
 			Route::get('addBox', 'AdminController@addBox');
 			Route::get('series', 'AdminController@manageSeries');
 			Route::get('boxes', 'AdminController@manageBoxes');
+			Route::post('saveBox', 'AdminController@saveBox');
 		} else {
 			Route::get('home', 'HomePageController@userHome');
 			Route::get('box', 'UserController@box');
