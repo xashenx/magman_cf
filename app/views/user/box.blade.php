@@ -21,7 +21,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($user->listComics as $comic)
+							@foreach ($comics as $comic)
 							@if ($comic->comic->available > 1)
 							<tr class="success">
 								@else
@@ -29,7 +29,7 @@
 								@endif
 								<td>{{ $comic->comic->series->name}} - {{ $comic->comic->series->version}}</td>
 								<td>{{ $comic->comic->number}}</td>
-								<td>{{ $comic->price}}</td>
+								<td>{{ round($comic->price,2) }}</td>
 							</tr>
 							@endforeach
 						</tbody>

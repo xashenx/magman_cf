@@ -28,14 +28,16 @@
 							<tr class="odd gradeX">
 								<td>{{$box->number}}</td>
 								<td>{{$box->name}} {{$box->surname}}</td>
-								@if (count($box->available) > 0)
-								<td>{{count($box->available)}}</td>
+								@if (count($box->availableComics) > 0)
+								<!-- <td>{{$box->availableComics}}</td> -->
+								<td>{{array_get($available,$box->id)}}</td>
 								<td>{{$box->discount}}</td>
-								<td>{{$box->due}}</td>
+								<td>{{array_get($due,$box->id)}}</td>
+								<td>{{$box->lastBuy->max('buy_time')}}</td>
 								@else
 								<td>0</td>
 								<td>{{$box->discount}}</td>
-								<td></td>
+								<td>0</td>
 								<td>{{$box->lastBuy->max('buy_time')}}</td>
 								@endif
 							</tr>
