@@ -8,6 +8,12 @@
 			<div class="panel-body">
 				<ul class="nav nav-tabs">
 					<li class="active">
+						<a href="#orderComics" data-toggle="tab">In arrivo</a>
+					</li>
+					<li class="">
+						<a href="#series" data-toggle="tab">Serie Seguite</a>
+					</li>
+					<li class="">
 						<a href="#details" data-toggle="tab">Dettagli</a>
 					</li>
 					<li class="">
@@ -16,7 +22,80 @@
 				</ul>
 
 				<div class="tab-content">
-					<div class="tab-pane fade active in" id="details">
+					<div class="tab-pane fade active in" id="orderComics">
+						<!-- <h4>Available Tab</h4> -->
+						<p>
+							<!--    Bordered Table  -->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									Fumetti in arrivo <strong>(Saldo disponibili: {{ $due }}€)</strong>
+								</div>
+								<!-- /.panel-heading -->
+								<div class="panel-body">
+									<div class="table-responsive table-bordered">
+										<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+											<thead>
+												<tr>
+													<th>Serie</th>
+													<th>Numero</th>
+													<th>Prezzo</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach ($comics as $comic)
+												@if ($comic->comic->available > 1)
+												<tr class="success">
+													@else
+												<tr class="odd gradeX">
+													@endif
+													<td>{{ $comic->comic->series->name}} - {{ $comic->comic->series->version}}</td>
+													<td>{{ $comic->comic->number}}</td>
+													<td>{{ round($comic->price,2) }}</td>
+												</tr>
+												@endforeach
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!--  End  Bordered Table  -->
+						</p>
+					</div>
+					<div class="tab-pane fade" id="series">
+						<!-- <h4>Details Tab</h4> -->
+						<p>
+							<div class="table-responsive table-bordered">
+								<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+									<thead>
+										<tr>
+											<th>Serie</th>
+											<th>Versione</th>
+											<th>Autore</th>
+											<th>Numeri Usciti</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach ($series as $serie)
+										@if ($serie->series->concluded == 1)
+										<tr class="success">
+											@elseif($serie->active == 1)
+										<tr class="odd gradeX">
+											@else
+										<tr class="danger">
+											@endif
+											<td>{{$serie->series->name}}</td>
+											<td>{{$serie->series->version}}</td>
+											<td>{{$serie->series->author}}</td>
+											<td>{{count($serie->series->listComics)}}</td>
+										</tr>
+										@endforeach
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</p>
+					</div>
+					<div class="tab-pane fade" id="details">
 						<!-- <h4>Details Tab</h4> -->
 						<p>
 							Nome: {{$user->name}}, Cognome: {{$user->surname}}
@@ -30,7 +109,7 @@
 					<div class="tab-pane fade" id="edit">
 						<!-- <h4>Edit Tab</h4> -->
 						<p>
-							{{ Form::model($user, array('action' => 'AdminL2Controller@updateUser')) }}
+							{{ Form::model($user, array('action' => 'UsersController@update')) }}
 							<div>
 								{{ Form::label('name', 'Nome') }}
 								{{ Form::text('name') }}
@@ -45,8 +124,8 @@
 								{{ Form::text('number') }}
 							</div>
 							<div>
-								{{ Form::label('password', 'Password') }}
-								{{ Form::text('password') }}
+								{{ Form::label('pass', 'Password') }}
+								{{ Form::password('pass') }}
 							</div>
 							<div>
 								{{ Form::label('discount', 'Sconto') }}

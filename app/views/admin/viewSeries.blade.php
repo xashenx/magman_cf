@@ -14,6 +14,9 @@
 						<a href="#numbers" data-toggle="tab">Numeri</a>
 					</li>
 					<li class="">
+						<a href="#newnumber" data-toggle="tab">Nuovo Numero</a>
+					</li>
+					<li class="">
 						<a href="#edit" data-toggle="tab">Modifica</a>
 					</li>
 				</ul>
@@ -28,7 +31,11 @@
 							<br />
 							Autore: {{$series->author}}
 							<br />
-							Numeri usciti: {{$series->listComics->max('number')}}
+							@if($series->listComics->max('number') != null)
+								Numeri usciti: {{$series->listComics->max('number')}}
+							@else
+								Numeri usciti: 0
+							@endif
 							<br />
 							@if($series->conclusa)
 							Stato: Conclusa
@@ -79,33 +86,65 @@
 							<!--End Advanced Tables -->
 						</p>
 					</div>
+					<div class="tab-pane fade" id="newnumber">
+						<!-- <h4>Edit Tab</h4> -->
+						<p>
+							{{ Form::open(array('action' => 'ComicsController@create')) }}
+							<div>
+								{{ Form::label('name', 'Nome') }}
+								{{ Form::text('name') }}
+								{{ Form::hidden('series_id', $series->id)}}
+							</div>
+							<div>
+								{{ Form::label('number','number') }}
+								{{ Form::text('number', $next_comic_number) }}
+							</div>
+							<div>
+								{{ Form::label('price', 'Prezzo') }}
+								{{ Form::text('price', '0') }}
+							</div>
+							<div>
+								{{ Form::label('available', 'Disponibilità') }}
+								{{ Form::text('available', '0') }}
+							</div>
+							<div>
+								{{ Form::submit('Inserisci') }}
+							</div>
+							{{ Form::close() }}
+						</p>
+					</div>
 					<div class="tab-pane fade" id="edit">
 						<!-- <h4>Edit Tab</h4> -->
 						<p>
 							{{ Form::model($series, array('action' => 'SeriesController@update')) }}
 							<div>
-								{{ Form::label('name', 'Name') }}
+								{{ Form::label('name', 'Nome') }}
 								{{ Form::text('name') }}
+								{{ Form::hidden('id')}}
 							</div>
 							<div>
-								{{ Form::label('version','Version') }}
+								{{ Form::label('version','Versione') }}
 								{{ Form::text('version') }}
 							</div>
 							<div>
-								{{ Form::label('author', 'Author') }}
+								{{ Form::label('author', 'Autore') }}
 								{{ Form::text('author') }}
 							</div>
 							<div>
-								{{ Form::label('type_id', 'Type_id') }}
+								{{ Form::label('type_id', 'Tipo') }}
 								{{ Form::text('type_id') }}
 							</div>
 							<div>
-								{{ Form::label('subtype_id', 'subtype_id') }}
+								{{ Form::label('subtype_id', 'Sotto Tipo') }}
 								{{ Form::text('subtype_id') }}
 							</div>
 							<div>
 								{{ Form::label('active', 'Attivo') }}
 								{{ Form::checkbox('active', 'value'); }}
+							</div>
+							<div>
+								{{ Form::label('completed', 'Conclusa') }}
+								{{ Form::checkbox('completed', 'value'); }}
 							</div>
 							<div>
 								{{ Form::submit('Aggiorna') }}

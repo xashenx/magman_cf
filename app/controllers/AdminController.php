@@ -41,11 +41,12 @@ class AdminController extends BaseController {
 	public function manageBoxes() {
 		// User::newUser('fabrizio@magman.it', Hash::make('fabrizio'),'Fabrizio','Zeni','3','2','45');
 		$boxes = User::all();
+		$next_box_id = $boxes->max('number')+1;
 		$available = $this->buildAvailableArray($boxes);
 		$due = $this->buildDueArray($boxes);
 		// return View::make('admin/manageBoxes');
 		$this -> layout -> content = View::make('admin/manageBoxes',
-		 array('boxes' => $boxes,'available' => $available,'due' => $due));
+		 array('boxes' => $boxes,'available' => $available,'due' => $due, 'next_box_id' => $next_box_id));
 	}
 	
 	// public function buildBoxesArrays($boxes){

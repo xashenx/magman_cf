@@ -7,7 +7,7 @@ class UserController extends BaseController {
 	 */
 	public function box() {
 		// $series = Series::all()->listComics->where('useri');
-		$series = SeriesUser::where('user_id','=',Auth::id())->get();
+		$series = SeriesUser::whereRaw('active = 1 and user_id =' . Auth::id())->get();
 		// $comics = ComicUser::where('user_id','=',Auth::id())->get();
 		// $comics = ComicUser::where('user_id','=',Auth::id())->get();
 		$comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . Auth::id())->get();
