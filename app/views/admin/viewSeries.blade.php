@@ -32,7 +32,7 @@
 							Autore: {{$series->author}}
 							<br />
 							@if($series->listComics->max('number') != null)
-								Numeri usciti: {{$series->listComics->max('number')}}
+								Numeri usciti: {{$series->listActive->max('number')}}
 							@else
 								Numeri usciti: 0
 							@endif

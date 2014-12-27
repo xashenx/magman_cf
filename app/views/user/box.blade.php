@@ -69,7 +69,11 @@
 								<td>{{$serie->series->name}}</td>
 								<td>{{$serie->series->version}}</td>
 								<td>{{$serie->series->author}}</td>
-								<td>{{count($serie->series->listComics)}}</td>
+								@if($serie->series->listActive->max('number') != null)
+								<td>{{$serie->series->listActive->max('number')}}</td>
+								@else
+								<td>0</td>
+								@endif
 							</tr>
 							@endforeach
 							</tr>

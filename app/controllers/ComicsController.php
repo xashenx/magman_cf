@@ -12,25 +12,33 @@ class ComicsController extends BaseController {
 		$comic -> series_id = $series_id;
 		$comic -> available = Input::get('available');
 		$comic -> save();
+		$this->updateComicUser($series_id,$comic);
 		return Redirect::to('series/' . $series_id);
 	}
 
 	public function update() {
 		$id = Input::get('id');
-		$series = Series::find($id);
-		$series -> name = Input::get('name');
-		$series -> version = Input::get('version');
-		$series -> author = Input::get('author');
-		if (Input::get('type_id') != null)
-			$series -> type_id = Input::get('type_id');
-		if (Input::get('subtype_id') != null)
-			$series -> subtype_id = Input::get('subtype_id');
+		$comic = Comic::find($id);
+		$comic -> name = Input::get('name');
+		$comic -> number = Input::get('number');
+		$comic -> available = Input::get('available');
 		if (Input::get('active'))
-			$series -> active = 1;
+			$comic -> active = 1;
 		else
-			$series -> active = 0;
-		$series -> save();
-		return Redirect::to('series/' . $id);
+			$comic -> active = 0;
+		$comic -> save();
+		return Redirect::to('series/' . $comic->series_id . '/' . $id);
+	}
+	
+	public function updateComicUser($series_id,$comic){
+		$series_user = SeriesUser::whereRaw('series_id = ' . $series_id . ' and active = 1')->get();
+		foreach ($series_user as $user) {
+			$comicUser = new ComicUser;
+			$comicUser -> comic_id = $comic -> id;
+			$comicUser -> user_id = $user -> user_id;
+			$comicUser -> price = $comic -> price;
+			$comicUser->save();
+		}
 	}
 }
 ?>

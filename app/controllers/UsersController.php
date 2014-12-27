@@ -49,7 +49,7 @@ class UsersController extends BaseController {
 		return $due;
 	}
 
-	public function createUser() {
+	public function create() {
 		$user = new User;
 		$user -> username = Input::get('username');
 		$user -> password = Hash::make(Input::get('password'));
@@ -61,7 +61,7 @@ class UsersController extends BaseController {
 		return Redirect::to('boxes/' . $user->id);
 	}
 
-	public function updateUser() {
+	public function update() {
 		$id = Input::get('id');
 		$user = User::find($id);
 		$user -> name = Input::get('name');

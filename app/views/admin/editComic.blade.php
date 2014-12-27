@@ -36,14 +36,11 @@
 					<div class="tab-pane fade" id="edit">
 						<!-- <h4>Edit Tab</h4> -->
 						<p>
-							{{ Form::model($comic, array('action' => 'SeriesController@update')) }}
+							{{ Form::model($comic, array('action' => 'ComicsController@update')) }}
 							<div>
 								{{ Form::label('name', 'Nome') }}
 								{{ Form::text('name') }}
-							</div>
-							<div>
-								{{ Form::label('series_id','Serie') }}
-								{{ Form::text('series_id') }}
+								{{ Form::hidden('id') }}
 							</div>
 							<div>
 								{{ Form::label('number', 'Numero') }}

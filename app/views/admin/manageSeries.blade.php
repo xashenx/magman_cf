@@ -28,6 +28,7 @@
 											<th>Serie</th>
 											<th>Autore</th>
 											<th>Numeri Usciti</th>
+											<th>Azioni veloci</th>
 											<th># Casellanti</th>
 										</tr>
 									</thead>
@@ -43,10 +44,27 @@
 											<td><a href="series/{{$serie->id}}">{{$serie->name}}</a></td>
 											<td>{{$serie->version}}</td>
 											<td>{{$serie->author}}</td>
-											<td>{{$serie->listComics->max('number')}}</td>
+											<td>{{$serie->listActive->max('number')}}</td>
+											<td><div class="btn-group">
+												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+													Azioni <span class="caret"></span>
+												</button>
+												<ul class="dropdown-menu">
+													<li>
+														@if($serie->active)
+														<a href="#" onclick = "showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},0)">Disabilita</a>
+														@else
+														<a href="#" onclick = "showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},1)">Abilita</a>
+														<a href="#" onclick = "showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},2)">Abilita+fumetti</a>
+														@endif
+													</li>
+													<!-- <li>
+														<a href="newComic/{{$serie->id}}">Nuovo fumetto</a>
+													</li> -->
+												</ul>
+											</div></td>
 											<td>{{count($serie->inBoxes)}}</td>
-										</tr>
-										@endforeach
+											@endforeach
 										</tr>
 									</tbody>
 								</table>
@@ -91,6 +109,57 @@
 	<!--End Advanced Tables -->
 </div>
 </div>
+
+<div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h3 class="modal-title">Conferma azione</h3>
+			</div>
+			<div class="modal-body">
+				<p id="confirmPageName" class="text-danger"></p>
+			</div>
+			<div class="modal-footer">
+				{{ Form::open(array('name' => 'confirmForm')) }}
+				{{ Form::hidden('id') }}
+				{{ Form::hidden('comics') }}
+				{{ Form::button('Annulla', array(
+				'data-dismiss' => 'modal',
+				'class' => 'btn btn-danger btn-sm')) }}
+				{{ Form::submit('Sì', array('class' => 'btn btn-danger btn-sm',)) }}
+				{{ Form::close() }}
+			</div>
+		</div>
+		{{-- /.modal-content --}}
+	</div>
+	{{-- /.modal-dialog --}}
+</div>
+{{-- /.modal --}}
+
+<script>
+	function showConfirmModal(name, version, serie_id, mode) {
+		document.confirmForm.id.value = serie_id;
+		if (mode == 0){
+			document.confirmForm.action = 'deleteSeries';
+			$('#confirmPageName').text('Sei sicuro di voler disabilitare la serie ' + "'" + name + " - " + version + "'?");
+		}
+		else if (mode == 1){
+			document.confirmForm.action = 'restoreSeries';
+			$('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "'?");
+		}
+		else{
+			document.confirmForm.action = 'restoreSeries';
+			document.confirmForm.comics.value = '1';
+			$('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "' e i relativi fumetti?");
+		}
+		$('#modal-confirm').modal({
+			show : true
+		});
+	}
+</script>
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
 <script src="assets/js/jquery.js"></script>
