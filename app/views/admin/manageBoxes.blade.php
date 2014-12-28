@@ -45,16 +45,18 @@
 											<td>{{$box->number}}</td>
 											<td><a href="boxes/{{$box->id}}">{{$box->name}} {{$box->surname}}</a></td>
 											@if (count($box->availableComics) > 0)
-											<!-- <td>{{$box->availableComics}}</td> -->
 											<td>{{array_get($available,$box->id)}}</td>
 											<td>{{$box->discount}}</td>
 											<td>{{array_get($due,$box->id)}}</td>
-											<td>{{$box->lastBuy->max('buy_time')}}</td>
 											@else
 											<td>0</td>
 											<td>{{$box->discount}}</td>
 											<td>0</td>
-											<td>{{$box->lastBuy->max('buy_time')}}</td>
+											@endif
+											@if($box->lastBuy->max('buy_time') != null)
+											<td>{{date('d-m-Y',strtotime($box->lastBuy->max('buy_time')))}}</td>
+											@else
+											<td>/</td>
 											@endif
 										</tr>
 										@endforeach
