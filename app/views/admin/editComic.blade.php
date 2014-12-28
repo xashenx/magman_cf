@@ -1,4 +1,4 @@
-@section('content') <p>
+@section('content')
 <div class="row">
 	<div class="col-md-12 col-sm-12">
 		<div class="panel panel-default">
@@ -67,19 +67,19 @@
 </div>
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
-<script src="../../assets/js/jquery.js"></script>
+<script src="{{$path}}assets/js/jquery.js"></script>
 <!-- BOOTSTRAP SCRIPTS -->
-<script src="../../assets/js/bootstrap.min.js"></script>
+<script src="{{$path}}assets/js/bootstrap.min.js"></script>
 <!-- METISMENU SCRIPTS -->
-<script src="../../assets/js/jquery.metisMenu.js"></script>
+<script src="{{$path}}assets/js/jquery.metisMenu.js"></script>
 <!-- DATA TABLE SCRIPTS -->
-<script src="../../assets/js/dataTables/jquery.dataTables.js"></script>
-<script src="../../assets/js/dataTables/dataTables.bootstrap.js"></script>
+<script src="{{$path}}assets/js/dataTables/jquery.dataTables.js"></script>
+<script src="{{$path}}assets/js/dataTables/dataTables.bootstrap.js"></script>
 <script>
 	$(document).ready(function() {
 		$('#dataTables-example').dataTable();
 	}); 
 </script>
 <!-- CUSTOM SCRIPTS -->
-<script src="../../assets/js/custom.js"></script>
+<script src="{{$path}}assets/js/custom.js"></script>
 @stop

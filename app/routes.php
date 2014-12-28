@@ -57,12 +57,17 @@ Route::group(array('before' => 'auth'), function() {
 			Route::get('addSeries', 'AdminController@addSeries');
 			Route::get('addComic', 'AdminController@addComic');
 			Route::get('addBox', 'AdminController@addBox');
-			Route::get('series', 'AdminController@manageSeries');
-			Route::get('boxes', 'AdminController@manageBoxes');
 			Route::post('saveBox', 'AdminController@saveBox');
+			// routes for the Boxes pages
+			Route::get('boxes', 'AdminController@manageBoxes');
 			Route::get('boxes/{box_id}', 'AdminL2Controller@manageBox') -> where('box_id', '[0-9]+');
-			Route::get('series/{series_id}', 'AdminL2Controller@manageSerie') -> where('id', '[0-9]+');
+			// routes for the Series pages
+			Route::get('series', 'AdminController@manageSeries');
+			Route::get('series/{series_id}', 'AdminL2Controller@manageSerie') -> where('series_id', '[0-9]+');
 			Route::get('series/{series_id}/{comic_id}', 'AdminL3Controller@manageComic') -> where('series_id', '[0-9]+') -> where('comic_id', '[0-9]+');
+			// route for the Comics page
+			Route::get('comics','ComicsController@listAllComics');
+			Route::get('comics/{comic_id}','ComicsL2Controller@manageComic') -> where('comic_id', '[0-9]+');
 			// routes for creation of instances of objects
 			Route::post('createUser', 'UsersController@create');
 			Route::post('createSeries', 'SeriesController@create');
@@ -92,7 +97,6 @@ Route::group(array('before' => 'auth'), function() {
 			Route::get('box', 'UserController@box');
 			Route::get('series', 'UserController@listSeries');
 			Route::get('series/{series_id}', 'UserL2Controller@viewSeries') -> where('id', '[0-9]+');
-			
 		}
 	}
 	//return URL::action('HomePageController@index');

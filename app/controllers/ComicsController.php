@@ -1,7 +1,7 @@
 <?php
 class ComicsController extends BaseController {
 	protected $layout = 'layouts.master';
-	protected $layout2 = 'layouts.master_level2';
+	protected $layou = 'layouts.master_level2';
 
 	public function create() {
 		$series_id = Input::get('series_id');
@@ -39,6 +39,11 @@ class ComicsController extends BaseController {
 			$comicUser -> price = $comic -> price;
 			$comicUser->save();
 		}
+	}
+	
+	public function listAllComics(){
+		$comics = Comic::all();
+		$this -> layout -> content = View::make('admin/manageComics', array('comics' => $comics));
 	}
 }
 ?>

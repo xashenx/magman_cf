@@ -34,7 +34,7 @@
       </div>
 
       <div style="color: white; padding: 20px 50px 5px 50px; float: right; font-size: 16px;">
-        Benvenuto Utente! &nbsp; <a href="login.html" class="btn btn-danger square-btn-adjust">Logout</a>
+        Benvenuto Utente! &nbsp; <a href="logout" class="btn btn-danger square-btn-adjust">Logout</a>
       </div>
       </nav>
       <!-- /. NAV TOP  -->
@@ -46,16 +46,19 @@
             <li class="red-line">
             </li>
             <li>
-              <a  href="index.html"><i class="fa fa-dashboard fa-3x sidebar-icon"></i> Dashboard</a>
+              <a  href="home"><i class="fa fa-dashboard fa-3x sidebar-icon"></i> Dashboard</a>
             </li>
             <li  >
-              <a  href="chart.html"><i class="fa fa-plus-square fa-3x sidebar-icon"></i> Nuovi Arrivi</a>
+              <a  href="arrivals"><i class="fa fa-plus-square fa-3x sidebar-icon"></i> Nuovi Arrivi</a>
             </li>
             <li>
-              <a  href="ui.html"><i class="fa fa-book fa-3x sidebar-icon"></i> Fumetti</a>
+              <a  href="boxes"><i class="fa fa-user fa-3x sidebar-icon"></i> Caselle</a>
+            </li>
+            <li>
+              <a  href="comics"><i class="fa fa-book fa-3x sidebar-icon"></i> Fumetti</a>
             </li>
             <li  >
-              <a  href="chart.html"><i class="fa fa-th-large fa-3x sidebar-icon"></i> Serie</a>
+              <a  href="series"><i class="fa fa-th-large fa-3x sidebar-icon"></i> Serie</a>
             </li>
             <li>
               <a  href="addBox"><i class="fa fa-user fa-3x sidebar-icon"></i> Utente</a>

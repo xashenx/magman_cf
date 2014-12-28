@@ -5,7 +5,7 @@ class AdminL3Controller extends BaseController {
 	public function manageComic($series_id, $comic_id) {
 		$comic = Comic::find($comic_id);
 		if ($comic != null && $comic->series->id == $series_id)
-			$this -> layout -> content = View::make('admin/editComic', array('comic' => $comic));
+			$this -> layout -> content = View::make('admin/editComic', array('comic' => $comic, 'path' => '../../'));
 		else
 			return Redirect::to('series/' . $series_id);
 	}
