@@ -1,12 +1,9 @@
 @section('content')
-<p>
-	Gestione Caselle
-</p>
 <div class="row">
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Visualizza/Modifica Serie
+				Gestione Caselle
 			</div>
 			<div class="panel-body">
 				<ul class="nav nav-tabs">

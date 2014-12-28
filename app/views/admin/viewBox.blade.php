@@ -24,7 +24,7 @@
 						<a href="#newseries" data-toggle="tab">Nuova Serie</a>
 					</li>
 					<li class="">
-						<a href="#newsinglecomic" data-toggle="tab">Nuova Serie</a>
+						<a href="#newsinglecomic" data-toggle="tab">Nuovo Arretrato/Singolo</a>
 					</li>
 					@endif
 					<li class="">
@@ -53,6 +53,7 @@
 													<th>Serie</th>
 													<th>Numero</th>
 													<th>Prezzo</th>
+													<th>Azioni Rapide</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -62,9 +63,29 @@
 													@else
 												<tr class="odd gradeX">
 													@endif
+													@if($comic->comic->series->version != null)
 													<td>{{ $comic->comic->series->name}} - {{ $comic->comic->series->version}}</td>
+													@else
+													<td>{{ $comic->comic->series->name}}</td>
+													@endif
 													<td>{{ $comic->comic->number}}</td>
 													<td>{{ round($comic->price,2) }}</td>
+
+													<td>
+													<div class="btn-group">
+														<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+															Azioni <span class="caret"></span>
+														</button>
+														<ul class="dropdown-menu">
+															<li>
+																@if($comic->comic->available > 1)
+																<a href="#" onclick = "showConfirmModal({{$comic->comic->id}},{{$user->id}},0)">Acquistato</a>
+																@endif
+																<a href="#" onclick = "showConfirmModal({{$comic->comic->id}},{{$user->id}},1)">Rimuovi</a>
+															</li>
+														</ul>
+													</div></td>
+
 												</tr>
 												@endforeach
 											</tbody>
@@ -123,7 +144,24 @@
 									{{ Form::hidden('user_id', $user->id) }}
 								</div>
 								<div>
-									{{ Form::submit('Inserisci') }}
+									{{ Form::submit('Aggiungi') }}
+								</div>
+								{{ Form::close() }}
+							</p>
+						</div>
+						<div class="tab-pane fade" id="newsinglecomic">
+							<!-- <h4>Edit Tab</h4> -->
+							<p>
+								{{ Form::open(array('action' => 'ComicUserL2Controller@create')) }}
+								<div>
+									{{ Form::label('series_id', 'Serie') }}
+									{{ Form::text('series_id') }}
+									{{ Form::label('number', 'Numero') }}
+									{{ Form::text('number') }}
+									{{ Form::hidden('user_id', $user->id) }}
+								</div>
+								<div>
+									{{ Form::submit('Aggiungi') }}
 								</div>
 								{{ Form::close() }}
 							</p>
@@ -180,8 +218,56 @@
 			</div>
 		</div>
 	</div>
+	
+<div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h3 class="modal-title">Conferma azione</h3>
+			</div>
+			<div class="modal-body">
+				<p id="confirmPageName" class="text-danger"></p>
+			</div>
+			<div class="modal-footer">
+				{{ Form::open(array('name' => 'confirmForm')) }}
+				{{ Form::hidden('id') }}
+				{{ Form::hidden('user_id') }}
+				{{ Form::button('Annulla', array(
+				'data-dismiss' => 'modal',
+				'class' => 'btn btn-danger btn-sm')) }}
+				{{ Form::submit('Confermo', array('class' => 'btn btn-danger btn-sm',)) }}
+				{{ Form::close() }}
+			</div>
+		</div>
+		{{-- /.modal-content --}}
+	</div>
+	{{-- /.modal-dialog --}}
+</div>
+{{-- /.modal --}}
 	<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 	<!-- JQUERY SCRIPTS -->
+<script>
+	function showConfirmModal(comic_id,user_id,mode) {
+		document.confirmForm.id.value = comic_id;
+		document.confirmForm.user_id.value = user_id;
+		if (mode == 0){
+			// buying the comic
+			document.confirmForm.action = '../buyComic';
+			$('#confirmPageName').text('Il fumetto è stato acquistato?');
+		}
+		else if (mode == 1){
+			// removing the comic from the box
+			document.confirmForm.action = '../deleteComicUser';
+			$('#confirmPageName').text('Sei sicuro di voler togliere il fumetto dalla casella?');
+		}
+		$('#modal-confirm').modal({
+			show : true
+		});
+	}
+</script>
 	<script src="../assets/js/jquery.js"></script>
 	<!-- BOOTSTRAP SCRIPTS -->
 	<script src="../assets/js/bootstrap.min.js"></script>

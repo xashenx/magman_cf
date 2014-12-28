@@ -1,12 +1,9 @@
 @section('content')
-<p>
-	Gestione Caselle
-</p>
 <div class="row">
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Visualizza/Modifica Fumetti
+				Gestione Fumetti
 			</div>
 			<div class="panel-body">
 				<div class="tab-content">
@@ -18,6 +15,7 @@
 										<th>Series</th>
 										<th>Numero</th>
 										<th>Prezzo</th>
+										<th>Disponibilità</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -33,7 +31,8 @@
 										<td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}}</a></td>
 										@endif
 										<td>{{ $comic->number}}</td>
-										<td>{{ $comic->price}}</td>
+										<td>{{ $comic->price}}€</td>
+										<td>{{ $comic->available}}</td>
 									</tr>
 									@endforeach
 								</tbody>

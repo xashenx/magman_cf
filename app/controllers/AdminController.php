@@ -96,7 +96,7 @@ class AdminController extends BaseController {
 		$due = null;
 		foreach ($boxes as $box) {
 			// check available comics and due
-			$comics = $box->listComics()->whereRaw('state_id < 3')->get();
+			$comics = $box->listComics()->whereRaw('state_id < 3 and active = 1')->get();
 			$due_counter = 0;
 			foreach ($comics as $comic) {
 				if ($comic -> comic -> available > 1) {

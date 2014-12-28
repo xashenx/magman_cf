@@ -1,6 +1,8 @@
 @section('content')
 <div class="row">
 	<div class="col-md-12">
+		<h3>Bentornato Admin {{ Auth::user()->name }}!</h3>
+		@if((count($insolvents)+count($defaultings))>0)
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				Warning caselle
@@ -36,8 +38,8 @@
 				</div>
 			</div>
 		</div>
+		@endif
 	</div>
-	<!-- Advanced Tables -->
 </div>
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->

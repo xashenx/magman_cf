@@ -1,19 +1,29 @@
 <?php
-class ComicUserController extends BaseController {
+class ComicUserL2Controller extends BaseController {
 	protected $layout = 'layouts.master';
 	protected $layout2 = 'layouts.master_level2';
 
 	public function create() {
-		$series = new Series;
-		$series -> name = Input::get('name');
-		$series -> version = Input::get('version');
-		$series -> author = Input::get('author');
-		if (Input::get('type_id') != null)
-			$series -> type_id = Input::get('type_id');
-		if (Input::get('subtype_id') != null)
-			$series -> subtype_id = Input::get('subtype_id');
-		$series -> save();
-		return Redirect::to('series/' . $series -> id);
+		$series_id = Input::get('series_id');
+		$number  = Input::get('number');
+		$user_id = Input::get('user_id');
+		$series = Series::find($series_id);
+		$comics = $series->listActive()->where('number','=',$number)->get();
+		if(count($comics) > 1 && count($comics) > 0){
+			//TODO warning, no more than one number for series should be present!
+			return "error";
+		}else{
+			$comic_id = 0;
+			foreach($comics as $comic){
+				$comic_id = $comic -> id;
+			$comicUser = new ComicUser;
+			$comicUser -> comic_id = $comic_id;
+			$comicUser -> user_id = $user_id;
+			$comicUser -> price = $comic -> price;
+			$comicUser -> save();
+			}
+		}
+		return Redirect::to('boxes/' . $user_id);
 	}
 
 	public function update() {
@@ -57,6 +67,5 @@ class ComicUserController extends BaseController {
 		}
 		return Redirect::to('boxes/' . $user_id);
 	}
-
 }
 ?>

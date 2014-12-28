@@ -42,7 +42,7 @@ class SeriesController extends BaseController {
 		$comics = $series -> listComics;
 		$this -> deleteComics($comics);
 		$this -> deleteSeriesUser($series_id);
-		$this -> deleteComicUser($comics);
+		// $this -> deleteComicUser($comics);
 		return Redirect::to('series');
 	}
 
@@ -53,38 +53,41 @@ class SeriesController extends BaseController {
 		$series -> update();
 		$comics = $series -> listComics;
 		if (Input::get('comics') == 1) {
-			$this -> restoreComics($comics);
+			// $this -> restoreComics($comics);
+			DB::table('comics') -> where('series_id', $series_id) -> update(array('active' => 0));
 		}
 		return Redirect::to('series');
 	}
 
 	public function deleteComics($comics) {
 		foreach ($comics as $comic) {
+			DB::table('comic_user') -> where('comic_id', $comic->id) -> update(array('active' => 0));
 			$comic -> active = 0;
 			$comic -> update();
 		}
 	}
 
 	public function deleteSeriesUser($series_id) {
-		$seriesUser = SeriesUser::where('series_id',$series_id)->get();
-		foreach ($seriesUser as $box) {
-			$box -> active = 0;
-			$box -> update();
-		}
+		DB::table('series_user') -> where('series_id', $series_id) -> update(array('active' => 0));
+		// $seriesUser = SeriesUser::where('series_id',$series_id)->get();
+		// foreach ($seriesUser as $box) {
+			// $box -> active = 0;
+			// $box -> update();
+		// }
 	}
 
-	public function deleteComicUser($comics) {
-		foreach ($comics as $comic) {
-			DB::table('comic_user') -> where('comic_id', $comic->id) -> update(array('active' => 0));
-		}
-	}
+	// public function deleteComicUser($comics) {
+		// foreach ($comics as $comic) {
+			// DB::table('comic_user') -> where('comic_id', $comic->id) -> update(array('active' => 0));
+		// }
+	// }
 
-	public function restoreComics($comics) {
-		foreach ($comics as $comic) {
-			$comic -> active = 1;
-			$comic -> update();
-		}
-	}
+	// public function restoreComics($comics) {
+		// foreach ($comics as $comic) {
+			// $comic -> active = 1;
+			// $comic -> update();
+		// }
+	// }
 
 }
 ?>

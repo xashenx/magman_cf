@@ -45,7 +45,8 @@
 											<td>{{$serie->version}}</td>
 											<td>{{$serie->author}}</td>
 											<td>{{$serie->listActive->max('number')}}</td>
-											<td><div class="btn-group">
+											<td>
+											<div class="btn-group">
 												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
 													Azioni <span class="caret"></span>
 												</button>
@@ -59,7 +60,7 @@
 														@endif
 													</li>
 													<!-- <li>
-														<a href="newComic/{{$serie->id}}">Nuovo fumetto</a>
+													<a href="newComic/{{$serie->id}}">Nuovo fumetto</a>
 													</li> -->
 												</ul>
 											</div></td>
@@ -138,19 +139,18 @@
 	{{-- /.modal-dialog --}}
 </div>
 {{-- /.modal --}}
-
+<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+<!-- JQUERY SCRIPTS -->
 <script>
 	function showConfirmModal(name, version, serie_id, mode) {
 		document.confirmForm.id.value = serie_id;
-		if (mode == 0){
+		if (mode == 0) {
 			document.confirmForm.action = 'deleteSeries';
 			$('#confirmPageName').text('Sei sicuro di voler disabilitare la serie ' + "'" + name + " - " + version + "'?");
-		}
-		else if (mode == 1){
+		} else if (mode == 1) {
 			document.confirmForm.action = 'restoreSeries';
 			$('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "'?");
-		}
-		else{
+		} else {
 			document.confirmForm.action = 'restoreSeries';
 			document.confirmForm.comics.value = '1';
 			$('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "' e i relativi fumetti?");
@@ -160,8 +160,6 @@
 		});
 	}
 </script>
-<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-<!-- JQUERY SCRIPTS -->
 <script src="assets/js/jquery.js"></script>
 <!-- BOOTSTRAP SCRIPTS -->
 <script src="assets/js/bootstrap.min.js"></script>

@@ -8,6 +8,8 @@ class ComicUser extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'comic_user';
+	
+	protected $guarded = array('id','remember_token','level_id');
 
 	public function user() {
 		return $this -> hasMany('User');

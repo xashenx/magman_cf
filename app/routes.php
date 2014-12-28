@@ -66,14 +66,15 @@ Route::group(array('before' => 'auth'), function() {
 			Route::get('series/{series_id}', 'AdminL2Controller@manageSerie') -> where('series_id', '[0-9]+');
 			Route::get('series/{series_id}/{comic_id}', 'AdminL3Controller@manageComic') -> where('series_id', '[0-9]+') -> where('comic_id', '[0-9]+');
 			// route for the Comics page
-			Route::get('comics','ComicsController@listAllComics');
-			Route::get('comics/{comic_id}','ComicsL2Controller@manageComic') -> where('comic_id', '[0-9]+');
+			Route::get('comics', 'ComicsController@listAllComics');
+			Route::get('comics/{comic_id}', 'ComicsL2Controller@manageComic') -> where('comic_id', '[0-9]+');
 			// routes for creation of instances of objects
 			Route::post('createUser', 'UsersController@create');
 			Route::post('createSeries', 'SeriesController@create');
 			Route::post('createComic', 'ComicsController@create');
 			Route::post('createSeriesUser', 'SeriesUserController@create');
 			Route::post('createComicUser', 'ComicUserController@create');
+			Route::post('boxes/createComicUser', 'ComicUserL2Controller@create');
 			// routes for updates of instances of objects
 			Route::post('updateUser', 'UsersController@update');
 			Route::post('updateSeries', 'SeriesController@update');
@@ -92,6 +93,8 @@ Route::group(array('before' => 'auth'), function() {
 			Route::post('restoreComic', 'ComicsController@restore');
 			Route::post('restoreSeriesUser', 'SeriesUserController@restore');
 			Route::post('restoreComicUser', 'ComicUserController@restore');
+			// special events routes
+			Route::post('buyComic', 'ComicUserController@buy');
 		} else {
 			Route::get('home', 'UserController@userHome');
 			Route::get('box', 'UserController@box');

@@ -21,8 +21,10 @@ class HomePageController extends BaseController {
 		 * - defaulting: not buying for at least 3 months
 		 */
 		$boxes = User::where('active','=','1')->get();
-		$insolvents = $this -> buildInsolventArray($boxes);
-		$defaultings = $this -> buildDefaultingArray($boxes);
+		$insolvency_threshold = ShopConf::find(1);
+		$defaulting_threshold = ShopConf::find(2);
+		$insolvents = $this -> buildInsolventArray($boxes,$insolvency_threshold);
+		$defaultings = $this -> buildDefaultingArray($boxes,$defaulting_threshold);
 		$this -> layout -> content = View::make('admin/homePage',array('insolvents' => $insolvents,'defaultings' => $defaultings));
 	}
 
@@ -33,7 +35,7 @@ class HomePageController extends BaseController {
 		$this -> layout -> content = View::make('user/userHomePage');
 	}
 	
-	public function buildInsolventArray($boxes){
+	public function buildInsolventArray($boxes,$insolvency_treshold){
 		$insolvent = array();
 		foreach ($boxes as $box) {
 			// check available comics and due
@@ -45,7 +47,7 @@ class HomePageController extends BaseController {
 				}
 			}
 			$due_counter = $due_counter - ($due_counter * $box -> discount / 100);
-			if($due_counter > 150){
+			if($due_counter > $insolvency_treshold -> value){
 				$insolvent = array_add($insolvent, $box -> name . " " . $box -> surname, 'Insolvente (' . $due_counter . '€)');
 				// echo $box->name . " insolvent: " . $due_counter . "<br>";
 			}
@@ -53,11 +55,11 @@ class HomePageController extends BaseController {
 		return $insolvent;
 	}
 	
-	public function buildDefaultingArray($boxes){
+	public function buildDefaultingArray($boxes,$defaulting_threshold){
 		$defaulting = array();
 		foreach ($boxes as $box){
 			$last_buy = $box->lastBuy->max('buy_time');
-			if(strtotime("-1 months") > strtotime($last_buy) && $last_buy != null){
+			if(strtotime("-" . $defaulting_threshold -> value . " days") > strtotime($last_buy) && $last_buy != null){
 				// echo $box->name . " defaulting: " . $box->lastBuy->max('buy_time') . "<br>";
 				$defaulting = array_add($defaulting, $box -> name . " " .
 				 $box -> surname, 'Disperso (' . date('d-m-Y',strtotime($last_buy)) . ')');

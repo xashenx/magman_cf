@@ -10,9 +10,11 @@
 					<li class="active">
 						<a href="#details" data-toggle="tab">Dettagli</a>
 					</li>
+					@if($comic->series->active == 1)
 					<li class="">
 						<a href="#edit" data-toggle="tab">Modifica</a>
 					</li>
+					@endif
 				</ul>
 
 				<div class="tab-content">
@@ -29,10 +31,13 @@
 							<br />
 							Nome del numero: {{$comic->name}}
 							<br />
+							Disponibilità: {{$comic->available}}
+							<br />
 							Prezzo: {{round($comic->price,2)}}
 							<br />
 						</p>
 					</div>
+					@if($comic->series->active == 1)
 					<div class="tab-pane fade" id="edit">
 						<!-- <h4>Edit Tab</h4> -->
 						<p>
@@ -41,6 +46,11 @@
 								{{ Form::label('name', 'Nome') }}
 								{{ Form::text('name') }}
 								{{ Form::hidden('id') }}
+								@if($path == "../")
+								{{ Form::hidden('return','comics') }}
+								@elseif($path == "../../")
+								{{ Form::hidden('return','series') }}
+								@endif
 							</div>
 							<div>
 								{{ Form::label('number', 'Numero') }}
@@ -49,6 +59,10 @@
 							<div>
 								{{ Form::label('available', 'Disponibilità') }}
 								{{ Form::text('available') }}
+							</div>
+							<div>
+								{{ Form::label('price', 'Prezzo') }}
+								{{ Form::text('price') }}
 							</div>
 							<div>
 								{{ Form::label('active', 'Attivo') }}
@@ -60,6 +74,7 @@
 							{{ Form::close() }}
 						</p>
 					</div>
+					@endif
 				</div>
 			</div>
 		</div>
