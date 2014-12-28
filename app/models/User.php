@@ -16,9 +16,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'users';
 
-	// protected $fillable = array('password', 'name', 'surname', 'number', 'level_id', 'discount', 'active');
-	protected $fillable = array('name');
-	protected $guarded = array();
+	protected $fillable = array('password', 'name', 'surname', 'number', 'discount', 'active');
+	protected $guarded = array('id','remember_token','level_id');
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -48,4 +47,30 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		// this matches the Eloquent model
 	}
 
+	public static function newUser($user, $password, $name, $surname, $number, $level, $discount){
+		$new = new User;
+		$new->username = $user;
+		$new->password = $password;
+		$new->name = $name;
+		$new->surname = $surname;
+		$new->number = $number;
+		$new->level_id = $level;
+		$new->discount = $discount;
+		$new->save();
+	}
+	
+	public function availableComics(){
+		// return $this->listComics()->where('state_id','=','1');
+		// $prova = $this->listComics()->whereRaw('state_id < 3')->comic;
+		return $this->listComics()->whereRaw('state_id < 3');
+	}
+	// public function available(){
+		// return $this->listComics();
+		// // ->where('state_id','=','1');
+	// }
+	public function lastBuy(){
+		$comic = $this->listComics()->where('state_id','=','3');
+		return $comic;
+	}
+	
 }
