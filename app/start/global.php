@@ -77,5 +77,9 @@ App::down(function()
 | definitions instead of putting them all in the main routes file.
 |
 */
+App::error(function(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception, $code)
+{
+    return Redirect::to('home');
+});
 
 require app_path().'/filters.php';
