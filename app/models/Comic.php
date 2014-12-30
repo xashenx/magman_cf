@@ -16,5 +16,6 @@ class Comic extends Eloquent {
   public function comic_user() {
     return $this->belongsTo('ComicUser');
   }
+
 }
 ?>

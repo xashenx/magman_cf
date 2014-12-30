@@ -92,7 +92,7 @@
 								{{ Form::text('discount', '10') }}
 							</div>
 							<div>
-								{{ Form::submit('Aggiorna') }}
+								{{ Form::submit('Aggiungi') }}
 							</div>
 							{{ Form::close() }}
 						</p>
@@ -100,16 +100,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- Advanced Tables -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				Caselle
-			</div>
-			<div class="panel-body">
-
-			</div>
-		</div>
-		<!--End Advanced Tables -->
 	</div>
 </div>
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->

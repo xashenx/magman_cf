@@ -48,12 +48,13 @@ Route::get('logout', function() {
 });
 
 /* Internal Page */
-
+Route::post('shipment','ComicsController@showShipmentLoader');
 Route::group(array('before' => 'auth'), function() {
 	if (Auth::check()) {
 		$privilege = Auth::user() -> level_id;
 		if ($privilege == 1) {
 			Route::get('home', 'HomePageController@adminHome');
+			Route::get('newShipment','ComicsController@showShipmentLoader');
 			Route::get('addSeries', 'AdminController@addSeries');
 			Route::get('addComic', 'AdminController@addComic');
 			Route::get('addBox', 'AdminController@addBox');
@@ -61,6 +62,7 @@ Route::group(array('before' => 'auth'), function() {
 			// routes for the Boxes pages
 			Route::get('boxes', 'AdminController@manageBoxes');
 			Route::get('boxes/{box_id}', 'AdminL2Controller@manageBox') -> where('box_id', '[0-9]+');
+			Route::get('boxes/{box_id}/comic/{comic_user_id}','AdminL4Controller@manageComicUser') -> where('box_id', '[0-9]+')->where('comic_user_id','[0-9]+');
 			// routes for the Series pages
 			Route::get('series', 'AdminController@manageSeries');
 			Route::get('series/{series_id}', 'AdminL2Controller@manageSerie') -> where('series_id', '[0-9]+');
@@ -95,6 +97,7 @@ Route::group(array('before' => 'auth'), function() {
 			Route::post('restoreComicUser', 'ComicUserController@restore');
 			// special events routes
 			Route::post('buyComic', 'ComicUserController@buy');
+			Route::post('loadShipment','ComicsController@loadShipment');
 		} else {
 			Route::get('home', 'UserController@userHome');
 			Route::get('box', 'UserController@box');

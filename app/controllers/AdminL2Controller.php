@@ -4,10 +4,9 @@ class AdminL2Controller extends BaseController {
 
 	public function manageSerie($series_id) {
 		$series = Series::find($series_id);
-		$next_comic_number = $series->listComics->max('number')+1;
+		$next_comic_number = $series -> listComics -> max('number') + 1;
 		if ($series != null)
-			$this -> layout -> content = View::make('admin/viewSeries',
-			 array('series' => $series, 'next_comic_number' => $next_comic_number));
+			$this -> layout -> content = View::make('admin/viewSeries', array('series' => $series, 'next_comic_number' => $next_comic_number));
 		else
 			return Redirect::to('series');
 	}
@@ -22,12 +21,12 @@ class AdminL2Controller extends BaseController {
 	 */
 	public function manageBox($box_id) {
 		$user = User::find($box_id);
-		$series = SeriesUser::where('user_id', '=', $box_id) -> get();
-		$comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . $box_id) -> get();
-		$due = $this -> due($user);
-		if ($user != null)
+		if ($user != null) {
+			$series = SeriesUser::where('user_id', '=', $box_id) -> get();
+			$comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . $box_id) -> get();
+			$due = $this -> due($user);
 			$this -> layout -> content = View::make('admin/viewBox', array('user' => $user, 'comics' => $comics, 'due' => $due, 'series' => $series));
-		else
+		} else
 			return Redirect::to('boxes');
 	}
 

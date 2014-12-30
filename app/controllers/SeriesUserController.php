@@ -1,7 +1,6 @@
 <?php
 class SeriesUserController extends BaseController {
 	protected $layout = 'layouts.master';
-	protected $layout2 = 'layouts.master_level2';
 
 	public function create() {
 		$user_id = Input::get('user_id');
@@ -41,6 +40,27 @@ class SeriesUserController extends BaseController {
 		$series -> save();
 		return Redirect::to('series/' . $id);
 	}
-
+	
+	public function delete(){
+		$su_id = Input::get('id');
+		$user_id = Input::get('user_id');
+		$seriesUser = SeriesUser::find($su_id);
+		$seriesUser -> active = 0;
+		$comics = $seriesUser -> series -> listActive;
+		foreach ($comics as $comic) {
+			DB::update('update comic_user set active = 0 where comic_id = ' . $comic -> id);
+		}
+		$seriesUser -> update();
+		return Redirect::to('boxes/' . $user_id);
+	}
+	
+	public function restore(){
+		$su_id = Input::get('id');
+		$user_id = Input::get('user_id');
+		$seriesUser = SeriesUser::find($su_id);
+		$seriesUser -> active = 1;
+		$seriesUser -> update();
+		return Redirect::to('boxes/' . $user_id);
+	}
 }
 ?>

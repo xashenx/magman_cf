@@ -1,7 +1,6 @@
 <?php
 class ComicsController extends BaseController {
 	protected $layout = 'layouts.master';
-	protected $layou = 'layouts.master_level2';
 
 	public function create() {
 		$series_id = Input::get('series_id');
@@ -29,8 +28,10 @@ class ComicsController extends BaseController {
 		}
 		if (Input::get('active'))
 			$comic -> active = 1;
-		else
+		else {
 			$comic -> active = 0;
+			DB::update('update comic_user set active = 0 where comic_id = ' . $id);
+		}
 		$comic -> save();
 		$return = Input::get('return');
 
@@ -64,6 +65,33 @@ class ComicsController extends BaseController {
 	public function listAllComics() {
 		$comics = Comic::all();
 		$this -> layout -> content = View::make('admin/manageComics', array('comics' => $comics));
+	}
+
+	public function showShipmentLoader() {
+		$comics = Comic::where('active', '=', '1');
+		$this -> layout -> content = View::make('admin/shipmentLoader', array('comics' => $comics));
+	}
+
+	public function loadShipment() {
+		$rules = array('amount' => 'required|min:1|integer');
+
+		// $validator = Validator::make(Input::all(),array());
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator -> fails()) {
+			$messages = $validator -> messages();
+			echo $messages;
+			// return Redirect::to('register') -> withErrors($validator);
+			return Redirect::to('newShipment')->withErrors($validator);
+		} else {
+			$comic_id = Input::get('comic_id');
+			$amount = Input::get('amount');
+			$comic = Comic::find($comic_id);
+			$comic -> available += $amount;
+			$comic -> update();
+			return Redirect::to('newShipment');
+		}
 	}
 
 }

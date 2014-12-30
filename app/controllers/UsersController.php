@@ -2,6 +2,44 @@
 class UsersController extends BaseController {
 	protected $layout = 'layouts.master_level2';
 
+	public function create() {
+		$user = new User;
+		$user -> username = Input::get('username');
+		$user -> password = Hash::make(Input::get('password'));
+		$user -> name = Input::get('name');
+		$user -> surname = Input::get('surname');
+		$user -> number = Input::get('number');
+		$user -> discount = Input::get('discount');
+		$user -> save();
+		return Redirect::to('boxes/' . $user->id);
+	}
+
+	public function update() {
+		$id = Input::get('id');
+		$user = User::find($id);
+		$user -> name = Input::get('name');
+		$user -> surname = Input::get('surname');
+		$user -> number = Input::get('number');
+		$new_password = Hash::make(Input::get('pass'));
+		if($new_password != $user->password && $new_password != null)
+			$user -> password = $new_password; 
+		$user -> discount = Input::get('discount');
+		if (Input::get('active')){
+			$user -> active = 1;
+		}else{
+			$user -> active = 0;
+			$this -> delete($id);
+		}
+		$user -> save();
+		return Redirect::to('boxes/' . $id);
+	}
+
+	public function delete($box_id){
+		//delete followed series and ordered comics
+		DB::table('series_user') -> where('user_id', $box_id) -> update(array('active' => 0));
+		DB::table('comic_user') -> where('user_id', $box_id) -> update(array('active' => 0));
+	}
+	
 	/*
 	 * Displays the box managment page
 	 */
@@ -47,34 +85,6 @@ class UsersController extends BaseController {
 			$due = array_add($due, $box -> id, $due_counter);
 		}
 		return $due;
-	}
-
-	public function create() {
-		$user = new User;
-		$user -> username = Input::get('username');
-		$user -> password = Hash::make(Input::get('password'));
-		$user -> name = Input::get('name');
-		$user -> surname = Input::get('surname');
-		$user -> number = Input::get('number');
-		$user -> discount = Input::get('discount');
-		$user -> save();
-		return Redirect::to('boxes/' . $user->id);
-	}
-
-	public function update() {
-		$id = Input::get('id');
-		$user = User::find($id);
-		$user -> name = Input::get('name');
-		$user -> surname = Input::get('surname');
-		$user -> number = Input::get('number');
-		$user -> password = Hash::make(Input::get('pass'));
-		$user -> discount = Input::get('discount');
-		if (Input::get('active'))
-			$user -> active = 1;
-		else
-			$user -> active = 0;
-		$user -> save();
-		return Redirect::to('boxes/' . $id);
 	}
 
 	public function due($user) {

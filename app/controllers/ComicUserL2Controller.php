@@ -1,7 +1,6 @@
 <?php
 class ComicUserL2Controller extends BaseController {
 	protected $layout = 'layouts.master';
-	protected $layout2 = 'layouts.master_level2';
 
 	public function create() {
 		$series_id = Input::get('series_id');
@@ -9,9 +8,8 @@ class ComicUserL2Controller extends BaseController {
 		$user_id = Input::get('user_id');
 		$series = Series::find($series_id);
 		$comics = $series->listActive()->where('number','=',$number)->get();
-		if(count($comics) > 1 && count($comics) > 0){
+		if(count($comics) > 1){
 			//TODO warning, no more than one number for series should be present!
-			return "error";
 		}else{
 			$comic_id = 0;
 			foreach($comics as $comic){
