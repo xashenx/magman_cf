@@ -20,9 +20,12 @@ class UsersController extends BaseController {
 		$user -> name = Input::get('name');
 		$user -> surname = Input::get('surname');
 		$user -> number = Input::get('number');
-		$new_password = Hash::make(Input::get('pass'));
-		if($new_password != $user->password && $new_password != null)
-			$user -> password = $new_password; 
+		$new_password = Input::get('pass');
+		$new_hash = Hash::make($new_password);
+		if($new_hash != $user->password && $new_password != null){
+			$user -> password = $new_hash;
+			echo "entro!"; 			
+		}
 		$user -> discount = Input::get('discount');
 		if (Input::get('active')){
 			$user -> active = 1;

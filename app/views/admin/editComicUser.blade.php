@@ -1,37 +1,74 @@
 @section('content')
 <div class="row">
-	<div class="col-md-12 col-sm-12">
-		<div class="panel panel-default">
+	<div class="col-md-6 col-sm-6">
+		<div class="panel panel-danger" style="height: 300px;">
 			<div class="panel-heading">
-				<h2>Fumetto Ordinato</h2>
-				<br />
-				@if($comic->comic->series->version != null)
-				<u>{{$comic->comic->series->name}} - {{$comic->comic->series->version}} nr. {{$comic->comic->number}}</u>
-				@else
-				<u>{{$comic->comic->series->name}} nr. {{$comic->comic->number}}</u>
-				@endif
-				per <u>{{$comic->box->name}} {{$comic->box->surname}}</u>
-				<br />
-				Ordinato il: {{date('d-m-Y',strtotime($comic->created_at))}}
+				Fumetto Ordinato
 			</div>
 			<div class="panel-body">
-				<h3>Modifica</h3>
-					{{ Form::model($comic, array('action' => 'ComicUserController@update')) }}
+				<div>
+					@if($comic->comic->series->version != null)
+					<u>{{$comic->comic->series->name}} - {{$comic->comic->series->version}} nr. {{$comic->comic->number}}</u>
+					@else
+					<u>{{$comic->comic->series->name}} nr. {{$comic->comic->number}}</u>
+					@endif
+					per <u>{{$comic->box->name}} {{$comic->box->surname}}</u>
+					<br />
+					<br />
+					Ordinato il: {{date('d-m-Y',strtotime($comic->created_at))}}
+				</div>
+				<br />
+				<center>
 					<div>
-						{{ Form::label('price', 'Prezzo') }}
-						{{ Form::text('price') }}
-						{{ Form::hidden('cu_id',$comic->id) }}
-						{{ Form::hidden('user_id',$comic->box->id) }}
+						{{ Form::model($comic, array('action' => 'ComicUserController@update')) }}
+						<div>
+							{{ Form::label('price', 'Prezzo') }}
+							{{ Form::text('price') }}
+							{{ Form::hidden('cu_id',$comic->id) }}
+							{{ Form::hidden('user_id',$comic->box->id) }}
+						</div>
+						<div>
+							{{ Form::label('active', 'Attivo') }}
+							{{ Form::checkbox('active', 'value'); }}
+						</div>
+						<div>
+							{{ Form::submit('Aggiorna') }}
+
+						</div>
+						{{ Form::close() }}
 					</div>
-					<div>
-						{{ Form::label('active', 'Attivo') }}
-						{{ Form::checkbox('active', 'value'); }}
-					</div>
-					<div>
-						{{ Form::submit('Aggiorna') }}
-					</div>
-					{{ Form::close() }}
+				</center>
 			</div>
+			<!-- <div class="panel-footer">
+			Panel Footer
+			</div> -->
+		</div>
+	</div>
+	<div class="col-md-6 col-sm-4">
+		<div class="panel panel-danger" style="height: 300px;">
+			<div class="panel-heading">
+				<h2>Modifica</h2>
+			</div>
+			<div class="panel-body">
+				{{ Form::model($comic, array('action' => 'ComicUserController@update')) }}
+				<div>
+					{{ Form::label('price', 'Prezzo') }}
+					{{ Form::text('price') }}
+					{{ Form::hidden('cu_id',$comic->id) }}
+					{{ Form::hidden('user_id',$comic->box->id) }}
+				</div>
+				<div>
+					{{ Form::label('active', 'Attivo') }}
+					{{ Form::checkbox('active', 'value'); }}
+				</div>
+				<div>
+					{{ Form::submit('Aggiorna') }}
+				</div>
+				{{ Form::close() }}
+			</div>
+			<!-- <div class="panel-footer">
+			Panel Footer
+			</div> -->
 		</div>
 	</div>
 </div>
