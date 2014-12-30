@@ -46,22 +46,22 @@
             <li class="red-line">
             </li>
             <li>
-              <a  href="home"><i class="fa fa-dashboard fa-3x sidebar-icon"></i> Dashboard</a>
+              <a  href="../home"><i class="fa fa-dashboard fa-3x sidebar-icon"></i> Dashboard</a>
             </li>
             <li  >
-              <a  href="arrivals"><i class="fa fa-plus-square fa-3x sidebar-icon"></i> Nuovi Arrivi</a>
+              <a  href="../newShipment"><i class="fa fa-plus-square fa-3x sidebar-icon"></i> Nuovi Arrivi</a>
             </li>
             <li>
-              <a  href="boxes"><i class="fa fa-user fa-3x sidebar-icon"></i> Caselle</a>
+              <a  href="../boxes"><i class="fa fa-user fa-3x sidebar-icon"></i> Caselle</a>
             </li>
             <li>
-              <a  href="comics"><i class="fa fa-book fa-3x sidebar-icon"></i> Fumetti</a>
+              <a  href="../comics"><i class="fa fa-book fa-3x sidebar-icon"></i> Fumetti</a>
             </li>
             <li  >
-              <a  href="series"><i class="fa fa-th-large fa-3x sidebar-icon"></i> Serie</a>
+              <a  href="../series"><i class="fa fa-th-large fa-3x sidebar-icon"></i> Serie</a>
             </li>
             <li>
-              <a  href="addBox"><i class="fa fa-user fa-3x sidebar-icon"></i> Utente</a>
+              <a  href="../addBox"><i class="fa fa-user fa-3x sidebar-icon"></i> Utente</a>
             </li>
             <li>
               <a href="#"><i class="fa fa-gear fa-3x sidebar-icon"></i> Gestione parametri fissi<span class="fa arrow"></span></a>
