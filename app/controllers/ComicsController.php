@@ -73,16 +73,10 @@ class ComicsController extends BaseController {
 	}
 
 	public function loadShipment() {
-		$rules = array('amount' => 'required|min:1|integer');
-
-		// $validator = Validator::make(Input::all(),array());
-
+		$rules = array('comic_id' => 'required|min:1|integer|exists:comics,id,active,1','amount' => 'required|min:1|integer');
 		$validator = Validator::make(Input::all(), $rules);
-
 		if ($validator -> fails()) {
 			$messages = $validator -> messages();
-			echo $messages;
-			// return Redirect::to('register') -> withErrors($validator);
 			return Redirect::to('newShipment')->withErrors($validator);
 		} else {
 			$comic_id = Input::get('comic_id');
@@ -93,6 +87,5 @@ class ComicsController extends BaseController {
 			return Redirect::to('newShipment');
 		}
 	}
-
 }
 ?>

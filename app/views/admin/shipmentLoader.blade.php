@@ -10,10 +10,16 @@
 				<div>
 					{{ Form::label('comic_id', 'Fumetto') }}
 					{{ Form::text('comic_id') }}
+					@foreach($errors->get('comic_id') as $message)
+					{{$message}}
+					@endforeach
 				</div>
 				<div>
 					{{ Form::label('amount', 'Quantità') }}
 					{{ Form::text('amount') }}
+					@foreach($errors->get('amount') as $message)
+					{{$message}}
+					@endforeach
 				</div>
 				<div>
 					{{ Form::submit('Carica') }}
