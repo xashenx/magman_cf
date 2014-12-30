@@ -49,7 +49,7 @@
               <a  href="home"><i class="fa fa-dashboard fa-3x sidebar-icon"></i> Dashboard</a>
             </li>
             <li  >
-              <a  href="arrivals"><i class="fa fa-plus-square fa-3x sidebar-icon"></i> Nuovi Arrivi</a>
+              <a  href="newShipment"><i class="fa fa-plus-square fa-3x sidebar-icon"></i> Nuovi Arrivi</a>
             </li>
             <li>
               <a  href="boxes"><i class="fa fa-user fa-3x sidebar-icon"></i> Caselle</a>
