@@ -57,7 +57,7 @@
 												@foreach ($comics as $comic)
 												<tr class="odd gradeX">
 													<td>{{$comic->number}}</td>													
-													<td><a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a></td>
+													<td>{{$comic->name}}</td>
 													<td>{{round($comic->price,2)}}</td>
 													<td>{{$comic->available}}</td>
 												</tr>

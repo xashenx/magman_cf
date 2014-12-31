@@ -6,26 +6,25 @@ class UserController extends BaseController {
 	 * Show the page for the addiction of a series.
 	 */
 	public function box() {
-		// $series = Series::all()->listComics->where('useri');
 		$series = SeriesUser::whereRaw('active = 1 and user_id =' . Auth::id())->get();
-		// $comics = ComicUser::where('user_id','=',Auth::id())->get();
-		// $comics = ComicUser::where('user_id','=',Auth::id())->get();
 		$comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . Auth::id())->get();
-		// $comics = $comics->where('state_id','<','3')->get();
 		$user = User::find(Auth::id());
-		// ->where('state_id','=','1')->get();
-		// ->where('user_id','=','1');
-		// $series = Series::all();
 		$due = $this->due($user);
 		$this -> layout -> content = View::make('user/box', array('series' => $series,'user' => $user,'due' => $due,'comics' => $comics));
-		// return View::make('user/box');
 	}
 
 	/*
 	 * Displays the home page for an user of the platform
 	 */
 	public function userHome() {
-		$this -> layout -> content = View::make('user/homePage');
+		$last = Comic::where('active','=','1')->max('created_at');
+		$last = date('Y-m-d',strtotime($last));
+		$news = Comic::whereRaw("active = 1 and created_at > '" . $last . "'")->get();
+		$comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . Auth::id())->get();
+		$user = User::find(Auth::id());
+		$due = $this->due($user);
+		$last = date('d-m-Y',strtotime($last));
+		$this -> layout -> content = View::make('user/homePage',array('news' => $news,'user' => $user,'due' => $due,'comics' => $comics,'last' => $last));
 	}
 	
 	public function due($user){

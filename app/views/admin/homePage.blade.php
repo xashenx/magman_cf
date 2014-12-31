@@ -9,7 +9,6 @@
 			</div>
 			<div class="panel-body">
 				<div class="tab-content">
-					<p>
 						<div class="table-responsive">
 							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 								<thead>
@@ -34,7 +33,6 @@
 								</tbody>
 							</table>
 						</div>
-					</p>
 				</div>
 			</div>
 		</div>

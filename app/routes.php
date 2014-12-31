@@ -103,6 +103,7 @@ Route::group(array('before' => 'auth'), function() {
 			Route::get('box', 'UserController@box');
 			Route::get('series', 'UserController@listSeries');
 			Route::get('series/{series_id}', 'UserL2Controller@viewSeries') -> where('id', '[0-9]+');
+			Route::get('series/{series_id}/{comic_id}', 'UserL3Controller@manageComic') -> where('series_id', '[0-9]+') -> where('comic_id', '[0-9]+');
 		}
 	} else {
 		Route::get('home', function() {
