@@ -51,7 +51,7 @@
 											<td>0</td>
 											@endif
 											@if($box->lastBuy->max('buy_time') != null)
-											<td>{{date('d-m-Y',strtotime($box->lastBuy->max('buy_time')))}}</td>
+											<td>{{date('d/m/Y',strtotime($box->lastBuy->max('buy_time')))}}</td>
 											@else
 											<td>/</td>
 											@endif
