@@ -3,7 +3,7 @@
 	<div class="col-md-12 col-sm-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Visualizza/Modifica Fumetto
+				<h1>Visualizza/Modifica Fumetto</h1>
 			</div>
 			<div class="panel-body">
 				<ul class="nav nav-tabs">
@@ -19,8 +19,10 @@
 
 				<div class="tab-content">
 					<div class="tab-pane fade active in" id="details">
-						<!-- <h4>Details Tab</h4> -->
-						<p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Dettagli del Fumetto</h5>
+							</div>
 							Nome: {{$comic->series->name}}
 							<br />
 							Versione: {{$comic->series->version}}
@@ -35,12 +37,14 @@
 							<br />
 							Prezzo: {{round($comic->price,2)}}
 							<br />
-						</p>
+						</div>
 					</div>
 					@if($comic->series->active == 1)
 					<div class="tab-pane fade" id="edit">
-						<!-- <h4>Edit Tab</h4> -->
-						<p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Modifica del Fumetto</h5>
+							</div>
 							{{ Form::model($comic, array('action' => 'ComicsController@update')) }}
 							<div>
 								{{ Form::label('name', 'Nome') }}
@@ -72,7 +76,7 @@
 								{{ Form::submit('Aggiorna') }}
 							</div>
 							{{ Form::close() }}
-						</p>
+						</div>
 					</div>
 					@endif
 				</div>

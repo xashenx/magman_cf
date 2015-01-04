@@ -3,11 +3,14 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Gestione Fumetti
+				<h1>Gestione Fumetti</h1>
 			</div>
 			<div class="panel-body">
-				<div class="tab-content">
-					<p>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h5>Fumetti inseriti nel sistema</h5>
+					</div>
+					<div class="tab-content">
 						<div class="table-responsive">
 							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 								<thead>
@@ -38,7 +41,7 @@
 								</tbody>
 							</table>
 						</div>
-					</p>
+					</div>
 				</div>
 			</div>
 		</div>

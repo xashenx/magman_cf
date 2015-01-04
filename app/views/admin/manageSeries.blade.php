@@ -4,12 +4,12 @@
 		<!-- Advanced Tables -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Gestione Serie
+				<h1>Gestione Serie</h1>
 			</div>
 			<div class="panel-body">
 				<ul class="nav nav-tabs">
 					<li class="active">
-						<a href="#boxes" data-toggle="tab">Caselle</a>
+						<a href="#series" data-toggle="tab">Serie</a>
 					</li>
 					<li class="">
 						<a href="#new" data-toggle="tab">Nuova Serie</a>
@@ -17,9 +17,11 @@
 				</ul>
 
 				<div class="tab-content">
-					<div class="tab-pane fade active in" id="boxes">
-						<!-- <h4>Details Tab</h4> -->
-						<p>
+					<div class="tab-pane fade active in" id="series">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Serie inserite nel sistema</h5>
+							</div>
 							<div class="table-responsive">
 								<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 									<thead>
@@ -70,11 +72,13 @@
 									</tbody>
 								</table>
 							</div>
-						</p>
+						</div>
 					</div>
 					<div class="tab-pane fade" id="new">
-						<!-- <h4>Edit Tab</h4> -->
-						<p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Inserimento di una Nuova Serie</h5>
+							</div>
 							{{ Form::open(array('action' => 'SeriesController@update')) }}
 							<div>
 								{{ Form::label('name', 'Nome') }}
@@ -101,7 +105,7 @@
 								{{ Form::submit('Aggiorna') }}
 							</div>
 							{{ Form::close() }}
-						</p>
+						</div>
 					</div>
 				</div>
 			</div>

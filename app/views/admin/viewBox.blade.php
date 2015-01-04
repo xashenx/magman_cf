@@ -3,7 +3,7 @@
 	<div class="col-md-12 col-sm-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
+				<h1>Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}</h1>
 			</div>
 			<div class="panel-body">
 				<ul class="nav nav-tabs">
@@ -58,9 +58,8 @@
 					<div class="tab-pane fade active in" id="orderedComics">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								Fumetti in arrivo <strong>(Saldo disponibili: {{ $due }}€)</strong>
+								<h5>Fumetti in arrivo</h5> (Saldo disponibili: {{ $due }}€)
 							</div>
-							<!-- /.panel-heading -->
 							<div class="panel-body">
 								<div class="table-responsive table-bordered">
 									<table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -108,108 +107,120 @@
 					</div>
 					@if(count($series)>0)
 					<div class="tab-pane fade" id="series">
-						<div class="table-responsive table-bordered">
-							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
-								<thead>
-									<tr>
-										<th>Serie</th>
-										<th>Autore</th>
-										<th>Numeri Usciti</th>
-										<th>Azioni Rapide</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach ($series as $serie)
-									@if ($serie->series->concluded)
-									<tr class="success">
-										@elseif($serie->active)
-									<tr class="odd gradeX">
-										@else
-									<tr class="danger">
-										@endif
-										@if($serie->series->version == null)
-										<td>{{$serie->series->name}}</td>
-										@else
-										<td>{{$serie->series->name}} - {{$serie->series->version}}</td>
-										@endif
-										<td>{{$serie->series->author}}</td>
-										<td>{{count($serie->series->listComics)}}</td>
-										<td> @if(!$serie->series->concluded)
-										<div class="btn-group">
-											<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-												Azioni <span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu">
-												<li>
-													@if($serie->active)
-													<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},2)">Abbandona</a>
-													@else
-													<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},3)">Segui</a>
-													@endif
-												</li>
-											</ul>
-										</div> @endif </td>
-									</tr>
-									@endforeach
-								</tbody>
-							</table>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Serie Seguite dal casellante</h5>
+							</div>
+							<div class="table-responsive table-bordered">
+								<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+									<thead>
+										<tr>
+											<th>Serie</th>
+											<th>Autore</th>
+											<th>Numeri Usciti</th>
+											<th>Azioni Rapide</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach ($series as $serie)
+										@if ($serie->series->concluded)
+										<tr class="success">
+											@elseif($serie->active)
+										<tr class="odd gradeX">
+											@else
+										<tr class="danger">
+											@endif
+											@if($serie->series->version == null)
+											<td>{{$serie->series->name}}</td>
+											@else
+											<td>{{$serie->series->name}} - {{$serie->series->version}}</td>
+											@endif
+											<td>{{$serie->series->author}}</td>
+											<td>{{count($serie->series->listComics)}}</td>
+											<td> @if(!$serie->series->concluded)
+											<div class="btn-group">
+												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+													Azioni <span class="caret"></span>
+												</button>
+												<ul class="dropdown-menu">
+													<li>
+														@if($serie->active)
+														<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},2)">Abbandona</a>
+														@else
+														<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},3)">Segui</a>
+														@endif
+													</li>
+												</ul>
+											</div> @endif </td>
+										</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 					@endif
 					@elseif(count($series)>0)
 					<div class="tab-pane fade active in" id="series">
-						<div class="table-responsive table-bordered">
-							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
-								<thead>
-									<tr>
-										<th>Serie</th>
-										<th>Autore</th>
-										<th>Numeri Usciti</th>
-										<th>Azioni Rapide</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach ($series as $serie)
-									@if ($serie->series->concluded)
-									<tr class="success">
-										@elseif($serie->active)
-									<tr class="odd gradeX">
-										@else
-									<tr class="danger">
-										@endif
-										@if($serie->series->version == null)
-										<td>{{$serie->series->name}}</td>
-										@else
-										<td>{{$serie->series->name}} - {{$serie->series->version}}</td>
-										@endif
-										<td>{{$serie->series->author}}</td>
-										<td>{{count($serie->series->listComics)}}</td>
-										<td> @if(!$serie->series->concluded)
-										<div class="btn-group">
-											<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-												Azioni <span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu">
-												<li>
-													@if($serie->active)
-													<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},2)">Abbandona</a>
-													@else
-													<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},3)">Segui</a>
-													@endif
-												</li>
-											</ul>
-										</div> @endif </td>
-									</tr>
-									@endforeach
-								</tbody>
-							</table>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Serie Seguite dal casellante</h5>
+							</div>
+							<div class="table-responsive table-bordered">
+								<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+									<thead>
+										<tr>
+											<th>Serie</th>
+											<th>Autore</th>
+											<th>Numeri Usciti</th>
+											<th>Azioni Rapide</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach ($series as $serie)
+										@if ($serie->series->concluded)
+										<tr class="success">
+											@elseif($serie->active)
+										<tr class="odd gradeX">
+											@else
+										<tr class="danger">
+											@endif
+											@if($serie->series->version == null)
+											<td>{{$serie->series->name}}</td>
+											@else
+											<td>{{$serie->series->name}} - {{$serie->series->version}}</td>
+											@endif
+											<td>{{$serie->series->author}}</td>
+											<td>{{count($serie->series->listComics)}}</td>
+											<td> @if(!$serie->series->concluded)
+											<div class="btn-group">
+												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+													Azioni <span class="caret"></span>
+												</button>
+												<ul class="dropdown-menu">
+													<li>
+														@if($serie->active)
+														<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},2)">Abbandona</a>
+														@else
+														<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},3)">Segui</a>
+														@endif
+													</li>
+												</ul>
+											</div> @endif </td>
+										</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 					@endif
 					@if(count($series)>0 || count($comics)>0)
 					<div class="tab-pane fade" id="newseries">
-						<!-- <h4>Edit Tab</h4> -->
-						<p>
+<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Nuova Serie in casella</h5>
+							</div>
 							{{ Form::open(array('action' => 'SeriesUserController@create')) }}
 							<div>
 								{{ Form::label('series_id', 'Serie') }}
@@ -220,12 +231,14 @@
 								{{ Form::submit('Aggiungi') }}
 							</div>
 							{{ Form::close() }}
-						</p>
+						</div>
 					</div>
 					@else
 					<div class="tab-pane fade active in" id="newseries">
-						<!-- <h4>Edit Tab</h4> -->
-						<p>
+<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Nuova Serie in casella</h5>
+							</div>
 							{{ Form::open(array('action' => 'SeriesUserController@create')) }}
 							<div>
 								{{ Form::label('series_id', 'Serie') }}
@@ -236,12 +249,14 @@
 								{{ Form::submit('Aggiungi') }}
 							</div>
 							{{ Form::close() }}
-						</p>
+						</div>
 					</div>
 					@endif
 					<div class="tab-pane fade" id="newsinglecomic">
-						<!-- <h4>Edit Tab</h4> -->
-						<p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Nuova Arretrato/Fumetto Singolo in casella</h5>
+							</div>
 							{{ Form::open(array('action' => 'ComicUserL2Controller@create')) }}
 							<div>
 								{{ Form::label('series_id','Serie') }}
@@ -254,39 +269,43 @@
 								{{ Form::submit('Aggiungi') }}
 							</div>
 							{{ Form::close() }}
-						</p>
+						</div>
 					</div>
 					@endif
 					@if(!$user->active)
 					<div class="tab-pane fade active in" id="details">
-						<!-- <h4>Details Tab</h4> -->
-						<p>
+<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Dettagli della casella</h5>
+							</div>
 							Nome: {{$user->name}}, Cognome: {{$user->surname}}
 							<br />
 							Numero casella: {{$user->number}}
 							<br />
 							Sconto: {{$user->discount}}
 							<br />
-						</p>
+						</div>
 					</div>
 					@else
 					<div class="tab-pane fade" id="details">
-						<!-- <h4>Details Tab</h4> -->
-						<p>
+<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Dettagli della casella</h5>
+							</div>
 							Nome: {{$user->name}}, Cognome: {{$user->surname}}
 							<br />
 							Numero casella: {{$user->number}}
 							<br />
 							Sconto: {{$user->discount}}
 							<br />
-						</p>
+						</div>
 					</div>
 					@endif
 					@if(count($purchases)>0)
 					<div class="tab-pane fade" id="purchases">
 						<div class="table-responsive table-bordered">
 							<div class="panel-heading">
-								Storico Acquisti
+								<h3><Storico degli Acquisti</h3>
 							</div>
 							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 								<thead>
@@ -314,8 +333,10 @@
 					</div>
 					@endif
 					<div class="tab-pane fade" id="edit">
-						<!-- <h4>Edit Tab</h4> -->
-						<p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Modifica della casella</h5>
+							</div>
 							{{ Form::model($user, array('action' => 'UsersController@update')) }}
 							<div>
 								{{ Form::label('name', 'Nome') }}
@@ -346,7 +367,7 @@
 								{{ Form::submit('Aggiorna') }}
 							</div>
 							{{ Form::close() }}
-						</p>
+						</div>
 					</div>
 				</div>
 			</div>

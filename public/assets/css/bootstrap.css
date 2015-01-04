@@ -989,13 +989,11 @@ hr {
 }
 h1,
 h2,
-h3,
 h4,
 h5,
 h6,
 .h1,
 .h2,
-.h3,
 .h4,
 .h5,
 .h6 {
@@ -1035,11 +1033,9 @@ h6 .small,
 h1,
 .h1,
 h2,
-.h2,
-h3,
-.h3 {
-  margin-top: 20px;
-  margin-bottom: 10px;
+.h2{
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 h1 small,
 .h1 small,
@@ -1055,10 +1051,25 @@ h3 .small,
 .h3 .small {
   font-size: 65%;
 }
+h3,
+ .h3{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color:#F40101;
+  text-decoration: underline;
+  font-style: italic;
+ }
+h5,
+ .h5{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color:#F40101;
+  text-decoration: underline;
+  font-style: italic;
+  font-weight: bold;
+ }
 h4,
 .h4,
-h5,
-.h5,
 h6,
 .h6 {
   margin-top: 10px;

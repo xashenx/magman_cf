@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Gestione Caselle
+				<h1>Gestione Caselle</h1>
 			</div>
 			<div class="panel-body">
 				<ul class="nav nav-tabs">
@@ -17,8 +17,10 @@
 
 				<div class="tab-content">
 					<div class="tab-pane fade active in" id="boxes">
-						<!-- <h4>Details Tab</h4> -->
-						<p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Caselle inserite nel sistema</h5>
+							</div>
 							<div class="table-responsive">
 								<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 									<thead>
@@ -61,11 +63,13 @@
 									</tbody>
 								</table>
 							</div>
-						</p>
+						</div>
 					</div>
 					<div class="tab-pane fade" id="new">
-						<!-- <h4>Edit Tab</h4> -->
-						<p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Inserimento Nuova Casella</h5>
+							</div>
 							{{ Form::open(array('action' => 'UsersController@create')) }}
 							<div>
 								{{ Form::label('name', 'Nome') }}
@@ -95,7 +99,7 @@
 								{{ Form::submit('Aggiungi') }}
 							</div>
 							{{ Form::close() }}
-						</p>
+						</div>
 					</div>
 				</div>
 			</div>

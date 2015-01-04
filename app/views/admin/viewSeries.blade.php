@@ -3,7 +3,7 @@
 	<div class="col-md-12 col-sm-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Visualizza/Modifica Serie
+				<h1>Visualizza/Modifica Serie</h1>
 			</div>
 			<div class="panel-body">
 				<ul class="nav nav-tabs">
@@ -23,8 +23,10 @@
 
 				<div class="tab-content">
 					<div class="tab-pane fade active in" id="details">
-						<!-- <h4>Details Tab</h4> -->
-						<p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Visualizza Dettagli della Serie</h5>
+							</div>
 							Nome: {{$series->name}}
 							<br />
 							Versione: {{$series->version}}
@@ -32,9 +34,9 @@
 							Autore: {{$series->author}}
 							<br />
 							@if($series->listComics->max('number') != null)
-								Numeri usciti: {{$series->listActive->max('number')}}
+							Numeri usciti: {{$series->listActive->max('number')}}
 							@else
-								Numeri usciti: 0
+							Numeri usciti: 0
 							@endif
 							<br />
 							@if($series->conclusa)
@@ -45,50 +47,48 @@
 							<br />
 							@endif
 							Casellanti della serie: {{count($series->inBoxes)}}
-						</p>
+						</div>
 					</div>
 					<div class="tab-pane fade" id="numbers">
-						<!-- <h4>Numbers Tab</h4> -->
-						<p>
-							<!-- Advanced Tables -->
-							<div class="panel panel-default">
-								<div class="panel-heading"></div>
-								<div class="panel-body">
-									<div class="table-responsive">
-										<table class="table table-striped table-bordered table-hover" id="dataTables-example">
-											<thead>
-												<tr>
-													<th>Numero</th>
-													<th>Nome</th>
-													<th>Prezzo</th>
-													<th>Disponibilità</th>
-												</tr>
-											</thead>
-											<tbody>
-												@foreach ($series->listComics as $comic)
-												@if($comic->active)
-												<tr class="odd gradeX">
-													@else
-												<tr class="danger">
-													@endif
-													<td>{{$comic->number}}</td>
-													<td><a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a></td>
-													<td>{{round($comic->price,2)}}</td>
-													<td>{{$comic->available}}</td>
-												</tr>
-												@endforeach
-											</tbody>
-										</table>
-									</div>
-
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Numeri della Serie</h5>
+							</div>
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+										<thead>
+											<tr>
+												<th>Numero</th>
+												<th>Nome</th>
+												<th>Prezzo</th>
+												<th>Disponibilità</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach ($series->listComics as $comic)
+											@if($comic->active)
+											<tr class="odd gradeX">
+												@else
+											<tr class="danger">
+												@endif
+												<td>{{$comic->number}}</td>
+												<td><a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a></td>
+												<td>{{round($comic->price,2)}}</td>
+												<td>{{$comic->available}}</td>
+											</tr>
+											@endforeach
+										</tbody>
+									</table>
 								</div>
 							</div>
-							<!--End Advanced Tables -->
-						</p>
+						</div>
 					</div>
 					<div class="tab-pane fade" id="newnumber">
-						<!-- <h4>Edit Tab</h4> -->
-						<p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Inserimento Nuovo Numero</h5>
+							</div>
 							{{ Form::open(array('action' => 'ComicsController@create')) }}
 							<div>
 								{{ Form::label('name', 'Nome') }}
@@ -111,11 +111,13 @@
 								{{ Form::submit('Inserisci') }}
 							</div>
 							{{ Form::close() }}
-						</p>
+						</div>
 					</div>
 					<div class="tab-pane fade" id="edit">
-						<!-- <h4>Edit Tab</h4> -->
-						<p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h5>Modifica della Serie</h5>
+							</div>
 							{{ Form::model($series, array('action' => 'SeriesController@update')) }}
 							<div>
 								{{ Form::label('name', 'Nome') }}
@@ -150,7 +152,7 @@
 								{{ Form::submit('Aggiorna') }}
 							</div>
 							{{ Form::close() }}
-						</p>
+						</div>
 					</div>
 				</div>
 			</div>
