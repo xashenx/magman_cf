@@ -24,8 +24,9 @@ class AdminL2Controller extends BaseController {
 		if ($user != null) {
 			$series = SeriesUser::where('user_id', '=', $box_id) -> get();
 			$comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . $box_id) -> get();
+			$purchases = ComicUser::whereRaw('state_id = 3 and active = 1 and user_id = ' . $box_id) -> get();
 			$due = $this -> due($user);
-			$this -> layout -> content = View::make('admin/viewBox', array('user' => $user, 'comics' => $comics, 'due' => $due, 'series' => $series));
+			$this -> layout -> content = View::make('admin/viewBox', array('user' => $user,'comics' => $comics,'due' => $due,'series' => $series,'purchases' => $purchases));
 		} else
 			return Redirect::to('boxes');
 	}

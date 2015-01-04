@@ -43,6 +43,11 @@
 						<a href="#details" data-toggle="tab">Dettagli</a>
 					</li>
 					@endif
+					@if(count($purchases)>0)
+					<li class="">
+						<a href="#purchases" data-toggle="tab">Storico Acquisti</a>
+					</li>
+					@endif
 					<li class="">
 						<a href="#edit" data-toggle="tab">Modifica</a>
 					</li>
@@ -51,154 +56,154 @@
 					@if($user->active)
 					@if(count($comics)>0)
 					<div class="tab-pane fade active in" id="orderedComics">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									Fumetti in arrivo <strong>(Saldo disponibili: {{ $due }}€)</strong>
-								</div>
-								<!-- /.panel-heading -->
-								<div class="panel-body">
-									<div class="table-responsive table-bordered">
-										<table class="table table-striped table-bordered table-hover" id="dataTables-example">
-											<thead>
-												<tr>
-													<th>Serie</th>
-													<th>Prezzo</th>
-													<th>Azioni Rapide</th>
-												</tr>
-											</thead>
-											<tbody>
-												@foreach ($comics as $comic)
-												@if ($comic->comic->available > 1)
-												<tr class="success">
-													@else
-												<tr class="odd gradeX">
-													@endif
-													@if($comic->comic->series->version != null)
-													<td><a href="{{$user->id}}/comic/{{$comic->id}}">{{ $comic->comic->series->name}} - {{ $comic->comic->series->version}} nr. {{ $comic->comic->number}}</a></td>
-													@else
-													<td><a href="{{$user->id}}/comic/{{$comic->id}}">{{ $comic->comic->series->name}} nr. {{ $comic->comic->number}}</a></td>
-													@endif
-													<td>{{ round($comic->price,2) }}</td>
-													<td>
-													<div class="btn-group">
-														<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-															Azioni <span class="caret"></span>
-														</button>
-														<ul class="dropdown-menu">
-															<li>
-																@if($comic->comic->available > 1)
-																<a href="#" onclick = "showConfirmModal({{$comic->comic->id}},{{$user->id}},0)">Acquistato</a>
-																@endif
-																<a href="#" onclick = "showConfirmModal({{$comic->comic->id}},{{$user->id}},1)">Rimuovi</a>
-															</li>
-														</ul>
-													</div></td>
-												</tr>
-												@endforeach
-											</tbody>
-										</table>
-									</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								Fumetti in arrivo <strong>(Saldo disponibili: {{ $due }}€)</strong>
+							</div>
+							<!-- /.panel-heading -->
+							<div class="panel-body">
+								<div class="table-responsive table-bordered">
+									<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+										<thead>
+											<tr>
+												<th>Serie</th>
+												<th>Prezzo</th>
+												<th>Azioni Rapide</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach ($comics as $comic)
+											@if ($comic->comic->available > 1)
+											<tr class="success">
+												@else
+											<tr class="odd gradeX">
+												@endif
+												@if($comic->comic->series->version != null)
+												<td><a href="{{$user->id}}/comic/{{$comic->id}}">{{ $comic->comic->series->name}} - {{ $comic->comic->series->version}} nr. {{ $comic->comic->number}}</a></td>
+												@else
+												<td><a href="{{$user->id}}/comic/{{$comic->id}}">{{ $comic->comic->series->name}} nr. {{ $comic->comic->number}}</a></td>
+												@endif
+												<td>{{ round($comic->price,2) }}</td>
+												<td>
+												<div class="btn-group">
+													<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+														Azioni <span class="caret"></span>
+													</button>
+													<ul class="dropdown-menu">
+														<li>
+															@if($comic->comic->available > 1)
+															<a href="#" onclick = "showConfirmModal({{$comic->comic->id}},{{$user->id}},0)">Acquistato</a>
+															@endif
+															<a href="#" onclick = "showConfirmModal({{$comic->comic->id}},{{$user->id}},1)">Rimuovi</a>
+														</li>
+													</ul>
+												</div></td>
+											</tr>
+											@endforeach
+										</tbody>
+									</table>
 								</div>
 							</div>
+						</div>
 					</div>
 					@if(count($series)>0)
 					<div class="tab-pane fade" id="series">
-							<div class="table-responsive table-bordered">
-								<table class="table table-striped table-bordered table-hover" id="dataTables-example">
-									<thead>
-										<tr>
-											<th>Serie</th>
-											<th>Autore</th>
-											<th>Numeri Usciti</th>
-											<th>Azioni Rapide</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach ($series as $serie)
-										@if ($serie->series->concluded)
-										<tr class="success">
-											@elseif($serie->active)
-										<tr class="odd gradeX">
-											@else
-										<tr class="danger">
-											@endif
-											@if($serie->series->version == null)
-											<td>{{$serie->series->name}}</td>
-											@else
-											<td>{{$serie->series->name}} - {{$serie->series->version}}</td>
-											@endif
-											<td>{{$serie->series->author}}</td>
-											<td>{{count($serie->series->listComics)}}</td>
-											<td> @if(!$serie->series->concluded)
-											<div class="btn-group">
-												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-													Azioni <span class="caret"></span>
-												</button>
-												<ul class="dropdown-menu">
-													<li>
-														@if($serie->active)
-														<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},2)">Abbandona</a>
-														@else
-														<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},3)">Segui</a>
-														@endif
-													</li>
-												</ul>
-											</div> @endif </td>
-										</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
+						<div class="table-responsive table-bordered">
+							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+								<thead>
+									<tr>
+										<th>Serie</th>
+										<th>Autore</th>
+										<th>Numeri Usciti</th>
+										<th>Azioni Rapide</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($series as $serie)
+									@if ($serie->series->concluded)
+									<tr class="success">
+										@elseif($serie->active)
+									<tr class="odd gradeX">
+										@else
+									<tr class="danger">
+										@endif
+										@if($serie->series->version == null)
+										<td>{{$serie->series->name}}</td>
+										@else
+										<td>{{$serie->series->name}} - {{$serie->series->version}}</td>
+										@endif
+										<td>{{$serie->series->author}}</td>
+										<td>{{count($serie->series->listComics)}}</td>
+										<td> @if(!$serie->series->concluded)
+										<div class="btn-group">
+											<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+												Azioni <span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu">
+												<li>
+													@if($serie->active)
+													<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},2)">Abbandona</a>
+													@else
+													<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},3)">Segui</a>
+													@endif
+												</li>
+											</ul>
+										</div> @endif </td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
 					</div>
 					@endif
 					@elseif(count($series)>0)
 					<div class="tab-pane fade active in" id="series">
-							<div class="table-responsive table-bordered">
-								<table class="table table-striped table-bordered table-hover" id="dataTables-example">
-									<thead>
-										<tr>
-											<th>Serie</th>
-											<th>Autore</th>
-											<th>Numeri Usciti</th>
-											<th>Azioni Rapide</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach ($series as $serie)
-										@if ($serie->series->concluded)
-										<tr class="success">
-											@elseif($serie->active)
-										<tr class="odd gradeX">
-											@else
-										<tr class="danger">
-											@endif
-											@if($serie->series->version == null)
-											<td>{{$serie->series->name}}</td>
-											@else
-											<td>{{$serie->series->name}} - {{$serie->series->version}}</td>
-											@endif
-											<td>{{$serie->series->author}}</td>
-											<td>{{count($serie->series->listComics)}}</td>
-											<td> @if(!$serie->series->concluded)
-											<div class="btn-group">
-												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-													Azioni <span class="caret"></span>
-												</button>
-												<ul class="dropdown-menu">
-													<li>
-														@if($serie->active)
-														<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},2)">Abbandona</a>
-														@else
-														<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},3)">Segui</a>
-														@endif
-													</li>
-												</ul>
-											</div> @endif </td>
-										</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
+						<div class="table-responsive table-bordered">
+							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+								<thead>
+									<tr>
+										<th>Serie</th>
+										<th>Autore</th>
+										<th>Numeri Usciti</th>
+										<th>Azioni Rapide</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($series as $serie)
+									@if ($serie->series->concluded)
+									<tr class="success">
+										@elseif($serie->active)
+									<tr class="odd gradeX">
+										@else
+									<tr class="danger">
+										@endif
+										@if($serie->series->version == null)
+										<td>{{$serie->series->name}}</td>
+										@else
+										<td>{{$serie->series->name}} - {{$serie->series->version}}</td>
+										@endif
+										<td>{{$serie->series->author}}</td>
+										<td>{{count($serie->series->listComics)}}</td>
+										<td> @if(!$serie->series->concluded)
+										<div class="btn-group">
+											<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+												Azioni <span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu">
+												<li>
+													@if($serie->active)
+													<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},2)">Abbandona</a>
+													@else
+													<a href="#" onclick = "showConfirmModal({{$serie->id}},{{$user->id}},3)">Segui</a>
+													@endif
+												</li>
+											</ul>
+										</div> @endif </td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
 					</div>
 					@endif
 					@if(count($series)>0 || count($comics)>0)
@@ -275,6 +280,37 @@
 							Sconto: {{$user->discount}}
 							<br />
 						</p>
+					</div>
+					@endif
+					@if(count($purchases)>0)
+					<div class="tab-pane fade" id="purchases">
+						<div class="table-responsive table-bordered">
+							<div class="panel-heading">
+								Storico Acquisti
+							</div>
+							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+								<thead>
+									<tr>
+										<th>Data Acquisto</th>
+										<th>Fumetto</th>
+										<th>Prezzo</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($purchases as $purchase)
+									<tr class="odd gradeX">
+										<td>{{date('d/m/Y',strtotime($purchase->buy_time))}}</td>
+										@if($purchase->series->version == null)
+										<td>{{$purchase->series->name}} nr. {{$purchase->comic->number}}</td>
+										@else
+										<td>{{$purchase->series->name}} - {{$purchase->series->version}} nr. {{$purchase->comic->number}}</td>
+										@endif
+										<td>{{$purchase->price}}</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
 					</div>
 					@endif
 					<div class="tab-pane fade" id="edit">

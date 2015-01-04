@@ -21,6 +21,10 @@ class ComicUser extends Eloquent {
 		// this matches the Eloquent model
 	}
 	
+	public function series(){
+		return $this->comic->series();
+	}
+	
 	public function box() {
 		return $this -> hasOne('User', 'id', 'user_id');
 		// this matches the Eloquent model
