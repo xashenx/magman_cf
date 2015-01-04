@@ -51,9 +51,6 @@
 					@if($user->active)
 					@if(count($comics)>0)
 					<div class="tab-pane fade active in" id="orderedComics">
-						<!-- <h4>Available Tab</h4> -->
-						<p>
-							<!--    Bordered Table  -->
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									Fumetti in arrivo <strong>(Saldo disponibili: {{ $due }}€)</strong>
@@ -103,12 +100,9 @@
 									</div>
 								</div>
 							</div>
-							<!--  End  Bordered Table  -->
-						</p>
 					</div>
 					@if(count($series)>0)
 					<div class="tab-pane fade" id="series">
-						<p>
 							<div class="table-responsive table-bordered">
 								<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 									<thead>
@@ -155,12 +149,10 @@
 									</tbody>
 								</table>
 							</div>
-						</p>
 					</div>
 					@endif
 					@elseif(count($series)>0)
 					<div class="tab-pane fade active in" id="series">
-						<p>
 							<div class="table-responsive table-bordered">
 								<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 									<thead>
@@ -207,7 +199,6 @@
 									</tbody>
 								</table>
 							</div>
-						</p>
 					</div>
 					@endif
 					@if(count($series)>0 || count($comics)>0)
@@ -284,7 +275,7 @@
 							Sconto: {{$user->discount}}
 							<br />
 						</p>
-					</div>					
+					</div>
 					@endif
 					<div class="tab-pane fade" id="edit">
 						<!-- <h4>Edit Tab</h4> -->
