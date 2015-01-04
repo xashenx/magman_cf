@@ -68,13 +68,13 @@
                                                 <tbody>
                                                 @foreach ($insolvents as $key => $insolvent)
                                                     <tr class="odd gradeX">
-                                                        <td>{{$key }}</td>
+                                                        <td><a href="boxes/{{array_get($insolventBoxes,$key)->id}}">{{array_get($insolventBoxes,$key)->name}} {{array_get($insolventBoxes,$key)->surname}}</a></td>
                                                         <td>{{$insolvent}}</td>
                                                     </tr>
                                                 @endforeach
                                                 @foreach ($defaultings as $key => $defaulting)
                                                     <tr class="odd gradeX">
-                                                        <td>{{$key}}</td>
+                                                        <td><a href="boxes/{{array_get($defaultingBoxes,$key)->id}}">{{array_get($defaultingBoxes,$key)->name}} {{array_get($defaultingBoxes,$key)->surname}}</a></td>
                                                         <td>{{$defaulting}}</td>
                                                     </tr>
                                                 @endforeach
