@@ -1,8 +1,6 @@
 @section('content')
 <div class="row">
 	<div class="col-md-12 col-sm-12">
-		<center><h3>Bentornato Admin {{ Auth::user()->name }}!</h3></center>
-		<br />
 		<div>
 			@if(count($insolvents) > 0 || count($defaultings) > 0)
 			<div class="col-md-6 col-sm-6">
