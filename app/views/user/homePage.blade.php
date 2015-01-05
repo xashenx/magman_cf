@@ -1,7 +1,4 @@
 @section('content')
-    <p>
-        Bentornato {{ $user->name }}
-    </p>
     <div class="row">
         <div class="col-md-6">
             <!--    Bordered Table  -->
@@ -60,7 +57,7 @@
                             <tbody>
                             @foreach ($news as $new)
                                 <tr class="odd gradeX">
-                                    @if($new->series->versio != null)
+                                    @if($new->series->version != null)
                                         <td>{{$new->series->name}} - {{$new->series->version}} nr. {{$new->number}}</td>
                                     @else
                                         <td>{{$new->series->name}} nr. {{$new->number}}</td>
