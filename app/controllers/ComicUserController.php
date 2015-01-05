@@ -31,7 +31,7 @@ class ComicUserController extends BaseController {
 	public function delete() {
 		$id = Input::get('id');
 		$user_id = Input::get('user_id');
-		$comics = ComicUser::whereRaw('comic_id = ' . $id . ' and user_id = ' . $user_id) -> get();
+		$comics = ComicUser::whereRaw('id = ' . $id . ' and user_id = ' . $user_id) -> get();
 		foreach ($comics as $comic) {
 			$comic -> active = '0';
 			$comic -> update();
@@ -42,7 +42,7 @@ class ComicUserController extends BaseController {
 	public function buy() {
 		$id = Input::get('id');
 		$user_id = Input::get('user_id');
-		$comics = ComicUser::whereRaw('comic_id = ' . $id . ' and user_id = ' . $user_id) -> get();
+		$comics = ComicUser::whereRaw('id = ' . $id . ' and user_id = ' . $user_id) -> get();
 		foreach ($comics as $comicUser) {
 			$timestamp = date("Y-m-d H:i:s", time());
 			$comicUser -> buy_time = $timestamp;

@@ -90,10 +90,10 @@
 													</button>
 													<ul class="dropdown-menu">
 														<li>
-															@if($comic->comic->available > 1)
-															<a href="#" onclick = "showConfirmModal({{$comic->comic->id}},{{$user->id}},0)">Acquistato</a>
+															@if($comic->comic->available > 0)
+															<a href="#" onclick = "showConfirmModal({{$comic->id}},{{$user->id}},0)">Acquistato</a>
 															@endif
-															<a href="#" onclick = "showConfirmModal({{$comic->comic->id}},{{$user->id}},1)">Rimuovi</a>
+															<a href="#" onclick = "showConfirmModal({{$comic->id}},{{$user->id}},1)">Rimuovi</a>
 														</li>
 													</ul>
 												</div></td>
