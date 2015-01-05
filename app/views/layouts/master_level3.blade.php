@@ -59,7 +59,7 @@
               <a  href="../../comics"><i class="fa fa-book fa-3x sidebar-icon"></i> Fumetti</a>
             </li>
             @endif
-            @if(Auth::user->level_id == 2)
+            @if(Auth::user()->level_id == 2)
             <li>
               <a  href="../../box"><i class="fa fa-user fa-3x sidebar-icon"></i> Casella</a>
             </li>

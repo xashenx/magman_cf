@@ -4,7 +4,7 @@
             <!--    Bordered Table  -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Fumetti in arrivo <strong>(Saldo disponibili: {{ $due }}€)</strong>
+                    <h5>Fumetti in arrivo</h5> <strong>(Saldo disponibili: {{ $due }}€)</strong>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -42,7 +42,7 @@
             <!--    Bordered Table  -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Novità del {{$last}}
+                    <h5>Novità del {{$last}}</h5>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">

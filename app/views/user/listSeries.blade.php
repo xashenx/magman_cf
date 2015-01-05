@@ -4,7 +4,7 @@
 		<!-- Advanced Tables -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Visualizza serie
+				<h5>Serie disponibili</h5>
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">

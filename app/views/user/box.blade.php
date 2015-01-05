@@ -1,13 +1,13 @@
 @section('content')
 <p>
-	Visualizzazione Casella
+	<h1>Visualizzazione Casella</h1>
 </p>
 <div class="row">
 	<div class="col-md-6">
 		<!--    Bordered Table  -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Fumetti in arrivo <strong>(Saldo disponibili: {{ $due }}€)</strong>
+				<h5>Fumetti in arrivo</h5> <strong>(Saldo disponibili: {{ $due }}€)</strong>
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
@@ -45,7 +45,7 @@
 		<!--    Bordered Table  -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Serie Seguite
+				<h5>Serie Seguite</h5>
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
