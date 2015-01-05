@@ -348,7 +348,7 @@
 		 * sZeroRecords - assuming that is given.
 		 */
 		if ( !oLanguage.sEmptyTable && zeroRecords &&
-			oDefaults.sEmptyTable === "Nessuno dato disponibile" )
+			oDefaults.sEmptyTable === "Nessun dato disponibile" )
 		{
 			_fnMap( oLanguage, oLanguage, 'sZeroRecords', 'sEmptyTable' );
 		}

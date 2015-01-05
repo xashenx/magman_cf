@@ -7,7 +7,7 @@
 				<h5>Serie disponibili</h5>
 			</div>
 			<div class="panel-body">
-				<div class="table-responsive">
+				<div class="table-responsive table-bordered">
 					<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 						<thead>
 							<tr>
@@ -32,7 +32,6 @@
 								<td>{{$serie->listComics->max('number')}}</td>
 							</tr>
 							@endforeach
-							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -55,7 +54,7 @@
 <script>
 	$(document).ready(function() {
 		$('#dataTables-example').dataTable();
-	}); 
+	});
 </script>
 <!-- CUSTOM SCRIPTS -->
 <script src="assets/js/custom.js"></script>

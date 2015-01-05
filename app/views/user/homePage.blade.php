@@ -65,7 +65,6 @@
                                     <td>{{$new->series->author}}</td>
                                 </tr>
                                 @endforeach
-                                </tr>
                             </tbody>
                         </table>
                     </div>

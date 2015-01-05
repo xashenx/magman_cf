@@ -33,14 +33,9 @@
                             </p>
                         </div>
                         <div class="tab-pane fade" id="numbers">
-                            <!-- <h4>Numbers Tab</h4> -->
-                            <p>
-                                <!-- Advanced Tables -->
-
                             <div class="panel panel-default">
-                                <div class="panel-heading"></div>
                                 <div class="panel-body">
-                                    <div class="table-responsive">
+                                    <div class="table-responsive table-bordered">
                                         <table class="table table-striped table-bordered table-hover"
                                                id="dataTables-example">
                                             <thead>
@@ -65,8 +60,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--End Advanced Tables -->
-                            </p>
                         </div>
                     </div>
                 </div>
