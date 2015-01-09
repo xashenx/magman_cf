@@ -17,9 +17,12 @@ class SeriesUserController extends BaseController {
 				$series_user -> series_id = $series_id;
 				$series_user -> user_id = $user_id;
 				$series_user -> save();
+			}else{
+				// TODO warning already in box
 			}
+		}else{
+			// TODO warning: either the series does not exist or it's disabled
 		}
-		// TODO warnings!
 		return Redirect::to('boxes/' . $user_id);
 	}
 

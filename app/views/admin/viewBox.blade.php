@@ -243,8 +243,15 @@
                                         </div>
                                         {{ Form::open(array('action' => 'SeriesUserController@create')) }}
                                         <div>
-                                            {{ Form::label('series_id', 'Serie') }}
-                                            {{ Form::text('series_id') }}
+                                            <select name="series_id" id="series_id">
+                                                @foreach($active_series as $serie)
+                                                    @if($serie->version != null)
+                                                    <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                    @else
+                                                    <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                             {{ Form::hidden('user_id', $user->id) }}
                                         </div>
                                         <div>
@@ -261,8 +268,15 @@
                                         </div>
                                         {{ Form::open(array('action' => 'SeriesUserController@create')) }}
                                         <div>
-                                            {{ Form::label('series_id', 'Serie') }}
-                                            {{ Form::text('series_id') }}
+                                            <select name="series_id" id="series_id">
+                                                @foreach($active_series as $serie)
+                                                    @if($serie->version != null)
+                                                        <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                    @else
+                                                        <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                             {{ Form::hidden('user_id', $user->id) }}
                                         </div>
                                         <div>
@@ -279,8 +293,15 @@
                                     </div>
                                     {{ Form::open(array('action' => 'ComicUserL2Controller@create')) }}
                                     <div>
-                                        {{ Form::label('series_id','Serie') }}
-                                        {{ Form::text('series_id') }}
+                                        <select name="series_id" id="series_id">
+                                            @foreach($active_series as $serie)
+                                                @if($serie->version != null)
+                                                    <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                @else
+                                                    <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
                                         {{ Form::label('number', 'Numero') }}
                                         {{ Form::text('number') }}
                                         {{ Form::hidden('user_id', $user->id) }}
