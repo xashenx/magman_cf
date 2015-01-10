@@ -301,7 +301,7 @@
                                     </div>
                                     {{ Form::open(array('action' => 'ComicUserL2Controller@create')) }}
                                     <div>
-                                        <select name="series_id" id="series_id">
+                                        <select name="single_series_id" id="single_series_id">
                                             <option value="-1" selected>-- Seleziona una serie --</option>
                                             @foreach($active_series as $serie)
                                                 @if($serie->version != null)
@@ -466,8 +466,8 @@
     <!-- JQUERY SCRIPTS -->
     <script>
         $(document).ready(function () {
-            $('select#series_id').on('change', function () {
-                var selected_id = $('select#series_id').val();
+            $('select#single_series_id').on('change', function () {
+                var selected_id = $('select#single_series_id').val();
                 $.ajax({
                     url: 'getNumberFromSeries',
                     dataType: 'json',
