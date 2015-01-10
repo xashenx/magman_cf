@@ -83,5 +83,15 @@ class UserController extends BaseController {
 		$series = Series::where('active','=','1')->get();
 		$this -> layout -> content = View::make('user/listSeries', array('series' => $series));
 	}
+
+	public function viewSeries($series_id) {
+		$series = Series::find($series_id);
+		$comics = Comic::whereRaw('active = 1 and series_id = ' . $series_id) -> get();
+		if ($series != null && $series -> active)
+			$this -> layout -> content = View::make('user/viewSeries',
+			 array('series' => $series,'comics' => $comics));
+		else
+			return Redirect::to('series');
+	}
 }
 ?>

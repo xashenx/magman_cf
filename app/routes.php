@@ -61,22 +61,22 @@ Route::group(array('before' => 'auth'), function() {
 			Route::post('saveBox', 'AdminController@saveBox');
 			// routes for the Boxes pages
 			Route::get('boxes', 'AdminController@manageBoxes');
-			Route::get('boxes/{box_id}', 'AdminL2Controller@manageBox') -> where('box_id', '[0-9]+');
-			Route::get('boxes/{box_id}/comic/{comic_user_id}', 'AdminL4Controller@manageComicUser') -> where('box_id', '[0-9]+') -> where('comic_user_id', '[0-9]+');
+			Route::get('boxes/{box_id}', 'AdminController@manageBox') -> where('box_id', '[0-9]+');
+			Route::get('boxes/{box_id}/comic/{comic_user_id}', 'AdminController@manageComicUser') -> where('box_id', '[0-9]+') -> where('comic_user_id', '[0-9]+');
 			// routes for the Series pages
 			Route::get('series', 'AdminController@manageSeries');
-			Route::get('series/{series_id}', 'AdminL2Controller@manageSerie') -> where('series_id', '[0-9]+');
-			Route::get('series/{series_id}/{comic_id}', 'AdminL3Controller@manageComic') -> where('series_id', '[0-9]+') -> where('comic_id', '[0-9]+');
+			Route::get('series/{series_id}', 'AdminController@manageSerie') -> where('series_id', '[0-9]+');
+			Route::get('series/{series_id}/{comic_id}', 'AdminController@manageComic') -> where('series_id', '[0-9]+') -> where('comic_id', '[0-9]+');
 			// route for the Comics page
 			Route::get('comics', 'ComicsController@listAllComics');
-			Route::get('comics/{comic_id}', 'ComicsL2Controller@manageComic') -> where('comic_id', '[0-9]+');
+			Route::get('comics/{comic_id}', 'ComicsController@manageComic') -> where('comic_id', '[0-9]+');
 			// routes for creation of instances of objects
 			Route::post('createUser', 'UsersController@create');
 			Route::post('createSeries', 'SeriesController@create');
 			Route::post('createComic', 'ComicsController@create');
 			Route::post('createSeriesUser', 'SeriesUserController@create');
 			Route::post('createComicUser', 'ComicUserController@create');
-			Route::post('boxes/createComicUser', 'ComicUserL2Controller@create');
+			Route::post('boxes/createComicUser', 'ComicUserController@create');
 			// routes for updates of instances of objects
 			Route::post('updateUser', 'UsersController@update');
 			Route::post('updateSeries', 'SeriesController@update');
@@ -103,7 +103,7 @@ Route::group(array('before' => 'auth'), function() {
 			Route::get('home', 'UserController@userHome');
 			Route::get('box', 'UserController@box');
 			Route::get('series', 'UserController@listSeries');
-			Route::get('series/{series_id}', 'UserL2Controller@viewSeries') -> where('id', '[0-9]+');
+			Route::get('series/{series_id}', 'UserController@viewSeries') -> where('id', '[0-9]+');
 		}
 		Route::get('profile', 'UserController@userProfile');
 		Route::post('changePassword', 'UserController@changePassword');
