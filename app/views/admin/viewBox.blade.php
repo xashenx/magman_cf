@@ -299,7 +299,7 @@
                                     <div class="panel-heading">
                                         <h5>Nuova Arretrato/Fumetto Singolo in casella</h5>
                                     </div>
-                                    {{ Form::open(array('action' => 'ComicUserL2Controller@create')) }}
+                                    {{ Form::open(array('action' => 'ComicUserController@create')) }}
                                     <div>
                                         <select name="single_series_id" id="single_series_id">
                                             <option value="-1" selected>-- Seleziona una serie --</option>
