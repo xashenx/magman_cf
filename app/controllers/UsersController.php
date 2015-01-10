@@ -47,6 +47,37 @@ class UsersController extends BaseController
     }
 
     /*
+     * Process the change of password
+    */
+    public function changePassword()
+    {
+        $id = Input::get('id');
+        $user = User::find($id);
+        $old_password = Input::get('old_pass');
+        $messages = array();
+        if (!Hash::check($old_password, $user->password)) {
+            $message = 'la password attuale non è corretta';
+            $errors = array('old_pass' => $message);
+            Input::merge(array('old_pass' => $message));
+            echo Input::get('old_pass');
+            return Redirect::to('profile')->withErrors(array('test' => 'prova'));
+//			$this -> layout -> content = View::make('user/profilePage',array('user' => Auth::user(),'errors' => $errors));
+        }
+        $rules = array('pass' => 'required|min:8|confirmed');
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+            echo $messages;
+//			return Redirect::to('newShipment')->withErrors($validator);
+        }
+        $pass = Input::get('pass');
+        $new_hash = Hash::make($pass);
+        $user->password = $new_hash;
+//		$user -> update();
+//		return Redirect::to('profile');
+    }
+
+    /*
      * Displays the box managment page
      */
     public function manageBox($box_id)

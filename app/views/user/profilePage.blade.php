@@ -15,7 +15,7 @@
                     <h5>Profilo Utente</h5>
                 </div>
                 <div class="panel-body">
-                    {{ Form::model($user, array('action' => 'UserController@changePassword')) }}
+                    {{ Form::model($user, array('action' => 'UsersController@changePassword')) }}
                     <div>
                         {{ Form::label('old_pass', 'Password attuale') }}
                         {{ Form::password('old_pass') }}
