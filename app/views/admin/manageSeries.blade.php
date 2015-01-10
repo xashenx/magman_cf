@@ -175,8 +175,7 @@
 <script>
 	$(document).ready(function() {
 		$('#dataTables-example').dataTable();
-	}); 
+	});
 </script>
 <!-- CUSTOM SCRIPTS -->
-<script src="assets/js/custom.js"></script>
 @stop

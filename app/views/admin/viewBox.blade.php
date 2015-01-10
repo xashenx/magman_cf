@@ -512,7 +512,6 @@
         });
     </script>
     <!-- CUSTOM SCRIPTS -->
-    <script src="../assets/js/custom.js"></script>
     <script>
         $('select#single_series_id').on('change', function () {
             var selected_id = $('select#single_series_id').val();
