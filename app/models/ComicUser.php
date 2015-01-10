@@ -8,7 +8,26 @@ class ComicUser extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'comic_user';
-	
+	private $rules = array(
+		'comic_id' => 'required|numeric',
+		'user_id' => 'required|numeric',
+		'price' => 'required|numeric',
+	);
+	private $errors;
+
+	public function validate($data){
+		$v = Validator::make($data,$this->rules);
+		if($v->fails()){
+			$this->errors = $v->errors();
+			return false;
+		}
+		return $v->passes();
+	}
+
+	public function errors(){
+		return $this->errors;
+	}
+
 	protected $guarded = array('id','remember_token','level_id');
 
 	public function user() {

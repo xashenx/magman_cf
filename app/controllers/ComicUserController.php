@@ -4,6 +4,8 @@ class ComicUserController extends BaseController {
     public function create()
     {
         $this -> layout = null;
+		$new = Input::all();
+
         $series_id = Input::get('single_series_id');
         $comic_id = Input::get('single_number_id');
         $user_id = Input::get('user_id');
@@ -16,10 +18,15 @@ class ComicUserController extends BaseController {
                 foreach ($comics as $comic) {
                     $comic_id = $comic->id;
                     $comicUser = new ComicUser;
-                    $comicUser->comic_id = $comic_id;
-                    $comicUser->user_id = $user_id;
-                    $comicUser->price = $comic->price;
-                    $comicUser->save();
+					if ($comicUser->validate($new)) {
+						$comicUser->comic_id = $comic_id;
+						$comicUser->user_id = $user_id;
+						$comicUser->price = $comic->price;
+						$comicUser->save();
+					}else{
+						$errors = $comic->errors();
+						return Redirect::to('boxes/' . $user_id)->withErrors($errors);
+					}
                 }
             }
         }

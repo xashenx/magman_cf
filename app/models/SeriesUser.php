@@ -8,6 +8,24 @@ class SeriesUser extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'series_user';
+	private $rules = array(
+		'series_id' => 'required|numeric',
+		'user_id' => 'required|numeric'
+	);
+	private $errors;
+
+	public function validate($data){
+		$v = Validator::make($data,$this->rules);
+		if($v->fails()){
+			$this->errors = $v->errors();
+			return false;
+		}
+		return $v->passes();
+	}
+
+	public function errors(){
+		return $this->errors;
+	}
 
 	public function user() {
 		return $this -> hasMany('User');

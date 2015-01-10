@@ -107,7 +107,7 @@ Route::group(array('before' => 'auth'), function() {
 			Route::get('series/{series_id}', 'UserController@viewSeries') -> where('id', '[0-9]+');
 		}
 		Route::get('profile', 'UserController@userProfile');
-		Route::post('changePassword', 'UserController@changePassword');
+		Route::post('changePassword', 'UsersController@changePassword');
 	} else {
 		Route::get('home', function() {
 			return View::make('homePage');
