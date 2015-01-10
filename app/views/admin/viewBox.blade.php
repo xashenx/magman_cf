@@ -316,11 +316,12 @@
                                             @endforeach
                                         </select>
                                         {{ Form::label('number', 'Numero') }}
-                                        {{ Form::text('number') }}
+                                        <select name="single_number_id" id="single_number_id" disabled>
+                                        </select>
                                         {{ Form::hidden('user_id', $user->id) }}
                                     </div>
                                     <div>
-                                        {{ Form::submit('Aggiungi') }}
+                                        {{ Form::submit('Aggiungi',['id' => 'add_single_number']) }}
                                     </div>
                                     {{ Form::close() }}
                                 </div>
@@ -465,25 +466,6 @@
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
     <!-- JQUERY SCRIPTS -->
     <script>
-        $(document).ready(function () {
-            $('select#single_series_id').on('change', function () {
-                var selected_id = $('select#single_series_id').val();
-                $.ajax({
-                    url: 'getNumberFromSeries',
-                    dataType: 'json',
-                    type: 'POST',
-                    data: {'series_id': selected_id},
-                    success: function () {
-                        console.log("ciao");
-                    },
-                    error: function () {
-                        console.log("error");
-                    }
-                });
-            });
-        });
-    </script>
-    <script>
         function showConfirmModal(object_id, user_id, mode) {
             document.confirmForm.user_id.value = user_id;
             if (mode == 0) {
@@ -527,4 +509,31 @@
     </script>
     <!-- CUSTOM SCRIPTS -->
     <script src="../assets/js/custom.js"></script>
+    <script>
+            $('select#single_series_id').on('change', function () {
+                var selected_id = $('select#single_series_id').val();
+                if (selected_id == -1){
+                    $('select#single_number_id').prop('disabled', 'disabled');
+                    $('#add_single_number').prop('disabled', 'disabled');
+                } else {
+                    $.ajax({
+                        url: '../getNumberFromSeries',
+                        type: 'POST',
+                        data: {'series_id': selected_id},
+                        success: function (data) {
+                            $('select#single_number_id').empty();
+                            $('select#single_number_id').prop('disabled', false);
+                            $('#add_single_number').prop('disabled', false);
+                            $.each(data, function (index,value){
+                                $('select#single_number_id').append('<option value="' + value.id + '">' + value.number + '</option>');
+                            });
+                        },
+                        error: function () {
+                            $('select#single_number_id').prop('disabled', 'disabled');
+                            $('#add_single_number').prop('disabled', 'disabled');
+                        }
+                    });
+                }
+            });
+    </script>
 @stop
