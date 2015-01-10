@@ -321,7 +321,7 @@
                                         {{ Form::hidden('user_id', $user->id) }}
                                     </div>
                                     <div>
-                                        {{ Form::submit('Aggiungi',['id' => 'add_single_number']) }}
+                                        {{ Form::submit('Aggiungi',['id' => 'add_single_number','disabled' => 'disabled']) }}
                                     </div>
                                     {{ Form::close() }}
                                 </div>
@@ -514,6 +514,7 @@
                 var selected_id = $('select#single_series_id').val();
                 if (selected_id == -1){
                     $('select#single_number_id').prop('disabled', 'disabled');
+                    $('select#single_number_id').empty();
                     $('#add_single_number').prop('disabled', 'disabled');
                 } else {
                     $.ajax({
@@ -523,7 +524,7 @@
                         success: function (data) {
                             $('select#single_number_id').empty();
                             $('select#single_number_id').prop('disabled', false);
-                            $('#add_single_number').prop('disabled', false);
+                            $('select#single_number_id').append('<option value="-1">-- Seleziona un numero --</option>');
                             $.each(data, function (index,value){
                                 $('select#single_number_id').append('<option value="' + value.id + '">' + value.number + '</option>');
                             });
@@ -533,6 +534,13 @@
                             $('#add_single_number').prop('disabled', 'disabled');
                         }
                     });
+                }
+            });
+
+            $('select#single_number_id').on('change', function () {
+                var selected_id = $('select#single_number_id').val();
+                if (selected_id != -1){
+                    $('#add_single_number').prop('disabled', false);
                 }
             });
     </script>
