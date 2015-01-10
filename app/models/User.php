@@ -18,7 +18,27 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	protected $fillable = array('password', 'name', 'surname', 'number', 'discount', 'active');
 	protected $guarded = array('id','remember_token','level_id');
+	private $rules = array(
+		'username' => 'required|alpha|email',
+		'password' => 'required|alpha|min:8',
+		'name'  => 'required|alpha',
+		'surname'  => 'required|alpha',
+		'number' => 'required|numeric'
+	);
+	private $errors;
 
+	public function validate($data){
+		$v = Validator::make($data,$this->rules);
+		if($v->fails()){
+			$this->errors = $v->errors();
+			return false;
+		}
+		return $v->passes();
+	}
+
+	public function errors(){
+		return $this->errors;
+	}
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *

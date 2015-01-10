@@ -1,4 +1,8 @@
 @section('content')
+    @if(count($errors)>0))
+    <h3>Whoops! C'è stato un errore!!! <br/>
+        Se il problema persiste, contattare un amministratore!</h3>
+    @endif
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="panel panel-default">
@@ -509,38 +513,38 @@
     </script>
     <!-- CUSTOM SCRIPTS -->
     <script>
-            $('select#single_series_id').on('change', function () {
-                var selected_id = $('select#single_series_id').val();
-                if (selected_id == -1){
-                    $('select#single_number_id').prop('disabled', 'disabled');
-                    $('select#single_number_id').empty();
-                    $('#add_single_number').prop('disabled', 'disabled');
-                } else {
-                    $.ajax({
-                        url: '../getNumberFromSeries',
-                        type: 'POST',
-                        data: {'series_id': selected_id},
-                        success: function (data) {
-                            $('select#single_number_id').empty();
-                            $('select#single_number_id').prop('disabled', false);
-                            $('select#single_number_id').append('<option value="-1">-- Seleziona un numero --</option>');
-                            $.each(data, function (index,value){
-                                $('select#single_number_id').append('<option value="' + value.id + '">' + value.number + '</option>');
-                            });
-                        },
-                        error: function () {
-                            $('select#single_number_id').prop('disabled', 'disabled');
-                            $('#add_single_number').prop('disabled', 'disabled');
-                        }
-                    });
-                }
-            });
+        $('select#single_series_id').on('change', function () {
+            var selected_id = $('select#single_series_id').val();
+            if (selected_id == -1) {
+                $('select#single_number_id').prop('disabled', 'disabled');
+                $('select#single_number_id').empty();
+                $('#add_single_number').prop('disabled', 'disabled');
+            } else {
+                $.ajax({
+                    url: '../getNumberFromSeries',
+                    type: 'POST',
+                    data: {'series_id': selected_id},
+                    success: function (data) {
+                        $('select#single_number_id').empty();
+                        $('select#single_number_id').prop('disabled', false);
+                        $('select#single_number_id').append('<option value="-1">-- Seleziona un numero --</option>');
+                        $.each(data, function (index, value) {
+                            $('select#single_number_id').append('<option value="' + value.id + '">' + value.number + '</option>');
+                        });
+                    },
+                    error: function () {
+                        $('select#single_number_id').prop('disabled', 'disabled');
+                        $('#add_single_number').prop('disabled', 'disabled');
+                    }
+                });
+            }
+        });
 
-            $('select#single_number_id').on('change', function () {
-                var selected_id = $('select#single_number_id').val();
-                if (selected_id != -1){
-                    $('#add_single_number').prop('disabled', false);
-                }
-            });
+        $('select#single_number_id').on('change', function () {
+            var selected_id = $('select#single_number_id').val();
+            if (selected_id != -1) {
+                $('#add_single_number').prop('disabled', false);
+            }
+        });
     </script>
 @stop

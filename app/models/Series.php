@@ -8,6 +8,25 @@ class Series extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'series';
+	private $rules = array(
+		'name' => 'required',
+		'version' => 'required',
+		'author' => 'required'
+	);
+	private $errors;
+
+	public function validate($data){
+		$v = Validator::make($data,$this->rules);
+		if($v->fails()){
+			$this->errors = $v->errors();
+			return false;
+		}
+		return $v->passes();
+	}
+
+	public function errors(){
+		return $this->errors;
+	}
 
 	public function comic() {
 		return $this -> belongsTo('Comic', 'id', 'series_id');

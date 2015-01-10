@@ -39,7 +39,7 @@
       </div>
 
       <div style="color: white; padding: 20px 50px 5px 50px; float: right; font-size: 16px;">
-        Benvenuto {{Auth::user()->name}}! &nbsp; <a href="logout" class="btn btn-danger square-btn-adjust">Logout</a>
+        Benvenuto <a href="{{ URL::asset('profile') }}">{{Auth::user()->name}}</a>! &nbsp; <a href="logout" class="btn btn-danger square-btn-adjust">Logout</a>
       </div>
       </nav>
       <!-- /. NAV TOP  -->
@@ -71,9 +71,6 @@
             @endif
             <li  >
               <a  href="{{ URL::asset('series') }}"><i class="fa fa-th-large fa-3x sidebar-icon"></i> Serie</a>
-            </li>
-            <li>
-              <a  href="{{ URL::asset('profile') }}"><i class="fa fa-user fa-3x sidebar-icon"></i> Profilo</a>
             </li>
             @if(Auth::user()->level_id == 100)
             <li>

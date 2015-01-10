@@ -27,8 +27,6 @@ class UserController extends BaseController {
 	}
 
 	public function userProfile(){
-		echo "asdasda" . Input::get('old_pass');
-		echo var_dump(Input::all());
 		if(Input::get('old_pass') != null)
 			echo "ciao";
 		else

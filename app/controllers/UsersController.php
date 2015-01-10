@@ -58,23 +58,20 @@ class UsersController extends BaseController
         if (!Hash::check($old_password, $user->password)) {
             $message = 'la password attuale non è corretta';
             $errors = array('old_pass' => $message);
-            Input::merge(array('old_pass' => $message));
-            echo Input::get('old_pass');
-            return Redirect::to('profile')->withErrors(array('test' => 'prova'));
-//			$this -> layout -> content = View::make('user/profilePage',array('user' => Auth::user(),'errors' => $errors));
+            return Redirect::to('profile')->withErrors($errors);
         }
         $rules = array('pass' => 'required|min:8|confirmed');
         $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
             $messages = $validator->messages();
-            echo $messages;
-//			return Redirect::to('newShipment')->withErrors($validator);
+//            echo $messages;
+			return Redirect::to('profile')->withErrors($validator);
         }
         $pass = Input::get('pass');
         $new_hash = Hash::make($pass);
         $user->password = $new_hash;
-//		$user -> update();
-//		return Redirect::to('profile');
+		$user -> update();
+		return Redirect::to('profile');
     }
 
     /*

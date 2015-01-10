@@ -19,7 +19,6 @@ class ComicsController extends BaseController
             return Redirect::to('series/' . $series_id);
         } else {
             $errors = $comic->errors();
-//            echo $errors;
             return Redirect::to('series/' . $series_id)->withErrors($errors);
         }
     }
