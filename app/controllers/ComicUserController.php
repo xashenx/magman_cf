@@ -1,6 +1,5 @@
 <?php
 class ComicUserController extends BaseController {
-	protected $layout = 'layouts.master';
 
 	public function create() {
 		$series = new Series;

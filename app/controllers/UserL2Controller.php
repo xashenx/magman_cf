@@ -1,6 +1,5 @@
 <?php
 class UserL2Controller extends BaseController {
-	protected $layout = 'layouts.master_level2';
 
 	/**
 	 * Displays the details of one series

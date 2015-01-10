@@ -1,6 +1,5 @@
 <?php
 class AdminL3Controller extends BaseController {
-	protected $layout = 'layouts.master_level3';
 
 	public function manageComic($series_id, $comic_id) {
 		$comic = Comic::find($comic_id);

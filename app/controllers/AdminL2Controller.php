@@ -1,6 +1,5 @@
 <?php
 class AdminL2Controller extends BaseController {
-	protected $layout = 'layouts.master_level2';
 
 	public function manageSerie($series_id) {
 		$series = Series::find($series_id);

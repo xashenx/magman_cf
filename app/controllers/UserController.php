@@ -1,7 +1,6 @@
 <?php
 class UserController extends BaseController {
-	protected $layout = 'layouts.master';
-	
+
 	/**
 	 * Show the page for the addiction of a series.
 	 */
@@ -66,17 +65,17 @@ class UserController extends BaseController {
 //		$user -> update();
 //		return Redirect::to('profile');
 	}
-	
+
 	public function due($user){
 		$due = 0;
-		$discount = $user->discount; 
+		$discount = $user->discount;
 		foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
 			if($comic->comic->available > 1)
 				$due += round($comic->price,2);
 		}
 		return $due-($due*$discount/100);
-	}	
-	
+	}
+
 	/*
 	 * Displays the series page
 	 */

@@ -1,6 +1,5 @@
 <?php
 class ComicsController extends BaseController {
-	protected $layout = 'layouts.master';
 
 	public function create() {
 		$series_id = Input::get('series_id');

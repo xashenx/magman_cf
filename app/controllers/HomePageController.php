@@ -1,17 +1,16 @@
 <?php
-
 class HomePageController extends BaseController
 {
 
     /**
      * Show the profile for the given user.
      */
-    protected $layout = 'layouts.master';
 
     public function index()
     {
         //$comic = Comic::where('name', 'LIKE', '%città%')
         // ->get();
+        $this -> layout -> title = 'Tomu';
         $this->layout->content = View::make('homePage');
     }
 
@@ -34,6 +33,7 @@ class HomePageController extends BaseController
         $insolvent_boxes = $this->buildInsolventBoxesArray($insolvents);
         $defaultings = $this->buildDefaultingArray($boxes, $defaulting_threshold);
         $defaulting_boxes = $this->buildDefaultingBoxesArray($defaultings);
+        $this -> layout -> title = 'Tomu';
 		$this -> layout -> content = View::make('admin/homePage',array('insolvents' => $insolvents,'defaultings' => $defaultings,'to_order' => $toOrder,'defaultingBoxes' => $defaulting_boxes,'insolventBoxes' => $insolvent_boxes));
     }
 

@@ -4,17 +4,23 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Titolo da cambiare</title>
+    <title>
+      @if(isset($title))
+        {{ $title }}
+      @else
+        Titolo da inserire
+      @endif
+    </title>
     <!-- BOOTSTRAP STYLES-->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="{{ URL::asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
     <!-- FONTAWESOME STYLES-->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="{{ URL::asset('assets/css/font-awesome.css') }}" rel="stylesheet" />
     <!-- CUSTOM STYLES-->
-    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="{{ URL::asset('assets/css/custom.css') }}" rel="stylesheet" />
     <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
      <!-- TABLE STYLES-->
-    <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="{{ URL::asset('assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
   </head>
 
   <body>
@@ -29,7 +35,7 @@
           <span class="icon-bar"></span>
         </button>
 
-        <a class="navbar-brand" href="index.html"><img src="assets/img/logo.png" class="img-responsive"/></a>
+        <a class="navbar-brand" href="index.html"><img src="{{ URL::asset('assets/img/logo.png') }}" class="img-responsive"/></a>
 
       </div>
 

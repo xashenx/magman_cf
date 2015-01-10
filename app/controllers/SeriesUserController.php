@@ -1,6 +1,5 @@
 <?php
 class SeriesUserController extends BaseController {
-	protected $layout = 'layouts.master';
 
 	public function create() {
 		$user_id = Input::get('user_id');
@@ -43,7 +42,7 @@ class SeriesUserController extends BaseController {
 		$series -> save();
 		return Redirect::to('series/' . $id);
 	}
-	
+
 	public function delete(){
 		$su_id = Input::get('id');
 		$user_id = Input::get('user_id');
@@ -56,7 +55,7 @@ class SeriesUserController extends BaseController {
 		$seriesUser -> update();
 		return Redirect::to('boxes/' . $user_id);
 	}
-	
+
 	public function restore(){
 		$su_id = Input::get('id');
 		$user_id = Input::get('user_id');

@@ -1,6 +1,5 @@
 <?php
 class AdminL4Controller extends BaseController {
-	protected $layout = 'layouts.master_level4';
 
 	public function manageComicUser($box_id, $comic_user_id) {
 		$comicUser = ComicUser::find($comic_user_id);

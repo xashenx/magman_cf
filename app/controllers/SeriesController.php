@@ -1,7 +1,5 @@
 <?php
 class SeriesController extends BaseController {
-	protected $layout = 'layouts.master';
-	protected $layout2 = 'layouts.master_level2';
 
 	public function create() {
 		$series = new Series;

@@ -1,6 +1,5 @@
 <?php
 class AdminController extends BaseController {
-	protected $layout = 'layouts.master';
 	/**
 	 * Show the page for the addiction of a series.
 	 */
@@ -54,7 +53,7 @@ class AdminController extends BaseController {
 		$this -> layout -> content = View::make('admin/manageBoxes',
 		 array('boxes' => $boxes,'available' => $available,'due' => $due, 'next_box_id' => $next_box_id));
 	}
-	
+
 	// public function buildBoxesArrays($boxes){
 		// $return_array= $available = $due = null;
 		// foreach ($boxes as $box) {
@@ -91,7 +90,7 @@ class AdminController extends BaseController {
 		}
 		return $available;
 	}
-	
+
 	public function buildDueArray($boxes){
 		$due = null;
 		foreach ($boxes as $box) {

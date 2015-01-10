@@ -1,8 +1,6 @@
 <?php
-
 class UsersController extends BaseController
 {
-    protected $layout = 'layouts.master_level2';
 
     public function create()
     {
