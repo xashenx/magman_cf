@@ -8,6 +8,27 @@ class Comic extends Eloquent {
    * @var string
    */
   protected $table = 'comics';
+  private $rules = array(
+      'series_id' => 'required|numeric',
+      'number' => 'required|numeric',
+      'name'  => 'alpha_dash',
+      'price' => 'required|numeric',
+      'available' => 'numeric'
+  );
+  private $errors;
+
+  public function validate($data){
+    $v = Validator::make($data,$this->rules);
+    if($v->fails()){
+      $this->errors = $v->errors();
+      return false;
+    }
+    return $v->passes();
+  }
+
+  public function errors(){
+    return $this->errors;
+  }
 
   public function series() {
     return $this->hasOne('Series', 'id', 'series_id'); // this matches the Eloquent model

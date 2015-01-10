@@ -1,25 +1,29 @@
 @section('content')
-<div class="row">
-	<div class="col-md-12 col-sm-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h1>Visualizza/Modifica Serie</h1>
-			</div>
-			<div class="panel-body">
-				<ul class="nav nav-tabs">
-					<li class="active">
-						<a href="#details" data-toggle="tab">Dettagli</a>
-					</li>
-					<li class="">
-						<a href="#numbers" data-toggle="tab">Numeri</a>
-					</li>
-					<li class="">
-						<a href="#newnumber" data-toggle="tab">Nuovo Numero</a>
-					</li>
-					<li class="">
-						<a href="#edit" data-toggle="tab">Modifica</a>
-					</li>
-				</ul>
+    @if(count($errors)>0)
+        <h3>Whhops: E' avvenuto un errore!!<br/>
+        Se il problema persiste contattare un amministratore</h3>
+    @endif
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1>Visualizza/Modifica Serie</h1>
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#details" data-toggle="tab">Dettagli</a>
+                        </li>
+                        <li class="">
+                            <a href="#numbers" data-toggle="tab">Numeri</a>
+                        </li>
+                        <li class="">
+                            <a href="#newnumber" data-toggle="tab">Nuovo Numero</a>
+                        </li>
+                        <li class="">
+                            <a href="#edit" data-toggle="tab">Modifica</a>
+                        </li>
+                    </ul>
 
 				<div class="tab-content">
 					<div class="tab-pane fade active in" id="details">
@@ -85,32 +89,32 @@
 						</div>
 					</div>
 					<div class="tab-pane fade" id="newnumber">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h5>Inserimento Nuovo Numero</h5>
-							</div>
-							{{ Form::open(array('action' => 'ComicsController@create')) }}
-							<div>
-								{{ Form::label('name', 'Nome') }}
-								{{ Form::text('name') }}
-								{{ Form::hidden('series_id', $series->id)}}
-							</div>
-							<div>
-								{{ Form::label('number','number') }}
-								{{ Form::text('number', $next_comic_number) }}
-							</div>
-							<div>
-								{{ Form::label('price', 'Prezzo') }}
-								{{ Form::text('price', '0') }}
-							</div>
-							<div>
-								{{ Form::label('available', 'Disponibilità') }}
-								{{ Form::text('available', '0') }}
-							</div>
-							<div>
-								{{ Form::submit('Inserisci') }}
-							</div>
-							{{ Form::close() }}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h5>Inserimento Nuovo Numero</h5>
+              </div>
+              {{ Form::open(array('action' => 'ComicsController@create','id' => 'comic')) }}
+              <div>
+                  {{ Form::label('name', 'Nome') }}
+                  {{ Form::text('name') }}
+                  {{ Form::hidden('series_id', $series->id, array('id' => 'comic_series_id'))}}
+              </div>
+              <div>
+                  {{ Form::label('number','Numero') }}
+                  {{ Form::text('number', $next_comic_number, array('id' => 'comic_number')) }}
+              </div>
+              <div>
+                  {{ Form::label('price', 'Prezzo') }}
+                  {{ Form::text('price', '0', array('id' => 'comic_price')) }}
+              </div>
+              <div>
+                  {{ Form::label('available', 'Disponibilità') }}
+                  {{ Form::text('available', '0', array('id' => 'comic_available')) }}
+              </div>
+              <div>
+                  {{ Form::submit('Inserisci') }}
+              </div>
+              {{ Form::close() }}
 							<div class="restyleAlert2" style="display:none">
 								<div class="alert alert-success suc_not"></div>
 								<div class="alert alert-error err_not"></div>
@@ -180,16 +184,26 @@
       $('.restyleAlert2').hide();
       $('.err_not').hide();
       $('.suc_not').hide();
+      $('.err_not').html("");
+      $('.suc_not').html("");
       var number = $('#comic_number').val();
       var price = $('#comic_price').val();
       var available = $('#comic_available').val();
       var series_id = $('#comic_series_id').val();
       var submit = true;
-      var result = checkInputValue(number, "message", 11, 1);
+      var result = checkInputValue(number, "number", 11, 1);
       if (result['status'] == 'ko') {
         $('.restyleAlert2').show();
         $('.err_not').show();
         var obj = {result: result, htmlElement: $('.err_not'), sex: "m", elementName: "numero", maxLength: 11, minLength: 1};
+        showErrorMsg(obj);
+        submit = false;
+      }
+      var result = checkInputValue(price, "number", 11, 1);
+      if (result['status'] == 'ko') {
+        $('.restyleAlert2').show();
+        $('.err_not').show();
+        var obj = {result: result, htmlElement: $('.err_not'), sex: "m", elementName: "prezzo", maxLength: 11, minLength: 1};
         showErrorMsg(obj);
         submit = false;
       }
@@ -198,5 +212,4 @@
 	});
 </script>
 <!-- CUSTOM SCRIPTS -->
-<script src="../assets/js/custom.js"></script>
 @stop
