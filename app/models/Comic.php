@@ -11,8 +11,8 @@ class Comic extends Eloquent {
   private $rules = array(
       'series_id' => 'required|numeric',
       'number' => 'required|numeric',
-      'name'  => 'alpha_dash',
-      'price' => 'required|numeric',
+      'name'  => "regex:/^[A-z 'àèìòù]*$/",
+      'price' => 'required|regex:/^[0-9]{1,8}[\.\,]?[0-9]{0,2}$/',
       'available' => 'numeric'
   );
   private $errors;

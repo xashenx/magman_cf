@@ -3,14 +3,14 @@
 class ComicsController extends BaseController
 {
 
-    public function create()
-    {
+    public function create() {
         $new = Input::all();
         $series_id = Input::get('series_id');
         $comic = new Comic;
+        $comic_price = str_replace(',','.',Input::get('price'));
         $comic->name = Input::get('name');
         $comic->number = Input::get('number');
-        $comic->price = Input::get('price');
+        $comic->price = $comic_price;
         $comic->series_id = $series_id;
         $comic->available = Input::get('available');
         if ($comic->validate($new)) {
