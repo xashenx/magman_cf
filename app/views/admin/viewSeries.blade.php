@@ -199,7 +199,7 @@
         showErrorMsg(obj);
         submit = false;
       }
-      var result = checkInputValue(price, "number", 11, 1);
+      var result = checkInputValue(price, "price", 11, 1);
       if (result['status'] == 'ko') {
         $('.restyleAlert2').show();
         $('.err_not').show();
