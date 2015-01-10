@@ -124,5 +124,6 @@
       <!-- /. PAGE WRAPPER  -->
     </div>
     <!-- /. WRAPPER  -->
+    <script src = {{ URL::asset('assets/js/control.js') }}></script>
   </body>
 </html>

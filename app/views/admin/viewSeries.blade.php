@@ -111,6 +111,10 @@
 								{{ Form::submit('Inserisci') }}
 							</div>
 							{{ Form::close() }}
+							<div class="restyleAlert2" style="display:none">
+								<div class="alert alert-success suc_not"></div>
+								<div class="alert alert-error err_not"></div>
+							</div>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="edit">
@@ -172,7 +176,26 @@
 <script>
 	$(document).ready(function() {
 		$('#dataTables-example').dataTable();
-	}); 
+    $('#comic').on('submit', function(){
+      $('.restyleAlert2').hide();
+      $('.err_not').hide();
+      $('.suc_not').hide();
+      var number = $('#comic_number').val();
+      var price = $('#comic_price').val();
+      var available = $('#comic_available').val();
+      var series_id = $('#comic_series_id').val();
+      var submit = true;
+      var result = checkInputValue(number, "message", 11, 1);
+      if (result['status'] == 'ko') {
+        $('.restyleAlert2').show();
+        $('.err_not').show();
+        var obj = {result: result, htmlElement: $('.err_not'), sex: "m", elementName: "numero", maxLength: 11, minLength: 1};
+        showErrorMsg(obj);
+        submit = false;
+      }
+      return submit;
+    })
+	});
 </script>
 <!-- CUSTOM SCRIPTS -->
 <script src="../assets/js/custom.js"></script>
