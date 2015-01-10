@@ -26,7 +26,7 @@ Route::get('login', function() {
 
 Route::post('login', function() {
 	/* Get the login form data using the 'Input' class */
-	$userdata = array('username' => Input::get('username'), 'password' => Input::get('password'));
+	$userdata = array('username' => Input::get('username'), 'password' => Input::get('password'), 'active' => 1);
 
 	if (Input::get('persist') == 'on')
 		$isAuth = Auth::attempt($userdata, true);
