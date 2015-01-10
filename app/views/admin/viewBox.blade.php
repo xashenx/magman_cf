@@ -465,6 +465,7 @@
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
     <!-- JQUERY SCRIPTS -->
     <script>
+        document.ready()
         $(document).ready(function () {
             $('select#single_series_id').on('change', function () {
                 var selected_id = $('select#single_series_id').val();
