@@ -98,6 +98,7 @@ Route::group(array('before' => 'auth'), function() {
 			// special events routes
 			Route::post('buyComic', 'ComicUserController@buy');
 			Route::post('loadShipment', 'ComicsController@loadShipment');
+			Route::post('getNumberFromSeries','ComicsController@getNumberFromSeries');
 		} else {
 			Route::get('home', 'UserController@userHome');
 			Route::get('box', 'UserController@box');

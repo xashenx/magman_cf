@@ -87,5 +87,12 @@ class ComicsController extends BaseController {
 			return Redirect::to('newShipment');
 		}
 	}
+
+	public function getNumberFromSeries(){
+		$this -> layout = null;
+		$series_id = Input::get('series_id');
+		$comics = Comic::where('series_id','=',$series_id)->get();
+		echo $comics;
+	}
 }
 ?>

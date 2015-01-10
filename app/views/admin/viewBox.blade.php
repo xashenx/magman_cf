@@ -246,9 +246,13 @@
                                             <select name="series_id" id="series_id">
                                                 @foreach($active_series as $serie)
                                                     @if($serie->version != null)
-                                                    <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                        <option value="{{ $serie->id }}"
+                                                                rel="{{ $serie->name }}">{{ $serie->name }}
+                                                            - {{ $serie -> version }}</option>
                                                     @else
-                                                    <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                        <option value="{{ $serie->id }}"
+                                                                rel="{{ $serie->name }}">{{ $serie->name }}
+                                                            - {{ $serie -> version }}</option>
                                                     @endif
                                                 @endforeach
                                             </select>
@@ -271,9 +275,13 @@
                                             <select name="series_id" id="series_id">
                                                 @foreach($active_series as $serie)
                                                     @if($serie->version != null)
-                                                        <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                        <option value="{{ $serie->id }}"
+                                                                rel="{{ $serie->name }}">{{ $serie->name }}
+                                                            - {{ $serie -> version }}</option>
                                                     @else
-                                                        <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                        <option value="{{ $serie->id }}"
+                                                                rel="{{ $serie->name }}">{{ $serie->name }}
+                                                            - {{ $serie -> version }}</option>
                                                     @endif
                                                 @endforeach
                                             </select>
@@ -294,11 +302,16 @@
                                     {{ Form::open(array('action' => 'ComicUserL2Controller@create')) }}
                                     <div>
                                         <select name="series_id" id="series_id">
+                                            <option value="-1" selected>-- Seleziona una serie --</option>
                                             @foreach($active_series as $serie)
                                                 @if($serie->version != null)
-                                                    <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                    <option value="{{ $serie->id }}"
+                                                            rel="{{ $serie->name }}">{{ $serie->name }}
+                                                        - {{ $serie -> version }}</option>
                                                 @else
-                                                    <option value="{{ $serie->id }}" rel="{{ $serie->name }}">{{ $serie->name }} - {{ $serie -> version }}</option>
+                                                    <option value="{{ $serie->id }}"
+                                                            rel="{{ $serie->name }}">{{ $serie->name }}
+                                                        - {{ $serie -> version }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -451,6 +464,25 @@
     {{-- /.modal --}}
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
     <!-- JQUERY SCRIPTS -->
+    <script>
+        $(document).ready(function () {
+            $('select#series_id').on('change', function () {
+                var selected_id = $('select#series_id').val();
+                $.ajax({
+                    url: 'getNumberFromSeries',
+                    dataType: 'json',
+                    type: 'POST',
+                    data: {'series_id': selected_id},
+                    success: function () {
+                        console.log("ciao");
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+            });
+        });
+    </script>
     <script>
         function showConfirmModal(object_id, user_id, mode) {
             document.confirmForm.user_id.value = user_id;
