@@ -6,12 +6,13 @@ class ComicUserL2Controller extends BaseController
 
     public function create()
     {
-        $series_id = Input::get('series_id');
-        $number = Input::get('number');
+        $this -> layout = null;
+        $series_id = Input::get('single_series_id');
+        $comic_id = Input::get('single_number_id');
         $user_id = Input::get('user_id');
         $series = Series::find($series_id);
         if (count($series) > 0) {
-            $comics = $series->listActive()->where('number', '=', $number)->get();
+            $comics = $series->listActive()->where('id', '=', $comic_id)->get();
             if (count($comics) > 1) {
                 //TODO warning, no more than one number for series should be present!
             } else {

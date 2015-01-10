@@ -91,8 +91,8 @@ class ComicsController extends BaseController {
 	public function getNumberFromSeries(){
 		$this -> layout = null;
 		$series_id = Input::get('series_id');
-		$comics = Comic::where('series_id','=',$series_id)->get();
-		echo $comics;
+		$comics = Comic::whereRaw('series_id = '. $series_id . ' and active = 1')->get();
+		return $comics;
 	}
 }
 ?>
