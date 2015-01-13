@@ -26,7 +26,7 @@
       <div class="row login_box">
         <div class="col-md-12 col-xs-12" align="center">
           <br/>
-          <div class="outter"><img src="http://media.comicbook.com/wp-content/uploads/2013/03/GetMAD.jpg" class="image-circle"/></div>
+          <div class="outter"><img src="{{ URL::asset('assets/img/GetMAD.jpg') }}" class="image-circle"/></div>
           <h1>Benvenuto Ospite</h1>
           <span></span>
           <br/>
