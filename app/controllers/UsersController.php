@@ -4,6 +4,7 @@ class UsersController extends BaseController
 
     public function create()
     {
+        $new = Input::all();
         $user = new User;
         $user->username = Input::get('username');
         $user->password = Hash::make(Input::get('password'));
@@ -11,32 +12,42 @@ class UsersController extends BaseController
         $user->surname = Input::get('surname');
         $user->number = Input::get('number');
         $user->discount = Input::get('discount');
-        $user->save();
-        return Redirect::to('boxes/' . $user->id);
+        if ($user->validate($new)) {
+            $user->save();
+            return Redirect::to('boxes/' . $user->id);
+        } else {
+            $errors = $user->errors();
+            return Redirect::to('boxes/' . $user->id)->withErrors($errors);
+        }
     }
 
     public function update()
     {
+        $new = Input::all();
         $id = Input::get('id');
         $user = User::find($id);
         $user->name = Input::get('name');
         $user->surname = Input::get('surname');
         $user->number = Input::get('number');
         $new_password = Input::get('pass');
-        $new_hash = Hash::make($new_password);
-        if ($new_hash != $user->password && $new_password != null) {
-            $user->password = $new_hash;
-            echo "entro!";
-        }
-        $user->discount = Input::get('discount');
-        if (Input::get('active')) {
-            $user->active = 1;
+        if ($user->validate($new)) {
+            $new_hash = Hash::make($new_password);
+            if ($new_hash != $user->password && $new_password != null) {
+                $user->password = $new_hash;
+            }
+            $user->discount = Input::get('discount');
+            if (Input::get('active')) {
+                $user->active = 1;
+            } else {
+                $user->active = 0;
+                $this->delete($id);
+            }
+            $user->save();
+            return Redirect::to('boxes/' . $id);
         } else {
-            $user->active = 0;
-            $this->delete($id);
+            $errors = $user->errors();
+            return Redirect::to('boxes/' . $id)->withErrors($errors);
         }
-        $user->save();
-        return Redirect::to('boxes/' . $id);
     }
 
     public function delete($box_id)

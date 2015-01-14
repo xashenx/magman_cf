@@ -1,8 +1,13 @@
 @section('content')
-    @if(count($errors)>0))
+    @if(count($errors)>0)
     <h3>Whoops! C'è stato un errore!!! <br/>
         Se il problema persiste, contattare un amministratore!</h3>
     @endif
+    {{ $errors->first('name') }}
+    {{ $errors->first('surname') }}
+    {{ $errors->first('number') }}
+    {{ $errors->first('username') }}
+    {{ $errors->first('password') }}
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="panel panel-default">
@@ -410,6 +415,7 @@
                                     {{ Form::label('surname','Cognome') }}
                                     {{ Form::text('surname') }}
                                     {{ Form::hidden('id')}}
+                                    {{ Form::hidden('username')}}
                                 </div>
                                 <div>
                                     {{ Form::label('number','Numero') }}
@@ -418,6 +424,7 @@
                                 <div>
                                     {{ Form::label('pass', 'Password') }}
                                     {{ Form::password('pass') }}
+                                    {{ Form::hidden('password','dummypassword') }}
                                 </div>
                                 <div>
                                     {{ Form::label('discount', 'Sconto') }}
