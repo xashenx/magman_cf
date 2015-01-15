@@ -3,11 +3,12 @@
 class ComicsController extends BaseController
 {
 
-    public function create() {
+    public function create()
+    {
         $new = Input::all();
         $series_id = Input::get('series_id');
         $comic = new Comic;
-        $comic_price = str_replace(',','.',Input::get('price'));
+        $comic_price = str_replace(',', '.', Input::get('price'));
         $comic->name = Input::get('name');
         $comic->number = Input::get('number');
         $comic->price = $comic_price;
@@ -25,31 +26,43 @@ class ComicsController extends BaseController
 
     public function update()
     {
+        $new = Input::all();
         $id = Input::get('id');
         $comic = Comic::find($id);
         $comic->name = Input::get('name');
         $comic->number = Input::get('number');
         $comic->available = Input::get('available');
         $new_price = Input::get('price');
-        if ($new_price != $comic->price) {
-            $comic->price = $new_price;
-            DB::update('update comic_user set price = ' . $new_price . ' where comic_id = ' . $id . ' and state_id < 3');
-        }
-        if (Input::get('active'))
-            $comic->active = 1;
-        else {
-            $comic->active = 0;
-            DB::update('update comic_user set active = 0 where comic_id = ' . $id);
-        }
-        $comic->save();
         $return = Input::get('return');
+        if ($comic->validate($new)) {
+            if ($new_price != $comic->price) {
+                $comic->price = $new_price;
+                DB::update('update comic_user set price = ' . $new_price . ' where comic_id = ' . $id . ' and state_id < 3');
+            }
+            if (Input::get('active'))
+                $comic->active = 1;
+            else {
+                $comic->active = 0;
+                DB::update('update comic_user set active = 0 where comic_id = ' . $id);
+            }
+            $comic->save();
 
-        if ($return == 'comics')
-            return Redirect::to('comics/' . $id);
-        elseif ($return == 'series')
-            return Redirect::to('series/' . $comic->series_id . '/' . $id);
-        else
-            return "error";
+            if ($return == 'comics')
+                return Redirect::to('comics/' . $id);
+            elseif ($return == 'series')
+                return Redirect::to('series/' . $comic->series_id . '/' . $id);
+            else
+                return "error";
+        } else {
+            $errors = $comic->errors();
+            if ($return == 'comics')
+                return Redirect::to('comics/' . $id)->withErrors($errors);
+            elseif ($return == 'series')
+                return Redirect::to('series/' . $comic->series_id . '/' . $id)->withErrors($errors);
+            else
+                return "error";
+        }
+
     }
 
     public function remove()
@@ -82,7 +95,8 @@ class ComicsController extends BaseController
     public function showShipmentLoader()
     {
         $comics = Comic::where('active', '=', '1');
-        $this->layout->content = View::make('admin/shipmentLoader', array('comics' => $comics));
+        $active_series = DB::select('SELECT s.id, s.name, s.version, count(*) as comics FROM series as s LEFT JOIN comics as c ON c.series_id = s.id WHERE s.active = 1 and c.active = 1 GROUP BY s.id');
+        $this->layout->content = View::make('admin/shipmentLoader', array('comics' => $comics, 'active_series' => $active_series));
     }
 
     public function loadShipment()
