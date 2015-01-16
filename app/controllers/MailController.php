@@ -7,15 +7,14 @@ class MailController extends BaseController
      */
     public function mailToShop()
     {
-        $to  = 'fabrizio.zeni@gmail.com';
+        // TODO VALIDAZIONE PARAMETRI
+        $to  = ShopConf::find(3);
         $user = Auth::user()->name . " " . Auth::user()->surname;
         $subject = 'Magman Casellario: email da ' . $user;
         $message = Input::get('message');
         $headers = 'From: info@magman.it' . "\r\n" .
             'Reply-To: info@magman.it' . "\r\n" .
-            'Cc: txtwiz@gmail.com' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
-
         mail($to, $subject, $message, $headers);
         return Redirect::to('box');
     }
@@ -25,6 +24,7 @@ class MailController extends BaseController
      */
     public function mailToCustomer()
     {
+        // TODO VALIDAZIONE PARAMETRI
         $user_id = Input::get('to');
         $user = User::find($user_id);
         $to = $user->username;
