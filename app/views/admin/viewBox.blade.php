@@ -47,6 +47,9 @@
                             <li class="">
                                 <a href="#details" data-toggle="tab">Dettagli</a>
                             </li>
+                                <li class="">
+                                    <a href="#contact" data-toggle="tab">Contatta</a>
+                                </li>
                         @else
                             <li class="active">
                                 <a href="#details" data-toggle="tab">Dettagli</a>
@@ -364,6 +367,28 @@
                                     <br/>
                                 </div>
                             </div>
+                                <div class="tab-pane fade" id="contact">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h5>Contatta lo Shop</h5>
+                                        </div>
+                                        <h6>Tramite questo form potrai contattare il casellante.<br />
+                                            Scrivi il tuo messaggio nel campo sottostante e il sistema lo invierà al casellante.</h6>
+                                        {{ Form::open(array('action' => 'MailController@mailToCustomer')) }}
+                                        <div>
+                                            {{ Form::label('subject', 'Oggetto: ') }}
+                                            {{ Form::text('subject') }}
+                                        </div><br />
+                                        <div>
+                                            {{ Form::textarea('message') }}
+                                            {{ Form::hidden('to',$user->username) }}
+                                        </div>
+                                        <div>
+                                            {{ Form::submit('Invia mail') }}
+                                        </div>
+                                        {{ Form::close() }}
+                                    </div>
+                                </div>
                         @endif
                         {{--@if(count($purchases)>0)--}}
                             {{--<div class="tab-pane fade" id="purchases">--}}
