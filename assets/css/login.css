@@ -121,11 +121,13 @@ h1{
     font-size: 25px;
     border: none;
     padding-top: 0px;
+    padding-bottom: 10px;
     padding-left: 10px;
     border-bottom: 1px solid #CCC;
-    margin-top:25px;
+    margin-top: 25px;
     margin-bottom: 35px;
-    outline: none;
+    height:35px;
+
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     box-shadow: none !important;
@@ -134,7 +136,11 @@ h1{
 .form-control:focus{
     border-radius: 0px;
     border-bottom: 1px solid #FC563B;
-    margin-bottom: 10px;
+    height:35px;
+    padding-top: 0px;
+    padding-left: 10px;
+    margin-top: 25px;
+    margin-bottom: 35px;
     outline: none;
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
