@@ -69,9 +69,11 @@
               <a  href="{{ URL::asset('box') }}"><i class="fa fa-user fa-3x sidebar-icon"></i> Casella</a>
             </li>
             @endif
+            @if(Auth::user()->level_id == 1)
             <li  >
               <a  href="{{ URL::asset('series') }}"><i class="fa fa-th-large fa-3x sidebar-icon"></i> Serie</a>
             </li>
+            @endif
             @if(Auth::user()->level_id == 100)
             <li>
               <a href="#"><i class="fa fa-gear fa-3x sidebar-icon"></i> Gestione parametri fissi<span class="fa arrow"></span></a>
