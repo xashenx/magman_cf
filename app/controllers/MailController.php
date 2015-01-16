@@ -25,9 +25,7 @@ class MailController extends BaseController
      */
     public function mailToCustomer()
     {
-        $user_id = Input::get('to');
-        $user = User::find($user_id);
-        $to = $user->username;
+        $to = Input::get('to');
         $subject_input = Input::get('subject');
         $subject = 'Magman Casellario: ' . $subject_input;
         $message = Input::get('message');
