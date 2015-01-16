@@ -7,9 +7,10 @@ class MailController extends BaseController
      */
     public function mailToShop()
     {
-        $to  = 'ashen@ashen.it';
-        $subject = 'Test Mailer';
-        $message = 'questa è una prova di mail';
+        $to  = 'fabrizio.zeni@gmail.com';
+        $user = Auth::user()->name . " " . Auth::user()->surname;
+        $subject = 'Magman Casellario: email da ' . $user;
+        $message = Input::get('message');
         $headers = 'From: info@magman.it' . "\r\n" .
             'Reply-To: info@magman.it' . "\r\n" .
             'Cc: txtwiz@gmail.com' . "\r\n" .
@@ -20,21 +21,21 @@ class MailController extends BaseController
     }
 
     /**
-     * Send a mail to the a customer of the shop
+     * Send a mail to a customer of the shop
      */
     public function mailToCustomer()
     {
-        $to      = 'nobody@example.com';
-        $subject = 'the subject';
-        $message = 'hello';
-        $headers = 'From: webmaster@example.com' . "\r\n" .
-            'Reply-To: webmaster@example.com' . "\r\n" .
+        $to = Input::get('to');
+        $subject_input = Input::get('subject');
+        $subject = 'Magman Casellario: ' . $subject_input;
+        $message = Input::get('message');
+        $headers = 'From: casellario@magman.it' . "\r\n" .
+            'Reply-To: casellario@magman.it' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
 
         mail($to, $subject, $message, $headers);
-        return Redirect::to('series');
+        return Redirect::to('boxes');
     }
-
 }
 
 ?>

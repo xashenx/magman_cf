@@ -106,7 +106,8 @@ Route::group(array('before' => 'auth'), function () {
         } else {
             Route::get('home', 'UserController@userHome');
             Route::get('box', 'UserController@box');
-//            Route::get('mail', 'MailController@mailToShop');
+            Route::get('mail', 'UserController@contactTheShop');
+            Route::post('mailToShop', 'MailController@mailToShop');
 //            Route::get('series', 'UserController@listSeries');
 //            Route::get('series/{series_id}', 'UserController@viewSeries')->where('id', '[0-9]+');
         }

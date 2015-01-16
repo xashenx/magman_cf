@@ -58,5 +58,9 @@ class UserController extends BaseController {
 		else
 			return Redirect::to('series');
 	}
+
+	public function contactTheShop(){
+		$this -> layout -> content = View::make('user/contactTheShop');
+	}
 }
 ?>
