@@ -11,12 +11,9 @@
  |
  */
 
-Route::get('example', function() {
-	return View::make('example');
-});
-
 Route::get('/', function() {
-	return View::make('hello');
+	// TODO change to home
+	return View::make('loginForm');
 });
 
 /* LOGIN */
