@@ -2,6 +2,10 @@
 <p>
 	<h1>Visualizzazione Casella</h1>
 </p>
+@if(count($errors)>0)
+	<h3>Whoops! C'è stato un errore!!! <br/>
+		Se il problema persiste, contattare un amministratore!</h3>
+@endif
 <div class="row">
 	<div class="col-md-6">
 		<!--    Bordered Table  -->
