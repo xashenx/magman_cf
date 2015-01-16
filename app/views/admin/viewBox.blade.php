@@ -52,11 +52,11 @@
                                 <a href="#details" data-toggle="tab">Dettagli</a>
                             </li>
                         @endif
-                        @if(count($purchases)>0)
-                            <li class="">
-                                <a href="#purchases" data-toggle="tab">Storico Acquisti</a>
-                            </li>
-                        @endif
+                        {{--@if(count($purchases)>0)--}}
+                            {{--<li class="">--}}
+                                {{--<a href="#purchases" data-toggle="tab">Storico Acquisti</a>--}}
+                            {{--</li>--}}
+                        {{--@endif--}}
                         <li class="">
                             <a href="#edit" data-toggle="tab">Modifica</a>
                         </li>
@@ -365,42 +365,42 @@
                                 </div>
                             </div>
                         @endif
-                        @if(count($purchases)>0)
-                            <div class="tab-pane fade" id="purchases">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h5>Storico degli Acquisti</h5>
-                                    </div>
-                                    <div class="table-responsive table-bordered">
-                                        <table class="table table-striped table-bordered table-hover"
-                                               id="dataTables-example">
-                                            <thead>
-                                            <tr>
-                                                <th>Data Acquisto</th>
-                                                <th>Fumetto</th>
-                                                <th>Prezzo</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach ($purchases as $purchase)
-                                                <tr class="odd gradeX">
-                                                    <td>{{date('d/m/Y',strtotime($purchase->buy_time))}}</td>
-                                                    @if($purchase->series->version == null)
-                                                        <td>{{$purchase->series->name}}
-                                                            nr. {{$purchase->comic->number}}</td>
-                                                    @else
-                                                        <td>{{$purchase->series->name}} - {{$purchase->series->version}}
-                                                            nr. {{$purchase->comic->number}}</td>
-                                                    @endif
-                                                    <td>{{$purchase->price}}</td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
+                        {{--@if(count($purchases)>0)--}}
+                            {{--<div class="tab-pane fade" id="purchases">--}}
+                                {{--<div class="panel panel-default">--}}
+                                    {{--<div class="panel-heading">--}}
+                                        {{--<h5>Storico degli Acquisti</h5>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="table-responsive table-bordered">--}}
+                                        {{--<table class="table table-striped table-bordered table-hover"--}}
+                                               {{--id="dataTables-example">--}}
+                                            {{--<thead>--}}
+                                            {{--<tr>--}}
+                                                {{--<th>Data Acquisto</th>--}}
+                                                {{--<th>Fumetto</th>--}}
+                                                {{--<th>Prezzo</th>--}}
+                                            {{--</tr>--}}
+                                            {{--</thead>--}}
+                                            {{--<tbody>--}}
+                                            {{--@foreach ($purchases as $purchase)--}}
+                                                {{--<tr class="odd gradeX">--}}
+                                                    {{--<td>{{date('d/m/Y',strtotime($purchase->buy_time))}}</td>--}}
+                                                    {{--@if($purchase->series->version == null)--}}
+                                                        {{--<td>{{$purchase->series->name}}--}}
+                                                            {{--nr. {{$purchase->comic->number}}</td>--}}
+                                                    {{--@else--}}
+                                                        {{--<td>{{$purchase->series->name}} - {{$purchase->series->version}}--}}
+                                                            {{--nr. {{$purchase->comic->number}}</td>--}}
+                                                    {{--@endif--}}
+                                                    {{--<td>{{$purchase->price}}</td>--}}
+                                                {{--</tr>--}}
+                                            {{--@endforeach--}}
+                                            {{--</tbody>--}}
+                                        {{--</table>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--@endif--}}
                         <div class="tab-pane fade" id="edit">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
