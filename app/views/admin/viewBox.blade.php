@@ -381,7 +381,7 @@
                                         </div><br />
                                         <div>
                                             {{ Form::textarea('message') }}
-                                            {{ Form::hidden('to',$user->username) }}
+                                            {{ Form::hidden('to',$user->id) }}
                                         </div>
                                         <div>
                                             {{ Form::submit('Invia mail') }}
