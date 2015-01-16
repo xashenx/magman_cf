@@ -40,7 +40,7 @@
         </div>
 
         <div style="color: white; padding: 20px 50px 5px 50px; float: right; font-size: 16px;">
-            Benvenuto <a href="{{ URL::asset('profile') }}">{{Auth::user()->name}}</a>! &nbsp; <a href="logout"
+            Benvenuto <a href="{{ URL::asset('profile') }}">{{Auth::user()->name}}</a>! &nbsp; <a href="{{ URL::asset('logout') }}"
                                                                                                   class="btn btn-danger square-btn-adjust">Logout</a>
         </div>
     </nav>
