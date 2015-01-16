@@ -16,14 +16,12 @@ class UserController extends BaseController {
 	 * Displays the home page for an user of the platform
 	 */
 	public function userHome() {
-		$last = Comic::where('active','=','1')->max('created_at');
-		$last = date('Y-m-d',strtotime($last));
-		$news = Comic::whereRaw("active = 1 and created_at > '" . $last . "'")->get();
+		$one_week_earlier = date('Y-m-d',strtotime('-1 week'));
+		$news = Comic::whereRaw("active = 1 and created_at > '" . $one_week_earlier . "'")->get();
 		$comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . Auth::id())->get();
 		$user = User::find(Auth::id());
 		$due = $this->due($user);
-		$last = date('d-m-Y',strtotime($last));
-		$this -> layout -> content = View::make('user/homePage',array('news' => $news,'user' => $user,'due' => $due,'comics' => $comics,'last' => $last));
+		$this -> layout -> content = View::make('user/homePage',array('news' => $news,'user' => $user,'due' => $due,'comics' => $comics));
 	}
 
 	public function userProfile(){

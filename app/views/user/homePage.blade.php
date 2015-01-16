@@ -42,7 +42,7 @@
             <!--    Bordered Table  -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h5>Novità del {{$last}}</h5>
+                    <h5>Novità della Settimana</h5>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
