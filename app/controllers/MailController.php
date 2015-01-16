@@ -8,9 +8,10 @@ class MailController extends BaseController
     public function mailToShop()
     {
         // TODO VALIDAZIONE PARAMETRI
-        $to  = ShopConf::find(3);
+        $shop_owner = ShopConf::find(3);
+        $to  = $shop_owner->value;
         $user = Auth::user()->name . " " . Auth::user()->surname;
-        $subject = 'Magman Casellario: email da ' . $user;
+        $subject = 'Magman Casellario: messaggio da ' . $user;
         $message = Input::get('message');
         $headers = 'From: info@magman.it' . "\r\n" .
             'Reply-To: info@magman.it' . "\r\n" .
