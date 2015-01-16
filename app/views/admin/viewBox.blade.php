@@ -370,7 +370,7 @@
                                 <div class="tab-pane fade" id="contact">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h5>Contatta lo Shop</h5>
+                                            <h5>Contatta l'utente</h5>
                                         </div>
                                         <h6>Tramite questo form potrai contattare il casellante.<br />
                                             Scrivi il tuo messaggio nel campo sottostante e il sistema lo invierà al casellante.</h6>
