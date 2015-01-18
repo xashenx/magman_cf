@@ -20,10 +20,11 @@
     <!-- LOGIN STYLES-->
     <link href="{{ URL::asset('assets/css/login.css') }}" rel="stylesheet" />
   </head>
-  <body>
 
+  <body>
     <div class="container">
       <div class="row login_box">
+
         <div class="col-md-12 col-xs-12" align="center">
           <br/>
           <div class="outter"><img src="{{ URL::asset('assets/img/GetMAD.jpg') }}" class="image-circle"/></div>
@@ -41,18 +42,22 @@
             <div class="control">
               <input type="password" name="password" class="form-control" placeholder="Password" required/>
             </div>
+
             <div class="control">
               <div class="label">
                 <input type="checkbox" name="persist" tabindex="3">
                 <span>Ricordami</span>
               </div>
             </div>
+
             <div align="center">
-              <button class="btn btn-orange">LOGIN</button>
+              <button class="btn btn-danger btn-orange">LOGIN</button>
             </div>
           </form>
         </div>
+
       </div>
     </div>
+
   </body>
 </html>
