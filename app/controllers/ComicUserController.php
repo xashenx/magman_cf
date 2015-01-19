@@ -4,8 +4,6 @@ class ComicUserController extends BaseController {
     public function create()
     {
         $this -> layout = null;
-		$new = Input::all();
-
         $series_id = Input::get('single_series_id');
         $comic_id = Input::get('single_number_id');
         $user_id = Input::get('user_id');
@@ -13,10 +11,15 @@ class ComicUserController extends BaseController {
         if (count($series) > 0) {
             $comics = $series->listActive()->where('id', '=', $comic_id)->get();
             if (count($comics) > 1) {
+				echo "qui!";
                 //TODO warning, no more than one number for series should be present!
             } else {
+
                 foreach ($comics as $comic) {
+					Input::merge(array('comic_id' => $comic_id));
+					Input::merge(array('price' => $comic->price));
                     $comic_id = $comic->id;
+					$new = Input::all();
                     $comicUser = new ComicUser;
 					if ($comicUser->validate($new)) {
 						$comicUser->comic_id = $comic_id;
@@ -24,6 +27,7 @@ class ComicUserController extends BaseController {
 						$comicUser->price = $comic->price;
 						$comicUser->save();
 					}else{
+						echo $comicUser->errors();
 						$errors = $comic->errors();
 						return Redirect::to('boxes/' . $user_id)->withErrors($errors);
 					}
