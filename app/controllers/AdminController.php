@@ -105,7 +105,7 @@ class AdminController extends BaseController
         $due = 0;
         $discount = $user->discount;
         foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
-            if ($comic->comic->available > 1)
+            if ($comic->comic->available > 0)
                 $due += round($comic->price, 2);
         }
         return $due - ($due * $discount / 100);
@@ -119,7 +119,7 @@ class AdminController extends BaseController
             $comics = $box->listComics()->whereRaw('state_id < 3 and active = 1')->get();
             $available_counter = 0;
             foreach ($comics as $comic) {
-                if ($comic->comic->available > 1) {
+                if ($comic->comic->available > 0) {
                     $available_counter++;
                 }
             }
@@ -136,7 +136,7 @@ class AdminController extends BaseController
             $comics = $box->listComics()->whereRaw('state_id < 3 and active = 1')->get();
             $due_counter = 0;
             foreach ($comics as $comic) {
-                if ($comic->comic->available > 1) {
+                if ($comic->comic->available > 0) {
                     $due_counter += round($comic->price, 2);
                 }
             }

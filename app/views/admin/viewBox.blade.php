@@ -82,7 +82,7 @@
                                                     </thead>
                                                     <tbody>
                                                     @foreach ($comics as $comic)
-                                                        @if ($comic->comic->available > 1)
+                                                        @if ($comic->comic->available > 0)
                                                             <tr class="success">
                                                         @else
                                                             <tr class="odd gradeX">

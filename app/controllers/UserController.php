@@ -35,7 +35,7 @@ class UserController extends BaseController {
 		$due = 0;
 		$discount = $user->discount;
 		foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
-			if($comic->comic->available > 1)
+			if($comic->comic->available > 0)
 				$due += round($comic->price,2);
 		}
 		return $due-($due*$discount/100);

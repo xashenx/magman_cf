@@ -53,7 +53,7 @@ class HomePageController extends BaseController
             $comics = $box->listComics()->whereRaw('state_id < 3 and active = 1')->get();
             $due_counter = 0;
             foreach ($comics as $comic) {
-                if ($comic->comic->available > 1) {
+                if ($comic->comic->available > 0) {
                     $due_counter += round($comic->price, 2);
                 }
             }

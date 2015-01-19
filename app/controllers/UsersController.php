@@ -108,7 +108,7 @@ class UsersController extends BaseController
             $comics = $box->listComics()->whereRaw('state_id < 3')->get();
             $available_counter = 0;
             foreach ($comics as $comic) {
-                if ($comic->comic->available > 1) {
+                if ($comic->comic->available > 0) {
                     $available_counter++;
                 }
             }
