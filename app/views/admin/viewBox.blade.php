@@ -3,6 +3,8 @@
     <h3>Whoops! C'è stato un errore!!! <br/>
         Se il problema persiste, contattare un amministratore!</h3>
     @endif
+    {{ $errors->first('message') }}
+    {{ $errors->first('subject') }}
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="panel panel-default">

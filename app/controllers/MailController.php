@@ -7,22 +7,28 @@ class MailController extends BaseController
      */
     public function mailToShop()
     {
-        $rules = array('message' => 'regex:/^[A-z 0-9\'àèìòù&,\.\?\!()\$\€%"£^\@\;\:\n\+\-]*$/');
-        $validator = Validator::make(Input::all(), $rules);
-        if ($validator->fails()) {
-            return Redirect::to('box')->withErrors($validator);
-        } else {
-            $shop_owner = ShopConf::find(3);
-            $to = $shop_owner->value;
-            $user = Auth::user()->name . " " . Auth::user()->surname;
-            $subject = 'Magman Casellario: messaggio da ' . $user;
-            $message = Input::get('message');
-            $headers = 'From: ' . Auth::user()->username . "\r\n" .
-                'Reply-To: ' . Auth::user()->username . "\r\n" .
-                'X-Mailer: PHP/' . phpversion();
-            mail($to, $subject, $message, $headers);
-            return Redirect::to('box');
-        }
+        $rules = array('message' => 'required|regex:/^[A-z 0-9àèìòù&\',\.\?\!()\$\€%"£^\@\;\:\n\+\-]*$/');
+//        echo print_r(Input::get('message'));
+        $message = Input::get('message');
+        $message = nl2br($message);
+        $message = str_replace('<br />','XX',$message);
+        Input::merge(array('message' => $message));
+        echo var_dump(Input::get('message'));
+//        $validator = Validator::make(Input::all(), $rules);
+//        if ($validator->fails()) {
+//            return Redirect::to('box')->withErrors($validator);
+//        } else {
+//            $shop_owner = ShopConf::find(3);
+//            $to = $shop_owner->value;
+//            $user = Auth::user()->name . " " . Auth::user()->surname;
+//            $subject = 'Magman Casellario: messaggio da ' . $user;
+//            $message = Input::get('message');
+//            $headers = 'From: ' . Auth::user()->username . "\r\n" .
+//                'Reply-To: ' . Auth::user()->username . "\r\n" .
+//                'X-Mailer: PHP/' . phpversion();
+//            mail($to, $subject, $message, $headers);
+//            return Redirect::to('box');
+//        }
     }
 
     /**
