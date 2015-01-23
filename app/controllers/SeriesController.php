@@ -52,21 +52,21 @@ class SeriesController extends BaseController {
 		$comics = $series -> listComics;
 		if (Input::get('comics') == 1) {
 			// $this -> restoreComics($comics);
-			DB::table('comics') -> where('series_id', $series_id) -> update(array('active' => 0));
+			DB::table('bm_comics') -> where('series_id', $series_id) -> update(array('active' => 0));
 		}
 		return Redirect::to('series');
 	}
 
 	public function deleteComics($comics) {
 		foreach ($comics as $comic) {
-			DB::table('comic_user') -> where('comic_id', $comic->id) -> update(array('active' => 0));
+			DB::table('bm_comic_user') -> where('comic_id', $comic->id) -> update(array('active' => 0));
 			$comic -> active = 0;
 			$comic -> update();
 		}
 	}
 
 	public function deleteSeriesUser($series_id) {
-		DB::table('series_user') -> where('series_id', $series_id) -> update(array('active' => 0));
+		DB::table('bm_series_user') -> where('series_id', $series_id) -> update(array('active' => 0));
 		// $seriesUser = SeriesUser::where('series_id',$series_id)->get();
 		// foreach ($seriesUser as $box) {
 			// $box -> active = 0;

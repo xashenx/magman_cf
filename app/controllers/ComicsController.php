@@ -37,13 +37,13 @@ class ComicsController extends BaseController
         if ($comic->validate($new)) {
             if ($new_price != $comic->price) {
                 $comic->price = $new_price;
-                DB::update('update comic_user set price = ' . $new_price . ' where comic_id = ' . $id . ' and state_id < 3');
+                DB::update('update bm_comic_user set price = ' . $new_price . ' where comic_id = ' . $id . ' and state_id < 3');
             }
             if (Input::get('active'))
                 $comic->active = 1;
             else {
                 $comic->active = 0;
-                DB::update('update comic_user set active = 0 where comic_id = ' . $id);
+                DB::update('update bm_comic_user set active = 0 where comic_id = ' . $id);
             }
             $comic->save();
 
@@ -95,7 +95,7 @@ class ComicsController extends BaseController
     public function showShipmentLoader()
     {
         $comics = Comic::where('active', '=', '1');
-        $active_series = DB::select('SELECT s.id, s.name, s.version, count(*) as comics FROM series as s LEFT JOIN comics as c ON c.series_id = s.id WHERE s.active = 1 and c.active = 1 GROUP BY s.id');
+        $active_series = DB::select('SELECT s.id, s.name, s.version, count(*) as comics FROM bm_series as s LEFT JOIN bm_comics as c ON c.series_id = s.id WHERE s.active = 1 and c.active = 1 GROUP BY s.id');
         $this->layout->content = View::make('admin/shipmentLoader', array('comics' => $comics, 'active_series' => $active_series));
     }
 

@@ -7,7 +7,7 @@ class ShopConf extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'shop_configurations';
+	protected $table = 'bm_shop_configurations';
 	
 	protected $guarded = array('id','description');
 

@@ -7,7 +7,7 @@ class Comic extends Eloquent {
    *
    * @var string
    */
-  protected $table = 'comics';
+  protected $table = 'bm_comics';
   private $rules = array(
       'series_id' => 'required|numeric',
       'number' => 'required|numeric',

@@ -50,7 +50,7 @@ class SeriesUserController extends BaseController {
 		$seriesUser -> active = 0;
 		$comics = $seriesUser -> series -> listActive;
 		foreach ($comics as $comic) {
-			DB::update('update comic_user set active = 0 where comic_id = ' . $comic -> id);
+			DB::update('update bm_comic_user set active = 0 where comic_id = ' . $comic -> id);
 		}
 		$seriesUser -> update();
 		return Redirect::to('boxes/' . $user_id);

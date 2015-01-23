@@ -53,8 +53,8 @@ class UsersController extends BaseController
     public function delete($box_id)
     {
         //delete followed series and ordered comics
-        DB::table('series_user')->where('user_id', $box_id)->update(array('active' => 0));
-        DB::table('comic_user')->where('user_id', $box_id)->update(array('active' => 0));
+        DB::table('bm_series_user')->where('user_id', $box_id)->update(array('active' => 0));
+        DB::table('bm_comic_user')->where('user_id', $box_id)->update(array('active' => 0));
     }
 
     /*

@@ -7,7 +7,7 @@ class Series extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'series';
+	protected $table = 'bm_series';
 	private $rules = array(
 		'name' => 'required',
 		'version' => 'required',

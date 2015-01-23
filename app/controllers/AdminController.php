@@ -90,7 +90,7 @@ class AdminController extends BaseController
         $user = User::find($box_id);
         if ($user != null) {
             $series = SeriesUser::where('user_id', '=', $box_id)->get();
-            $active_series = DB::select('SELECT s.id, s.name, s.version, count(*) as comics FROM series as s LEFT JOIN comics as c ON c.series_id = s.id WHERE s.active = 1 and c.active = 1 GROUP BY s.id');
+            $active_series = DB::select('SELECT s.id, s.name, s.version, count(*) as comics FROM bm_series as s LEFT JOIN bm_comics as c ON c.series_id = s.id WHERE s.active = 1 and c.active = 1 GROUP BY s.id');
 //			$active_series = Series::where('active','=',1)->get();
             $comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . $box_id)->get();
             $purchases = ComicUser::whereRaw('state_id = 3 and active = 1 and user_id = ' . $box_id)->get();

@@ -7,7 +7,7 @@ class Level extends Eloquent {
    *
    * @var string
    */
-	protected $table = 'level';
+	protected $table = 'bm_level';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
