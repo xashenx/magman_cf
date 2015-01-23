@@ -10,6 +10,7 @@ class UserController extends BaseController {
 		$user = User::find(Auth::id());
 		$due = $this->due($user);
 		$this -> layout -> content = View::make('user/box', array('series' => $series,'user' => $user,'due' => $due,'comics' => $comics));
+//		test
 	}
 
 	/*
