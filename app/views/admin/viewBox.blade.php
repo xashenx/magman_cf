@@ -204,7 +204,7 @@
                                                                                 class="btn btn-danger btn-sm"><i
                                                                                     class="fa fa-remove"></i>
                                                                             </button>
-                                                                        @else
+                                                                        @elseif($serie->series->active)
                                                                             <button type="button" title="Segui"
                                                                                     onclick="showConfirmModal({{$serie->id}},{{$user->id}},3)"
                                                                                     class="btn btn-success btn-sm"><i
