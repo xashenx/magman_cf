@@ -15,6 +15,11 @@
                             <a href="#details" data-toggle="tab">Dettagli</a>
                         </li>
                         @if($comic->series->active == 1)
+                            @if(count($ordered)>0)
+                            <li class="">
+                                <a href="#ordered" data-toggle="tab">Prenotazioni</a>
+                            </li>
+                            @endif
                             <li class="">
                                 <a href="#edit" data-toggle="tab">Modifica</a>
                             </li>
@@ -38,14 +43,48 @@
                                 Nome del numero: {{$comic->name}}
                                 <br/>
                                 @if($inv_state == 1)
-                                Disponibilità: {{$comic->available}}
-                                <br/>
+                                    Disponibilità: {{$comic->available}}
+                                    <br/>
                                 @endif
                                 Prezzo: {{round($comic->price,2)}}
                                 <br/>
                             </div>
                         </div>
                         @if($comic->series->active == 1)
+                            @if(count($ordered)>0)
+                            <div class="tab-pane fade" id="ordered">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h5>Prenotazioni del Fumetto</h5>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover"
+                                                   id="dataTables-example">
+                                                <thead>
+                                                <tr>
+                                                    <th>Casellante</th>
+                                                    <th>Prezzo</th>
+                                                    <th>Data prenotazione</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($ordered as $order)
+                                                    <tr class="odd gradeX">
+                                                        <td>
+                                                            <a href="{{ $path }}boxes/{{ $order->box->id }}">{{ $order->box->name }} {{ $order->box->surname }}</a>
+                                                        </td>
+                                                        <td>{{ round($order->price,2)}}€</td>
+                                                        <td>{{ date('d/m/Y',strtotime($order->created_at)) }}</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                             <div class="tab-pane fade" id="edit">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -68,10 +107,10 @@
                                         {{ Form::text('number') }}
                                     </div>
                                     @if($inv_state == 1)
-                                    <div>
-                                        {{ Form::label('available', 'Disponibilità') }}
-                                        {{ Form::text('available') }}
-                                    </div>
+                                        <div>
+                                            {{ Form::label('available', 'Disponibilità') }}
+                                            {{ Form::text('available') }}
+                                        </div>
                                     @endif
                                     <div>
                                         {{ Form::label('price', 'Prezzo') }}

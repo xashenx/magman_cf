@@ -151,8 +151,9 @@ class ComicsController extends BaseController
     {
         $inv_state = $this -> module_state('inventory');
         $comic = Comic::find($comic_id);
+        $ordered = ComicUser::whereRaw('active = 1 AND state_id = 1 AND comic_id = ' . $comic_id)->get();
         if ($comic != null)
-            $this->layout->content = View::make('admin/editComic', array('comic' => $comic, 'path' => '../','inv_state' => $inv_state));
+            $this->layout->content = View::make('admin/editComic', array('comic' => $comic, 'path' => '../','ordered' => $ordered,'inv_state' => $inv_state));
         else
             return Redirect::to('comics/' . $comic_id);
     }
