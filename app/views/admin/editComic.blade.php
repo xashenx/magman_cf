@@ -7,7 +7,29 @@
         <div class="col-md-12 col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1>Visualizza/Modifica Fumetto</h1>
+                    <h1>Visualizza/Modifica Fumetto
+                    @if($comic->active)
+                            <button type="button" title="Disattiva fumetto"
+                                    @if($path == '../')
+                                    onclick="showConfirmModal({{$comic->id}},0,0)"
+                                    @else
+                                    onclick="showConfirmModal({{$comic->id}},{{$comic->series->id}},0)"
+                                    @endif
+                                    class="btn btn-danger btn-sm"><i
+                                        class="fa fa-thumbs-o-down"></i>
+                            </button>
+                    @else
+                        <button type="button" title="Riattiva fumetto"
+                                @if($path == '../')
+                                onclick="showConfirmModal({{$comic->id}},0,1)"
+                                @else
+                                onclick="showConfirmModal({{$comic->id}},{{$comic->series->id}},1)"
+                                @endif
+                                class="btn btn-success btn-sm"><i
+                                    class="fa fa-thumbs-o-up"></i>
+                        </button>
+                    @endif
+                    </h1>
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
@@ -117,10 +139,6 @@
                                         {{ Form::text('price') }}
                                     </div>
                                     <div>
-                                        {{ Form::label('active', 'Attivo') }}
-                                        {{ Form::checkbox('active', 'value'); }}
-                                    </div>
-                                    <div>
                                         {{ Form::submit('Aggiorna') }}
                                     </div>
                                     {{ Form::close() }}
@@ -132,6 +150,34 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h3 class="modal-title">Conferma azione</h3>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmPageName" class="text-danger"></p>
+                </div>
+                <div class="modal-footer">
+                    {{ Form::open(array('name' => 'confirmForm')) }}
+                    {{ Form::hidden('id') }}
+                    {{ Form::hidden('return') }}
+                    {{ Form::button('Annulla', array(
+                    'data-dismiss' => 'modal',
+                    'class' => 'btn btn-danger btn-sm')) }}
+                    {{ Form::submit('Confermo', array('class' => 'btn btn-danger btn-sm',)) }}
+                    {{ Form::close() }}
+                </div>
+            </div>
+            {{-- /.modal-content --}}
+        </div>
+        {{-- /.modal-dialog --}}
+    </div>
+    {{-- /.modal --}}
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
     <!-- JQUERY SCRIPTS -->
     <script src="{{$path}}assets/js/jquery.js"></script>
@@ -148,4 +194,33 @@
         });
     </script>
     <!-- CUSTOM SCRIPTS -->
+    <script>
+        function showConfirmModal(object_id, series, mode) {
+            if(series != 0)
+                document.confirmForm.return.value = "series/" + series + "/" + object_id;
+            else
+                document.confirmForm.return.value = "comics/" + object_id;
+            if (mode == 0) {
+                // delete comic
+                if(series != 0)
+                    document.confirmForm.action = '../../deleteComic';
+                else
+                    document.confirmForm.action = '../deleteComic';
+                document.confirmForm.id.value = object_id;
+                $('#confirmPageName').text('Sei sicuro di volere disattivare questo fumetto');
+            } else if (mode == 1) {
+                // restore comic
+                if(series != 0)
+                    document.confirmForm.action = '../../restoreComic';
+                else
+                    document.confirmForm.action = '../restoreComic';
+                document.confirmForm.id.value = object_id;
+                $('#confirmPageName').text('Sei sicuro di volere attivare nuovamente questo fumetto?' + mode);
+            }
+            $('#modal-confirm').modal({
+                show: true
+            });
+        }
+    </script>
+
 @stop

@@ -9,7 +9,20 @@
         <div class="col-md-12 col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1>Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}</h1>
+                    <h1>Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
+                    @if($user->active)
+                        <button type="button" title="Disattiva casella"
+                            onclick="showConfirmModal({{$user->id}},0,4)"
+                            class="btn btn-danger btn-sm"><i
+                            class="fa fa-remove"></i>
+                        </button></h1>
+                    @else
+                        <button type="button" title="Riattiva casella"
+                                onclick="showConfirmModal({{$user->id}},0,5)"
+                                class="btn btn-success btn-sm"><i
+                                    class="fa fa-thumbs-o-up"></i>
+                        </button></h1>
+                    @endif
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
@@ -189,7 +202,7 @@
                                                                             <button type="button" title="Abbandona"
                                                                                 onclick="showConfirmModal({{$serie->id}},{{$user->id}},2)"
                                                                                 class="btn btn-danger btn-sm"><i
-                                                                                    class="fa fa-heart-o"></i>
+                                                                                    class="fa fa-remove"></i>
                                                                             </button>
                                                                         @else
                                                                             <button type="button" title="Segui"
@@ -496,10 +509,6 @@
                                     {{ Form::text('discount') }}
                                 </div>
                                 <div>
-                                    {{ Form::label('active', 'Attivo') }}
-                                    {{ Form::checkbox('active'); }}
-                                </div>
-                                <div>
                                     {{ Form::submit('Aggiorna') }}
                                 </div>
                                 {{ Form::close() }}
@@ -564,6 +573,16 @@
                 document.confirmForm.id.value = object_id;
                 document.confirmForm.action = '../restoreSeriesUser';
                 $('#confirmPageName').text('Sei sicuro di voler ripristinare la seria nella casella?');
+            } else if(mode == 4){
+                // confirm disabling of a box
+                document.confirmForm.id.value = object_id;
+                document.confirmForm.action = '../deleteUser';
+                $('#confirmPageName').text('Sei sicuro di voler disabilitare questa casella?');
+            } else if(mode == 5){
+                // confirm re-enabling of a box
+                document.confirmForm.id.value = object_id;
+                document.confirmForm.action = '../restoreUser';
+                $('#confirmPageName').text('Sei sicuro di voler abilitare nuovamente questa casella?');
             }
             $('#modal-confirm').modal({
                 show: true

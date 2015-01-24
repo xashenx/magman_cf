@@ -41,12 +41,12 @@ class ComicsController extends BaseController
                 $comic->price = $new_price;
                 DB::update('update bm_comic_user set price = ' . $new_price . ' where comic_id = ' . $id . ' and state_id < 3');
             }
-            if (Input::get('active'))
-                $comic->active = 1;
-            else {
-                $comic->active = 0;
-                DB::update('update bm_comic_user set active = 0 where comic_id = ' . $id);
-            }
+//            if (Input::get('active'))
+//                $comic->active = 1;
+//            else {
+//                $comic->active = 0;
+//                DB::update('update bm_comic_user set active = 0 where comic_id = ' . $id);
+//            }
             $comic->save();
 
             if ($return == 'comics')
@@ -65,6 +65,38 @@ class ComicsController extends BaseController
                 return "error";
         }
 
+    }
+
+    public function delete()
+    {
+        $comic_id = Input::get('id');
+        $path = Input::get('return');
+        $rules = array('id' => 'required|numeric|exists:bm_comics,id,active,1');
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to($path)->withErrors($validator);
+        } else{
+            $comic = Comic::find($comic_id);
+            $comic->active = 0;
+            $comic->update();
+            DB::update('update bm_comic_user set active = 0 where comic_id = ' . $comic_id);
+            return Redirect::to($path);
+        }
+    }
+
+    public function restore(){
+        $comic_id = Input::get('id');
+        $path = Input::get('return');
+        $rules = array('id' => 'required|numeric|exists:bm_comics,id,active,0');
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to($path)->withErrors($validator);
+        } else{
+            $comic = Comic::find($comic_id);
+            $comic->active = 1;
+            $comic->update();
+            return Redirect::to($path);
+        }
     }
 
     public function remove()

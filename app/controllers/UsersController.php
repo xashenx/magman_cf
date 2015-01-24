@@ -36,12 +36,12 @@ class UsersController extends BaseController
                 $user->password = $new_hash;
             }
             $user->discount = Input::get('discount');
-            if (Input::get('active')) {
-                $user->active = 1;
-            } else {
-                $user->active = 0;
-                $this->delete($id);
-            }
+//            if (Input::get('active')) {
+//                $user->active = 1;
+//            } else {
+//                $user->active = 0;
+//                $this->delete($id);
+//            }
             $user->save();
             return Redirect::to('boxes/' . $id);
         } else {
@@ -50,11 +50,35 @@ class UsersController extends BaseController
         }
     }
 
-    public function delete($box_id)
+    public function delete()
     {
-        //delete followed series and ordered comics
-        DB::table('bm_series_user')->where('user_id', $box_id)->update(array('active' => 0));
-        DB::table('bm_comic_user')->where('user_id', $box_id)->update(array('active' => 0));
+        $box_id = Input::get('id');
+        $user = User::find($box_id);
+        $rules = array('id' => 'required|numeric|exists:bm_users,id,active,1');
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to('boxes/' . $user->id)->withErrors($validator);
+        } else{
+            $user->active = 0;
+            $user->update();
+            DB::table('bm_series_user')->where('user_id', $box_id)->update(array('active' => 0));
+            DB::table('bm_comic_user')->where('user_id', $box_id)->update(array('active' => 0));
+            return Redirect::to('boxes/' . $user->id);
+        }
+    }
+
+    public function restore(){
+        $box_id = Input::get('id');
+        $user = User::find($box_id);
+        $rules = array('id' => 'required|numeric|exists:bm_users,id,active,0');
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to('boxes/' . $user->id)->withErrors($validator);
+        } else{
+            $user->active = 1;
+            $user->update();
+            return Redirect::to('boxes/' . $user->id);
+        }
     }
 
     /*
@@ -65,7 +89,6 @@ class UsersController extends BaseController
         $id = Input::get('id');
         $user = User::find($id);
         $old_password = Input::get('old_pass');
-        $messages = array();
         if (!Hash::check($old_password, $user->password)) {
             $message = 'la password attuale non è corretta';
             $errors = array('old_pass' => $message);

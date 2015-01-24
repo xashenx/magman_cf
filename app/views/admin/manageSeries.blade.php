@@ -1,4 +1,8 @@
 @section('content')
+	@if(count($errors)>0)
+		<h3>Whhops: E' avvenuto un errore!!<br/>
+			Se il problema persiste contattare un amministratore</h3>
+	@endif
 <div class="row">
 	<div class="col-md-12">
 		<!-- Advanced Tables -->
@@ -52,7 +56,7 @@
 													<button type="button" title="Disabilita"
 															onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},0)"
 															class="btn btn-danger btn-sm"><i
-																class="fa fa-trash"></i>
+																class="fa fa-remove"></i>
 													</button>
 												@else
 													<button type="button" title="Abilita"
@@ -151,6 +155,7 @@
 				{{ Form::open(array('name' => 'confirmForm')) }}
 				{{ Form::hidden('id') }}
 				{{ Form::hidden('comics') }}
+				{{ Form::hidden('return') }}
 				{{ Form::button('Annulla', array(
 				'data-dismiss' => 'modal',
 				'class' => 'btn btn-danger btn-sm')) }}
@@ -168,6 +173,7 @@
 <script>
 	function showConfirmModal(name, version, serie_id, mode) {
 		document.confirmForm.id.value = serie_id;
+		document.confirmForm.return.value = 'series';
 		if (mode == 0) {
 			document.confirmForm.action = 'deleteSeries';
 			$('#confirmPageName').text('Sei sicuro di voler disabilitare la serie ' + "'" + name + " - " + version + "'?");
