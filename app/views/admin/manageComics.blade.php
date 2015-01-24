@@ -18,7 +18,9 @@
 										<th>Series</th>
 										<th>Numero</th>
 										<th>Prezzo</th>
+										@if($inv_state == 1)
 										<th>Disponibilità</th>
+											@endif
 									</tr>
 								</thead>
 								<tbody>
@@ -34,8 +36,10 @@
 										<td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}}</a></td>
 										@endif
 										<td>{{ $comic->number}}</td>
-										<td>{{ $comic->price}}€</td>
+										<td>{{ round($comic->price,2)}}€</td>
+										@if($inv_state == 1)
 										<td>{{ $comic->available}}</td>
+											@endif
 									</tr>
 									@endforeach
 								</tbody>

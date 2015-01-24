@@ -2,30 +2,6 @@
 
 class AdminController extends BaseController
 {
-    /**
-     * Show the page for the addiction of a series.
-     */
-    public function addSeries()
-    {
-        return View::make('admin/addSeries');
-    }
-
-    /**
-     * Show the page for the addiction of a comic.
-     */
-    public function addComic()
-    {
-        return View::make('admin/addComic');
-    }
-
-    /**
-     * Show the page for the addiction of a box.
-     */
-    public function addBox()
-    {
-        $this->layout->content = View::make('admin/addBox');
-    }
-
     public function saveBox()
     {
         $username = Input::get('username');
@@ -42,7 +18,6 @@ class AdminController extends BaseController
      */
     public function manageSeries()
     {
-        // return View::make('admin/manageSeries');
         $series = Series::all();
         $this->layout->content = View::make('admin/manageSeries', array('series' => $series));
     }
@@ -52,12 +27,10 @@ class AdminController extends BaseController
      */
     public function manageBoxes()
     {
-        // User::newUser('fabrizio@magman.it', Hash::make('fabrizio'),'Fabrizio','Zeni','3','2','45');
         $boxes = User::all();
         $next_box_id = $boxes->max('number') + 1;
         $available = $this->buildAvailableArray($boxes);
         $due = $this->buildDueArray($boxes);
-        // return View::make('admin/manageBoxes');
         $this->layout->content = View::make('admin/manageBoxes',
             array('boxes' => $boxes, 'available' => $available, 'due' => $due, 'next_box_id' => $next_box_id));
     }
@@ -65,19 +38,21 @@ class AdminController extends BaseController
 
     public function manageSerie($series_id)
     {
+        $inv_state = $this -> module_state('inventory');
         $series = Series::find($series_id);
         $next_comic_number = $series->listComics->max('number') + 1;
         if ($series != null)
-            $this->layout->content = View::make('admin/viewSeries', array('series' => $series, 'next_comic_number' => $next_comic_number));
+            $this->layout->content = View::make('admin/viewSeries', array('series' => $series, 'next_comic_number' => $next_comic_number,'inv_state' => $inv_state));
         else
             return Redirect::to('series');
     }
 
     public function manageComic($series_id, $comic_id)
     {
+        $inv_state = $this -> module_state('inventory');
         $comic = Comic::find($comic_id);
         if ($comic != null && $comic->series->id == $series_id)
-            $this->layout->content = View::make('admin/editComic', array('comic' => $comic, 'path' => '../../'));
+            $this->layout->content = View::make('admin/editComic', array('comic' => $comic, 'path' => '../../','inv_state' => $inv_state));
         else
             return Redirect::to('series/' . $series_id);
     }
@@ -87,40 +62,45 @@ class AdminController extends BaseController
      */
     public function manageBox($box_id)
     {
+        $inv_state = $this -> module_state('inventory');
         $user = User::find($box_id);
         if ($user != null) {
             $series = SeriesUser::where('user_id', '=', $box_id)->get();
             $active_series = DB::select('SELECT s.id, s.name, s.version, count(*) as comics FROM bm_series as s LEFT JOIN bm_comics as c ON c.series_id = s.id WHERE s.active = 1 and c.active = 1 GROUP BY s.id');
-//			$active_series = Series::where('active','=',1)->get();
             $comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . $box_id)->get();
             $purchases = ComicUser::whereRaw('state_id = 3 and active = 1 and user_id = ' . $box_id)->get();
             $due = $this->due($user);
-            $this->layout->content = View::make('admin/viewBox', array('user' => $user, 'comics' => $comics, 'due' => $due, 'series' => $series, 'purchases' => $purchases, 'active_series' => $active_series));
+            $this->layout->content = View::make('admin/viewBox', array('user' => $user, 'comics' => $comics, 'due' => $due, 'series' => $series, 'purchases' => $purchases, 'active_series' => $active_series,'inv_state' => $inv_state));
         } else
             return Redirect::to('boxes');
     }
 
     public function due($user)
     {
+        $inv_state = $this -> module_state('inventory');
         $due = 0;
         $discount = $user->discount;
         foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
-            if ($comic->comic->available > 0)
+            if($comic->comic->state == 2) {
+                if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2))
                 $due += round($comic->price, 2);
+            }
         }
         return $due - ($due * $discount / 100);
     }
 
     public function buildAvailableArray($boxes)
     {
+        $inv_state = $this -> module_state('inventory');
         $available = null;
         foreach ($boxes as $box) {
             // check available comics and due
             $comics = $box->listComics()->whereRaw('state_id < 3 and active = 1')->get();
             $available_counter = 0;
             foreach ($comics as $comic) {
-                if ($comic->comic->available > 0) {
-                    $available_counter++;
+                if($comic->comic->state == 2) {
+                    if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2))
+                        $available_counter++;
                 }
             }
             $available = array_add($available, $box->id, $available_counter);
@@ -130,14 +110,16 @@ class AdminController extends BaseController
 
     public function buildDueArray($boxes)
     {
+        $inv_state = $this -> module_state('inventory');
         $due = null;
         foreach ($boxes as $box) {
             // check available comics and due
             $comics = $box->listComics()->whereRaw('state_id < 3 and active = 1')->get();
             $due_counter = 0;
             foreach ($comics as $comic) {
-                if ($comic->comic->available > 0) {
-                    $due_counter += round($comic->price, 2);
+                if($comic->comic->state == 2) {
+                    if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2))
+                        $due_counter += round($comic->price, 2);
                 }
             }
             $due_counter = $due_counter - ($due_counter * $box->discount / 100);
@@ -154,6 +136,17 @@ class AdminController extends BaseController
             return Redirect::to('boxes/' . $box_id);
         else
             $this->layout->content = View::make('admin/editComicUser', array('comic' => $comicUser));
+    }
+
+    public function module_state($module_description){
+        $modules = Modules::where('description','=',$module_description)->get();
+        $state = 0;
+        if(count($modules)==1) {
+            foreach($modules as $module){
+                $state = $module->active;
+            }
+        }
+        return $state;
     }
 }
 

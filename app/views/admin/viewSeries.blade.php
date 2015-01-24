@@ -66,7 +66,9 @@
 												<th>Numero</th>
 												<th>Nome</th>
 												<th>Prezzo</th>
+												@if($inv_state == 1)
 												<th>Disponibilità</th>
+												@endif
 											</tr>
 										</thead>
 										<tbody>
@@ -79,7 +81,9 @@
 												<td>{{$comic->number}}</td>
 												<td><a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a></td>
 												<td>{{round($comic->price,2)}}</td>
+												@if($inv_state == 1)
 												<td>{{$comic->available}}</td>
+												@endif
 											</tr>
 											@endforeach
 										</tbody>
@@ -107,10 +111,12 @@
                   {{ Form::label('price', 'Prezzo') }}
                   {{ Form::text('price', '0', array('id' => 'comic_price')) }}
               </div>
+				@if($inv_state == 1)
               <div>
                   {{ Form::label('available', 'Disponibilità') }}
                   {{ Form::text('available', '0', array('id' => 'comic_available')) }}
               </div>
+				@endif
               <div>
                   {{ Form::submit('Inserisci') }}
               </div>

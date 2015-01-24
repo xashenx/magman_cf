@@ -8,7 +8,7 @@
                             @endif
                             <div class="panel panel-info">
                                 <div class="panel-heading">
-                                    Fumetti mancanti
+                                    Fumetti ordinati da clienti
                                 </div>
                                 <div class="panel-body">
                                     @if(count($to_order) > 0)

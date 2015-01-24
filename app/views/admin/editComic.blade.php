@@ -37,8 +37,10 @@
                                 <br/>
                                 Nome del numero: {{$comic->name}}
                                 <br/>
+                                @if($inv_state == 1)
                                 Disponibilità: {{$comic->available}}
                                 <br/>
+                                @endif
                                 Prezzo: {{round($comic->price,2)}}
                                 <br/>
                             </div>
@@ -65,10 +67,12 @@
                                         {{ Form::label('number', 'Numero') }}
                                         {{ Form::text('number') }}
                                     </div>
+                                    @if($inv_state == 1)
                                     <div>
                                         {{ Form::label('available', 'Disponibilità') }}
                                         {{ Form::text('available') }}
                                     </div>
+                                    @endif
                                     <div>
                                         {{ Form::label('price', 'Prezzo') }}
                                         {{ Form::text('price') }}

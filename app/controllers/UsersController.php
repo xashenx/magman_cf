@@ -119,14 +119,16 @@ class UsersController extends BaseController
 
     public function buildDueArray($boxes)
     {
+        $inv_state = $this -> module_state('inventory');
         $due = null;
         foreach ($boxes as $box) {
             // check available comics and due
             $comics = $box->listComics()->whereRaw('state_id < 3')->get();
             $due_counter = 0;
             foreach ($comics as $comic) {
-                if ($comic->comic->available > 1) {
-                    $due_counter += round($comic->price, 2);
+                if($comic->comic->state == 2) {
+                    if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2))
+                        $due_counter += round($comic->price, 2);
                 }
             }
             $due_counter = $due_counter - ($due_counter * $box->discount / 100);
@@ -137,15 +139,28 @@ class UsersController extends BaseController
 
     public function due($user)
     {
+        $inv_state = $this -> module_state('inventory');
         $due = 0;
         $discount = $user->discount;
         foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
-            if ($comic->comic->available > 1)
-                $due += round($comic->price, 2);
+            if($comic->comic->state == 2) {
+                if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2))
+                    $due += round($comic->price, 2);
+            }
         }
         return $due - ($due * $discount / 100);
     }
 
+    public function module_state($module_description){
+        $modules = Modules::where('description','=',$module_description)->get();
+        $state = 0;
+        if(count($modules)==1) {
+            foreach($modules as $module){
+                $state = $module->active;
+            }
+        }
+        return $state;
+    }
 }
 
 ?>

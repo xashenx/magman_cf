@@ -19,11 +19,23 @@
                             </thead>
                             <tbody>
                             @foreach ($comics as $comic)
-                                @if ($comic->comic->available > 1)
-                                    <tr class="success">
+                                @if($inv_state == 1)
+                                    @if ($comic->comic->available > 1)
+                                        <tr class="success">
+                                    @else
+                                        <tr class="odd gradeX">
+                                    @endif
                                 @else
-                                    <tr class="odd gradeX">
+                                    @if ($comic->comic->arrived_at > date('Y-m-d',strtotime('-1 month')))
+                                        <tr class="success">
+                                    @else
+                                        @if ($comic->comic->state == 2)
+                                            <tr class="warning">
+                                        @else
+                                            <tr class="odd gradeX">
                                         @endif
+                                    @endif
+                                @endif
                                         <td>{{ $comic->comic->series->name}} - {{ $comic->comic->series->version}}</td>
                                         <td>{{ $comic->comic->number}}</td>
                                         <td>{{ round($comic->price,2) }}</td>

@@ -82,14 +82,26 @@
                                                     </thead>
                                                     <tbody>
                                                     @foreach ($comics as $comic)
-                                                        @if ($comic->comic->available > 0)
-                                                            <tr class="success">
+                                                        @if($inv_state == 1)
+                                                            @if ($comic->comic->available > 1)
+                                                                <tr class="success">
+                                                            @else
+                                                                <tr class="odd gradeX">
+                                                             @endif
                                                         @else
-                                                            <tr class="odd gradeX">
+                                                            @if ($comic->comic->arrived_at > date('Y-m-d',strtotime('-1 month')))
+                                                                <tr class="success">
+                                                            @else
+                                                                @if ($comic->comic->state == 2)
+                                                                    <tr class="warning">
+                                                                @else
+                                                                    <tr class="odd gradeX">
                                                                 @endif
-                                                                @if($comic->comic->series->version != null)
-                                                                    <td>
-                                                                        <a href="{{$user->id}}/comic/{{$comic->id}}">{{ $comic->comic->series->name}}
+                                                            @endif
+                                                        @endif
+                                                        @if($comic->comic->series->version != null)
+                                                            <td>
+                                                                 <a href="{{$user->id}}/comic/{{$comic->id}}">{{ $comic->comic->series->name}}
                                                                             - {{ $comic->comic->series->version}}
                                                                             nr. {{ $comic->comic->number}}</a></td>
                                                                 @else
