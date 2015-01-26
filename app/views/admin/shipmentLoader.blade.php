@@ -74,7 +74,7 @@
                 $('#load_comic').prop('disabled', 'disabled');
             } else {
                 $.ajax({
-                    url: 'getNumberFromSeries',
+                    url: 'getNewNumbersFromSeries',
                     type: 'POST',
                     data: {'series_id': selected_id},
                     success: function (data) {

@@ -172,6 +172,18 @@ class ComicsController extends BaseController
         $this->layout = null;
         $series_id = Input::get('series_id');
         $inv_state = $this -> module_state('inventory');
+//        if($inv_state == 1)
+            $comics = Comic::whereRaw('series_id = ' . $series_id . ' and active = 1')->get();
+//        else
+//            $comics = Comic::whereRaw('series_id = ' . $series_id . ' and active = 1 and state = 1')->get();
+        return $comics;
+    }
+
+    public function getNewNumbersFromSeries()
+    {
+        $this->layout = null;
+        $series_id = Input::get('series_id');
+        $inv_state = $this -> module_state('inventory');
         if($inv_state == 1)
             $comics = Comic::whereRaw('series_id = ' . $series_id . ' and active = 1')->get();
         else

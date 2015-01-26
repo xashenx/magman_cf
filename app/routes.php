@@ -103,6 +103,7 @@ Route::group(array('before' => 'auth'), function () {
             Route::post('buyComic', 'ComicUserController@buy');
             Route::post('loadShipment', 'ComicsController@loadShipment');
             Route::post('getNumberFromSeries', 'ComicsController@getNumberFromSeries');
+            Route::post('getNewNumbersFromSeries', 'ComicsController@getNewNumbersFromSeries');
             Route::post('mailToCustomer', 'MailController@mailToCustomer');
         } else {
             Route::get('home', 'UserController@userHome');
