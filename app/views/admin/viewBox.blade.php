@@ -11,11 +11,19 @@
                 <div class="panel-heading">
                     <h1>Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
                     @if($user->active)
+                            @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+                                <button type="button" title="Rinnova Tessera"
+                                        onclick="showConfirmModal({{$user->id}},0,6)"
+                                        class="btn btn-warning btn-sm"><i
+                                            class="fa fa-recycle"></i>
+                                </button>
+                            @endif
                         <button type="button" title="Disattiva casella"
                             onclick="showConfirmModal({{$user->id}},0,4)"
                             class="btn btn-danger btn-sm"><i
                             class="fa fa-remove"></i>
-                        </button></h1>
+                        </button>
+                    </h1>
                     @else
                         <button type="button" title="Riattiva casella"
                                 onclick="showConfirmModal({{$user->id}},0,5)"
@@ -80,7 +88,11 @@
                                 <div class="tab-pane fade active in" id="orderedComics">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h5>Fumetti in arrivo</h5> (Saldo disponibili: {{ $due }}€)
+                                            @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+                                                <h5>Fumetti in arrivo</h5>  <i>Rinnovo Tessera</i> : {{ $renewal_price }}€<br/> <i>Saldo disponibili</i> : {{ $due }}€
+                                            @else
+                                                <h5>Fumetti in arrivo</h5> (<i>Saldo disponibili</i> : {{ $due }}€)
+                                            @endif
                                         </div>
                                         <div class="panel-body">
                                             <div class="table-responsive table-bordered">
@@ -583,6 +595,11 @@
                 document.confirmForm.id.value = object_id;
                 document.confirmForm.action = '../restoreUser';
                 $('#confirmPageName').text('Sei sicuro di voler abilitare nuovamente questa casella?');
+            } else if(mode == 6){
+                // renewal of shop card of the user
+                document.confirmForm.id.value = object_id;
+                document.confirmForm.action = '../renewShopCard';
+                $('#confirmPageName').text('Sei sicuro di voler rinnovare la tessera della casella?');
             }
             $('#modal-confirm').modal({
                 show: true

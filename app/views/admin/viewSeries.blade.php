@@ -124,7 +124,7 @@
               </div>
               <div>
                   {{ Form::label('number','Numero') }}
-                  {{ Form::text('number', $next_comic_number, array('id' => 'comic_number')) }}
+                  {{ Form::text('number', $last_comic->number+1, array('id' => 'comic_number')) }}
               </div>
               <div>
                   {{ Form::label('price', 'Prezzo') }}

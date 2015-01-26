@@ -4,7 +4,13 @@
             <!--    Bordered Table  -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h5>Fumetti in arrivo</h5> <strong>(Saldo disponibili: {{ $due }}€)</strong>
+                    <h5>Fumetti in arrivo</h5>
+                    <strong>
+                        @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+                            Rinnovo Tessera; {{ $renewal_price }}€<br/>
+                        @endif
+                        Saldo disponibili: {{ $due }}€
+                    </strong>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">

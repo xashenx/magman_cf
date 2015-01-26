@@ -40,13 +40,11 @@ class AdminController extends BaseController
     {
         $inv_state = $this -> module_state('inventory');
         $series = Series::find($series_id);
-        $next_comic_number = $series->listActive->max('number') + 1;
-        $last_comic = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1');
-        $last_comic->max('id');
-        $last_comic = Comic::find(25);
+        $comics = $series->listActive;
+        $last_comic = Comic::find($comics->max('id'));
         $last_comic->price = round($last_comic->price,2);
         if ($series != null)
-            $this->layout->content = View::make('admin/viewSeries', array('series' => $series, 'next_comic_number' => $next_comic_number,'last_comic' => $last_comic,'inv_state' => $inv_state));
+            $this->layout->content = View::make('admin/viewSeries', array('series' => $series,'last_comic' => $last_comic,'inv_state' => $inv_state));
         else
             return Redirect::to('series');
     }
@@ -70,13 +68,14 @@ class AdminController extends BaseController
     {
         $inv_state = $this -> module_state('inventory');
         $user = User::find($box_id);
+        $renewal_price = ShopConf::find(4)->value;
         if ($user != null) {
             $series = SeriesUser::where('user_id', '=', $box_id)->get();
             $active_series = DB::select('SELECT s.id, s.name, s.version, count(*) as comics FROM bm_series as s LEFT JOIN bm_comics as c ON c.series_id = s.id WHERE s.active = 1 and c.active = 1 GROUP BY s.id');
             $comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . $box_id)->get();
             $purchases = ComicUser::whereRaw('state_id = 3 and active = 1 and user_id = ' . $box_id)->get();
             $due = $this->due($user);
-            $this->layout->content = View::make('admin/viewBox', array('user' => $user, 'comics' => $comics, 'due' => $due, 'series' => $series, 'purchases' => $purchases, 'active_series' => $active_series,'inv_state' => $inv_state));
+            $this->layout->content = View::make('admin/viewBox', array('user' => $user, 'comics' => $comics, 'due' => $due, 'series' => $series, 'purchases' => $purchases, 'active_series' => $active_series,'renewal_price' => $renewal_price,'inv_state' => $inv_state));
         } else
             return Redirect::to('boxes');
     }

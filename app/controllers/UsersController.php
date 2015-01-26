@@ -109,6 +109,18 @@ class UsersController extends BaseController
     }
 
     /*
+ * Process the renewal of the shop card of the box
+*/
+    public function renewCard()
+    {
+        $id = Input::get('id');
+        $user = User::find($id);
+        $user->shop_card_validity = date('Y-m-d H:i:s',strtotime('1 year'));
+        $user->update();
+        return Redirect::to('boxes/' . $user->id);
+    }
+
+    /*
      * Displays the box managment page
      */
     public function manageBox($box_id)

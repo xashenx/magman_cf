@@ -6,11 +6,12 @@ class UserController extends BaseController {
 	 */
 	public function box() {
 		$inv_state = $this->module_state('inventory');
+		$renewal_price = ShopConf::find(4)->value;
 		$series = SeriesUser::whereRaw('active = 1 and user_id =' . Auth::id())->get();
 		$comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . Auth::id())->get();
 		$user = User::find(Auth::id());
 		$due = $this->due($user);
-		$this -> layout -> content = View::make('user/box', array('series' => $series,'user' => $user,'due' => $due,'comics' => $comics,'inv_state' => $inv_state));
+		$this -> layout -> content = View::make('user/box', array('series' => $series,'user' => $user,'due' => $due,'comics' => $comics,'renewal_price' => $renewal_price,'inv_state' => $inv_state));
 	}
 
 	/*
@@ -18,12 +19,13 @@ class UserController extends BaseController {
 	 */
 	public function userHome() {
 		$inv_state = $this->module_state('inventory');
+		$renewal_price = ShopConf::find(4)->value;
 		$one_week_earlier = date('Y-m-d',strtotime('-1 week'));
 		$news = Comic::whereRaw("active = 1 and arrived_at > '" . $one_week_earlier . "'")->get();
 		$comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . Auth::id())->get();
 		$user = User::find(Auth::id());
 		$due = $this->due($user);
-		$this -> layout -> content = View::make('user/homePage',array('news' => $news,'user' => $user,'due' => $due,'comics' => $comics,'inv_state' => $inv_state));
+		$this -> layout -> content = View::make('user/homePage',array('news' => $news,'user' => $user,'due' => $due,'comics' => $comics,'renewal_price' => $renewal_price,'inv_state' => $inv_state));
 	}
 
 	public function userProfile(){
