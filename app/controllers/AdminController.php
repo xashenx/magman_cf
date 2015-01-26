@@ -40,9 +40,13 @@ class AdminController extends BaseController
     {
         $inv_state = $this -> module_state('inventory');
         $series = Series::find($series_id);
-        $next_comic_number = $series->listComics->max('number') + 1;
+        $next_comic_number = $series->listActive->max('number') + 1;
+        $last_comic = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1');
+        $last_comic->max('id');
+        $last_comic = Comic::find(25);
+        $last_comic->price = round($last_comic->price,2);
         if ($series != null)
-            $this->layout->content = View::make('admin/viewSeries', array('series' => $series, 'next_comic_number' => $next_comic_number,'inv_state' => $inv_state));
+            $this->layout->content = View::make('admin/viewSeries', array('series' => $series, 'next_comic_number' => $next_comic_number,'last_comic' => $last_comic,'inv_state' => $inv_state));
         else
             return Redirect::to('series');
     }
@@ -51,6 +55,7 @@ class AdminController extends BaseController
     {
         $inv_state = $this -> module_state('inventory');
         $comic = Comic::find($comic_id);
+        $comic -> price = round($comic->price,2);
         $ordered = ComicUser::whereRaw('active = 1 AND state_id = 1 AND comic_id = ' . $comic_id)->get();
         if ($comic != null && $comic->series->id == $series_id)
             $this->layout->content = View::make('admin/editComic', array('comic' => $comic, 'path' => '../../','ordered' => $ordered,'inv_state' => $inv_state));

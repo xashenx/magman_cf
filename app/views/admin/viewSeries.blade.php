@@ -128,8 +128,12 @@
               </div>
               <div>
                   {{ Form::label('price', 'Prezzo') }}
-                  {{ Form::text('price', '0', array('id' => 'comic_price')) }}
+                  {{ Form::text('price', $last_comic->price, array('id' => 'comic_price')) }}
               </div>
+				<div>
+					{{ Form::label('image', 'Link Immagine') }}
+					{{ Form::text('image') }}
+				</div>
 				@if($inv_state == 1)
               <div>
                   {{ Form::label('available', 'Disponibilità') }}

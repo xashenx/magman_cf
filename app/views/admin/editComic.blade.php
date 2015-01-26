@@ -68,7 +68,7 @@
                                     Disponibilità: {{$comic->available}}
                                     <br/>
                                 @endif
-                                Prezzo: {{round($comic->price,2)}}
+                                Prezzo: {{ $comic->price }}
                                 <br/>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                                                         <td>
                                                             <a href="{{ $path }}boxes/{{ $order->box->id }}">{{ $order->box->name }} {{ $order->box->surname }}</a>
                                                         </td>
-                                                        <td>{{ round($order->price,2)}}€</td>
+                                                        <td>{{ round($order->price,2) }}€</td>
                                                         <td>{{ date('d/m/Y',strtotime($order->created_at)) }}</td>
                                                     </tr>
                                                 @endforeach
@@ -134,6 +134,10 @@
                                             {{ Form::text('available') }}
                                         </div>
                                     @endif
+                                    <div>
+                                        {{ Form::label('image', 'Link Immagine') }}
+                                        {{ Form::text('image') }}
+                                    </div>
                                     <div>
                                         {{ Form::label('price', 'Prezzo') }}
                                         {{ Form::text('price') }}

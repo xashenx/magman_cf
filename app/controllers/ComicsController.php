@@ -8,14 +8,16 @@ class ComicsController extends BaseController
         $new = Input::all();
         $series_id = Input::get('series_id');
         $comic = new Comic;
-        $comic_price = str_replace(',', '.', Input::get('price'));
-        $comic->name = Input::get('name');
-        $comic->number = Input::get('number');
-        $comic->price = $comic_price;
-        $comic->series_id = $series_id;
-        if($this -> module_state('inventory') == 1)
-            $comic->available = Input::get('available');
         if ($comic->validate($new)) {
+            if($this -> module_state('inventory') == 1)
+                $comic->available = Input::get('available');
+            if(Input::get('image') != null)
+                $comic->image = Input::get('image');
+            $comic_price = str_replace(',', '.', Input::get('price'));
+            $comic->name = Input::get('name');
+            $comic->number = Input::get('number');
+            $comic->price = $comic_price;
+            $comic->series_id = $series_id;
             $comic->save();
             $this->updateComicUser($series_id, $comic);
             return Redirect::to('series/' . $series_id);
@@ -30,13 +32,15 @@ class ComicsController extends BaseController
         $new = Input::all();
         $id = Input::get('id');
         $comic = Comic::find($id);
-        $comic->name = Input::get('name');
-        $comic->number = Input::get('number');
-        if($this -> module_state('inventory') == 1)
-            $comic->available = Input::get('available');
-        $new_price = Input::get('price');
         $return = Input::get('return');
         if ($comic->validate($new)) {
+            $new_price = Input::get('price');
+            $comic->name = Input::get('name');
+            $comic->number = Input::get('number');
+            if($this -> module_state('inventory') == 1)
+                $comic->available = Input::get('available');
+            if(Input::get('image') != null)
+                $comic->image = Input::get('image');
             if ($new_price != $comic->price) {
                 $comic->price = $new_price;
                 DB::update('update bm_comic_user set price = ' . $new_price . ' where comic_id = ' . $id . ' and state_id < 3');
@@ -195,6 +199,7 @@ class ComicsController extends BaseController
     {
         $inv_state = $this -> module_state('inventory');
         $comic = Comic::find($comic_id);
+        $comic->price = round($comic->price,2);
         $ordered = ComicUser::whereRaw('active = 1 AND state_id = 1 AND comic_id = ' . $comic_id)->get();
         if ($comic != null)
             $this->layout->content = View::make('admin/editComic', array('comic' => $comic, 'path' => '../','ordered' => $ordered,'inv_state' => $inv_state));
