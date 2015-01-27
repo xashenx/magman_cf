@@ -5,6 +5,14 @@
 }
 /*override*/
 
+.dataTables_filter{
+  margin-right: 1px;
+}
+
+div.dataTables_paginate.paging_simple_numbers{
+  margin-right: 1px;
+}
+
 .panel-heading{
   padding-left: 10px;
 }
