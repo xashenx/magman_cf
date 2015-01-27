@@ -36,12 +36,12 @@ class UsersController extends BaseController
                 $user->password = $new_hash;
             }
             $user->discount = Input::get('discount');
-            if (Input::get('active')) {
-                $user->active = 1;
-            } else {
-                $user->active = 0;
-                $this->delete($id);
-            }
+//            if (Input::get('active')) {
+//                $user->active = 1;
+//            } else {
+//                $user->active = 0;
+//                $this->delete($id);
+//            }
             $user->save();
             return Redirect::to('boxes/' . $id);
         } else {
@@ -50,11 +50,35 @@ class UsersController extends BaseController
         }
     }
 
-    public function delete($box_id)
+    public function delete()
     {
-        //delete followed series and ordered comics
-        DB::table('series_user')->where('user_id', $box_id)->update(array('active' => 0));
-        DB::table('comic_user')->where('user_id', $box_id)->update(array('active' => 0));
+        $box_id = Input::get('id');
+        $user = User::find($box_id);
+        $rules = array('id' => 'required|numeric|exists:bm_users,id,active,1');
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to('boxes/' . $user->id)->withErrors($validator);
+        } else{
+            $user->active = 0;
+            $user->update();
+            DB::table('bm_series_user')->where('user_id', $box_id)->update(array('active' => 0));
+            DB::table('bm_comic_user')->where('user_id', $box_id)->update(array('active' => 0));
+            return Redirect::to('boxes/' . $user->id);
+        }
+    }
+
+    public function restore(){
+        $box_id = Input::get('id');
+        $user = User::find($box_id);
+        $rules = array('id' => 'required|numeric|exists:bm_users,id,active,0');
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to('boxes/' . $user->id)->withErrors($validator);
+        } else{
+            $user->active = 1;
+            $user->update();
+            return Redirect::to('boxes/' . $user->id);
+        }
     }
 
     /*
@@ -65,7 +89,6 @@ class UsersController extends BaseController
         $id = Input::get('id');
         $user = User::find($id);
         $old_password = Input::get('old_pass');
-        $messages = array();
         if (!Hash::check($old_password, $user->password)) {
             $message = 'la password attuale non è corretta';
             $errors = array('old_pass' => $message);
@@ -83,6 +106,18 @@ class UsersController extends BaseController
         $user->password = $new_hash;
 		$user -> update();
 		return Redirect::to('profile');
+    }
+
+    /*
+ * Process the renewal of the shop card of the box
+*/
+    public function renewCard()
+    {
+        $id = Input::get('id');
+        $user = User::find($id);
+        $user->shop_card_validity = date('Y-m-d H:i:s',strtotime('1 year'));
+        $user->update();
+        return Redirect::to('boxes/' . $user->id);
     }
 
     /*
@@ -108,7 +143,7 @@ class UsersController extends BaseController
             $comics = $box->listComics()->whereRaw('state_id < 3')->get();
             $available_counter = 0;
             foreach ($comics as $comic) {
-                if ($comic->comic->available > 1) {
+                if ($comic->comic->available > 0) {
                     $available_counter++;
                 }
             }
@@ -119,14 +154,16 @@ class UsersController extends BaseController
 
     public function buildDueArray($boxes)
     {
+        $inv_state = $this -> module_state('inventory');
         $due = null;
         foreach ($boxes as $box) {
             // check available comics and due
             $comics = $box->listComics()->whereRaw('state_id < 3')->get();
             $due_counter = 0;
             foreach ($comics as $comic) {
-                if ($comic->comic->available > 1) {
-                    $due_counter += round($comic->price, 2);
+                if($comic->comic->state == 2) {
+                    if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2))
+                        $due_counter += round($comic->price, 2);
                 }
             }
             $due_counter = $due_counter - ($due_counter * $box->discount / 100);
@@ -137,15 +174,28 @@ class UsersController extends BaseController
 
     public function due($user)
     {
+        $inv_state = $this -> module_state('inventory');
         $due = 0;
         $discount = $user->discount;
         foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
-            if ($comic->comic->available > 1)
-                $due += round($comic->price, 2);
+            if($comic->comic->state == 2) {
+                if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2))
+                    $due += round($comic->price, 2);
+            }
         }
         return $due - ($due * $discount / 100);
     }
 
+    public function module_state($module_description){
+        $modules = Modules::where('description','=',$module_description)->get();
+        $state = 0;
+        if(count($modules)==1) {
+            foreach($modules as $module){
+                $state = $module->active;
+            }
+        }
+        return $state;
+    }
 }
 
 ?>

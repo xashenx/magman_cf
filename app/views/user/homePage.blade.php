@@ -4,7 +4,13 @@
             <!--    Bordered Table  -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h5>Fumetti in arrivo</h5> <strong>(Saldo disponibili: {{ $due }}€)</strong>
+                    <h5>Fumetti in arrivo</h5>
+                    <strong>
+                        @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+                            Rinnovo Tessera; {{ $renewal_price }}€<br/>
+                        @endif
+                        Saldo disponibili: {{ $due }}€
+                    </strong>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -19,11 +25,23 @@
                             </thead>
                             <tbody>
                             @foreach ($comics as $comic)
-                                @if ($comic->comic->available > 1)
-                                    <tr class="success">
+                                @if($inv_state == 1)
+                                    @if ($comic->comic->available > 1)
+                                        <tr class="success">
+                                    @else
+                                        <tr class="odd gradeX">
+                                    @endif
                                 @else
-                                    <tr class="odd gradeX">
+                                    @if ($comic->comic->arrived_at > date('Y-m-d',strtotime('-1 month')))
+                                        <tr class="success">
+                                    @else
+                                        @if ($comic->comic->state == 2)
+                                            <tr class="warning">
+                                        @else
+                                            <tr class="odd gradeX">
                                         @endif
+                                    @endif
+                                @endif
                                         <td>{{ $comic->comic->series->name}} - {{ $comic->comic->series->version}}</td>
                                         <td>{{ $comic->comic->number}}</td>
                                         <td>{{ round($comic->price,2) }}</td>

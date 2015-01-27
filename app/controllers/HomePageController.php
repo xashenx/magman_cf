@@ -27,13 +27,15 @@ class HomePageController extends BaseController
         $boxes = User::where('active', '=', '1')->get();
         $insolvency_threshold = ShopConf::find(1);
         $defaulting_threshold = ShopConf::find(2);
-//		$toOrder = DB::select('select s.id as sid,c.id as cid,s.name,s.version,c.number, c.available, count(*) as to_order, (count(*)-c.available) as need FROM (comic_user as cu LEFT JOIN comics as c ON cu.comic_id = c.id) LEFT JOIN series as s ON  s.id = series_id WHERE cu.state_id = 1 and cu.active = 1  GROUP BY cu.comic_id');
-        $toOrder = DB::select('select s.id as sid,c.id as cid,s.name, s.version,c.number, c.available, cu.to_order, (cu.to_order-c.available) as need FROM ((SELECT count(*) as to_order, comic_id FROM comic_user WHERE state_id = 1 and active = 1 GROUP BY comic_id) as cu LEFT JOIN comics as c ON cu.comic_id = c.id) LEFT JOIN series as s ON  s.id = series_id WHERE  (cu.to_order-c.available) > 0');
+        $inv_status = $this->module_state('inventory');
+        if($inv_status == 1)
+            $toOrder = DB::select('SELECT s.id as sid,c.id as cid,s.name, s.version,c.number, c.available, cu.to_order, (cu.to_order-c.available) as need FROM ((SELECT count(*) as to_order, comic_id FROM bm_comic_user WHERE state_id = 1 and active = 1 GROUP BY comic_id) as cu LEFT JOIN bm_comics as c ON cu.comic_id = c.id) LEFT JOIN bm_series as s ON  s.id = series_id WHERE  (cu.to_order-c.available) > 0');
+        else
+            $toOrder = DB::select('SELECT s.id as sid,c.id as cid,s.name, s.version,c.number, c.available, cu.to_order, cu.to_order as need FROM ((SELECT count(*) as to_order, comic_id FROM bm_comic_user WHERE state_id = 1 and active = 1 GROUP BY comic_id) as cu LEFT JOIN bm_comics as c ON cu.comic_id = c.id) LEFT JOIN bm_series as s ON  s.id = series_id ');
         $insolvents = $this->buildInsolventArray($boxes, $insolvency_threshold);
         $insolvent_boxes = $this->buildInsolventBoxesArray($insolvents);
         $defaultings = $this->buildDefaultingArray($boxes, $defaulting_threshold);
         $defaulting_boxes = $this->buildDefaultingBoxesArray($defaultings);
-        $this -> layout -> title = 'Tomu';
 		$this -> layout -> content = View::make('admin/homePage',array('insolvents' => $insolvents,'defaultings' => $defaultings,'to_order' => $toOrder,'defaultingBoxes' => $defaulting_boxes,'insolventBoxes' => $insolvent_boxes));
     }
 
@@ -53,7 +55,7 @@ class HomePageController extends BaseController
             $comics = $box->listComics()->whereRaw('state_id < 3 and active = 1')->get();
             $due_counter = 0;
             foreach ($comics as $comic) {
-                if ($comic->comic->available > 1) {
+                if ($comic->comic->available > 0) {
                     $due_counter += round($comic->price, 2);
                 }
             }
@@ -98,6 +100,18 @@ class HomePageController extends BaseController
         }
         return $boxes;
     }
+
+    public function module_state($module_description){
+        $modules = Modules::where('description','=',$module_description)->get();
+        $state = 0;
+        if(count($modules)==1) {
+            foreach($modules as $module){
+                $state = $module->active;
+            }
+        }
+        return $state;
+    }
+
 }
 
 ?>

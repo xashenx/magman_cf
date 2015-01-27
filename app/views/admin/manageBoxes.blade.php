@@ -9,6 +9,7 @@
         {{ $errors->first('number') }}
         {{ $errors->first('discount') }}
     @endif
+    {{ date('Y-m-d',strtotime('now')) }}
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -47,7 +48,11 @@
                                         <tbody>
                                         @foreach ($boxes as $box)
                                             @if($box->active)
-                                                <tr class="odd gradeX">
+                                                @if(date('Y-m-d', strtotime($box->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+                                                    <tr class="odd warning">
+                                                @else
+                                                    <tr class="odd gradeX">
+                                                @endif
                                             @else
                                                 <tr class="danger">
                                                     @endif

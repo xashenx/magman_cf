@@ -15,10 +15,14 @@
 							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 								<thead>
 									<tr>
+										<th>Editore</th>
 										<th>Series</th>
 										<th>Numero</th>
+										<th>Cover</th>
 										<th>Prezzo</th>
+										@if($inv_state == 1)
 										<th>Disponibilità</th>
+											@endif
 									</tr>
 								</thead>
 								<tbody>
@@ -28,14 +32,22 @@
 										@else
 									<tr class="danger">
 										@endif
+										<td>{{ $comic->series->publisher }}</td>
 										@if($comic->series->version != null)
 										<td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}} - {{ $comic->series->version}}</a></td>
 										@else
 										<td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}}</a></td>
 										@endif
+                                        <td>
+										@if($comic->image != null)
+                                            <a href="{{$comic->image}}"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
+                                        @endif
+                                        </td>
 										<td>{{ $comic->number}}</td>
-										<td>{{ $comic->price}}€</td>
+										<td>{{ round($comic->price,2)}}€</td>
+										@if($inv_state == 1)
 										<td>{{ $comic->available}}</td>
+											@endif
 									</tr>
 									@endforeach
 								</tbody>

@@ -78,6 +78,7 @@ Route::group(array('before' => 'auth'), function () {
             Route::post('updateUser', 'UsersController@update');
             Route::post('deleteUser', 'UsersController@delete');
             Route::post('restoreUser', 'UsersController@restore');
+            Route::post('renewShopCard', 'UsersController@renewCard');
             // route to handle Series model changes
             Route::post('createSeries', 'SeriesController@create');
             Route::post('updateSeries', 'SeriesController@update');
@@ -103,6 +104,7 @@ Route::group(array('before' => 'auth'), function () {
             Route::post('buyComic', 'ComicUserController@buy');
             Route::post('loadShipment', 'ComicsController@loadShipment');
             Route::post('getNumberFromSeries', 'ComicsController@getNumberFromSeries');
+            Route::post('getNewNumbersFromSeries', 'ComicsController@getNewNumbersFromSeries');
             Route::post('mailToCustomer', 'MailController@mailToCustomer');
         } else {
             Route::get('home', 'UserController@userHome');
