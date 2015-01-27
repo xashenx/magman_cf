@@ -1,0 +1,33 @@
+.no-radius{
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+/*override*/
+.form-control{
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  border: 0px;
+  outline: 1px solid #cccccc; outline-offset:-1px
+}
+
+.form-control:focus{
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  border: 0px;
+  outline: 1px solid #cccccc; outline-offset:-1px
+}
+
+.pagination > li:first-child > a {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.pagination > li:last-child > a {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}

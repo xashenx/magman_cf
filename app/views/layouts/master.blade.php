@@ -16,6 +16,8 @@
       <link href="{{ URL::asset('assets/css/font-awesome.css') }}" rel="stylesheet"/>
       <!-- CUSTOM STYLES-->
       <link href="{{ URL::asset('assets/css/custom.css') }}" rel="stylesheet"/>
+      <!-- OUR STYLES-->
+      <link href="{{ URL::asset('assets/css/style.css') }}" rel="stylesheet"/>
       <!-- GOOGLE FONTS-->
       <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
       <!-- TABLE STYLES-->
