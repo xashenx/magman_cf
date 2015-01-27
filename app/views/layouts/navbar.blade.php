@@ -5,26 +5,26 @@
       <li class="red-line"></li>
       <li>
         <a href="{{ URL::asset('home') }}">
-          <i class="fa fa-dashboard fa-3x sidebar-icon"></i>
+          <span class="glyphicon glyphicon-dashboard btn-lg" aria-hidden="true"></span>
           Dashboard
         </a>
       </li>
       @if(Auth::user()->level_id == 1)
         <li>
           <a href="{{ URL::asset('newShipment') }}">
-            <i class="fa fa-plus-square fa-3x sidebar-icon"></i>
+            <span class="glyphicon glyphicon-plus btn-lg" aria-hidden="true"></span>
             Nuovi Arrivi
           </a>
         </li>
         <li>
           <a href="{{ URL::asset('boxes') }}">
-            <i class="fa fa-user fa-3x sidebar-icon"></i>
+            <span class="glyphicon glyphicon-user btn-lg" aria-hidden="true"></span>
             Caselle
           </a>
         </li>
         <li>
           <a href="{{ URL::asset('comics') }}">
-            <i class="fa fa-book fa-3x sidebar-icon"></i>
+            <span class="glyphicon glyphicon-book btn-lg" aria-hidden="true"></span>
             Fumetti
           </a>
         </li>
@@ -33,13 +33,13 @@
       @if(Auth::user()->level_id == 2)
         <li>
           <a href="{{ URL::asset('box') }}">
-            <i class="fa fa-user fa-3x sidebar-icon"></i>
+            <span class="glyphicon glyphicon-th-list btn-lg" aria-hidden="true"></span>
             Casella
           </a>
         </li>
         <li>
           <a href="{{ URL::asset('mail') }}">
-            <i class="fa fa-user fa-3x sidebar-icon"></i>
+            <span class="glyphicon glyphicon-comment btn-lg" aria-hidden="true"></span>
             Contatti
           </a>
         </li>
@@ -48,7 +48,7 @@
       @if(Auth::user()->level_id == 1)
         <li>
           <a href="{{ URL::asset('series') }}">
-            <i class="fa fa-th-large fa-3x sidebar-icon"></i>
+            <span class="glyphicon glyphicon-th-list btn-lg" aria-hidden="true"></span>
             Serie
           </a>
         </li>
