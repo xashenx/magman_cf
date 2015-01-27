@@ -8,7 +8,7 @@
                             @endif
                             <div class="panel panel-info no-radius">
                                 <div class="panel-heading no-radius">
-                                    Fumetti ordinati da clienti
+                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Fumetti ordinati da clienti
                                 </div>
                                 <div class="panel-body">
                                     @if(count($to_order) > 0)
@@ -52,7 +52,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="panel panel-warning no-radius">
                                     <div class="panel-heading no-radius">
-                                        Warning Caselle
+                                        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Warning Caselle
                                     </div>
                                     <div class="panel-body">
                                         <div>
