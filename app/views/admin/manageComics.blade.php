@@ -38,12 +38,12 @@
 										@else
 										<td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}}</a></td>
 										@endif
-                                        <td>
-										@if($comic->image != null)
-                                            <a href="{{$comic->image}}"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
-                                        @endif
-                                        </td>
 										<td>{{ $comic->number}}</td>
+										<td>
+											@if($comic->image != null)
+												<a href="{{$comic->image}}"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
+											@endif
+										</td>
 										<td>{{ round($comic->price,2)}}€</td>
 										@if($inv_state == 1)
 										<td>{{ $comic->available}}</td>
