@@ -9,7 +9,6 @@
         {{ $errors->first('number') }}
         {{ $errors->first('discount') }}
     @endif
-    {{ date('Y-m-d',strtotime('now')) }}
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
