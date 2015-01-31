@@ -118,7 +118,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    {{ Form::submit('Aggiungi') }}
+                                    {{ Form::submit('Aggiungi', array('class' => 'btn btn-primary no-radius')) }}
                                 </div>
                                 {{ Form::close() }}
                             </div>
