@@ -1,6 +1,6 @@
 <?php
 
-class ComicsController extends BaseController
+class VouchersController extends BaseController
 {
 
     public function create()
