@@ -6,13 +6,13 @@
                     @else
                         <div class="col-md-8 col-sm-8">
                             @endif
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    Fumetti mancanti
+                            <div class="panel panel-info no-radius">
+                                <div class="panel-heading no-radius">
+                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Fumetti ordinati da clienti
                                 </div>
                                 <div class="panel-body">
                                     @if(count($to_order) > 0)
-                                        <div class="table-responsive table-bordered">
+                                        <div>
                                             <table class="table table-striped table-bordered table-hover"
                                                    id="dataTables-example">
                                                 <thead>
@@ -50,12 +50,12 @@
                         </div>
                         @if(count($insolvents) > 0 || count($defaultings) > 0)
                             <div class="col-md-6 col-sm-6">
-                                <div class="panel panel-warning">
-                                    <div class="panel-heading">
-                                        Warning Caselle
+                                <div class="panel panel-warning no-radius">
+                                    <div class="panel-heading no-radius">
+                                        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Warning Caselle
                                     </div>
                                     <div class="panel-body">
-                                        <div class="table-responsive table-bordered">
+                                        <div>
                                             <table class="table table-striped table-bordered table-hover"
                                                    id="dataTables-example">
                                                 <thead>

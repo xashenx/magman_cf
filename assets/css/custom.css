@@ -3,14 +3,14 @@
     Authour URI: www.binarycart.com
     Version: 1.1
     License: MIT
-    
+
     http://opensource.org/licenses/MIT
 
     100% To use For Personal And Commercial Use.
-   
+
     ========================================================  */
 /*==============================================
-    GENERAL  STYLES    
+    GENERAL  STYLES
     =============================================*/
 body {
     font-family: 'Open Sans', sans-serif;
@@ -25,7 +25,7 @@ body {
     padding: 15px 15px;
     min-height: 600px;
     background:#F3F3F3;
-   
+
 }
 #page-inner {
     width:100%;
@@ -47,12 +47,13 @@ h2 {
 h4 {
     padding-top:10px;
 }
-.square-btn-adjust {
-    border: 0px solid transparent; 
-   -webkit-border-radius: 0px;
--moz-border-radius: 0px;
-border-radius: 0px;
 
+.square-btn-adjust {
+  border: 0px solid transparent;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  background-color: #e51b24;
 }
 p {
     font-size:16px;
@@ -60,7 +61,7 @@ p {
     padding-top:20px;
 }
 /*==============================================
-   DASHBOARD STYLES    
+   DASHBOARD STYLES
     =============================================*/
 .panel-back {
     background-color:#F8F8F8;
@@ -192,7 +193,7 @@ color: #8d8888;
 }
 
 /*==============================================
-    MENU STYLES    
+    MENU STYLES
     =============================================*/
 
 
@@ -233,7 +234,7 @@ max-width:170px;
 }
 
 .red-line {
-  background-color: #a70303;
+  background-color: #e51b24;
   height: 5px;
 }
 
@@ -265,7 +266,7 @@ max-width:170px;
 	color:#fff;
 	background:#202020;
 	text-shadow:none;
-	
+
 }
 .sidebar-collapse > .nav > li > a {
 	padding:15px 10px;
@@ -275,7 +276,7 @@ max-width:170px;
 }
 .sidebar-collapse .nav > li > a:hover,
 .sidebar-collapse .nav > li > a:focus {
-	
+
 	background:#0A0A0A;
 	outline:0;
 }
@@ -318,7 +319,7 @@ max-width:170px;
 .navbar-cls-top {
 	background:#4D4D4D;
 	border-bottom:none;
-	
+
 }
 
 .navbar-cls-top .navbar-brand:hover {
@@ -327,27 +328,45 @@ max-width:170px;
 }
 
 .navbar-default {
-border:0px solid black;
-     
+  border:0px solid black;
 }
+
 .navbar-header {
-    background: #A70303;
+  background: #A70303;
 }
+
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-background-color: #B40101;
+  background-color: #B40101;
 }
+
 .navbar-default .navbar-toggle {
-border-color: #fff;
+  border-color: #FFF;
+  margin-top:18px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
 }
 
 .navbar-default .navbar-toggle .icon-bar {
-background-color: #FFF;
+  background-color: #FFF;
 }
+
 .nav > li > a > i {
     margin-right:10px;
 }
+
+.welcome-div{
+  color: #FFF;
+  padding: 18px;
+  float: right;
+  font-size: 16px;
+}
+
+.welcome-div .profile{
+  color: #e51b24;
+}
 /*==============================================
-    UI ELEMENTS STYLES     
+    UI ELEMENTS STYLES
     =============================================*/
 .btn-circle {
 width: 50px;
@@ -362,18 +381,18 @@ line-height: 1.428571429;
 }
 
 /*==============================================
-    MEDIA QUERIES     
+    MEDIA QUERIES
     =============================================*/
- 
+
  @media(min-width:768px) {
      #page-wrapper{
                margin: 0 0 0 260px;
         padding: 15px 30px;
         min-height: 1200px;
-		
+
     }
-	
-	
+
+
     .navbar-side {
         z-index: 1;
         position: absolute;
@@ -381,9 +400,9 @@ line-height: 1.428571429;
     }
 
    .navbar {
- border-radius: 0px; 
+ border-radius: 0px;
 }
-   
+
 }
 
 

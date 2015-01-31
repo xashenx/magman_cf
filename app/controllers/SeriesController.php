@@ -24,49 +24,60 @@ class SeriesController extends BaseController {
 			$series -> type_id = Input::get('type_id');
 		if (Input::get('subtype_id') != null)
 			$series -> subtype_id = Input::get('subtype_id');
-		if (Input::get('active'))
-			$series -> active = 1;
-		else
-			$series -> active = 0;
+//		if (Input::get('active'))
+//			$series -> active = 1;
+//		else
+//			$series -> active = 0;
 		$series -> save();
 		return Redirect::to('series/' . $id);
 	}
 
 	public function delete() {
 		$series_id = Input::get('id');
-		$series = Series::find($series_id);
-		$series -> active = 0;
-		$series -> update();
-		$comics = $series -> listComics;
-		$this -> deleteComics($comics);
-		$this -> deleteSeriesUser($series_id);
-		// $this -> deleteComicUser($comics);
-		return Redirect::to('series');
+		$path = Input::get('return');
+		$rules = array('id' => 'required|numeric|exists:bm_series,id,active,1');
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->fails()) {
+			return Redirect::to($path)->withErrors($validator);
+		} else{
+			$series = Series::find($series_id);
+			$series -> active = 0;
+			$series -> update();
+			$comics = $series -> listComics;
+			$this -> deleteComics($comics);
+			$this -> deleteSeriesUser($series_id);
+			return Redirect::to($path);
+		}
 	}
 
 	public function restore() {
 		$series_id = Input::get('id');
-		$series = Series::find($series_id);
-		$series -> active = 1;
-		$series -> update();
-		$comics = $series -> listComics;
-		if (Input::get('comics') == 1) {
-			// $this -> restoreComics($comics);
-			DB::table('comics') -> where('series_id', $series_id) -> update(array('active' => 0));
+		$path = Input::get('return');
+		$rules = array('id' => 'required|numeric|exists:bm_series,id,active,0');
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->fails()) {
+			return Redirect::to($path)->withErrors($validator);
+		} else {
+			$series = Series::find($series_id);
+			$series->active = 1;
+			$series->update();
+			if (Input::get('comics') == 1) {
+				DB::table('bm_comics')->where('series_id', $series_id)->update(array('active' => 1));
+			}
+			return Redirect::to($path);
 		}
-		return Redirect::to('series');
 	}
 
 	public function deleteComics($comics) {
 		foreach ($comics as $comic) {
-			DB::table('comic_user') -> where('comic_id', $comic->id) -> update(array('active' => 0));
+			DB::table('bm_comic_user') -> where('comic_id', $comic->id) -> update(array('active' => 0));
 			$comic -> active = 0;
 			$comic -> update();
 		}
 	}
 
 	public function deleteSeriesUser($series_id) {
-		DB::table('series_user') -> where('series_id', $series_id) -> update(array('active' => 0));
+		DB::table('bm_series_user') -> where('series_id', $series_id) -> update(array('active' => 0));
 		// $seriesUser = SeriesUser::where('series_id',$series_id)->get();
 		// foreach ($seriesUser as $box) {
 			// $box -> active = 0;

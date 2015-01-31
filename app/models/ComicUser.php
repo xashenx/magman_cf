@@ -7,7 +7,7 @@ class ComicUser extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'comic_user';
+	protected $table = 'bm_comic_user';
 	private $rules = array(
 		'comic_id' => 'required|numeric',
 		'user_id' => 'required|numeric',

@@ -1,4 +1,8 @@
 @section('content')
+	@if(count($errors)>0)
+		<h3>Whhops: E' avvenuto un errore!!<br/>
+			Se il problema persiste contattare un amministratore</h3>
+	@endif
 <div class="row">
 	<div class="col-md-12">
 		<!-- Advanced Tables -->
@@ -48,24 +52,44 @@
 											<td>{{$serie->author}}</td>
 											<td>{{$serie->listActive->max('number')}}</td>
 											<td>
-											<div class="btn-group">
-												<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
-													Azioni <span class="caret"></span>
-												</button>
-												<ul class="dropdown-menu">
-													<li>
-														@if($serie->active)
-														<a href="#" onclick = "showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},0)">Disabilita</a>
-														@else
-														<a href="#" onclick = "showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},1)">Abilita</a>
-														<a href="#" onclick = "showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},2)">Abilita+fumetti</a>
-														@endif
-													</li>
-													<!-- <li>
-													<a href="newComic/{{$serie->id}}">Nuovo fumetto</a>
-													</li> -->
-												</ul>
-											</div></td>
+												@if($serie->active)
+													<button type="button" title="Disabilita"
+															onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},0)"
+															class="btn btn-danger btn-sm"><i
+																class="fa fa-remove"></i>
+													</button>
+												@else
+													<button type="button" title="Abilita"
+															onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},1)"
+															class="btn btn-success btn-sm"><i
+																class="fa fa-check"></i>
+													</button>
+													<button type="button" title="Abilita con Fumetti"
+															onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},2)"
+															class="btn btn-warning btn-sm"><i
+																class="fa fa-book"></i>
+													</button>
+												@endif
+											{{--<div class="btn-group">--}}
+
+												{{--<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">--}}
+													{{--Azioni <span class="caret"></span>--}}
+												{{--</button>--}}
+												{{--<ul class="dropdown-menu">--}}
+													{{--<li>--}}
+														{{--@if($serie->active)--}}
+														{{--<a href="#" onclick = "showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},0)">Disabilita</a>--}}
+														{{--@else--}}
+														{{--<a href="#" onclick = "showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},1)">Abilita</a>--}}
+														{{--<a href="#" onclick = "showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},2)">Abilita+fumetti</a>--}}
+														{{--@endif--}}
+													{{--</li>--}}
+													{{--<!-- <li>--}}
+													{{--<a href="newComic/{{$serie->id}}">Nuovo fumetto</a>--}}
+													{{--</li> -->--}}
+												{{--</ul>--}}
+											{{--</div>--}}
+											</td>
 											<td>{{count($serie->inBoxes)}}</td>
 											@endforeach
 										</tr>
@@ -131,6 +155,7 @@
 				{{ Form::open(array('name' => 'confirmForm')) }}
 				{{ Form::hidden('id') }}
 				{{ Form::hidden('comics') }}
+				{{ Form::hidden('return') }}
 				{{ Form::button('Annulla', array(
 				'data-dismiss' => 'modal',
 				'class' => 'btn btn-danger btn-sm')) }}
@@ -148,6 +173,7 @@
 <script>
 	function showConfirmModal(name, version, serie_id, mode) {
 		document.confirmForm.id.value = serie_id;
+		document.confirmForm.return.value = 'series';
 		if (mode == 0) {
 			document.confirmForm.action = 'deleteSeries';
 			$('#confirmPageName').text('Sei sicuro di voler disabilitare la serie ' + "'" + name + " - " + version + "'?");

@@ -47,7 +47,11 @@
                                         <tbody>
                                         @foreach ($boxes as $box)
                                             @if($box->active)
-                                                <tr class="odd gradeX">
+                                                @if(date('Y-m-d', strtotime($box->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+                                                    <tr class="odd warning">
+                                                @else
+                                                    <tr class="odd gradeX">
+                                                @endif
                                             @else
                                                 <tr class="danger">
                                                     @endif

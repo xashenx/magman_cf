@@ -7,13 +7,14 @@ class Comic extends Eloquent {
    *
    * @var string
    */
-  protected $table = 'comics';
+  protected $table = 'bm_comics';
   private $rules = array(
       'series_id' => 'required|numeric',
       'number' => 'required|numeric',
       'name'  => "regex:/^[A-z 'àèìòù]*$/",
       'price' => 'required|regex:/^[0-9]{1,8}[\.\,]?[0-9]{0,2}$/',
-      'available' => 'numeric'
+      'available' => 'numeric',
+      'image' => 'regex:/^http[s]?:\/\/.*\..{0,3}.*$/'
   );
   private $errors;
 

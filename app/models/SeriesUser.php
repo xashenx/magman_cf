@@ -7,7 +7,7 @@ class SeriesUser extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'series_user';
+	protected $table = 'bm_series_user';
 	private $rules = array(
 		'series_id' => 'required|numeric',
 		'user_id' => 'required|numeric'

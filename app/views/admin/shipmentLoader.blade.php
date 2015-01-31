@@ -32,6 +32,7 @@
                         <select name="comic_id" id="comic_id" disabled>
                         </select>
                     </div>
+                    @if($inv_state == 1)
                     <div>
                         {{ Form::label('amount', 'Quantità') }}
                         {{ Form::text('amount') }}
@@ -39,6 +40,7 @@
                             {{$message}}
                         @endforeach
                     </div>
+                    @endif
                     <div>
                         {{ Form::submit('Carica',['id' => 'load_comic','disabled' => 'disabled']) }}
                     </div>
@@ -72,7 +74,7 @@
                 $('#load_comic').prop('disabled', 'disabled');
             } else {
                 $.ajax({
-                    url: 'getNumberFromSeries',
+                    url: 'getNewNumbersFromSeries',
                     type: 'POST',
                     data: {'series_id': selected_id},
                     success: function (data) {
@@ -93,16 +95,20 @@
 
         $('select#comic_id').on('change', function () {
             var selected_id = $('select#comic_id').val();
+            @if($inv_state == 0)
             if (selected_id != -1) {
-//                $('#load_comic').prop('disabled', false);
+                $('#load_comic').prop('disabled', false);
             }
+            @endif
         });
 
+        @if($inv_state == 1)
         $('#amount').on('change', function () {
             var first_selected_id = $('select#series_id').val();
             var second_selected_id = $('select#comic_id').val();
             if(first_selected_id != -1 && second_selected_id != -1)
                 $('#load_comic').prop('disabled', false);
         });
+        @endif
     </script>
 @stop
