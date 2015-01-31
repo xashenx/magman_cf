@@ -60,6 +60,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function listComics() {
 		return $this -> hasMany('ComicUser', 'user_id', 'id');
 	}
+	
+	public function listVouchers() {
+		return $this -> hasMany('Voucher', 'user_id', 'id');
+	}
 
 	public function level() {
 		// return $this->hasOne('Level', 'id', 'level_id'); // this matches the Eloquent model
@@ -81,6 +85,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	
 	public function availableComics(){
 		return $this->listComics()->whereRaw('state_id < 3');
+	}
+
+	public function availableVouchers(){
+		return $this->listVouchers()->whereRaw('active = 1');
 	}
 
 	public function lastBuy(){

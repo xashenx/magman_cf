@@ -42,6 +42,11 @@
                                         <a href="#series" data-toggle="tab">Serie Seguite</a>
                                     </li>
                                 @endif
+                                @if(count($user->availableVouchers)>0)
+                                    <li class="">
+                                        <a href="#vouchers" data-toggle="tab">Buoni</a>
+                                    </li>                                
+                                @endif
                                 <li class="">
                                     <a href="#newseries" data-toggle="tab">Nuova Serie</a>
                                 </li>
@@ -49,10 +54,22 @@
                                 <li class="active">
                                     <a href="#series" data-toggle="tab">Serie Seguite</a>
                                 </li>
+                                @if(count($user->availableVouchers)>0)
+                                    <li class="">
+                                        <a href="#vouchers" data-toggle="tab">Buoni</a>
+                                    </li>                                
+                                @endif
                                 <li class="">
                                     <a href="#newseries" data-toggle="tab">Nuova Serie</a>
                                 </li>
-                            @elseif(count($comics)==0 && count($series)==0)
+							@elseif(count($user->availableVouchers)>0)
+                                <li class="active">
+                                    <a href="#vouchers" data-toggle="tab">Buoni</a>
+                                </li>							
+                                <li class="">
+                                    <a href="#newseries" data-toggle="tab">Nuova Serie</a>
+                                </li>
+                            @elseif(count($comics) == 0 && count($series) == 0 && count($user->availableVouchers) == 0)
                                 <li class="active">
                                     <a href="#newseries" data-toggle="tab">Nuova Serie</a>
                                 </li>
@@ -253,6 +270,47 @@
                                         </div>
                                     </div>
                                 @endif
+                                @if(count($user->availableVouchers)>0)
+                                    <div class="tab-pane fade" id="vouchers">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5>Buoni Disponibili</h5>
+                                            </div>
+                                            <div class="table-responsive table-bordered">
+                                                <table class="table table-striped table-bordered table-hover"
+                                                       id="dataTables-example">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Descrizione</th>
+                                                        <th>Valore</th>
+                                                        <th>Azioni</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+	                                                    @foreach ($user->availableVouchers as $voucher)
+                                                        <tr class="odd gradeX">
+                                                                <td>{{$voucher->description}}</td>
+                                                                <td>{{$voucher->amount}}</td>
+                                                                <td>
+                                                                      <button type="button" title="Usa"
+                                                                        onclick="showConfirmModal({{$voucher->id}},{{$user->id}},7)"
+                                                                        class="btn btn-success btn-sm"><i
+                                                                      	class="fa fa-dollar"></i>
+                                                                      </button>
+                                                                      <button type="button" title="Rimuovi"
+                                                                        onclick="showConfirmModal({{$voucher->id}},{{$user->id}},8)"
+                                                                        class="btn btn-danger btn-sm"><i
+                                                                      	class="fa fa-remove"></i>
+                                                                      </button>
+                                                                </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             @elseif(count($series)>0)
                                 <div class="tab-pane fade active in" id="series">
                                     <div class="panel panel-default">
@@ -312,8 +370,89 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if(count($user->availableVouchers)>0)
+                                    <div class="tab-pane fade" id="vouchers">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5>Buoni Disponibili</h5>
+                                            </div>
+                                            <div class="table-responsive table-bordered">
+                                                <table class="table table-striped table-bordered table-hover"
+                                                       id="dataTables-example">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Descrizione</th>
+                                                        <th>Valore</th>
+                                                        <th>Azioni</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+	                                                    @foreach ($user->availableVouchers as $voucher)
+                                                        <tr class="odd gradeX">
+                                                                <td>{{$voucher->description}}</td>
+                                                                <td>{{$voucher->amount}}</td>
+                                                                <td>
+                                                                      <button type="button" title="Usa"
+                                                                        onclick="showConfirmModal({{$voucher->id}},{{$user->id}},7)"
+                                                                        class="btn btn-success btn-sm"><i
+                                                                      	class="fa fa-dollar"></i>
+                                                                      </button>
+                                                                      <button type="button" title="Rimuovi"
+                                                                        onclick="showConfirmModal({{$voucher->id}},{{$user->id}},8)"
+                                                                        class="btn btn-danger btn-sm"><i
+                                                                      	class="fa fa-remove"></i>
+                                                                      </button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @elseif(count($user->availableVouchers)>0)
+                                    <div class="tab-pane fade active in" id="vouchers">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5>Buoni Disponibili</h5>
+                                            </div>
+                                            <div class="table-responsive table-bordered">
+                                                <table class="table table-striped table-bordered table-hover"
+                                                       id="dataTables-example">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Descrizione</th>
+                                                        <th>Valore</th>
+                                                        <th>Azioni</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+	                                                    @foreach ($user->availableVouchers as $voucher)
+                                                        <tr class="odd gradeX">
+                                                                <td>{{$voucher->description}}</td>
+                                                                <td>{{$voucher->amount}}</td>
+                                                                <td>
+                                                                      <button type="button" title="Usa"
+                                                                        onclick="showConfirmModal({{$voucher->id}},{{$user->id}},7)"
+                                                                        class="btn btn-success btn-sm"><i
+                                                                      	class="fa fa-dollar"></i>
+                                                                      </button>
+                                                                      <button type="button" title="Rimuovi"
+                                                                        onclick="showConfirmModal({{$voucher->id}},{{$user->id}},8)"
+                                                                        class="btn btn-danger btn-sm"><i
+                                                                      	class="fa fa-remove"></i>
+                                                                      </button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                             @endif
-                            @if(count($series)>0 || count($comics)>0)
+                            @if(count($series)>0 || count($comics)>0 || count($user->availableVouchers)>0)
                                 <div class="tab-pane fade" id="newseries">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
@@ -411,7 +550,7 @@
                                     </div>
                                     {{ Form::open(array('action' => 'VouchersController@create')) }}
                                     <div>
-                                        {{ Form::label('number', 'Descrizione buono') }}
+                                        {{ Form::label('number', 'Descrizione') }}
                                         {{ Form::text('description') }}
                                         {{ Form::hidden('user_id', $user->id) }}
                                     </div>
@@ -660,6 +799,16 @@
                 document.confirmForm.id.value = object_id;
                 document.confirmForm.action = '../renewShopCard';
                 $('#confirmPageName').text('Sei sicuro di voler rinnovare la tessera della casella?');
+            } else if(mode == 7){
+                // user a voucher
+                document.confirmForm.id.value = object_id;
+                document.confirmForm.action = '../deleteVoucher';
+                $('#confirmPageName').text('Sei sicuro di voler usare il buono?');
+            } else if(mode == 8){
+                // removing a voucher
+                document.confirmForm.id.value = object_id;
+                document.confirmForm.action = '../deleteVoucher';
+                $('#confirmPageName').text('Sei sicuro di voler rimuovere il buono?');
             }
             $('#modal-confirm').modal({
                 show: true
