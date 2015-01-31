@@ -3,6 +3,17 @@
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
+
+.margin-bottom{
+  margin-bottom: 10px;
+}
+
+.label-padding{
+  padding-top: 7px;
+}
+.button-margin{
+  margin-left: 15px;
+}
 /*override*/
 
 .dataTables_filter{
@@ -44,3 +55,22 @@ div.dataTables_paginate.paging_simple_numbers{
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
+
+.nav-tabs > li > a {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.nav-tabs > li:first-child > a {
+  border-left: none;
+}
+
+.nav-tabs > li:first-child > a:focus {
+  border-left: none;
+}
+
+.nav-tabs > li:first-child > a:hover {
+  border-left: none;
+}
+
