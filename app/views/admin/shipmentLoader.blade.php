@@ -1,36 +1,41 @@
 @section('content')
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="panel panel-default">
+            <div class="panel panel-default no-radius">
                 <div class="panel-heading">
-                    Nuovi Arrivi
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuovi Arrivi
                 </div>
                 <div class="panel-body">
                     {{ Form::open(array('action' => 'ComicsController@loadShipment')) }}
-                    <div>
-                        {{ Form::label('comic_id', 'Fumetto') }}
-                        <select name="series_id" id="series_id">
-                            <option value="-1" selected>-- Seleziona una serie --</option>
-                            @foreach($active_series as $serie)
-                                @if($serie->version != null)
-                                    <option value="{{ $serie->id }}"
-                                            rel="{{ $serie->name }}">{{ $serie->name }}
-                                        - {{ $serie -> version }}</option>
-                                @else
-                                    <option value="{{ $serie->id }}"
-                                            rel="{{ $serie->name }}">{{ $serie->name }}
-                                        - {{ $serie -> version }}</option>
-                                @endif
-                            @endforeach
-                        </select>
+                    <div class="form-group">
+                        {{ Form::label('series_id', 'Fumetto', array('class' => 'col-md-1 label-padding')) }}
+                        <div class="col-md-11 margin-bottom">
+                          <select name="series_id" id="series_id" class="form-control">
+                              <option value="-1" selected>-- Seleziona una serie --</option>
+                              @foreach($active_series as $serie)
+                                  @if($serie->version != null)
+                                      <option value="{{ $serie->id }}"
+                                              rel="{{ $serie->name }}">{{ $serie->name }}
+                                          - {{ $serie -> version }}</option>
+                                  @else
+                                      <option value="{{ $serie->id }}"
+                                              rel="{{ $serie->name }}">{{ $serie->name }}
+                                          - {{ $serie -> version }}</option>
+                                  @endif
+                              @endforeach
+                          </select>
+                        </div>
                         @foreach($errors->get('comic_id') as $message)
                             {{$message}}
                         @endforeach
                     </div>
-                    <div>
-                        {{ Form::label('number', 'Numero') }}
-                        <select name="comic_id" id="comic_id" disabled>
-                        </select>
+
+                    <div class="form-group">
+                        {{ Form::label('comic_id', 'Numero', array('class' => 'col-md-1 label-padding')) }}
+                        <div class="col-md-11 margin-bottom">
+                          <select name="comic_id" id="comic_id" class="form-control" disabled>
+                          </select>
+                        </div>
                     </div>
                     @if($inv_state == 1)
                     <div>
@@ -41,8 +46,10 @@
                         @endforeach
                     </div>
                     @endif
-                    <div>
-                        {{ Form::submit('Carica',['id' => 'load_comic','disabled' => 'disabled']) }}
+                    <div class="form-group">
+                      <div>
+                          {{ Form::submit('Carica',['id' => 'load_comic','disabled' => 'disabled', 'class' => 'button-margin']) }}
+                      </div>
                     </div>
                     {{ Form::close() }}
                 </div>

@@ -3,6 +3,17 @@
   -moz-border-radius: 0px;
   border-radius: 0px;
 }
+
+.margin-bottom{
+  margin-bottom: 10px;
+}
+
+.label-padding{
+  padding-top: 7px;
+}
+.button-margin{
+  margin-left: 15px;
+}
 /*override*/
 
 .dataTables_filter{
