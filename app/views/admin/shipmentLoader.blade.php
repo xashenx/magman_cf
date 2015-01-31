@@ -6,10 +6,10 @@
                   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nuovi Arrivi
                 </div>
                 <div class="panel-body">
-                    {{ Form::open(array('action' => 'ComicsController@loadShipment')) }}
+                    {{ Form::open(array('action' => 'ComicsController@loadShipment', 'class' => 'form-horizontal')) }}
                     <div class="form-group">
                         {{ Form::label('series_id', 'Fumetto', array('class' => 'col-md-1 label-padding')) }}
-                        <div class="col-md-11 margin-bottom">
+                        <div class="col-md-11">
                           <select name="series_id" id="series_id" class="form-control">
                               <option value="-1" selected>-- Seleziona una serie --</option>
                               @foreach($active_series as $serie)
@@ -32,7 +32,7 @@
 
                     <div class="form-group">
                         {{ Form::label('comic_id', 'Numero', array('class' => 'col-md-1 label-padding')) }}
-                        <div class="col-md-11 margin-bottom">
+                        <div class="col-md-11">
                           <select name="comic_id" id="comic_id" class="form-control" disabled>
                           </select>
                         </div>

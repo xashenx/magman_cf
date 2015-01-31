@@ -2,21 +2,15 @@
     @if(count($errors)>0)
         <h3>Whhops: E' avvenuto un errore!!<br/>
             Se il problema persiste contattare un amministratore</h3>
-        {{ $errors->first('name') }}
-        {{ $errors->first('surname') }}
-        {{ $errors->first('username') }}
-        {{ $errors->first('password') }}
-        {{ $errors->first('number') }}
-        {{ $errors->first('discount') }}
     @endif
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-default">
+            <div class="panel panel-default no-radius">
                 <div class="panel-heading">
-                    <h1>Gestione Caselle</h1>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Gestione Caselle
                 </div>
                 <div class="panel-body">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs margin-bottom">
                         <li class="active">
                             <a href="#boxes" data-toggle="tab">Caselle</a>
                         </li>
@@ -27,20 +21,18 @@
 
                     <div class="tab-content">
                         <div class="tab-pane fade active in" id="boxes">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h5>Caselle inserite nel sistema</h5>
-                                </div>
-                                <div class="table-responsive">
+                            <div>
+
+                                <div>
                                     <table class="table table-striped table-bordered table-hover"
                                            id="dataTables-example">
                                         <thead>
                                         <tr>
-                                            <th># Casella</th>
+                                            <th>#</th>
                                             <th>Casellante</th>
-                                            <th>Fumetti disponibili</th>
-                                            <th>Scontistica</th>
-                                            <th>Dovuto sul disponibile</th>
+                                            <th>Fumetti</th>
+                                            <th>Sconto</th>
+                                            <th>Dovuto</th>
                                             <th>Ultimo Acquisto</th>
                                         </tr>
                                         </thead>
@@ -81,38 +73,49 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="new">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h5>Inserimento Nuova Casella</h5>
+                            <div>
+                                {{ Form::open(array('action' => 'UsersController@create', 'class' => 'form-horizontal')) }}
+                                <div class="form-group">
+                                    {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
+                                        {{ Form::text('name', "", array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
-                                {{ Form::open(array('action' => 'UsersController@create')) }}
-                                <div>
-                                    {{ Form::label('name', 'Nome') }}
-                                    {{ Form::text('name') }}
+                                <div class="form-group">
+                                    {{ Form::label('surname', 'Cognome', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
+                                        {{ Form::text('surname', "", array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
-                                <div>
-                                    {{ Form::label('surname', 'Cognome') }}
-                                    {{ Form::text('surname') }}
+                                <div class="form-group">
+                                    {{ Form::label('number', 'Numero Casella', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
+                                        {{ Form::text('number', $next_box_id, array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
-                                <div>
-                                    {{ Form::label('number', 'Numero Casella') }}
-                                    {{ Form::text('number', $next_box_id) }}
+                                <div class="form-group">
+                                    {{ Form::label('username','Username', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
+                                        {{ Form::text('username', "", array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
-                                <div>
-                                    {{ Form::label('username','Username') }}
-                                    {{ Form::text('username') }}
+                                <div class="form-group">
+                                    {{ Form::label('password','Password', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
+                                        {{ Form::password('password', array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
-                                <div>
-                                    {{ Form::label('password','Password') }}
-                                    {{ Form::password('password') }}
+                                <div class="form-group">
+                                    {{ Form::label('password_confirmation','Conferma Password', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
+                                        {{ Form::password('password_confirmation', array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
-                                <div>
-                                    {{ Form::label('password_confirmation','Conferma Password') }}
-                                    {{ Form::password('password_confirmation') }}
-                                </div>
-                                <div>
-                                    {{ Form::label('discount', 'Sconto') }}
-                                    {{ Form::text('discount', '10') }}
+                                <div class="form-group">
+                                    {{ Form::label('discount', 'Sconto', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
+                                        {{ Form::text('discount', '10', array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
                                 <div>
                                     {{ Form::submit('Aggiungi') }}
