@@ -3,8 +3,6 @@
         <h3>Whoops! C'è stato un errore!!! <br/>
             Se il problema persiste, contattare un amministratore!</h3>
     @endif
-    {{ $errors->first('message') }}
-    {{ $errors->first('subject') }}
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="panel panel-default">
@@ -63,14 +61,20 @@
                                 <a href="#newsinglecomic" data-toggle="tab">Nuovo Arretrato/Singolo</a>
                             </li>
                             <li class="">
-                                <a href="#details" data-toggle="tab">Dettagli</a>
+                                <a href="#newvoucher" data-toggle="tab">Aggiungi Buono</a>
                             </li>
+{{--                            <li class="">
+                                <a href="#details" data-toggle="tab">Dettagli</a>
+                      		</li> --}}
                             <li class="">
                                 <a href="#contact" data-toggle="tab">Contatta</a>
                             </li>
+							<li class="">
+                            	<a href="#edit" data-toggle="tab">Modifica</a>
+                        	</li>
                         @else
                             <li class="active">
-                                <a href="#details" data-toggle="tab">Dettagli</a>
+                                <a href="#edit"data-toggle="tab">Modifica</a>
                             </li>
                         @endif
                         {{--@if(count($purchases)>0)--}}
@@ -78,9 +82,9 @@
                         {{--<a href="#purchases" data-toggle="tab">Storico Acquisti</a>--}}
                         {{--</li>--}}
                         {{--@endif--}}
-                        <li class="">
+                        {{--<li class="">
                             <a href="#edit" data-toggle="tab">Modifica</a>
-                        </li>
+                        </li>--}}
                     </ul>
                     <div class="tab-content">
                         @if($user->active)
@@ -400,9 +404,30 @@
                                     {{ Form::close() }}
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="newvoucher">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h5>Aggiungi un buono</h5>
+                                    </div>
+                                    {{ Form::open(array('action' => 'VouchersController@create')) }}
+                                    <div>
+                                        {{ Form::label('number', 'Descrizione buono') }}
+                                        {{ Form::text('description') }}
+                                        {{ Form::hidden('user_id', $user->id) }}
+                                    </div>
+                                    <div>
+                                        {{ Form::label('amount', 'Valore') }}
+                                        {{ Form::text('amount') }}                                    	
+                                    </div>
+                                    <div>
+                                        {{ Form::submit('Aggiungi',['id' => 'add_voucher','disabled' => 'disabled']) }}
+                                    </div>
+                                    {{ Form::close() }}
+                                </div>
+                            </div>
                         @endif
                         @if(!$user->active)
-                            <div class="tab-pane fade active in" id="details">
+                            {{--<div class="tab-pane fade active in" id="details">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h5>Dettagli della casella</h5>
@@ -414,9 +439,44 @@
                                     Sconto: {{$user->discount}}
                                     <br/>
                                 </div>
+                            </div>--}}
+                        <div class="tab-pane fade active in" id="edit">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h5>Modifica della casella</h5>
+                                </div>
+                                {{ Form::model($user, array('action' => 'UsersController@update')) }}
+                                <div>
+                                    {{ Form::label('name', 'Nome') }}
+                                    {{ Form::text('name') }}
+                                </div>
+                                <div>
+                                    {{ Form::label('surname','Cognome') }}
+                                    {{ Form::text('surname') }}
+                                    {{ Form::hidden('id')}}
+                                    {{ Form::hidden('username')}}
+                                </div>
+                                <div>
+                                    {{ Form::label('number','Numero') }}
+                                    {{ Form::text('number') }}
+                                </div>
+                                <div>
+                                    {{ Form::label('pass', 'Password') }}
+                                    {{ Form::password('pass') }}
+                                    {{ Form::hidden('password','dummypassword') }}
+                                </div>
+                                <div>
+                                    {{ Form::label('discount', 'Sconto') }}
+                                    {{ Form::text('discount') }}
+                                </div>
+                                <div>
+                                    {{ Form::submit('Aggiorna') }}
+                                </div>
+                                {{ Form::close() }}
                             </div>
+                        </div>
                         @else
-                            <div class="tab-pane fade" id="details">
+                            {{--<div class="tab-pane fade" id="details">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h5>Dettagli della casella</h5>
@@ -428,7 +488,7 @@
                                     Sconto: {{$user->discount}}
                                     <br/>
                                 </div>
-                            </div>
+                            </div>--}}
                             <div class="tab-pane fade" id="contact">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -454,6 +514,41 @@
                                     {{ Form::close() }}
                                 </div>
                             </div>
+                        <div class="tab-pane fade" id="edit">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h5>Modifica della casella</h5>
+                                </div>
+                                {{ Form::model($user, array('action' => 'UsersController@update')) }}
+                                <div>
+                                    {{ Form::label('name', 'Nome') }}
+                                    {{ Form::text('name') }}
+                                </div>
+                                <div>
+                                    {{ Form::label('surname','Cognome') }}
+                                    {{ Form::text('surname') }}
+                                    {{ Form::hidden('id')}}
+                                    {{ Form::hidden('username')}}
+                                </div>
+                                <div>
+                                    {{ Form::label('number','Numero') }}
+                                    {{ Form::text('number') }}
+                                </div>
+                                <div>
+                                    {{ Form::label('pass', 'Password') }}
+                                    {{ Form::password('pass') }}
+                                    {{ Form::hidden('password','dummypassword') }}
+                                </div>
+                                <div>
+                                    {{ Form::label('discount', 'Sconto') }}
+                                    {{ Form::text('discount') }}
+                                </div>
+                                <div>
+                                    {{ Form::submit('Aggiorna') }}
+                                </div>
+                                {{ Form::close() }}
+                            </div>
+                        </div>
                         @endif
                         {{--@if(count($purchases)>0)--}}
                         {{--<div class="tab-pane fade" id="purchases">--}}
@@ -491,41 +586,6 @@
                         {{--</div>--}}
                         {{--</div>--}}
                         {{--@endif--}}
-                        <div class="tab-pane fade" id="edit">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h5>Modifica della casella</h5>
-                                </div>
-                                {{ Form::model($user, array('action' => 'UsersController@update')) }}
-                                <div>
-                                    {{ Form::label('name', 'Nome') }}
-                                    {{ Form::text('name') }}
-                                </div>
-                                <div>
-                                    {{ Form::label('surname','Cognome') }}
-                                    {{ Form::text('surname') }}
-                                    {{ Form::hidden('id')}}
-                                    {{ Form::hidden('username')}}
-                                </div>
-                                <div>
-                                    {{ Form::label('number','Numero') }}
-                                    {{ Form::text('number') }}
-                                </div>
-                                <div>
-                                    {{ Form::label('pass', 'Password') }}
-                                    {{ Form::password('pass') }}
-                                    {{ Form::hidden('password','dummypassword') }}
-                                </div>
-                                <div>
-                                    {{ Form::label('discount', 'Sconto') }}
-                                    {{ Form::text('discount') }}
-                                </div>
-                                <div>
-                                    {{ Form::submit('Aggiorna') }}
-                                </div>
-                                {{ Form::close() }}
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -653,6 +713,27 @@
             if (selected_id != -1) {
                 $('#add_single_number').prop('disabled', false);
             }
+        });
+    </script>
+    <script>
+        $('#amount').on('change', function () {
+        	var actual = $('#amount').val();
+        	if (actual != ''){
+            	var other_par = $('#description').val();
+            	if(other_par != '')
+                	$('#add_voucher').prop('disabled', false);
+            } else	
+             $('#add_voucher').prop('disabled', 'disabled');
+        });
+        
+        $('#description').on('change', function () {
+        	var actual = $('#amount').val();
+        	if (actual != ''){
+            	var other_par = $('#amount').val();
+            	if(other_par != '')
+                	$('#add_voucher').prop('disabled', false);
+           } else	
+             $('#add_voucher').prop('disabled', 'disabled');	            
         });
     </script>
 @stop

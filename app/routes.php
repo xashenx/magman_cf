@@ -100,6 +100,12 @@ Route::group(array('before' => 'auth'), function () {
             Route::post('updateComicUser', 'ComicUserController@update');
             Route::post('deleteComicUser', 'ComicUserController@delete');
             Route::post('restoreComicUser', 'ComicUserController@restore');
+            // route to handle Voucher model changes
+            Route::post('createVoucher', 'VouchersController@create');
+            Route::post('boxes/createComicUser', 'ComicUserController@create');
+            Route::post('updateComicUser', 'ComicUserController@update');
+            Route::post('deleteComicUser', 'ComicUserController@delete');
+            Route::post('restoreComicUser', 'ComicUserController@restore');
             // special events routes
             Route::post('buyComic', 'ComicUserController@buy');
             Route::post('loadShipment', 'ComicsController@loadShipment');
