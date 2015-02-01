@@ -12,20 +12,20 @@
                         @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
                             <button type="button" title="Rinnova Tessera"
                                     onclick="showConfirmModal({{$user->id}},0,6)"
-                                    class="btn btn-warning btn-xs"><i
+                                    class="btn btn-warning btn-xs no-radius little-icon little-icon-padding"><i
                                         class="fa fa-recycle"></i>
                             </button>
                         @endif
                         <button type="button" title="Disattiva casella"
                             onclick="showConfirmModal({{$user->id}},0,4)"
-                            class="btn btn-danger btn-xs"><i
+                            class="btn btn-danger btn-xs no-radius little-icon"><i
                             class="fa fa-remove"></i>
                         </button>
 
                     @else
                         <button type="button" title="Riattiva casella"
                                 onclick="showConfirmModal({{$user->id}},0,5)"
-                                class="btn btn-success btn-sm"><i
+                                class="btn btn-success btn-sm no-radius little-icon"><i
                                     class="fa fa-thumbs-o-up"></i>
                         </button></h1>
                     @endif
@@ -46,7 +46,7 @@
                                 @if(count($user->availableVouchers)>0)
                                     <li class="">
                                         <a href="#vouchers" data-toggle="tab">Buoni</a>
-                                    </li>                                
+                                    </li>
                                 @endif
                                 <li class="">
                                     <a href="#newseries" data-toggle="tab">Nuova Serie</a>
@@ -58,7 +58,7 @@
                                 @if(count($user->availableVouchers)>0)
                                     <li class="">
                                         <a href="#vouchers" data-toggle="tab">Buoni</a>
-                                    </li>                                
+                                    </li>
                                 @endif
                                 <li class="">
                                     <a href="#newseries" data-toggle="tab">Nuova Serie</a>
@@ -66,7 +66,7 @@
 							@elseif(count($user->availableVouchers)>0)
                                 <li class="active">
                                     <a href="#vouchers" data-toggle="tab">Buoni</a>
-                                </li>							
+                                </li>
                                 <li class="">
                                     <a href="#newseries" data-toggle="tab">Nuova Serie</a>
                                 </li>

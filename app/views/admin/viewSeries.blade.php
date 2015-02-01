@@ -7,11 +7,11 @@
         <div class="col-md-12 col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1>Visualizza/Modifica Serie
+                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Gestione Serie
 						@if($series->active)
 							<button type="button" title="Disattiva serie"
 									onclick="showConfirmModal({{$series->id}},0,0)"
-									class="btn btn-danger btn-sm">
+									class="btn btn-danger btn-xs no-radius little-icon">
 									<i class="fa fa-remove"></i>
 							</button>
 						@else
@@ -26,7 +26,7 @@
 								<i class="fa fa-book"></i>
 							</button>
 						@endif
-					</h1>
+
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">

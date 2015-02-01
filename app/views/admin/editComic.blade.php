@@ -211,7 +211,7 @@
                 else
                     document.confirmForm.action = '../deleteComic';
                 document.confirmForm.id.value = object_id;
-                $('#confirmPageName').text('Sei sicuro di volere disattivare questo fumetto');
+                $('#confirmPageName').text('Sei sicuro di volere disattivare questo fumetto?');
             } else if (mode == 1) {
                 // restore comic
                 if(series != 0)
@@ -219,7 +219,7 @@
                 else
                     document.confirmForm.action = '../restoreComic';
                 document.confirmForm.id.value = object_id;
-                $('#confirmPageName').text('Sei sicuro di volere attivare nuovamente questo fumetto?' + mode);
+                $('#confirmPageName').text('Sei sicuro di volere attivare nuovamente questo fumetto?');
             }
             $('#modal-confirm').modal({
                 show: true
