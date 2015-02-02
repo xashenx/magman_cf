@@ -7,28 +7,29 @@
         <div class="col-md-12 col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1>Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
                     @if($user->active)
-                            @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
-                                <button type="button" title="Rinnova Tessera"
-                                        onclick="showConfirmModal({{$user->id}},0,6)"
-                                        class="btn btn-warning btn-sm"><i
-                                            class="fa fa-recycle"></i>
-                                </button>
-                            @endif
+                        @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+                            <button type="button" title="Rinnova Tessera"
+                                    onclick="showConfirmModal({{$user->id}},0,6)"
+                                    class="btn btn-warning btn-xs no-radius little-icon little-icon-padding"><i
+                                        class="fa fa-recycle"></i>
+                            </button>
+                        @endif
                         <button type="button" title="Disattiva casella"
                             onclick="showConfirmModal({{$user->id}},0,4)"
-                            class="btn btn-danger btn-sm"><i
+                            class="btn btn-danger btn-xs no-radius little-icon"><i
                             class="fa fa-remove"></i>
                         </button>
-                    </h1>
+
                     @else
                         <button type="button" title="Riattiva casella"
                                 onclick="showConfirmModal({{$user->id}},0,5)"
-                                class="btn btn-success btn-sm"><i
+                                class="btn btn-success btn-sm no-radius little-icon"><i
                                     class="fa fa-thumbs-o-up"></i>
                         </button></h1>
                     @endif
+                    (<i>Saldo</i> : {{ $due }}€)
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
@@ -45,7 +46,7 @@
                                 @if(count($user->availableVouchers)>0)
                                     <li class="">
                                         <a href="#vouchers" data-toggle="tab">Buoni</a>
-                                    </li>                                
+                                    </li>
                                 @endif
                                 <li class="">
                                     <a href="#newseries" data-toggle="tab">Nuova Serie</a>
@@ -57,7 +58,7 @@
                                 @if(count($user->availableVouchers)>0)
                                     <li class="">
                                         <a href="#vouchers" data-toggle="tab">Buoni</a>
-                                    </li>                                
+                                    </li>
                                 @endif
                                 <li class="">
                                     <a href="#newseries" data-toggle="tab">Nuova Serie</a>
@@ -65,7 +66,7 @@
 							@elseif(count($user->availableVouchers)>0)
                                 <li class="active">
                                     <a href="#vouchers" data-toggle="tab">Buoni</a>
-                                </li>							
+                                </li>
                                 <li class="">
                                     <a href="#newseries" data-toggle="tab">Nuova Serie</a>
                                 </li>
@@ -108,13 +109,7 @@
                             @if(count($comics)>0)
                                 <div class="tab-pane fade active in" id="orderedComics">
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
-                                                <h5>Fumetti in arrivo</h5>  <i>Rinnovo Tessera</i> : {{ $renewal_price }}€<br/> <i>Saldo disponibili</i> : {{ $due }}€
-                                            @else
-                                                <h5>Fumetti in arrivo</h5> (<i>Saldo disponibili</i> : {{ $due }}€)
-                                            @endif
-                                        </div>
+
                                         <div class="panel-body">
                                             <div class="table-responsive table-bordered">
                                                 <table class="table table-striped table-bordered table-hover"
@@ -556,7 +551,7 @@
                                     </div>
                                     <div>
                                         {{ Form::label('amount', 'Valore') }}
-                                        {{ Form::text('amount') }}                                    	
+                                        {{ Form::text('amount') }}
                                     </div>
                                     <div>
                                         {{ Form::submit('Aggiungi',['id' => 'add_voucher','disabled' => 'disabled']) }}
@@ -871,18 +866,18 @@
             	var other_par = $('#description').val();
             	if(other_par != '')
                 	$('#add_voucher').prop('disabled', false);
-            } else	
+            } else
              $('#add_voucher').prop('disabled', 'disabled');
         });
-        
+
         $('#description').on('change', function () {
         	var actual = $('#amount').val();
         	if (actual != ''){
             	var other_par = $('#amount').val();
             	if(other_par != '')
                 	$('#add_voucher').prop('disabled', false);
-           } else	
-             $('#add_voucher').prop('disabled', 'disabled');	            
+           } else
+             $('#add_voucher').prop('disabled', 'disabled');
         });
     </script>
 @stop

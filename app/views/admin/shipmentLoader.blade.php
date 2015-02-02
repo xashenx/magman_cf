@@ -48,7 +48,7 @@
                     @endif
                     <div class="form-group">
                       <div>
-                          {{ Form::submit('Carica',['id' => 'load_comic','disabled' => 'disabled', 'class' => 'button-margin']) }}
+                          {{ Form::submit('Carica',['id' => 'load_comic','disabled' => 'disabled', 'class' => 'btn btn-primary button-margin no-radius']) }}
                       </div>
                     </div>
                     {{ Form::close() }}

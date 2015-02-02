@@ -5,9 +5,9 @@
     @endif
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="panel panel-default">
+            <div class="panel panel-default no-radius">
                 <div class="panel-heading">
-                    <h1>Visualizza/Modifica Fumetto
+                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Gestione Fumetto
                     @if($comic->active)
                             <button type="button" title="Disattiva fumetto"
                                     @if($path == '../')
@@ -15,8 +15,8 @@
                                     @else
                                     onclick="showConfirmModal({{$comic->id}},{{$comic->series->id}},0)"
                                     @endif
-                                    class="btn btn-danger btn-sm"><i
-                                        class="fa fa-thumbs-o-down"></i>
+                                    class="btn btn-danger btn-xs no-radius"><i
+                                        class="fa fa-remove"></i>
                             </button>
                     @else
                         <button type="button" title="Riattiva fumetto"
@@ -29,10 +29,9 @@
                                     class="fa fa-thumbs-o-up"></i>
                         </button>
                     @endif
-                    </h1>
                 </div>
                 <div class="panel-body">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs margin-bottom">
                         <li class="active">
                             <a href="#details" data-toggle="tab">Dettagli</a>
                         </li>
@@ -50,10 +49,7 @@
 
                     <div class="tab-content">
                         <div class="tab-pane fade active in" id="details">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h5>Dettagli del Fumetto</h5>
-                                </div>
+                            <div>
                                 Nome: {{$comic->series->name}}
                                 <br/>
                                 Versione: {{$comic->series->version}}
@@ -75,12 +71,9 @@
                         @if($comic->series->active == 1)
                             @if(count($ordered)>0)
                             <div class="tab-pane fade" id="ordered">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h5>Prenotazioni del Fumetto</h5>
-                                    </div>
+                                <div>
                                     <div class="tab-content">
-                                        <div class="table-responsive">
+                                        <div>
                                             <table class="table table-striped table-bordered table-hover"
                                                    id="dataTables-example">
                                                 <thead>
@@ -96,7 +89,7 @@
                                                         <td>
                                                             <a href="{{ $path }}boxes/{{ $order->box->id }}">{{ $order->box->name }} {{ $order->box->surname }}</a>
                                                         </td>
-                                                        <td>{{ round($order->price,2) }}€</td>
+                                                        <td>{{ round($order->price,2) }} €</td>
                                                         <td>{{ date('d/m/Y',strtotime($order->created_at)) }}</td>
                                                     </tr>
                                                 @endforeach
@@ -108,14 +101,13 @@
                             </div>
                             @endif
                             <div class="tab-pane fade" id="edit">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h5>Modifica del Fumetto</h5>
-                                    </div>
-                                    {{ Form::model($comic, array('action' => 'ComicsController@update')) }}
-                                    <div>
-                                        {{ Form::label('name', 'Nome') }}
-                                        {{ Form::text('name') }}
+                                <div>
+                                    {{ Form::model($comic, array('action' => 'ComicsController@update', 'class' => 'form-horizontal')) }}
+                                    <div class="form-group">
+                                        {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
+                                        <div class="col-md-10">
+                                            {{ Form::text('name', $comic->name, array('class' => 'form-control')) }}
+                                        </div>
                                         {{ Form::hidden('id') }}
                                         {{ Form::hidden('series_id') }}
                                         @if($path == "../")
@@ -124,26 +116,34 @@
                                             {{ Form::hidden('return','series') }}
                                         @endif
                                     </div>
-                                    <div>
-                                        {{ Form::label('number', 'Numero') }}
-                                        {{ Form::text('number') }}
+                                    <div class="form-group">
+                                        {{ Form::label('number', 'Numero', array('class' => 'col-md-2 label-padding')) }}
+                                        <div class="col-md-10">
+                                            {{ Form::text('number', $comic->number, array('class' => 'form-control')) }}
+                                        </div>
                                     </div>
                                     @if($inv_state == 1)
-                                        <div>
-                                            {{ Form::label('available', 'Disponibilità') }}
-                                            {{ Form::text('available') }}
+                                        <div class="form-group">
+                                            {{ Form::label('available', 'Disponibilità', array('class' => 'col-md-2 label-padding')) }}
+                                            <div class="col-md-10">
+                                                {{ Form::text('available', $comic->available, array('class' => 'form-control')) }}
+                                            </div>
                                         </div>
                                     @endif
-                                    <div>
-                                        {{ Form::label('image', 'Link Immagine') }}
-                                        {{ Form::text('image') }}
+                                    <div class="form-group">
+                                        {{ Form::label('image', 'Link Immagine', array('class' => 'col-md-2 label-padding')) }}
+                                        <div class="col-md-10">
+                                            {{ Form::text('image', $comic->image, array('class' => 'form-control')) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{ Form::label('price', 'Prezzo', array('class' => 'col-md-2 label-padding')) }}
+                                        <div class="col-md-10">
+                                            {{ Form::text('price', $comic->price, array('class' => 'form-control')) }}
+                                        </div>
                                     </div>
                                     <div>
-                                        {{ Form::label('price', 'Prezzo') }}
-                                        {{ Form::text('price') }}
-                                    </div>
-                                    <div>
-                                        {{ Form::submit('Aggiorna') }}
+                                        {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary no-radius')) }}
                                     </div>
                                     {{ Form::close() }}
                                 </div>
@@ -211,7 +211,7 @@
                 else
                     document.confirmForm.action = '../deleteComic';
                 document.confirmForm.id.value = object_id;
-                $('#confirmPageName').text('Sei sicuro di volere disattivare questo fumetto');
+                $('#confirmPageName').text('Sei sicuro di volere disattivare questo fumetto?');
             } else if (mode == 1) {
                 // restore comic
                 if(series != 0)
@@ -219,7 +219,7 @@
                 else
                     document.confirmForm.action = '../restoreComic';
                 document.confirmForm.id.value = object_id;
-                $('#confirmPageName').text('Sei sicuro di volere attivare nuovamente questo fumetto?' + mode);
+                $('#confirmPageName').text('Sei sicuro di volere attivare nuovamente questo fumetto?');
             }
             $('#modal-confirm').modal({
                 show: true
