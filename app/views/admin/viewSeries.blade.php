@@ -194,13 +194,13 @@
 							  </div>
               </div>
 							<div class="form-group">
-								{{ Form::label('completed', 'Conclusa', array('class' => 'col-md-1 label-padding')) }}
+								{{ Form::label('concluded', 'Conclusa', array('class' => 'col-md-1 label-padding')) }}
                 <div class="col-md-11">
-								  {{ Form::checkbox('completed', 'value'); }}
+								  {{ Form::checkbox('concluded', 'value', $series->concluded); }}
 							  </div>
               </div>
 							<div>
-								{{ Form::submit('Aggiorna') }}
+								{{ Form::submit('Aggiorna', array('class' => 'btn btn-primary no-radius')) }}
 							</div>
 							{{ Form::close() }}
 						</div>
