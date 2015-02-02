@@ -5,9 +5,9 @@
     @endif
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="panel panel-default">
+            <div class="panel panel-default no-radius">
                 <div class="panel-heading">
-                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Gestione Serie
+                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Serie: {{$series->name}}
 						@if($series->active)
 							<button type="button" title="Disattiva serie"
 									onclick="showConfirmModal({{$series->id}},0,0)"
@@ -17,19 +17,19 @@
 						@else
 							<button type="button" title="Riattiva serie"
 									onclick="showConfirmModal({{$series->id}},0,1)"
-									class="btn btn-success btn-sm">
+									class="btn btn-success btn-xs no-radius little-icon">
 									<i class="fa fa-smile-o"></i>
 							</button>
 							<button type="button" title="Riattiva serie con fumetti"
 									onclick="showConfirmModal({{$series->id}},1,1)"
-									class="btn btn-warning btn-sm">
+									class="btn btn-warning btn-xs little-icon">
 								<i class="fa fa-book"></i>
 							</button>
 						@endif
 
                 </div>
                 <div class="panel-body">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs margin-bottom">
                         <li class="active">
                             <a href="#details" data-toggle="tab">Dettagli</a>
                         </li>
@@ -46,10 +46,7 @@
 
 				<div class="tab-content">
 					<div class="tab-pane fade active in" id="details">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h5>Visualizza Dettagli della Serie</h5>
-							</div>
+						<div>
 							Nome: {{$series->name}}
 							<br />
 							Versione: {{$series->version}}
@@ -73,12 +70,9 @@
 						</div>
 					</div>
 					<div class="tab-pane fade" id="numbers">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h5>Numeri della Serie</h5>
-							</div>
+						<div>
 							<div class="panel-body">
-								<div class="table-responsive">
+								<div>
 									<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 										<thead>
 											<tr>
@@ -112,36 +106,43 @@
 						</div>
 					</div>
 					<div class="tab-pane fade" id="newnumber">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                  <h5>Inserimento Nuovo Numero</h5>
-              </div>
-              {{ Form::open(array('action' => 'ComicsController@create','id' => 'comic')) }}
-              <div>
-                  {{ Form::label('name', 'Nome') }}
-                  {{ Form::text('name') }}
+            <div>
+              {{ Form::open(array('action' => 'ComicsController@create','id' => 'comic', 'class' => 'form-horizontal')) }}
+              <div class="form-group">
+                  {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
+                  <div class="col-md-10">
+                    {{ Form::text('name', "", array('class' => 'form-control')) }}
+                  </div>
                   {{ Form::hidden('series_id', $series->id, array('id' => 'comic_series_id'))}}
               </div>
-              <div>
-                  {{ Form::label('number','Numero') }}
-                  {{ Form::text('number', $last_comic->number+1, array('id' => 'comic_number')) }}
+              <div class="form-group">
+                  {{ Form::label('number','Numero', array('class' => 'col-md-2 label-padding')) }}
+                  <div class="col-md-10">
+                    {{ Form::text('number', $last_comic->number+1, array('id' => 'comic_number', 'class' => 'form-control')) }}
+                  </div>
               </div>
-              <div>
-                  {{ Form::label('price', 'Prezzo') }}
-                  {{ Form::text('price', $last_comic->price, array('id' => 'comic_price')) }}
+              <div class="form-group">
+                  {{ Form::label('price', 'Prezzo', array('class' => 'col-md-2 label-padding')) }}
+                  <div class="col-md-10">
+                    {{ Form::text('price', $last_comic->price, array('id' => 'comic_price', 'class' => 'form-control')) }}
+                  </div>
               </div>
-				<div>
-					{{ Form::label('image', 'Link Immagine') }}
-					{{ Form::text('image') }}
+				<div class="form-group">
+					{{ Form::label('image', 'Link Immagine', array('class' => 'col-md-2 label-padding')) }}
+					<div class="col-md-10">
+            {{ Form::text('image', "", array('class' => 'form-control')) }}
+          </div>
 				</div>
 				@if($inv_state == 1)
-              <div>
-                  {{ Form::label('available', 'Disponibilità') }}
-                  {{ Form::text('available', '0', array('id' => 'comic_available')) }}
+              <div class="form-group">
+                  {{ Form::label('available', 'Disponibilità', array('class' => 'col-md-2 label-padding')) }}
+                  <div class="col-md-10">
+                    {{ Form::text('available', '0', array('id' => 'comic_available', 'class' => 'form-control')) }}
+                  </div>
               </div>
 				@endif
               <div>
-                  {{ Form::submit('Inserisci') }}
+                  {{ Form::submit('Inserisci', array('class' => 'btn btn-primary no-radius')) }}
               </div>
               {{ Form::close() }}
 							<div class="restyleAlert2" style="display:none">
@@ -151,36 +152,45 @@
 						</div>
 					</div>
 					<div class="tab-pane fade" id="edit">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h5>Modifica della Serie</h5>
-							</div>
-							{{ Form::model($series, array('action' => 'SeriesController@update')) }}
-							<div>
-								{{ Form::label('name', 'Nome') }}
-								{{ Form::text('name') }}
+						<div>
+							{{ Form::model($series, array('action' => 'SeriesController@update', 'class' => 'form-horizontal')) }}
+							<div class="form-group">
+								{{ Form::label('name', 'Nome', array('class' => 'col-md-1 label-padding')) }}
+                <div class="col-md-11">
+								  {{ Form::text('name', $series->name, array('class' => 'form-control')) }}
+                </div>
 								{{ Form::hidden('id')}}
 							</div>
-							<div>
-								{{ Form::label('version','Versione') }}
-								{{ Form::text('version') }}
+							<div class="form-group">
+								{{ Form::label('version','Versione', array('class' => 'col-md-1 label-padding')) }}
+                <div class="col-md-11">
+								  {{ Form::text('version', $series->version, array('class' => 'form-control')) }}
+                </div>
 							</div>
-							<div>
-								{{ Form::label('author', 'Autore') }}
-								{{ Form::text('author') }}
+							<div class="form-group">
+								{{ Form::label('author', 'Autore', array('class' => 'col-md-1 label-padding')) }}
+                <div class="col-md-11">
+								  {{ Form::text('author', $series->author, array('class' => 'form-control')) }}
+                </div>
 							</div>
-							<div>
-								{{ Form::label('type_id', 'Tipo') }}
-								{{ Form::text('type_id') }}
+							<div class="form-group">
+								{{ Form::label('type_id', 'Tipo', array('class' => 'col-md-1 label-padding')) }}
+                <div class="col-md-11">
+								  {{ Form::text('type_id', $series->type_id, array('class' => 'form-control')) }}
+                </div>
 							</div>
-							<div>
-								{{ Form::label('subtype_id', 'Sotto Tipo') }}
-								{{ Form::text('subtype_id') }}
-							</div>
-							<div>
-								{{ Form::label('completed', 'Conclusa') }}
-								{{ Form::checkbox('completed', 'value'); }}
-							</div>
+							<div class="form-group">
+								{{ Form::label('subtype_id', 'Sotto Tipo', array('class' => 'col-md-1 label-padding')) }}
+                <div class="col-md-11">
+								  {{ Form::text('subtype_id', $series->subtype_id, array('class' => 'form-control')) }}
+							  </div>
+              </div>
+							<div class="form-group">
+								{{ Form::label('completed', 'Conclusa', array('class' => 'col-md-1 label-padding')) }}
+                <div class="col-md-11">
+								  {{ Form::checkbox('completed', 'value'); }}
+							  </div>
+              </div>
 							<div>
 								{{ Form::submit('Aggiorna') }}
 							</div>
