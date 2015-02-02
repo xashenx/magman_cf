@@ -118,13 +118,21 @@
               <div class="form-group">
                   {{ Form::label('number','Numero', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
-                    {{ Form::text('number', $last_comic->number+1, array('id' => 'comic_number', 'class' => 'form-control')) }}
+                    @if($last_comic != null)
+                      {{ Form::text('number', $last_comic->number+1, array('id' => 'comic_number', 'class' => 'form-control')) }}
+                    @else
+                      {{ Form::text('number', '', array('id' => 'comic_number', 'class' => 'form-control')) }}
+                    @endif
                   </div>
               </div>
               <div class="form-group">
                   {{ Form::label('price', 'Prezzo', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
-                    {{ Form::text('price', $last_comic->price, array('id' => 'comic_price', 'class' => 'form-control')) }}
+                    @if($last_comic != null)
+                      {{ Form::text('price', $last_comic->price, array('id' => 'comic_price', 'class' => 'form-control')) }}
+                    @else
+                      {{ Form::text('price', '', array('id' => 'comic_price', 'class' => 'form-control')) }}
+                    @endif
                   </div>
               </div>
 				<div class="form-group">
