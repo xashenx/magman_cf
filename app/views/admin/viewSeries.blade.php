@@ -124,11 +124,19 @@
               </div>
               <div>
                   {{ Form::label('number','Numero') }}
-                  {{ Form::text('number', $last_comic->number+1, array('id' => 'comic_number')) }}
+				  @if($last_comic != null)
+	                  {{ Form::text('number', $last_comic->number+1, array('id' => 'comic_number')) }}
+				  @else
+					  {{ Form::text('number', '', array('id' => 'comic_number')) }}
+				  @endif
               </div>
               <div>
                   {{ Form::label('price', 'Prezzo') }}
-                  {{ Form::text('price', $last_comic->price, array('id' => 'comic_price')) }}
+				  @if($last_comic != null)
+					  {{ Form::text('price', $last_comic->price, array('id' => 'comic_price')) }}
+				  @else
+					  {{ Form::text('price', '', array('id' => 'comic_price')) }}
+				  @endif
               </div>
 				<div>
 					{{ Form::label('image', 'Link Immagine') }}

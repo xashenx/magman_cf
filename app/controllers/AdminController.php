@@ -41,8 +41,11 @@ class AdminController extends BaseController
         $inv_state = $this -> module_state('inventory');
         $series = Series::find($series_id);
         $comics = $series->listActive;
-        $last_comic = Comic::find($comics->max('id'));
-        $last_comic->price = round($last_comic->price,2);
+        $last_comic = null;
+        if(count($comics)>0) {
+            $last_comic = Comic::find($comics->max('id'));
+            $last_comic->price = round($last_comic->price, 2);
+        }
         if ($series != null)
             $this->layout->content = View::make('admin/viewSeries', array('series' => $series,'last_comic' => $last_comic,'inv_state' => $inv_state));
         else
