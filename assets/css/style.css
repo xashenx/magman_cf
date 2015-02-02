@@ -20,6 +20,10 @@
   height: 22px;
 }
 
+.medium-icon{
+  width: 30px;
+  height: 30px;
+}
 .little-icon-padding{
   padding: 2px 0;
 }
