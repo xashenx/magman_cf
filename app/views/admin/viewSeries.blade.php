@@ -32,9 +32,11 @@
                         <li class="active">
                             <a href="#details" data-toggle="tab">Dettagli</a>
                         </li>
-                        <li class="">
-                            <a href="#numbers" data-toggle="tab">Numeri</a>
-                        </li>
+                        @if(count($series->listComics)>0)
+                            <li class="">
+                                <a href="#numbers" data-toggle="tab">Numeri</a>
+                            </li>
+                        @endif
                         <li class="">
                             <a href="#newnumber" data-toggle="tab">Nuovo Numero</a>
                         </li>
@@ -67,45 +69,47 @@
                                 Casellanti della serie: {{count($series->inBoxes)}}
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="numbers">
-                            <div>
-                                <div class="panel-body">
-                                    <div>
-                                        <table class="table table-striped table-bordered table-hover"
-                                               id="dataTables-example">
-                                            <thead>
-                                            <tr>
-                                                <th>Numero</th>
-                                                <th>Nome</th>
-                                                <th>Prezzo</th>
-                                                @if($inv_state == 1)
-                                                    <th>Disponibilità</th>
-                                                @endif
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach ($series->listComics as $comic)
-                                                @if($comic->active)
-                                                    <tr class="odd gradeX">
-                                                @else
-                                                    <tr class="danger">
-                                                        @endif
-                                                        <td>{{$comic->number}}</td>
-                                                        <td>
-                                                            <a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a>
-                                                        </td>
-                                                        <td>{{round($comic->price,2)}}</td>
-                                                        @if($inv_state == 1)
-                                                            <td>{{$comic->available}}</td>
-                                                        @endif
-                                                    </tr>
-                                                    @endforeach
-                                            </tbody>
-                                        </table>
+                        @if(count($series->listComics)>0)
+                            <div class="tab-pane fade" id="numbers">
+                                <div>
+                                    <div class="panel-body">
+                                        <div>
+                                            <table class="table table-striped table-bordered table-hover"
+                                                   id="dataTables-example">
+                                                <thead>
+                                                <tr>
+                                                    <th>Numero</th>
+                                                    <th>Nome</th>
+                                                    <th>Prezzo</th>
+                                                    @if($inv_state == 1)
+                                                        <th>Disponibilità</th>
+                                                    @endif
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($series->listComics as $comic)
+                                                    @if($comic->active)
+                                                        <tr class="odd gradeX">
+                                                    @else
+                                                        <tr class="danger">
+                                                            @endif
+                                                            <td>{{$comic->number}}</td>
+                                                            <td>
+                                                                <a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a>
+                                                            </td>
+                                                            <td>{{round($comic->price,2)}}</td>
+                                                            @if($inv_state == 1)
+                                                                <td>{{$comic->available}}</td>
+                                                            @endif
+                                                        </tr>
+                                                        @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="tab-pane fade" id="newnumber">
                             <div>
                                 {{ Form::open(array('action' => 'ComicsController@create','id' => 'comic', 'class' => 'form-horizontal')) }}
