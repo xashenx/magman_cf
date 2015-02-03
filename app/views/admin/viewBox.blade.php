@@ -64,11 +64,12 @@
                 <a href="#newvoucher" data-toggle="tab">Aggiungi Buono</a>
               </li>
               {{-- <li class=""><a href="#details" data-toggle="tab">Dettagli</a></li> --}}
-              <li class="">
-                <a href="#contact" data-toggle="tab">Contatta</a>
-              </li>
+
             @endif
             <li class="{{ $active }}">
+              <a href="#contact" data-toggle="tab">Contatta</a>
+            </li>
+            <li class="">
              <a href="#edit" data-toggle="tab">Modifica</a>
             </li>
             {{--@if(count($purchases)>0)--}}
@@ -270,249 +271,188 @@
                 {{--*/ $active = '' /*--}}
               @endif
 
-              <div class="tab-pane fade {{--*/ $active = '' /*--}}" id="newseries">
-                {{ Form::open(array('action' => 'SeriesUserController@create')) }}
-                  <div>
-                    <select name="series_id" id="series_id">
-                      @foreach($active_series as $serie)
-                        @if($serie->version != null)
+              <div class="tab-pane fade {{{ $active }}}" id="newseries">
+                {{ Form::open(array('action' => 'SeriesUserController@create', 'class' => 'form-horizontal')) }}
+                  <div class="form-group">
+                    {{ Form::label('series_id', 'Serie', array('class' => 'col-md-1 label-padding')) }}
+                    <div class="col-md-11">
+                      <select name="series_id" id="series_id" class="form-control">
+                        @foreach($active_series as $serie)
                           <option value="{{ $serie->id }}"
-                            rel="{{ $serie->name }}">{{ $serie->name }}
-                            - {{ $serie -> version }}</option>
-                        @else
+                            rel="{{ $serie->name }}">
+                            {{ $serie->name }}
+                            {{{ ($serie->version != null) ? ' - '.$serie->version : '' }}}
+                          </option>
+                        @endforeach
+                      </select>
+                      {{ Form::hidden('user_id', $user->id) }}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    {{ Form::submit('Aggiungi', array('class' => 'btn btn-primary button-margin no-radius')) }}
+                  </div>
+                {{ Form::close() }}
+              </div>
+
+              <div class="tab-pane fade" id="newsinglecomic">
+                {{ Form::open(array('action' => 'ComicUserController@create', 'class' => 'form-horizontal')) }}
+                  <div class="form-group">
+                    {{ Form::label('single_series_id', 'Serie', array('class' => 'col-md-1 label-padding')) }}
+                    <div class="col-md-11">
+                      <select name="single_series_id" id="single_series_id" class="form-control">
+                        <option value="-1" selected>-- Seleziona una serie --</option>
+                        @foreach($active_series as $serie)
                           <option value="{{ $serie->id }}"
-                            rel="{{ $serie->name }}">{{ $serie->name }}
-                            - {{ $serie -> version }}</option>
-                        @endif
-                      @endforeach
-                    </select>
+                            rel="{{ $serie->name }}">
+                            {{ $serie->name }}
+                            {{{ ($serie->version != null) ? ' - '.$serie->version : '' }}}
+                          </option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    {{ Form::label('number', 'Numero', array('class' => 'col-md-1 label-padding')) }}
+                    <div class="col-md-11">
+                      <select name="single_number_id" id="single_number_id" class="form-control" disabled>
+                      </select>
+                    </div>
                     {{ Form::hidden('user_id', $user->id) }}
                   </div>
-                  <div>
-                    {{ Form::submit('Aggiungi') }}
+                  <div class="form-group">
+                    {{ Form::submit('Aggiungi', array('id' => 'add_single_number', 'disabled' => 'disabled', 'class' => 'btn btn-primary button-margin no-radius')) }}
                   </div>
                 {{ Form::close() }}
               </div>
 
-        <div class="tab-pane fade" id="newsinglecomic">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h5>Nuova Arretrato/Fumetto Singolo in casella</h5>
-            </div>
-            {{ Form::open(array('action' => 'ComicUserController@create')) }}
-            <div>
-              <select name="single_series_id" id="single_series_id">
-                <option value="-1" selected>-- Seleziona una serie --</option>
-                @foreach($active_series as $serie)
-                @if($serie->version != null)
-                <option value="{{ $serie->id }}"
-                  rel="{{ $serie->name }}">{{ $serie->name }}
-                  - {{ $serie -> version }}</option>
-                  @else
-                  <option value="{{ $serie->id }}"
-                    rel="{{ $serie->name }}">{{ $serie->name }}
-                    - {{ $serie -> version }}</option>
-                    @endif
-                    @endforeach
-                  </select>
-                  {{ Form::label('number', 'Numero') }}
-                  <select name="single_number_id" id="single_number_id" disabled>
-                  </select>
+              <div class="tab-pane fade" id="newvoucher">
+                {{ Form::open(array('action' => 'VouchersController@create', 'class' => 'form-horizontal')) }}
+                <div class="form-group">
+                  {{ Form::label('number', 'Descrizione', array('class' => 'col-md-1 label-padding')) }}
+                  <div class="col-md-11">
+                    {{ Form::text('description', '', array('class' => 'form-control')) }}
+                  </div>
                   {{ Form::hidden('user_id', $user->id) }}
                 </div>
-                <div>
-                  {{ Form::submit('Aggiungi',['id' => 'add_single_number','disabled' => 'disabled']) }}
+                <div class="form-group">
+                  {{ Form::label('amount', 'Valore', array('class' => 'col-md-1 label-padding')) }}
+                  <div class="col-md-11">
+                    {{ Form::text('amount', '', array('class' => 'form-control')) }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  {{ Form::submit('Aggiungi', array('id' => 'add_voucher','disabled' => 'disabled', 'class' => 'btn btn-primary button-margin no-radius')) }}
                 </div>
                 {{ Form::close() }}
               </div>
-            </div>
-            <div class="tab-pane fade" id="newvoucher">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h5>Aggiungi un buono</h5>
-                </div>
-                {{ Form::open(array('action' => 'VouchersController@create')) }}
-                <div>
-                  {{ Form::label('number', 'Descrizione') }}
-                  {{ Form::text('description') }}
-                  {{ Form::hidden('user_id', $user->id) }}
-                </div>
-                <div>
-                  {{ Form::label('amount', 'Valore') }}
-                  {{ Form::text('amount') }}
-                </div>
-                <div>
-                  {{ Form::submit('Aggiungi',['id' => 'add_voucher','disabled' => 'disabled']) }}
-                </div>
-                {{ Form::close() }}
-              </div>
-            </div>
+              {{--*/ $active = '' /*--}}
+            @else
+              {{--*/ $active = 'active in' /*--}}
             @endif
-            @if(!$user->active)
-            {{--<div class="tab-pane fade active in" id="details">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h5>Dettagli della casella</h5>
-              </div>
-              Nome: {{$user->name}}, Cognome: {{$user->surname}}
-              <br/>
-              Numero casella: {{$user->number}}
-              <br/>
-              Sconto: {{$user->discount}}
-              <br/>
-            </div>
-          </div>--}}
-          <div class="tab-pane fade active in" id="edit">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h5>Modifica della casella</h5>
-              </div>
-              {{ Form::model($user, array('action' => 'UsersController@update')) }}
-              <div>
-                {{ Form::label('name', 'Nome') }}
-                {{ Form::text('name') }}
-              </div>
-              <div>
-                {{ Form::label('surname','Cognome') }}
-                {{ Form::text('surname') }}
-                {{ Form::hidden('id')}}
-                {{ Form::hidden('username')}}
-              </div>
-              <div>
-                {{ Form::label('number','Numero') }}
-                {{ Form::text('number') }}
-              </div>
-              <div>
-                {{ Form::label('pass', 'Password') }}
-                {{ Form::password('pass') }}
-                {{ Form::hidden('password','dummypassword') }}
-              </div>
-              <div>
-                {{ Form::label('discount', 'Sconto') }}
-                {{ Form::text('discount') }}
-              </div>
-              <div>
-                {{ Form::submit('Aggiorna') }}
-              </div>
-              {{ Form::close() }}
-            </div>
-          </div>
-          @else
-          {{--<div class="tab-pane fade" id="details">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h5>Dettagli della casella</h5>
-            </div>
-            Nome: {{$user->name}}, Cognome: {{$user->surname}}
-            <br/>
-            Numero casella: {{$user->number}}
-            <br/>
-            Sconto: {{$user->discount}}
-            <br/>
-          </div>
-        </div>--}}
-        <div class="tab-pane fade" id="contact">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h5>Contatta l'utente</h5>
-            </div>
-            <h6>Tramite questo form potrai contattare il casellante.<br/>
-              Scrivi il tuo messaggio nel campo sottostante e il sistema lo invierà al
-              casellante.</h6>
-              {{ Form::open(array('action' => 'MailController@mailToCustomer')) }}
-              <div>
-                {{ Form::label('subject', 'Oggetto: ') }}
-                {{ Form::text('subject') }}
-              </div>
-              <br/>
 
-              <div>
-                {{ Form::textarea('message') }}
-                {{ Form::hidden('to',$user->id) }}
-              </div>
-              <div>
-                {{ Form::submit('Invia mail') }}
-              </div>
+            <div class="tab-pane fade {{{ $active }}}" id="contact">
+              {{ Form::open(array('action' => 'MailController@mailToCustomer', 'class' => 'form-horizontal')) }}
+                <div class="form-group">
+                  {{ Form::label('subject', 'Oggetto', array('class' => 'col-md-1 label-padding')) }}
+                  <div class="col-md-11">
+                    {{ Form::text('subject', '', array('class' => 'form-control')) }}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-md-12">
+                    {{ Form::textarea('message', '', array('class' => 'form-control')) }}
+                  </div>
+                  {{ Form::hidden('to',$user->id) }}
+                </div>
+                <div class="form-group">
+                  {{ Form::submit('Invia mail', array('class' => 'btn btn-primary button-margin no-radius')) }}
+                </div>
               {{ Form::close() }}
             </div>
-          </div>
-          <div class="tab-pane fade" id="edit">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h5>Modifica della casella</h5>
-              </div>
-              {{ Form::model($user, array('action' => 'UsersController@update')) }}
-              <div>
-                {{ Form::label('name', 'Nome') }}
-                {{ Form::text('name') }}
-              </div>
-              <div>
-                {{ Form::label('surname','Cognome') }}
-                {{ Form::text('surname') }}
-                {{ Form::hidden('id')}}
-                {{ Form::hidden('username')}}
-              </div>
-              <div>
-                {{ Form::label('number','Numero') }}
-                {{ Form::text('number') }}
-              </div>
-              <div>
-                {{ Form::label('pass', 'Password') }}
-                {{ Form::password('pass') }}
-                {{ Form::hidden('password','dummypassword') }}
-              </div>
-              <div>
-                {{ Form::label('discount', 'Sconto') }}
-                {{ Form::text('discount') }}
-              </div>
-              <div>
-                {{ Form::submit('Aggiorna') }}
-              </div>
+
+            <div class="tab-pane fade" id="edit">
+              {{ Form::model($user, array('action' => 'UsersController@update', 'class' => 'form-horizontal')) }}
+                <div class="form-group">
+                  {{ Form::label('name', 'Nome', array('class' => 'col-md-1 label-padding')) }}
+                  <div class="col-md-11">
+                    {{ Form::text('name', $user->name, array('class' => 'form-control')) }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  {{ Form::label('surname','Cognome', array('class' => 'col-md-1 label-padding')) }}
+                  <div class="col-md-11">
+                    {{ Form::text('surname', $user->surname, array('class' => 'form-control')) }}
+                  </div>
+                  {{ Form::hidden('id')}}
+                  {{ Form::hidden('username')}}
+                </div>
+                <div class="form-group">
+                  {{ Form::label('number','Numero', array('class' => 'col-md-1 label-padding')) }}
+                  <div class="col-md-11">
+                    {{ Form::text('number', $user->number, array('class' => 'form-control')) }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  {{ Form::label('pass', 'Password', array('class' => 'col-md-1 label-padding')) }}
+                  <div class="col-md-11">
+                    {{ Form::password('pass', array('class' => 'form-control')) }}
+                  </div>
+                  {{ Form::hidden('password','dummypassword') }}
+                </div>
+                <div class="form-group">
+                  {{ Form::label('discount', 'Sconto', array('class' => 'col-md-1 label-padding')) }}
+                  <div class="col-md-11">
+                    {{ Form::text('discount', $user->discount, array('class' => 'form-control')) }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary button-margin no-radius')) }}
+                </div>
               {{ Form::close() }}
             </div>
+
+            {{--@if(count($purchases)>0)--}}
+            {{--<div class="tab-pane fade" id="purchases">--}}
+            {{--<div class="panel panel-default">--}}
+            {{--<div class="panel-heading">--}}
+            {{--<h5>Storico degli Acquisti</h5>--}}
+            {{--</div>--}}
+            {{--<div class="table-responsive table-bordered">--}}
+            {{--<table class="table table-striped table-bordered table-hover"--}}
+            {{--id="dataTables-example">--}}
+            {{--<thead>--}}
+            {{--<tr>--}}
+            {{--<th>Data Acquisto</th>--}}
+            {{--<th>Fumetto</th>--}}
+            {{--<th>Prezzo</th>--}}
+            {{--</tr>--}}
+            {{--</thead>--}}
+            {{--<tbody>--}}
+            {{--@foreach ($purchases as $purchase)--}}
+            {{--<tr class="odd gradeX">--}}
+            {{--<td>{{date('d/m/Y',strtotime($purchase->buy_time))}}</td>--}}
+            {{--@if($purchase->series->version == null)--}}
+            {{--<td>{{$purchase->series->name}}--}}
+            {{--nr. {{$purchase->comic->number}}</td>--}}
+            {{--@else--}}
+            {{--<td>{{$purchase->series->name}} - {{$purchase->series->version}}--}}
+            {{--nr. {{$purchase->comic->number}}</td>--}}
+            {{--@endif--}}
+            {{--<td>{{$purchase->price}}</td>--}}
+            {{--</tr>--}}
+            {{--@endforeach--}}
+            {{--</tbody>--}}
+            {{--</table>--}}
+            {{--</div>--}}
+            {{--</div>--}}
+            {{--</div>--}}
+            {{--@endif--}}
           </div>
-          @endif
-          {{--@if(count($purchases)>0)--}}
-          {{--<div class="tab-pane fade" id="purchases">--}}
-          {{--<div class="panel panel-default">--}}
-          {{--<div class="panel-heading">--}}
-          {{--<h5>Storico degli Acquisti</h5>--}}
-          {{--</div>--}}
-          {{--<div class="table-responsive table-bordered">--}}
-          {{--<table class="table table-striped table-bordered table-hover"--}}
-          {{--id="dataTables-example">--}}
-          {{--<thead>--}}
-          {{--<tr>--}}
-          {{--<th>Data Acquisto</th>--}}
-          {{--<th>Fumetto</th>--}}
-          {{--<th>Prezzo</th>--}}
-          {{--</tr>--}}
-          {{--</thead>--}}
-          {{--<tbody>--}}
-          {{--@foreach ($purchases as $purchase)--}}
-          {{--<tr class="odd gradeX">--}}
-          {{--<td>{{date('d/m/Y',strtotime($purchase->buy_time))}}</td>--}}
-          {{--@if($purchase->series->version == null)--}}
-          {{--<td>{{$purchase->series->name}}--}}
-          {{--nr. {{$purchase->comic->number}}</td>--}}
-          {{--@else--}}
-          {{--<td>{{$purchase->series->name}} - {{$purchase->series->version}}--}}
-          {{--nr. {{$purchase->comic->number}}</td>--}}
-          {{--@endif--}}
-          {{--<td>{{$purchase->price}}</td>--}}
-          {{--</tr>--}}
-          {{--@endforeach--}}
-          {{--</tbody>--}}
-          {{--</table>--}}
-          {{--</div>--}}
-          {{--</div>--}}
-          {{--</div>--}}
-          {{--@endif--}}
         </div>
       </div>
     </div>
   </div>
-</div>
 
 <div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
   <div class="modal-dialog">
