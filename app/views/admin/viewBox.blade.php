@@ -12,21 +12,20 @@
           @if($user->active)
             @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
               <button type="button" title="Rinnova Tessera" onclick="showConfirmModal({{$user->id}},0,6)"
-                class="btn btn-warning btn-xs no-radius little-icon little-icon-padding"><i
-                  class="fa fa-recycle"></i>
+                class="btn btn-warning btn-xs no-radius little-icon little-icon-padding">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
               </button>
             @endif
               <button type="button" title="Disattiva casella"
-              onclick="showConfirmModal({{$user->id}},0,4)"
-              class="btn btn-danger btn-xs no-radius little-icon"><i
-              class="fa fa-remove"></i>
+                onclick="showConfirmModal({{$user->id}},0,4)"
+                class="btn btn-danger btn-xs no-radius little-icon little-icon-padding">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
               </button>
-
           @else
             <button type="button" title="Riattiva casella"
-            onclick="showConfirmModal({{$user->id}},0,5)"
-            class="btn btn-success btn-sm no-radius little-icon"><i
-            class="fa fa-thumbs-o-up"></i>
+              onclick="showConfirmModal({{$user->id}},0,5)"
+              class="btn btn-success btn-xs no-radius little-icon little-icon-padding">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </button>
           @endif
           (<i>Saldo</i> : {{ $due }}€)
