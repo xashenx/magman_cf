@@ -452,7 +452,7 @@
       </div>
     </div>
   </div>
-
+<!--TOMU APPROVED! -->
 <div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
