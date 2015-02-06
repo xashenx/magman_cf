@@ -11,6 +11,11 @@
 .label-padding{
   padding-top: 7px;
 }
+
+.no-padding{
+  padding: 0;
+}
+
 .button-margin{
   margin-left: 15px;
 }

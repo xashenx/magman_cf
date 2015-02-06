@@ -1,48 +1,39 @@
 @section('content')
-    <div class="row">
-        <div class="col-md-6 col-sm-6">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h5>Profilo Utente</h5>
-                </div>
-                <div class="panel-body">
-                    {{ Form::model($user, array('action' => 'UsersController@changePassword')) }}
-                    <div>
-                        {{ Form::label('old_pass', 'Password attuale') }}
-                        {{ Form::password('old_pass') }}
-                        {{ Form::hidden('id') }}
-                    </div>
-                    <div>
-                        {{ Form::label('pass', 'Nuova Password') }}
-                        {{ Form::password('pass') }}
-                    </div>
-                    <div>
-                        {{ Form::label('pass_confirmation', 'Conferma Password') }}
-                        {{ Form::password('pass_confirmation') }}
-                    </div>
-                    <div>
-                        {{ Form::submit('Aggiorna') }}
-                    </div>
-                    {{ Form::close() }}
-                    <strong>{{ $errors->first('old_pass') }}</strong>
-                    <strong>{{ $errors->first('pass') }}</strong>
-                </div>
-            </div>
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="panel panel-info no-radius">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profilo Utente
+      </div>
+      <div class="panel-body">
+        {{ Form::model($user, array('action' => 'UsersController@changePassword', 'class' => 'form-horizontal')) }}
+        <div class="form-group">
+          {{ Form::label('old_pass', 'Password attuale', array('class' => 'col-md-2 label-padding')) }}
+          <div class="col-md-10">
+            {{ Form::password('old_pass', array('class' => 'form-control')) }}
+          </div>
+          {{ Form::hidden('id') }}
         </div>
+        <div class="form-group">
+          {{ Form::label('pass', 'Nuova Password', array('class' => 'col-md-2 label-padding')) }}
+          <div class="col-md-10">
+            {{ Form::password('pass', array('class' => 'form-control')) }}
+          </div>
+        </div>
+        <div class="form-group">
+          {{ Form::label('pass_confirmation', 'Conferma Password', array('class' => 'col-md-2 label-padding')) }}
+          <div class="col-md-10">
+            {{ Form::password('pass_confirmation', array('class' => 'form-control')) }}
+          </div>
+        </div>
+        <div class="form-group">
+          {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary button-margin no-radius')) }}
+        </div>
+        {{ Form::close() }}
+        <strong>{{ $errors->first('old_pass') }}</strong>
+        <strong>{{ $errors->first('pass') }}</strong>
+      </div>
     </div>
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
-    <script src="assets/js/jquery.js"></script>
-    <!-- BOOTSTRAP SCRIPTS -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- METISMENU SCRIPTS -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
-    <!-- DATA TABLE SCRIPTS -->
-    <script src="assets/js/dataTables/jquery.dataTables.js"></script>
-    <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#dataTables-example').dataTable();
-        });
-    </script>
+  </div>
+</div>
 @stop
