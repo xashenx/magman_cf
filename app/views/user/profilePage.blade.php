@@ -36,4 +36,5 @@
     </div>
   </div>
 </div>
+@include('../layouts/js-include')
 @stop

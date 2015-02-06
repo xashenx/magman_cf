@@ -14,7 +14,7 @@
         @if(count($to_order) > 0)
         <div>
           <table class="table table-striped table-bordered table-hover"
-          id="dataTables-example">
+          id="dataTables-comics">
           <thead>
             <tr>
               <th>Fumetto</th>
@@ -57,7 +57,7 @@
           <div class="panel-body">
             <div>
               <table class="table table-striped table-bordered table-hover"
-              id="dataTables-example">
+              id="dataTables-warning">
               <thead>
                 <tr>
                   <th>Casellante</th>
@@ -90,20 +90,12 @@
     @endif
   </div>
 </div>
-<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-<!-- JQUERY SCRIPTS -->
-<script src="assets/js/jquery.js"></script>
-<!-- BOOTSTRAP SCRIPTS -->
-<script src="assets/js/bootstrap.min.js"></script>
-<!-- METISMENU SCRIPTS -->
-<script src="assets/js/jquery.metisMenu.js"></script>
-<!-- DATA TABLE SCRIPTS -->
-<script src="assets/js/dataTables/jquery.dataTables.js"></script>
-<script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+@include('../layouts/js-include')
 <script>
-$(document).ready(function () {
-  $('#dataTables-example').dataTable();
-});
+  $(document).ready(function () {
+    $('#dataTables-comics').dataTable();
+    $('#dataTables-warning').dataTable();
+  });
 </script>
 <!-- CUSTOM SCRIPTS -->
 @stop
