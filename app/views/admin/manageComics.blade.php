@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default no-radius">
-      <div class="panel-heading">
+      <div class="panel-heading no-radius">
         <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Gestione Fumetti
       </div>
       <div class="panel-body">
@@ -57,16 +57,7 @@
   </div>
   <!-- Advanced Tables -->
 </div>
-<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-<!-- JQUERY SCRIPTS -->
-<script src="assets/js/jquery.js"></script>
-<!-- BOOTSTRAP SCRIPTS -->
-<script src="assets/js/bootstrap.min.js"></script>
-<!-- METISMENU SCRIPTS -->
-<script src="assets/js/jquery.metisMenu.js"></script>
-<!-- DATA TABLE SCRIPTS -->
-<script src="assets/js/dataTables/jquery.dataTables.js"></script>
-<script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+@include('../layouts/js-include')
 <script>
   $(document).ready(function() {
     $('#dataTables-example').dataTable();

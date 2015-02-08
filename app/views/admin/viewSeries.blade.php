@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="panel panel-default no-radius">
-                <div class="panel-heading">
+                <div class="panel-heading no-radius">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Serie: {{$series->name}}
                     @if($series->active)
                         <button type="button" title="Disattiva serie"
@@ -97,7 +97,7 @@
                                                             <td>
                                                                 <a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a>
                                                             </td>
-                                                            <td>{{round($comic->price,2)}}</td>
+                                                            <td>{{round($comic->price,2)}} €</td>
                                                             @if($inv_state == 1)
                                                                 <td>{{$comic->available}}</td>
                                                             @endif
@@ -247,16 +247,7 @@
         </div>
         {{-- /.modal-dialog --}}
     </div>
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
-    <script src="../assets/js/jquery.js"></script>
-    <!-- BOOTSTRAP SCRIPTS -->
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <!-- METISMENU SCRIPTS -->
-    <script src="../assets/js/jquery.metisMenu.js"></script>
-    <!-- DATA TABLE SCRIPTS -->
-    <script src="../assets/js/dataTables/jquery.dataTables.js"></script>
-    <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
+@include('../layouts/js-include')
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();

@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default no-radius">
-                <div class="panel-heading">
+                <div class="panel-heading no-radius">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Gestione Caselle
                 </div>
                 <div class="panel-body">
@@ -53,12 +53,12 @@
                                                     </td>
                                                     @if (count($box->availableComics) > 0)
                                                         <td>{{array_get($available,$box->id)}}</td>
-                                                        <td>{{$box->discount}}</td>
-                                                        <td>{{array_get($due,$box->id)}}</td>
+                                                        <td>{{$box->discount}} %</td>
+                                                        <td>{{array_get($due,$box->id)}} €</td>
                                                     @else
                                                         <td>0</td>
-                                                        <td>{{$box->discount}}</td>
-                                                        <td>0</td>
+                                                        <td>{{$box->discount}} %</td>
+                                                        <td>0 €</td>
                                                     @endif
                                                     @if($box->lastBuy->max('buy_time') != null)
                                                         <td>{{date('d/m/Y',strtotime($box->lastBuy->max('buy_time')))}}</td>
@@ -128,16 +128,8 @@
             </div>
         </div>
     </div>
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
-    <script src="assets/js/jquery.js"></script>
-    <!-- BOOTSTRAP SCRIPTS -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- METISMENU SCRIPTS -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
-    <!-- DATA TABLE SCRIPTS -->
-    <script src="assets/js/dataTables/jquery.dataTables.js"></script>
-    <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+
+@include('../layouts/js-include')
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();

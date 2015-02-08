@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="panel panel-default no-radius">
-                <div class="panel-heading">
+                <div class="panel-heading no-radius">
                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Gestione Fumetto
                     @if($comic->active)
                             <button type="button" title="Disattiva fumetto"
@@ -64,7 +64,7 @@
                                     Disponibilità: {{$comic->available}}
                                     <br/>
                                 @endif
-                                Prezzo: {{ $comic->price }}
+                                Prezzo: {{ $comic->price }} €
                                 <br/>
                             </div>
                         </div>
@@ -182,22 +182,7 @@
         {{-- /.modal-dialog --}}
     </div>
     {{-- /.modal --}}
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
-    <script src="{{$path}}assets/js/jquery.js"></script>
-    <!-- BOOTSTRAP SCRIPTS -->
-    <script src="{{$path}}assets/js/bootstrap.min.js"></script>
-    <!-- METISMENU SCRIPTS -->
-    <script src="{{$path}}assets/js/jquery.metisMenu.js"></script>
-    <!-- DATA TABLE SCRIPTS -->
-    <script src="{{$path}}assets/js/dataTables/jquery.dataTables.js"></script>
-    <script src="{{$path}}assets/js/dataTables/dataTables.bootstrap.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#dataTables-example').dataTable();
-        });
-    </script>
-    <!-- CUSTOM SCRIPTS -->
+@include('../layouts/js-include')
     <script>
         function showConfirmModal(object_id, series, mode) {
             if(series != 0)

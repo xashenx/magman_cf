@@ -6,7 +6,7 @@
 <div class="row">
   <div class="col-md-12 col-sm-12">
     <div class="panel panel-default no-radius">
-      <div class="panel-heading">
+      <div class="panel-heading no-radius">
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
         Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
         @if($user->active)
@@ -40,15 +40,15 @@
               </li>
               {{--*/ $active = '' /*--}}
             @endif
-            @if(count($series)>0)
-              <li class="{{ $active }}">
-                <a href="#series" data-toggle="tab">Serie Seguite</a>
-              </li>
-              {{--*/ $active = '' /*--}}
-            @endif
             @if(count($user->availableVouchers)>0)
               <li class="{{ $active }}">
                 <a href="#vouchers" data-toggle="tab">Buoni</a>
+              </li>
+              {{--*/ $active = '' /*--}}
+            @endif
+            @if(count($series)>0)
+              <li class="{{ $active }}">
+                <a href="#series" data-toggle="tab">Serie Seguite</a>
               </li>
               {{--*/ $active = '' /*--}}
             @endif
@@ -121,7 +121,7 @@
                           </a>
                         </td>
 
-                        <td>{{ round($comic->price,2) }}</td>
+                        <td>{{ round($comic->price,2) }} €</td>
                         <td>
                           @if($comic->comic->state == 2)
                             <button type="button" title="Acquista"
@@ -249,7 +249,7 @@
                     @foreach ($user->availableVouchers as $voucher)
                       <tr class="odd gradeX">
                         <td>{{$voucher->description}}</td>
-                        <td>{{$voucher->amount}}</td>
+                        <td>{{$voucher->amount}} €</td>
                         <td>
                           <button type="button" title="Usa"
                             onclick="showConfirmModal({{$voucher->id}},{{$user->id}},7)"
@@ -482,8 +482,7 @@
 {{-- /.modal-dialog --}}
 </div>
 {{-- /.modal --}}
-<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-<!-- JQUERY SCRIPTS -->
+
 <script>
 function showConfirmModal(object_id, user_id, mode) {
 document.confirmForm.user_id.value = user_id;

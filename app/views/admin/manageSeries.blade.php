@@ -7,7 +7,7 @@
 	<div class="col-md-12">
 		<!-- Advanced Tables -->
 		<div class="panel panel-default no-radius">
-			<div class="panel-heading">
+			<div class="panel-heading no-radius">
 				<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Gestione Serie
 			</div>
 			<div class="panel-body">
@@ -52,19 +52,19 @@
 												@if($serie->active)
 													<button type="button" title="Disabilita"
 															onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},0)"
-															class="btn btn-danger btn-xs no-radius little-icon"><i
-																class="fa fa-remove"></i>
+															class="btn btn-danger btn-sm no-radius medium-icon little-icon-padding">
+															<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 													</button>
 												@else
 													<button type="button" title="Abilita"
 															onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},1)"
-															class="btn btn-success btn-xs no-radius little-icon little-icon-padding"><i
-																class="fa fa-check"></i>
+															class="btn btn-success btn-sm no-radius medium-icon little-icon-padding">
+															<span class="glyphicon glyphicon-ok	" aria-hidden="true"></span>
 													</button>
 													<button type="button" title="Abilita con Fumetti"
 															onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},2)"
-															class="btn btn-warning btn-xs no-radius little-icon little-icon-padding"><i
-																class="fa fa-book"></i>
+															class="btn btn-warning btn-sm no-radius medium-icon little-icon-padding">
+															<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
 													</button>
 												@endif
 											{{--<div class="btn-group">--}}
@@ -172,8 +172,7 @@
 	{{-- /.modal-dialog --}}
 </div>
 {{-- /.modal --}}
-<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-<!-- JQUERY SCRIPTS -->
+@include('../layouts/js-include')
 <script>
 	function showConfirmModal(name, version, serie_id, mode) {
 		document.confirmForm.id.value = serie_id;
@@ -194,14 +193,7 @@
 		});
 	}
 </script>
-<script src="assets/js/jquery.js"></script>
-<!-- BOOTSTRAP SCRIPTS -->
-<script src="assets/js/bootstrap.min.js"></script>
-<!-- METISMENU SCRIPTS -->
-<script src="assets/js/jquery.metisMenu.js"></script>
-<!-- DATA TABLE SCRIPTS -->
-<script src="assets/js/dataTables/jquery.dataTables.js"></script>
-<script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+
 <script>
 	$(document).ready(function() {
 		$('#dataTables-example').dataTable();

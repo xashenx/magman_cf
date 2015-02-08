@@ -42,10 +42,10 @@ class ComicUserController extends BaseController {
 		$u_id = Input::get('user_id');
 		$comicUser = ComicUser::find($cu_id);
 		$comicUser -> price = Input::get('price');
-		if (Input::get('active'))
+		/*if (Input::get('active'))
 			$comicUser -> active = 1;
 		else
-			$comicUser -> active = 0;
+			$comicUser -> active = 0;*/
 		$comicUser -> update();
 		return Redirect::to('boxes/' . $u_id);
 	}

@@ -49,12 +49,6 @@
               {{ Form::hidden('user_id',$comic->box->id) }}
             </div>
             <div class="form-group">
-              {{ Form::label('active', 'Attivo', array('class' => 'col-md-2 label-padding')) }}
-              <div class="col-md-10">
-                {{ Form::checkbox('active', 'value'); }}
-              </div>
-            </div>
-            <div class="form-group">
               {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary button-margin no-radius')) }}
             </div>
           {{ Form::close() }}
@@ -66,3 +60,4 @@
 </div>
 @include('../layouts/js-include')
 @stop
+<!--TOMU APPROVED! -->
