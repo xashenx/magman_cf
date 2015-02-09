@@ -243,15 +243,21 @@
                                     {{--</div>--}}
                                 {{--</div>--}}
                                 <div class="form-group">
-                                    {{ Form::label('finished', 'Conclusa', array('class' => 'col-md-1 label-padding')) }}
+                                    {{ Form::label('concluded', 'Conclusa', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
-                                        @if($series->concluded)
-                                            {{ Form::checkbox('finished',1,$series->concluded); }}
-                                        @else
-                                            {{ Form::checkbox('finished',1,$series->concluded); }}
-                                        @endif
+                                        {{ Form::select('concluded',array('1' => 'Sì','0' => 'No'),$series->concluded,array('class' => 'form-control')) }}
                                     </div>
                                 </div>
+                                {{--<div class="form-group">--}}
+                                    {{--{{ Form::label('finished', 'Conclusa', array('class' => 'col-md-1 label-padding')) }}--}}
+                                    {{--<div class="col-md-11">--}}
+                                        {{--@if($series->concluded)--}}
+                                            {{--{{ Form::checkbox('finished',1,$series->concluded); }}--}}
+                                        {{--@else--}}
+                                            {{--{{ Form::checkbox('finished',1,$series->concluded); }}--}}
+                                        {{--@endif--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
                                 <div>
                                     {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary no-radius')) }}
                                 </div>

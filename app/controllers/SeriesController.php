@@ -34,10 +34,9 @@ class SeriesController extends BaseController
       $series->version = Input::get('version');
       $series->author = Input::get('author');
       $series->publisher = Input::get('publisher');
-
-      $finished = Input::get('finished');
-      if ($finished != $series->concluded)
-        $series->concluded = $finished;
+      $concluded = Input::get('concluded');
+      if ($concluded != $series->concluded)
+        $series->concluded = $concluded;
 ////    if (Input::get('type_id') != null)
 ////      $series->type_id = Input::get('type_id');
 ////    if (Input::get('subtype_id') != null)
