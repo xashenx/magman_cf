@@ -66,6 +66,10 @@
                                 @endif
                                 Prezzo: {{ $comic->price }} €
                                 <br/>
+                                @if($comic->image)
+                                    Cover: <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
+                                    <br />
+                                @endif
                             </div>
                         </div>
                         @if($comic->series->active == 1)

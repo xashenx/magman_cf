@@ -6,13 +6,13 @@ class UsersController extends BaseController
     {
         $new = Input::all();
         $user = new User;
-        $user->username = Input::get('username');
-        $user->password = Hash::make(Input::get('password'));
-        $user->name = Input::get('name');
-        $user->surname = Input::get('surname');
-        $user->number = Input::get('number');
-        $user->discount = Input::get('discount');
         if ($user->validate($new)) {
+            $user->username = Input::get('username');
+            $user->password = Hash::make(Input::get('password'));
+            $user->name = Input::get('name');
+            $user->surname = Input::get('surname');
+            $user->number = Input::get('number');
+            $user->discount = Input::get('discount');
             $user->save();
             return Redirect::to('boxes/' . $user->id);
         } else {
@@ -26,15 +26,17 @@ class UsersController extends BaseController
         $new = Input::all();
         $id = Input::get('id');
         $user = User::find($id);
-        $user->name = Input::get('name');
-        $user->surname = Input::get('surname');
-        $user->number = Input::get('number');
-        $new_password = Input::get('pass');
         if ($user->validate($new)) {
+            $user->name = Input::get('name');
+            $user->surname = Input::get('surname');
+            $user->number = Input::get('number');
+            $new_password = Input::get('pass');
             $new_hash = Hash::make($new_password);
             if ($new_hash != $user->password && $new_password != null) {
                 $user->password = $new_hash;
             }
+            if(Input::get('show_price')!= $user->show_price)
+                $user->show_price = Input::get('show_price');
             $user->discount = Input::get('discount');
 //            if (Input::get('active')) {
 //                $user->active = 1;

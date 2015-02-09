@@ -32,6 +32,11 @@
                         <li class="active">
                             <a href="#details" data-toggle="tab">Dettagli</a>
                         </li>
+                        @if(count($series->inBoxes)>0)
+                            <li class="">
+                                <a href="#boxes" data-toggle="tab">Casellanti</a>
+                            </li>
+                        @endif
                         @if(count($series->listComics)>0)
                             <li class="">
                                 <a href="#numbers" data-toggle="tab">Numeri</a>
@@ -53,6 +58,8 @@
                                 <br/>
                                 Autore: {{$series->author}}
                                 <br/>
+                                Editore: {{$series->publisher}}
+                                <br/>
                                 @if($series->listComics->max('number') != null)
                                     Numeri usciti: {{$series->listActive->max('number')}}
                                 @else
@@ -69,17 +76,43 @@
                                 Casellanti della serie: {{count($series->inBoxes)}}
                             </div>
                         </div>
+                        @if(count($series->inBoxes)>0)
+                            <div class="tab-pane fade" id="boxes">
+                                <div>
+                                    <div class="panel-body">
+                                        <div>
+                                            <table class="table table-striped table-bordered table-hover"
+                                                   id="dataTables-boxes">
+                                                <thead>
+                                                <tr>
+                                                    <th>Casellante</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($series->inBoxes as $series_user)
+                                                    <tr class="odd GradeX">
+                                                        <td>{{$series_user->box->name}} {{$series_user->box->surname}}</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         @if(count($series->listComics)>0)
                             <div class="tab-pane fade" id="numbers">
                                 <div>
                                     <div class="panel-body">
                                         <div>
                                             <table class="table table-striped table-bordered table-hover"
-                                                   id="dataTables-example">
+                                                   id="dataTables-comics">
                                                 <thead>
                                                 <tr>
                                                     <th>Numero</th>
                                                     <th>Nome</th>
+                                                    <th>Cover</th>
                                                     <th>Prezzo</th>
                                                     @if($inv_state == 1)
                                                         <th>Disponibilità</th>
@@ -96,6 +129,11 @@
                                                             <td>{{$comic->number}}</td>
                                                             <td>
                                                                 <a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a>
+                                                            </td>
+                                                            <td>
+                                                                @if($comic->image)
+                                                                    <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
+                                                                @endif
                                                             </td>
                                                             <td>{{round($comic->price,2)}} €</td>
                                                             @if($inv_state == 1)
@@ -187,27 +225,39 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{ Form::label('type_id', 'Tipo', array('class' => 'col-md-1 label-padding')) }}
+                                    {{ Form::label('publisher', 'Editore', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
-                                        {{ Form::text('type_id', $series->type_id, array('class' => 'form-control')) }}
+                                        {{ Form::text('publisher', $series->subtype_id, array('class' => 'form-control')) }}
                                     </div>
                                 </div>
+                                {{--<div class="form-group">--}}
+                                    {{--{{ Form::label('type_id', 'Tipo', array('class' => 'col-md-1 label-padding')) }}--}}
+                                    {{--<div class="col-md-11">--}}
+                                        {{--{{ Form::text('type_id', $series->type_id, array('class' => 'form-control')) }}--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                                {{--<div class="form-group">--}}
+                                    {{--{{ Form::label('subtype_id', 'Sotto Tipo', array('class' => 'col-md-1 label-padding')) }}--}}
+                                    {{--<div class="col-md-11">--}}
+                                        {{--{{ Form::text('subtype_id', $series->subtype_id, array('class' => 'form-control')) }}--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
                                 <div class="form-group">
-                                    {{ Form::label('subtype_id', 'Sotto Tipo', array('class' => 'col-md-1 label-padding')) }}
+                                    {{ Form::label('concluded', 'Conclusa', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
-                                        {{ Form::text('subtype_id', $series->subtype_id, array('class' => 'form-control')) }}
+                                        {{ Form::select('concluded',array('1' => 'Sì','0' => 'No'),$series->concluded,array('class' => 'form-control')) }}
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    {{ Form::label('finished', 'Conclusa', array('class' => 'col-md-1 label-padding')) }}
-                                    <div class="col-md-11">
-                                        @if($series->concluded)
-                                            {{ Form::checkbox('finished',1,$series->concluded); }}
-                                        @else
-                                            {{ Form::checkbox('finished',1,$series->concluded); }}
-                                        @endif
-                                    </div>
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--{{ Form::label('finished', 'Conclusa', array('class' => 'col-md-1 label-padding')) }}--}}
+                                    {{--<div class="col-md-11">--}}
+                                        {{--@if($series->concluded)--}}
+                                            {{--{{ Form::checkbox('finished',1,$series->concluded); }}--}}
+                                        {{--@else--}}
+                                            {{--{{ Form::checkbox('finished',1,$series->concluded); }}--}}
+                                        {{--@endif--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
                                 <div>
                                     {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary no-radius')) }}
                                 </div>
@@ -247,10 +297,11 @@
         </div>
         {{-- /.modal-dialog --}}
     </div>
-@include('../layouts/js-include')
+    @include('../layouts/js-include')
     <script>
         $(document).ready(function () {
-            $('#dataTables-example').dataTable();
+            $('#dataTables-boxes').dataTable();
+            $('#dataTables-comics').dataTable();
             $('#comic').on('submit', function () {
                 $('.restyleAlert2').hide();
                 $('.err_not').hide();
