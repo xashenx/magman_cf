@@ -5,42 +5,49 @@ class SeriesController extends BaseController
 
   public function create()
   {
-    //TODO VALIDATE MODEL
+    $new = Input::all();
     $series = new Series;
-    $series->name = Input::get('name');
-    $series->version = Input::get('version');
-    $series->author = Input::get('author');
-    if (Input::get('type_id') != null)
-      $series->type_id = Input::get('type_id');
-    if (Input::get('subtype_id') != null)
-      $series->subtype_id = Input::get('subtype_id');
-    $series->save();
-    return Redirect::to('series/' . $series->id);
+    if ($series->validate($new)) {
+      $series->name = Input::get('name');
+      $series->version = Input::get('version');
+      $series->author = Input::get('author');
+      $series->publisher = Input::get('publisher');
+//      if (Input::get('type_id') != null)
+//        $series->type_id = Input::get('type_id');
+//      if (Input::get('subtype_id') != null)
+//        $series->subtype_id = Input::get('subtype_id');
+      $series->save();
+      return Redirect::to('series/' . $series->id);
+    } else {
+      $errors = $series->errors();
+      return Redirect::to('series/' . $series->id)->withErrors($errors);
+    }
   }
 
   public function update()
   {
+    $new = Input::all();
     $id = Input::get('id');
     $series = Series::find($id);
-    $series->name = Input::get('name');
-    $series->version = Input::get('version');
-    $series->author = Input::get('author');
-    $finished = Input::get('finished');
-    if($finished == null)
-      $finished = 0;
-    //TODO VALIDATE MODEL
-    if (Input::get('type_id') != null)
-      $series->type_id = Input::get('type_id');
-    if (Input::get('subtype_id') != null)
-      $series->subtype_id = Input::get('subtype_id');
-    if ($finished != $series->concluded)
-      $series->concluded = $finished;
-//		if (Input::get('active'))
-//			$series -> active = 1;
-//		else
-//			$series -> active = 0;
-    $series->update();
-    return Redirect::to('series/' . $id);
+    if ($series->validate($new)) {
+      $series->name = Input::get('name');
+      $series->version = Input::get('version');
+      $series->author = Input::get('author');
+      $series->publisher = Input::get('publisher');
+
+      $finished = Input::get('finished');
+      if ($finished != $series->concluded)
+        $series->concluded = $finished;
+////    if (Input::get('type_id') != null)
+////      $series->type_id = Input::get('type_id');
+////    if (Input::get('subtype_id') != null)
+////      $series->subtype_id = Input::get('subtype_id');
+      $series->update();
+      return Redirect::to('series/' . $id);
+    } else {
+      $errors = $series->errors();
+      return Redirect::to('series/' . $id)->withErrors($errors);
+    }
   }
 
   public function delete()

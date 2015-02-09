@@ -37,8 +37,8 @@
                     @endif
                     <td>{{ $comic->number}}</td>
                     <td>
-                      @if($comic->image != null)
-                        <a href="{{$comic->image}}"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
+                      @if($comic->image)
+                        <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
                       @endif
                     </td>
                     <td>{{ round($comic->price,2)}} €</td>

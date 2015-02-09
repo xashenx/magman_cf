@@ -15,7 +15,9 @@
           <table class="table table-striped table-bordered table-hover" id="dataTables-comics">
             <thead>
               <tr>
+                <th>Editore</th>
                 <th>Fumetto</th>
+                <th>Cover</th>
                 <th>Richiesta</th>
               </tr>
             </thead>
@@ -23,12 +25,18 @@
               @foreach ($to_order as $order)
                 @if($order->need > 0)
                   <tr class="odd gradeX">
+                    <td>{{$order->publisher}}</td>
                     <td>
                       <a href="series/{{$order->sid}}/{{$order->cid}}">
                         {{$order->name}}
                         {{{ ($order->version != null) ? ' - '.$order->version : ' ' }}}
-                        # {{$order->number}}
+                        #{{$order->number}}
                       </a>
+                    </td>
+                    <td>
+                      @if($order->image)
+                        <a href="{{$order->image}}" target="_blank"><img src="{{$order->image}}" alt="" height="42" width="42"></a>
+                      @endif
                     </td>
                     <td>
                       {{$order->need}}
