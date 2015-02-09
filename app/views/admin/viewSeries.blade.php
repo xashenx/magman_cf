@@ -67,28 +67,62 @@
                     <div class="tab-content">
                         <div class="tab-pane fade active in" id="details">
                             <div>
-                                Nome: {{$series->name}}
-                                <br/>
-                                Versione: {{$series->version}}
-                                <br/>
-                                Autore: {{$series->author}}
-                                <br/>
-                                Editore: {{$series->publisher}}
-                                <br/>
+                                <div class="row">
+                                  <strong class="col-md-1 margin-bottom">Nome</strong>
+                                  <div class="col-md-11 margin-bottom">
+                                    {{$series->name}}
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <strong class="col-md-1 margin-bottom">Versione</strong>
+                                  <div class="col-md-11 margin-bottom">
+                                    {{$series->version}}
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <strong class="col-md-1 margin-bottom">Autore</strong>
+                                  <div class="col-md-11 margin-bottom">
+                                    {{$series->author}}
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <strong class="col-md-1 margin-bottom">Editore</strong>
+                                  <div class="col-md-11 margin-bottom">
+                                    {{$series->publisher}}
+                                  </div>
+                                </div>
                                 @if($series->listComics->max('number') != null)
-                                    Numeri usciti: {{$series->listActive->max('number')}}
+                                    {{--*/ $fumetti = $series->listActive->max('number') /*--}}
                                 @else
-                                    Numeri usciti: 0
+                                    {{--*/ $fumetti = 0 /*--}}
                                 @endif
-                                <br/>
+                                <div class="row">
+                                  <strong class="col-md-1 margin-bottom">Fumetti</strong>
+                                  <div class="col-md-11 margin-bottom">
+                                    {{$fumetti}}
+                                  </div>
+                                </div>
                                 @if($series->conclusa)
-                                    Stato: Conclusa
-                                    <br/>
+                                    {{--*/ $stato = 'Conclusa' /*--}}
                                 @else
-                                    Stato: Attiva
-                                    <br/>
+                                    {{--*/ $stato = 'Attiva' /*--}}
                                 @endif
-                                Casellanti della serie: {{count($series->inBoxes)}}
+                                <div class="row">
+                                  <strong class="col-md-1 margin-bottom">Stato</strong>
+                                  <div class="col-md-11 margin-bottom">
+                                    {{$stato}}
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <strong class="col-md-1 margin-bottom">Caselle</strong>
+                                  <div class="col-md-11 margin-bottom">
+                                    {{count($series->inBoxes)}}
+                                  </div>
+                                </div>
                             </div>
                         </div>
                         @if(count($series->inBoxes)>0)

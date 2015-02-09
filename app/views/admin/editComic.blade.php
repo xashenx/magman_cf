@@ -58,28 +58,63 @@
 
                     <div class="tab-content">
                         <div class="tab-pane fade active in" id="details">
-                            <div>
-                                Nome: {{$comic->series->name}}
-                                <br/>
-                                Versione: {{$comic->series->version}}
-                                <br/>
-                                Autore: {{$comic->series->author}}
-                                <br/>
-                                Numero: {{$comic->number}}
-                                <br/>
-                                Nome del numero: {{$comic->name}}
-                                <br/>
-                                @if($inv_state == 1)
-                                    Disponibilità: {{$comic->available}}
-                                    <br/>
-                                @endif
-                                Prezzo: {{ $comic->price }} €
-                                <br/>
-                                @if($comic->image)
-                                    Cover: <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
-                                    <br />
-                                @endif
+                            <div class="row">
+                              <strong class="col-md-1 margin-bottom">Serie</strong>
+                              <div class="col-md-11 margin-bottom">
+                                {{$comic->series->name}}
+                              </div>
                             </div>
+
+                            <div class="row">
+                              <strong class="col-md-1 margin-bottom">Versione</strong>
+                              <div class="col-md-11 margin-bottom">
+                                {{$comic->series->version}}
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <strong class="col-md-1 margin-bottom">Autore</strong>
+                              <div class="col-md-11 margin-bottom">
+                                {{$comic->series->author}}
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <strong class="col-md-1 margin-bottom">Numero</strong>
+                              <div class="col-md-11 margin-bottom">
+                                {{$comic->number}}
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <strong class="col-md-1 margin-bottom">Nome</strong>
+                              <div class="col-md-11 margin-bottom">
+                                {{$comic->name}}
+                              </div>
+                            </div>
+                            @if($inv_state == 1)
+                                <div class="row">
+                                  <strong class="col-md-1 margin-bottom">Disponibilità</strong>
+                                  <div class="col-md-11 margin-bottom">
+                                    {{$comic->available}}
+                                  </div>
+                                </div>
+                            @endif
+                            <div class="row">
+                              <strong class="col-md-1 margin-bottom">Prezzo</strong>
+                              <div class="col-md-11 margin-bottom">
+                                {{$comic->price}} €
+                              </div>
+                            </div>
+                            @if($comic->image)
+                                <div class="row">
+                                  <strong class="col-md-1 margin-bottom">Cover</strong>
+                                  <div class="col-md-11 margin-bottom">
+                                    <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
+                                  </div>
+                                </div>
+                            @endif
+
                         </div>
                         @if($comic->series->active == 1)
                             @if(count($ordered)>0)

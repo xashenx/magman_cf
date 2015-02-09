@@ -36,7 +36,7 @@
                                         <tr>
                                             <th>Editore</th>
                                             <th>Nome</th>
-                                            <th>Serie</th>
+                                            <th>Versione</th>
                                             <th>Autore</th>
                                             <th>Numeri Usciti</th>
                                             <th>Azioni veloci</th>
