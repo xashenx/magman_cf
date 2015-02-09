@@ -28,6 +28,18 @@
             Fumetti
           </a>
         </li>
+        <li>
+          <a href="{{ URL::asset('series') }}">
+            <span class="glyphicon glyphicon-th-list btn-lg" aria-hidden="true"></span>
+            Serie
+          </a>
+        </li>
+        <li>
+          <a href="{{ URL::asset('#') }}">
+            <span class="glyphicon glyphicon-cog btn-lg" aria-hidden="true"></span>
+            Impostazioni
+          </a>
+        </li>
       @endif
 
       @if(Auth::user()->level_id == 2)
@@ -45,14 +57,6 @@
         </li>
       @endif
 
-      @if(Auth::user()->level_id == 1)
-        <li>
-          <a href="{{ URL::asset('series') }}">
-            <span class="glyphicon glyphicon-th-list btn-lg" aria-hidden="true"></span>
-            Serie
-          </a>
-        </li>
-      @endif
 
       @if(Auth::user()->level_id == 100)
         <li>
