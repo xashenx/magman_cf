@@ -36,40 +36,64 @@
                         @if($user->active)
                             @if (count($comics) > 0)
                                 <li class="{{ $active }}">
-                                    <a href="#orderedComics" data-toggle="tab">In arrivo</a>
+                                    <a href="#orderedComics" data-toggle="tab">
+                                        In arrivo
+                                        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                                    </a>
                                 </li>
                                 {{--*/ $active = '' /*--}}
                             @endif
                             @if(count($user->availableVouchers)>0)
                                 <li class="{{ $active }}">
-                                    <a href="#vouchers" data-toggle="tab">Buoni</a>
+                                    <a href="#vouchers" data-toggle="tab">
+                                        Buoni
+                                        <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                                    </a>
                                 </li>
                                 {{--*/ $active = '' /*--}}
                             @endif
                             @if(count($series)>0)
                                 <li class="{{ $active }}">
-                                    <a href="#series" data-toggle="tab">Serie Seguite</a>
+                                    <a href="#series" data-toggle="tab">
+                                        Serie Seguite
+                                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                                    </a>
                                 </li>
                                 {{--*/ $active = '' /*--}}
                             @endif
                             <li class="{{ $active }}">
-                                <a href="#newseries" data-toggle="tab">Nuova Serie</a>
+                                <a href="#newseries" data-toggle="tab">
+                                    Nuova Serie
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </a>
                             </li>
                             {{--*/ $active = '' /*--}}
                             <li class="">
-                                <a href="#newsinglecomic" data-toggle="tab">Nuovo Arretrato/Singolo</a>
+                                <a href="#newsinglecomic" data-toggle="tab">
+                                    Nuovo Arretrato/Singolo
+                                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                                </a>
                             </li>
                             <li class="">
-                                <a href="#newvoucher" data-toggle="tab">Aggiungi Buono</a>
+                                <a href="#newvoucher" data-toggle="tab">
+                                    Aggiungi Buono
+                                    <span class="glyphicon glyphicon-gift" aria-hidden="true"></span>
+                                </a>
                             </li>
                             {{-- <li class=""><a href="#details" data-toggle="tab">Dettagli</a></li> --}}
 
                         @endif
                         <li class="{{ $active }}">
-                            <a href="#contact" data-toggle="tab">Contatta</a>
+                            <a href="#contact" data-toggle="tab">
+                                Contatta
+                                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                            </a>
                         </li>
                         <li class="">
-                            <a href="#edit" data-toggle="tab">Modifica</a>
+                            <a href="#edit" data-toggle="tab">
+                                Modifica
+                                <span class="glyphicon glyphicon-wrench " aria-hidden="true"></span>
+                            </a>
                         </li>
                         {{--@if(count($purchases)>0)--}}
                         {{--<li class="">--}}
@@ -352,7 +376,10 @@
                                 <div class="form-group">
                                     {{ Form::label('amount', 'Valore', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
-                                        {{ Form::text('amount', '', array('class' => 'form-control')) }}
+                                        <div class="input-group">
+                                            <span class="input-group-addon no-radius" id="basic-addon1">€</span>
+                                            {{ Form::text('amount', '', array('class' => 'form-control')) }}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -424,7 +451,10 @@
                             <div class="form-group">
                                 {{ Form::label('discount', 'Sconto', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
-                                    {{ Form::text('discount', $user->discount, array('class' => 'form-control')) }}
+                                    <div class="input-group">
+                                        <span class="input-group-addon no-radius" id="basic-addon1">%</span>
+                                        {{ Form::text('discount', $user->discount, array('class' => 'form-control')) }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -33,16 +33,25 @@
                 <div class="panel-body">
                     <ul class="nav nav-tabs margin-bottom">
                         <li class="active">
-                            <a href="#details" data-toggle="tab">Dettagli</a>
+                            <a href="#details" data-toggle="tab">
+                                Dettagli
+                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            </a>
                         </li>
                         @if($comic->series->active == 1)
                             @if(count($ordered)>0)
                             <li class="">
-                                <a href="#ordered" data-toggle="tab">Prenotazioni</a>
+                                <a href="#ordered" data-toggle="tab">
+                                    Prenotazioni
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                </a>
                             </li>
                             @endif
                             <li class="">
-                                <a href="#edit" data-toggle="tab">Modifica</a>
+                                <a href="#edit" data-toggle="tab">
+                                    Modifica
+                                    <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                                </a>
                             </li>
                         @endif
                     </ul>
@@ -143,7 +152,10 @@
                                     <div class="form-group">
                                         {{ Form::label('price', 'Prezzo', array('class' => 'col-md-2 label-padding')) }}
                                         <div class="col-md-10">
-                                            {{ Form::text('price', $comic->price, array('class' => 'form-control')) }}
+                                            <div class="input-group">
+                                                <span class="input-group-addon no-radius" id="basic-addon1">€</span>
+                                                {{ Form::text('price', $comic->price, array('class' => 'form-control')) }}
+                                            </div>
                                         </div>
                                     </div>
                                     <div>

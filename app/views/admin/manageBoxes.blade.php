@@ -12,10 +12,16 @@
                 <div class="panel-body">
                     <ul class="nav nav-tabs margin-bottom">
                         <li class="active">
-                            <a href="#boxes" data-toggle="tab">Caselle</a>
+                            <a href="#boxes" data-toggle="tab">
+                                Caselle
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            </a>
                         </li>
                         <li class="">
-                            <a href="#new" data-toggle="tab">Nuova Casella</a>
+                            <a href="#new" data-toggle="tab">
+                                Nuova Casella
+                                <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                            </a>
                         </li>
                     </ul>
 
@@ -114,7 +120,10 @@
                                 <div class="form-group">
                                     {{ Form::label('discount', 'Sconto', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::text('discount', '10', array('class' => 'form-control')) }}
+                                        <div class="input-group">
+                                            <span class="input-group-addon no-radius" id="basic-addon1">%</span>
+                                            {{ Form::text('discount', '10', array('class' => 'form-control')) }}
+                                        </div>
                                     </div>
                                 </div>
                                 <div>

@@ -30,23 +30,38 @@
                 <div class="panel-body">
                     <ul class="nav nav-tabs margin-bottom">
                         <li class="active">
-                            <a href="#details" data-toggle="tab">Dettagli</a>
+                            <a href="#details" data-toggle="tab">
+                                Dettagli
+                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            </a>
                         </li>
                         @if(count($series->inBoxes)>0)
                             <li class="">
-                                <a href="#boxes" data-toggle="tab">Casellanti</a>
+                                <a href="#boxes" data-toggle="tab">
+                                    Casellanti
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                </a>
                             </li>
                         @endif
                         @if(count($series->listComics)>0)
                             <li class="">
-                                <a href="#numbers" data-toggle="tab">Numeri</a>
+                                <a href="#numbers" data-toggle="tab">
+                                    Numeri
+                                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                                </a>
                             </li>
                         @endif
                         <li class="">
-                            <a href="#newnumber" data-toggle="tab">Nuovo Numero</a>
+                            <a href="#newnumber" data-toggle="tab">
+                                Nuovo Numero
+                                <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                            </a>
                         </li>
                         <li class="">
-                            <a href="#edit" data-toggle="tab">Modifica</a>
+                            <a href="#edit" data-toggle="tab">
+                                Modifica
+                                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                            </a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -171,11 +186,14 @@
                                 <div class="form-group">
                                     {{ Form::label('price', 'Prezzo', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        @if($last_comic != null)
-                                            {{ Form::text('price', $last_comic->price, array('id' => 'comic_price', 'class' => 'form-control')) }}
-                                        @else
-                                            {{ Form::text('price', '', array('id' => 'comic_price', 'class' => 'form-control')) }}
-                                        @endif
+                                        <div class="input-group">
+                                            <span class="input-group-addon no-radius" id="basic-addon1">€</span>
+                                            @if($last_comic != null)
+                                                {{ Form::text('price', $last_comic->price, array('id' => 'comic_price', 'class' => 'form-control')) }}
+                                            @else
+                                                {{ Form::text('price', '', array('id' => 'comic_price', 'class' => 'form-control')) }}
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
