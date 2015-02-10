@@ -37,8 +37,8 @@
                             @if (count($comics) > 0)
                                 <li class="{{ $active }}">
                                     <a href="#orderedComics" data-toggle="tab">
-                                        In arrivo
                                         <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                                        In arrivo
                                     </a>
                                 </li>
                                 {{--*/ $active = '' /*--}}
@@ -46,8 +46,8 @@
                             @if(count($user->availableVouchers)>0)
                                 <li class="{{ $active }}">
                                     <a href="#vouchers" data-toggle="tab">
-                                        Buoni
                                         <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                                        Buoni
                                     </a>
                                 </li>
                                 {{--*/ $active = '' /*--}}
@@ -55,8 +55,8 @@
                             @if(count($series)>0)
                                 <li class="{{ $active }}">
                                     <a href="#series" data-toggle="tab">
-                                        Serie Seguite
                                         <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                                        Serie Seguite
                                     </a>
                                 </li>
                                 {{--*/ $active = '' /*--}}
