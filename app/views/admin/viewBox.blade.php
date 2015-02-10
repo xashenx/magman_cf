@@ -2,9 +2,6 @@
     @if(count($errors)>0)
         <h3>Whoops! C'è stato un errore!!! <br/>
             Se il problema persiste, contattare un amministratore!</h3>
-        {{$errors->first('subject')}}<br />
-        {{$errors->first('message')}}<br />
-        {{$errors->first('to')}}<br />
     @endif
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -400,13 +397,13 @@
                             <div class="form-group">
                                 {{ Form::label('subject', 'Oggetto', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
-                                    {{ Form::text('subject', '', array('class' => 'form-control')) }}
+                                    {{ Form::text('subject', $errors->first('subject') ? $errors->first('subject') : '', array('class' => 'form-control')) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    {{ Form::textarea('message', '', array('class' => 'form-control')) }}
+                                    {{ Form::textarea('message', $errors->first('message') ? $errors->first('message') : '', array('class' => 'form-control')) }}
                                 </div>
                                 {{ Form::hidden('to',$user->id) }}
                             </div>
