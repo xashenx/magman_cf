@@ -2,6 +2,9 @@
     @if(count($errors)>0)
         <h3>Whoops! C'è stato un errore!!! <br/>
             Se il problema persiste, contattare un amministratore!</h3>
+        {{$errors->first('subject')}}<br />
+        {{$errors->first('message')}}<br />
+        {{$errors->first('to')}}<br />
     @endif
     <div class="row">
         <div class="col-md-12 col-sm-12">
