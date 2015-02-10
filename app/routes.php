@@ -62,6 +62,7 @@ Route::group(array('before' => 'auth'), function () {
             Route::get('addComic', 'AdminController@addComic');
             Route::get('addBox', 'AdminController@addBox');
             Route::post('saveBox', 'AdminController@saveBox');
+            Route::get('shop', 'AdminController@shopSettings');
             // routes for the Boxes pages
             Route::get('boxes', 'AdminController@manageBoxes');
             Route::get('boxes/{box_id}', 'AdminController@manageBox')->where('box_id', '[0-9]+');
@@ -103,6 +104,8 @@ Route::group(array('before' => 'auth'), function () {
             // route to handle Voucher model changes
             Route::post('createVoucher', 'VouchersController@create');
             Route::post('deleteVoucher', 'VouchersController@delete');
+            // route to handle ShopConf model changes
+            Route::post('updateShopConf', 'ShopConfController@update');
             // special events routes
             Route::post('buyComic', 'ComicUserController@buy');
             Route::post('loadShipment', 'ComicsController@loadShipment');

@@ -59,7 +59,7 @@ class AdminController extends BaseController
         $comic -> price = round($comic->price,2);
         $ordered = ComicUser::whereRaw('active = 1 AND state_id = 1 AND comic_id = ' . $comic_id)->get();
         if ($comic != null && $comic->series->id == $series_id)
-            $this->layout->content = View::make('admin/editComic', array('comic' => $comic, 'path' => '../../','ordered' => $ordered,'inv_state' => $inv_state));
+            $this->layout->content = View::make('admin/viewComic', array('comic' => $comic, 'path' => '../../','ordered' => $ordered,'inv_state' => $inv_state));
         else
             return Redirect::to('series/' . $series_id);
     }
@@ -143,7 +143,7 @@ class AdminController extends BaseController
         if ($comicUser == null || $comicUser->active == 0 || $comicUser->state_id == 3 || $comicUser->user_id != $box_id)
             return Redirect::to('boxes/' . $box_id);
         else
-            $this->layout->content = View::make('admin/editComicUser', array('comic' => $comicUser));
+            $this->layout->content = View::make('admin/viewComicUser', array('comic' => $comicUser));
     }
 
     public function module_state($module_description){
@@ -155,6 +155,10 @@ class AdminController extends BaseController
             }
         }
         return $state;
+    }
+
+    public function shopSettings(){
+        $this->layout->content = View::make('admin/shopSettings', array());
     }
 }
 

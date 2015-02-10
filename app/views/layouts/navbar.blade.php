@@ -35,7 +35,7 @@
           </a>
         </li>
         <li>
-          <a href="{{ URL::asset('#') }}">
+          <a href="{{ URL::asset('shop') }}">
             <span class="glyphicon glyphicon-cog btn-lg" aria-hidden="true"></span>
             Impostazioni
           </a>

@@ -16,11 +16,55 @@
                 - <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Rinnovo
                 Tessera: {{ $renewal_price }} € <span class="glyphicon glyphicon-warning-sign"
                                                       aria-hidden="true"></span>
-              @endif
-              @if($user->show_price && $due > 0 )
                 <br/>
-                - Saldo disponibili: {{ $due }} €
               @endif
+              @if($user->show_price && $dueG+$dueNG > 0 )
+
+                <div>
+                  - Saldo disponibili:
+                  @if($dueG > 0)
+                    <div>
+                      <label title="guaranteed"
+                             class="label label-success no-radius medium-icon little-icon-padding">
+                        Garantiti: {{ $dueG }} €
+                      </label>
+                    </div>
+                  @endif
+                  @if($dueNG > 0)
+                    <div>
+                      <label title="not_guaranteed"
+                             class="label label-warning no-radius medium-icon little-icon-padding">
+                        Non garantiti: {{ $dueNG }} €
+                      </label>
+                    </div>
+                  @endif
+                  @if($dueG > 0 && $dueNG > 0)
+                    <div>
+                      <u>Totale</u>: {{ $dueG+$dueNG }} €
+                    </div>
+                  @endif
+                </div>
+              @endif
+              @if(!$user->show_price)
+                <br/>
+                <div>
+                  <strong><u>Legenda</u></strong>
+
+                  <div>
+                    <label title="guaranteed"
+                           class="label label-success no-radius medium-icon little-icon-padding">
+                      Disponibilità Garantita
+                    </label>
+                  </div>
+                  <div>
+                    <label title="not_guaranteed"
+                           class="label label-warning no-radius medium-icon little-icon-padding">
+                      Disponibilità Non Garantita
+                    </label>
+                  </div>
+                </div>
+              @endif
+
             </strong>
           </div>
           @if(count($comics)>0)
@@ -65,7 +109,8 @@
                       </td>
                       <td>
                         @if($comic->comic->image)
-                          <a href="{{$comic->comic->image}}" target="_blank"><img src="{{$comic->comic->image}}" alt="" height="42" width="42"></a>
+                          <a href="{{$comic->comic->image}}" target="_blank"><img src="{{$comic->comic->image}}" alt=""
+                                                                                  height="42" width="42"></a>
                         @endif
                       </td>
                       @if($user->show_price)
@@ -114,7 +159,7 @@
                   <td>
                     @if($new->image)
                       <a href="{{$new->image}}" target="_blank"><img src="{{$new->image}}" alt="" height="42" width="42"
-                                                     ></a>
+                                ></a>
                     @endif
                   </td>
                 </tr>
