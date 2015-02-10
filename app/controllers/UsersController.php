@@ -117,7 +117,9 @@ class UsersController extends BaseController
     {
         $id = Input::get('id');
         $user = User::find($id);
-        $user->shop_card_validity = date('Y-m-d H:i:s',strtotime('1 year'));
+        $shop_card_duration = ShopConf::find(5)->value;
+        $old_validity = $user->shop_card_validity;
+        $user->shop_card_validity = date('Y-m-d H:i:s',strtotime($old_validity . ' + ' . $shop_card_duration . ' month'));
         $user->update();
         return Redirect::to('boxes/' . $user->id);
     }

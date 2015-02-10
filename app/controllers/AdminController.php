@@ -156,6 +156,10 @@ class AdminController extends BaseController
         }
         return $state;
     }
+
+    public function shopSettings(){
+        $this->layout->content = View::make('admin/shopSettings', array());
+    }
 }
 
 ?>
