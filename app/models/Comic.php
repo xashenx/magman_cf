@@ -14,7 +14,7 @@ class Comic extends Eloquent {
       'name'  => "regex:/^[A-z 'àèìòù]*$/",
       'price' => 'required|regex:/^[0-9]{1,8}[\.\,]?[0-9]{0,2}$/',
       'available' => 'numeric',
-      'image' => array('regex:/^http[s]?:\/\/[a-zA-Z0-9]+.[a-zA-Z0-9]+.[a-zA-Z0-9]+\/([a-zA-Z0-9\_]+\/)*[a-zA-Z0-9\_\%]+.(gif|jpg|png)$/')
+      'image' => array('regex:/^http[s]?:\/\/[a-zA-Z0-9\_\-\%]+.[a-zA-Z0-9]+.[a-zA-Z0-9\_\-\%]+\/([a-zA-Z0-9\_\-\%]+\/)*[a-zA-Z0-9\_\%\-]+.(gif|jpg|png)$/')
   );
   private $errors;
 
