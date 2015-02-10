@@ -7,7 +7,7 @@ class MailController extends BaseController
    */
   public function mailToShop()
   {
-    $rules = array('message' => 'required|regex:/^[A-z 0-9àèìòù&\',\.\?\!()\$\€%"£^\@\;\:\r\n\+\-]*$/');
+    $rules = array('message' => 'required|regex:/^[A-z 0-9àèéìòù&\',\.\?\!()\$\€%"£^\@\;\:\r\n\+\-]*$/');
     $validator = Validator::make(Input::all(), $rules);
     if ($validator->fails()) {
       return Redirect::to('box')->withErrors($validator);
@@ -45,7 +45,7 @@ class MailController extends BaseController
    */
   public function mailToCustomer()
   {
-    $rules = array('message' => array('required', 'regex:/^[A-z 0-9\'àèìòù&,\.\?\!()\$\€%"£^\@\;\:\r\n\s\+\-]*$/'),
+    $rules = array('message' => array('required', 'regex:/^[A-z 0-9\'àèéìòù&,\.\?\!()\$\€%"£^\@\;\:\r\n\s\+\-]*$/'),
       'subject' => "required|min:4|max:25",
       'to' => 'required|exists:bm_users,id');
     $validator = Validator::make(Input::all(), $rules);
