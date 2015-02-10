@@ -31,7 +31,7 @@ class MailController extends BaseController
     public function mailToCustomer()
     {
         $rules = array('message' => array('required','regex:/^[A-z 0-9\'àèìòù&,\.\?\!()\$\€%"£^\@\;\:\r\n\s\+\-]*$/'),
-            'subject' => "required|min:4|max:15",
+            'subject' => "required|min:4|max:25",
             'to' => 'required|exists:bm_users,id');
         $validator = Validator::make(Input::all(), $rules);
         $user_id = Input::get('to');
