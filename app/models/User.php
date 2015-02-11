@@ -20,7 +20,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $guarded = array('id','remember_token','level_id');
 	private $rules = array(
 		'username' => 'required|email',
-		'password' => 'required|alpha|min:8',
+		'password' => 'required|regex:/^[0-9a-zA-Z\!\_\-\#]*$/|min:7',
 		'name'  => 'required|alpha',
 		'surname'  => 'required|alpha',
 		'number' => 'required|numeric',

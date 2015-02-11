@@ -436,11 +436,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                {{ Form::label('pass', 'Password', array('class' => 'col-md-1 label-padding')) }}
+                                {{ Form::label('password', 'Password', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
-                                    {{ Form::password('pass', array('class' => 'form-control')) }}
+                                    {{ Form::password('password', array('class' => 'form-control')) }}
                                 </div>
-                                {{ Form::hidden('password','dummypassword') }}
                             </div>
                             <div class="form-group">
                                 {{ Form::label('show_price', 'Visualizza Conto', array('class' => 'col-md-1 label-padding')) }}
