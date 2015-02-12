@@ -14,14 +14,14 @@
                     <ul class="nav nav-tabs margin-bottom">
                         <li class="active">
                             <a href="#series" data-toggle="tab">
-                                Serie
                                 <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                                <span class="titoli-tab">Serie</span>
                             </a>
                         </li>
                         <li class="">
                             <a href="#new" data-toggle="tab">
-                                Nuova Serie
                                 <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                                <span class="titoli-tab">Nuova Serie</span>
                             </a>
                         </li>
                     </ul>

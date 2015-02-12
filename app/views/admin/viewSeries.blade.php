@@ -31,36 +31,36 @@
                     <ul class="nav nav-tabs margin-bottom">
                         <li class="active">
                             <a href="#details" data-toggle="tab">
-                                Dettagli
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                <span class="titoli-tab">Dettagli</span>
                             </a>
                         </li>
                         @if(count($series->inBoxes)>0)
                             <li class="">
                                 <a href="#boxes" data-toggle="tab">
-                                    Casellanti
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    <span class="titoli-tab">Casellanti</span>
                                 </a>
                             </li>
                         @endif
                         @if(count($series->listComics)>0)
                             <li class="">
                                 <a href="#numbers" data-toggle="tab">
-                                    Numeri
                                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                                    <span class="titoli-tab">Numeri</span>
                                 </a>
                             </li>
                         @endif
                         <li class="">
                             <a href="#newnumber" data-toggle="tab">
-                                Nuovo Numero
                                 <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                                <span class="titoli-tab">Nuovo Numero</span>
                             </a>
                         </li>
                         <li class="">
                             <a href="#edit" data-toggle="tab">
-                                Modifica
                                 <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                                <span class="titoli-tab">Modifica</span>
                             </a>
                         </li>
                     </ul>

@@ -13,14 +13,14 @@
                     <ul class="nav nav-tabs margin-bottom">
                         <li class="active">
                             <a href="#boxes" data-toggle="tab">
-                                Caselle
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                <span class="titoli-tab">Caselle</span>
                             </a>
                         </li>
                         <li class="">
                             <a href="#new" data-toggle="tab">
-                                Nuova Casella
                                 <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                                <span class="titoli-tab">Nuova Casella</span>
                             </a>
                         </li>
                     </ul>

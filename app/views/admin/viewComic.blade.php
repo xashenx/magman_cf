@@ -34,23 +34,23 @@
           <ul class="nav nav-tabs margin-bottom">
             <li class="active">
               <a href="#details" data-toggle="tab">
-                Dettagli
                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                <span class="titoli-tab">Dettagli</span>
               </a>
             </li>
             @if($comic->series->active == 1)
               @if(count($ordered)>0)
                 <li class="">
                   <a href="#ordered" data-toggle="tab">
-                    Prenotazioni
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <span class="titoli-tab">Prenotazioni</span>
                   </a>
                 </li>
               @endif
               <li class="">
                 <a href="#edit" data-toggle="tab">
-                  Modifica
                   <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                  <span class="titoli-tab">Modifica</span>
                 </a>
               </li>
             @endif
