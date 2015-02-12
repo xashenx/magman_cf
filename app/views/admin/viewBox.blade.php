@@ -38,7 +38,7 @@
                                 <li class="{{ $active }}">
                                     <a href="#orderedComics" data-toggle="tab">
                                         <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-                                        In arrivo
+                                        <span class="titoli-tab">In arrivo</span>
                                     </a>
                                 </li>
                                 {{--*/ $active = '' /*--}}
@@ -47,7 +47,7 @@
                                 <li class="{{ $active }}">
                                     <a href="#vouchers" data-toggle="tab">
                                         <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
-                                        Buoni
+                                        <span class="titoli-tab">Buoni</span>
                                     </a>
                                 </li>
                                 {{--*/ $active = '' /*--}}
@@ -56,28 +56,28 @@
                                 <li class="{{ $active }}">
                                     <a href="#series" data-toggle="tab">
                                         <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                                        Serie Seguite
+                                        <span class="titoli-tab">Serie Seguite</span>
                                     </a>
                                 </li>
                                 {{--*/ $active = '' /*--}}
                             @endif
                             <li class="{{ $active }}">
                                 <a href="#newseries" data-toggle="tab">
-                                    Nuova Serie
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    <span class="titoli-tab">Nuova Serie</span>
                                 </a>
                             </li>
                             {{--*/ $active = '' /*--}}
                             <li class="">
                                 <a href="#newsinglecomic" data-toggle="tab">
-                                    Nuovo Arretrato/Singolo
                                     <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                                    <span class="titoli-tab">Nuovo Arretrato/Singolo</span>
                                 </a>
                             </li>
                             <li class="">
                                 <a href="#newvoucher" data-toggle="tab">
-                                    Aggiungi Buono
                                     <span class="glyphicon glyphicon-gift" aria-hidden="true"></span>
+                                    <span class="titoli-tab">Aggiungi Buono</span>
                                 </a>
                             </li>
                             {{-- <li class=""><a href="#details" data-toggle="tab">Dettagli</a></li> --}}
@@ -85,14 +85,14 @@
                         @endif
                         <li class="{{ $active }}">
                             <a href="#contact" data-toggle="tab">
-                                Contatta
                                 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                                <span class="titoli-tab">Contatta</span>
                             </a>
                         </li>
                         <li class="">
                             <a href="#edit" data-toggle="tab">
-                                Modifica
-                                <span class="glyphicon glyphicon-wrench " aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                                <span class="titoli-tab">Modifica</span>
                             </a>
                         </li>
                         {{--@if(count($purchases)>0)--}}

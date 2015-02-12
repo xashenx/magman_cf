@@ -92,3 +92,15 @@ div.dataTables_paginate.paging_simple_numbers{
   border-left: none;
 }
 
+/*-----------------------*/
+.titoli-tab{
+  display: none;
+}
+
+@media(min-width:768px) {
+  .titoli-tab{
+    display: inline;
+    margin-left: 10px;
+  }
+}
+
