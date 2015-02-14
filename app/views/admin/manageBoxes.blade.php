@@ -334,7 +334,7 @@
               $('#new-box').find('#password_confirmation').closest('.form-group').addClass('has-error');
               $('#new-box').find('#password_confirmation ~ div').html(error_icon);
               $('#alert-1').find('.error').append('<strong>Attenzione!</strong> La password di conferma inserita è differente dalla password.<br/>');
-              aubmit = false;
+              submit = false;
             }
 
             //DISCOUNT
