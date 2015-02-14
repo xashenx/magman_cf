@@ -277,6 +277,65 @@
               $('#new-box').find('#username ~ div').html(success_icon);
             }
 
+            //PASSWORD
+            var result = checkInputValue(password, "pwd", 30, 6);
+            if (result['status'] == 'ko') {
+              $('#alert-1').show();
+              $('#alert-1').find('.error').show();
+              $('#new-box').find('#password').closest('.form-group').removeClass('has-success');
+              $('#new-box').find('#password').closest('.form-group').addClass('has-error');
+              $('#new-box').find('#password ~ div').html(error_icon);
+
+              var obj = {
+                result: result,
+                htmlElement: $('#alert-1').find('.error'),
+                sex: "f",
+                elementName: "password",
+                maxLength: 30,
+                minLength: 6
+              };
+              showErrorMsg(obj);
+              submit = false;
+            } else {
+              $('#new-box').find('#password').closest('.form-group').removeClass('has-error');
+              $('#new-box').find('#password').closest('.form-group').addClass('has-success');
+              $('#new-box').find('#password ~ div').html(success_icon);
+            }
+
+            //PASSWORD CONFIRMATION
+            if (password == password_confirmation){
+              var result = checkInputValue(password_confirmation, "pwd", 30, 6);
+              if (result['status'] == 'ko') {
+                $('#alert-1').show();
+                $('#alert-1').find('.error').show();
+                $('#new-box').find('#password_confirmation').closest('.form-group').removeClass('has-success');
+                $('#new-box').find('#password_confirmation').closest('.form-group').addClass('has-error');
+                $('#new-box').find('#password_confirmation ~ div').html(error_icon);
+
+                var obj = {
+                  result: result,
+                  htmlElement: $('#alert-1').find('.error'),
+                  sex: "f",
+                  elementName: "conferma della password",
+                  maxLength: 30,
+                  minLength: 6
+                };
+                showErrorMsg(obj);
+                submit = false;
+              } else {
+                $('#new-box').find('#password_confirmation').closest('.form-group').removeClass('has-error');
+                $('#new-box').find('#password_confirmation').closest('.form-group').addClass('has-success');
+                $('#new-box').find('#password_confirmation ~ div').html(success_icon);
+              }
+            } else {
+              $('#alert-1').show();
+              $('#alert-1').find('.error').show();
+              $('#new-box').find('#password_confirmation').closest('.form-group').removeClass('has-success');
+              $('#new-box').find('#password_confirmation').closest('.form-group').addClass('has-error');
+              $('#new-box').find('#password_confirmation ~ div').html(error_icon);
+              $('#alert-1').find('.error').append('<strong>Attenzione!</strong> La password di conferma inserita è differente dalla password.<br/>');
+              aubmit = false;
+            }
 
             //DISCOUNT
             var result = checkInputValue(discount, "number", 2, 1);
@@ -290,8 +349,8 @@
               var obj = {
                 result: result,
                 htmlElement: $('#alert-1').find('.error'),
-                sex: "m",
-                elementName: "sconto",
+                sex: "f",
+                elementName: "percentuale di sconto",
                 maxLength: 2,
                 minLength: 1
               };
@@ -303,6 +362,9 @@
               $('#new-box').find('#discount ~ div').html(success_icon);
             }
 
+            if (submit){
+              //chiamata ajax
+            }
             return submit;
           })
         });
