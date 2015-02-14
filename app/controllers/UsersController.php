@@ -38,13 +38,23 @@ class UsersController extends BaseController
             if(Input::get('show_price')!= $user->show_price)
                 $user->show_price = Input::get('show_price');
             $user->discount = Input::get('discount');
+            $new_username = Input::get('newusername');
+            if($user->username !=  $new_username && $new_username != null){
+                $rules = array('newusername' => 'required|email|unique:bm_users,username');
+                $validator = Validator::make(Input::all(), $rules);
+                $user->username = $new_username;
+                if ($validator->fails()) {
+                    $errors = $user->errors();
+                    return Redirect::to('boxes/' . $id)->withErrors($validator);
+                }
+            }
 //            if (Input::get('active')) {
 //                $user->active = 1;
 //            } else {
 //                $user->active = 0;
 //                $this->delete($id);
 //            }
-            $user->save();
+            $user->update();
             return Redirect::to('boxes/' . $id);
         } else {
             $errors = $user->errors();
