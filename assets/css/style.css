@@ -32,6 +32,11 @@
 .little-icon-padding{
   padding: 2px 0;
 }
+
+.cAlert{
+  margin-top: 20px;
+  display: none;
+}
 /*override*/
 
 .dataTables_filter{
@@ -50,17 +55,30 @@ div.dataTables_paginate.paging_simple_numbers{
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
-  border: 0px;
-  outline: 1px solid #cccccc; outline-offset:-1px
 }
 
 .form-control:focus{
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
+}
+
+select.form-control{
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
   border: 0px;
   outline: 1px solid #cccccc; outline-offset:-1px
 }
+
+select.form-control:focus{
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  border: 0px;
+  outline: 1px solid #cccccc; outline-offset:-1px
+}
+
 
 .pagination > li:first-child > a {
   -webkit-border-radius: 0px;

@@ -250,7 +250,7 @@
                                 {{ Form::close() }}
                                 <div class="restyleAlert2" style="display:none">
                                     <div class="alert alert-success suc_not"></div>
-                                    <div class="alert alert-error err_not"></div>
+                                    <div class="alert alert-danger err_not"></div>
                                 </div>
                             </div>
                         </div>

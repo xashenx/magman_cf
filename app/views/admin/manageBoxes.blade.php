@@ -31,7 +31,7 @@
 
                                 <div>
                                     <table class="table table-striped table-bordered table-hover"
-                                           id="dataTables-example">
+                                           id="dataTables-boxes">
                                         <thead>
                                         <tr>
                                             <th>#</th>
@@ -80,41 +80,47 @@
                         </div>
                         <div class="tab-pane fade" id="new">
                             <div>
-                                {{ Form::open(array('action' => 'UsersController@create', 'class' => 'form-horizontal')) }}
-                                <div class="form-group">
+                                {{ Form::open(array('action' => 'UsersController@create', 'id' => 'new-box', 'class' => 'form-horizontal')) }}
+                                <div class="form-group has-feedback">
                                     {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::text('name', "", array('class' => 'form-control')) }}
+                                        {{ Form::text('name', "", array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        <div></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    {{ Form::label('surname', 'Cognome', array('class' => 'col-md-2 label-padding')) }}
+                                <div class="form-group has-feedback">
+                                    {{ Form::label('surname', 'Cognome', array('class' => 'col-md-2 label-padding', 'aria-describedby' => 'inputSuccess2Status')) }}
                                     <div class="col-md-10">
-                                        {{ Form::text('surname', "", array('class' => 'form-control')) }}
+                                        {{ Form::text('surname', "", array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        <div></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group has-feedback">
                                     {{ Form::label('number', 'Numero Casella', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::text('number', $next_box_id, array('class' => 'form-control')) }}
+                                        {{ Form::text('number', $next_box_id, array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        <div></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group has-feedback">
                                     {{ Form::label('username','Username', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::text('username', "", array('class' => 'form-control')) }}
+                                        {{ Form::text('username', "", array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        <div></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group has-feedback">
                                     {{ Form::label('password','Password', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::password('password', array('class' => 'form-control')) }}
+                                        {{ Form::password('password', array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        <div></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group has-feedback">
                                     {{ Form::label('password_confirmation','Conferma Password', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::password('password_confirmation', array('class' => 'form-control')) }}
+                                        {{ Form::password('password_confirmation', array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        <div></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -122,7 +128,8 @@
                                     <div class="col-md-10">
                                         <div class="input-group">
                                             <span class="input-group-addon no-radius" id="basic-addon1">%</span>
-                                            {{ Form::text('discount', '10', array('class' => 'form-control')) }}
+                                            {{ Form::text('discount', '10', array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                            <div></div>
                                         </div>
                                     </div>
                                 </div>
@@ -130,6 +137,10 @@
                                     {{ Form::submit('Aggiungi', array('class' => 'btn btn-primary no-radius')) }}
                                 </div>
                                 {{ Form::close() }}
+                                <div class="cAlert" id="alert-1">
+                                    <div class="alert alert-success success no-radius"></div>
+                                    <div class="alert alert-danger error no-radius"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -141,7 +152,159 @@
 @include('../layouts/js-include')
     <script>
         $(document).ready(function () {
-            $('#dataTables-example').dataTable();
+          $('#dataTables-boxes').dataTable();
+
+          //ON BLUR
+          //$('#new-box').find('#name').closest('.form-group') aggiungere has-error o has-success
+
+          $('#new-box').on('submit', function () {
+            $('#alert-1').hide();
+            $('#alert-1').find('.success').hide();
+            $('#alert-1').find('.error').hide();
+            $('#alert-1').find('.success').html("");
+            $('#alert-1').find('.error').html("");
+
+            //value
+            var name = $('#new-box').find('#name').val();
+            var surname = $('#new-box').find('#surname').val();
+            var number = $('#new-box').find('#number').val();
+            var username = $('#new-box').find('#username').val();
+            var password = $('#new-box').find('#password').val();
+            var password_confirmation = $('#new-box').find('#password_confirmation').val();
+            var discount = $('#new-box').find('#discount').val()
+            var error_icon ='<span class=\"glyphicon glyphicon-remove form-control-feedback\" aria-hidden=\"true\"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>'
+            var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>'
+            //submit = true
+            var submit = true;
+            //start the check!
+            //NAME
+            var result = checkInputValue(name, "text", 30, 1);
+            if (result['status'] == 'ko') {
+              $('#alert-1').show();
+              $('#alert-1').find('.error').show();
+              $('#new-box').find('#name').closest('.form-group').removeClass('has-success');
+              $('#new-box').find('#name').closest('.form-group').addClass('has-error');
+              $('#new-box').find('#name ~ div').html(error_icon);
+
+              var obj = {
+                result: result,
+                htmlElement: $('#alert-1').find('.error'),
+                sex: "m",
+                elementName: "nome",
+                maxLength: 30,
+                minLength: 1
+              };
+              showErrorMsg(obj);
+              submit = false;
+            } else {
+              $('#new-box').find('#name').closest('.form-group').removeClass('has-error');
+              $('#new-box').find('#name').closest('.form-group').addClass('has-success');
+              $('#new-box').find('#name ~ div').html(success_icon);
+            }
+
+            //SURNAME
+            var result = checkInputValue(surname, "text", 30, 1);
+            if (result['status'] == 'ko') {
+              $('#alert-1').show();
+              $('#alert-1').find('.error').show();
+              $('#new-box').find('#surname').closest('.form-group').removeClass('has-success');
+              $('#new-box').find('#surname').closest('.form-group').addClass('has-error');
+              $('#new-box').find('#surname ~ div').html(error_icon);
+
+              var obj = {
+                result: result,
+                htmlElement: $('#alert-1').find('.error'),
+                sex: "m",
+                elementName: "cognome",
+                maxLength: 30,
+                minLength: 1
+              };
+              showErrorMsg(obj);
+              submit = false;
+            } else {
+              $('#new-box').find('#surname').closest('.form-group').removeClass('has-error');
+              $('#new-box').find('#surname').closest('.form-group').addClass('has-success');
+              $('#new-box').find('#surname ~ div').html(success_icon);
+            }
+
+            //NUMBER
+            var result = checkInputValue(number, "number", 11, 1);
+            if (result['status'] == 'ko') {
+              $('#alert-1').show();
+              $('#alert-1').find('.error').show();
+              $('#new-box').find('#number').closest('.form-group').removeClass('has-success');
+              $('#new-box').find('#number').closest('.form-group').addClass('has-error');
+              $('#new-box').find('#number ~ div').html(error_icon);
+
+              var obj = {
+                result: result,
+                htmlElement: $('#alert-1').find('.error'),
+                sex: "m",
+                elementName: "numero casella",
+                maxLength: 11,
+                minLength: 1
+              };
+              showErrorMsg(obj);
+              submit = false;
+            } else {
+              $('#new-box').find('#number').closest('.form-group').removeClass('has-error');
+              $('#new-box').find('#number').closest('.form-group').addClass('has-success');
+              $('#new-box').find('#number ~ div').html(success_icon);
+            }
+
+            //USERNAME
+            var result = checkInputValue(username, "email", 128, 1);
+            if (result['status'] == 'ko') {
+              $('#alert-1').show();
+              $('#alert-1').find('.error').show();
+              $('#new-box').find('#username').closest('.form-group').removeClass('has-success');
+              $('#new-box').find('#username').closest('.form-group').addClass('has-error');
+              $('#new-box').find('#username ~ div').html(error_icon);
+
+              var obj = {
+                result: result,
+                htmlElement: $('#alert-1').find('.error'),
+                sex: "am",
+                elementName: "username",
+                maxLength: 128,
+                minLength: 1
+              };
+              showErrorMsg(obj);
+              submit = false;
+            } else {
+              $('#new-box').find('#username').closest('.form-group').removeClass('has-error');
+              $('#new-box').find('#username').closest('.form-group').addClass('has-success');
+              $('#new-box').find('#username ~ div').html(success_icon);
+            }
+
+
+            //DISCOUNT
+            var result = checkInputValue(discount, "number", 2, 1);
+            if (result['status'] == 'ko') {
+              $('#alert-1').show();
+              $('#alert-1').find('.error').show();
+              $('#new-box').find('#discount').closest('.form-group').removeClass('has-success');
+              $('#new-box').find('#discount').closest('.form-group').addClass('has-error');
+              $('#new-box').find('#discount ~ div').html(error_icon);
+
+              var obj = {
+                result: result,
+                htmlElement: $('#alert-1').find('.error'),
+                sex: "m",
+                elementName: "sconto",
+                maxLength: 2,
+                minLength: 1
+              };
+              showErrorMsg(obj);
+              submit = false;
+            } else {
+              $('#new-box').find('#discount').closest('.form-group').removeClass('has-error');
+              $('#new-box').find('#discount').closest('.form-group').addClass('has-success');
+              $('#new-box').find('#discount ~ div').html(success_icon);
+            }
+
+            return submit;
+          })
         });
     </script>
     <!-- CUSTOM SCRIPTS -->

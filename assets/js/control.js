@@ -114,49 +114,49 @@ function showErrorMsg(obj){
     if (result.msg == 'empty'){
 
       if(sex == 'm'){
-        htmlElement.append('<strong>Attenzione!</strong><br/> Non è stato inserito il ' + elementName + '.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> Non è stato inserito il ' + elementName + '.<br/>');
       } else if (sex == 'f') {
-        htmlElement.append('<strong>Attenzione!</strong><br/> Non è stata inserita la ' + elementName + '.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> Non è stata inserita la ' + elementName + '.<br/>');
       } else if (sex == 'am') {
-        htmlElement.append('<strong>Attenzione!</strong><br/> Non è stato inserito l\'' + elementName + '.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> Non è stato inserito l\'' + elementName + '.<br/>');
       } else {
-        htmlElement.append('<strong>Attenzione!</strong><br/> Non è stata inserita l\'' + elementName + '.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> Non è stata inserita l\'' + elementName + '.<br/>');
       }
 
     } else if (result.msg == 'overflow'){
 
       if(sex == 'm'){
-        htmlElement.append('<strong>Attenzione!</strong><br/> Il ' + elementName + ' inserito supera i ' + maxLength + ' caratteri.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> Il ' + elementName + ' inserito supera i ' + maxLength + ' caratteri.<br/>');
       } else if (sex == 'f') {
-        htmlElement.append('<strong>Attenzione!</strong><br/> La ' + elementName + ' inserita supera i ' + maxLength + ' caratteri.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> La ' + elementName + ' inserita supera i ' + maxLength + ' caratteri.<br/>');
       } else if (sex == 'am') {
-        htmlElement.append('<strong>Attenzione!</strong><br/> L\'' + elementName + ' inserito supera i ' + maxLength + ' caratteri.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> L\'' + elementName + ' inserito supera i ' + maxLength + ' caratteri.<br/>');
       } else {
-        htmlElement.append('<strong>Attenzione!</strong><br/> L\'' + elementName + ' inserita supera i ' + maxLength + ' caratteri.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> L\'' + elementName + ' inserita supera i ' + maxLength + ' caratteri.<br/>');
       }
 
     } else if (result.msg == 'underflow'){
 
       if(sex == 'm'){
-        htmlElement.append('<strong>Attenzione!</strong><br/> Il ' + elementName + ' inserito deve superare i ' + minLength + ' caratteri.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> Il ' + elementName + ' inserito deve superare i ' + minLength + ' caratteri.<br/>');
       } else if (sex == 'f') {
-        htmlElement.append('<strong>Attenzione!</strong><br/> La ' + elementName + ' inserita deve superare i ' + minLength + ' caratteri.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> La ' + elementName + ' inserita deve superare i ' + minLength + ' caratteri.<br/>');
       } else if (sex == 'am') {
-        htmlElement.append('<strong>Attenzione!</strong><br/> L\'' + elementName + ' inserito deve superare i ' + minLength + ' caratteri.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> L\'' + elementName + ' inserito deve superare i ' + minLength + ' caratteri.<br/>');
       } else {
-        htmlElement.append('<strong>Attenzione!</strong><br/> L\'' + elementName + ' inserita deve superare i ' + minLength + ' caratteri.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> L\'' + elementName + ' inserita deve superare i ' + minLength + ' caratteri.<br/>');
       }
 
     } else if (result.msg == 'invalid'){
 
       if(sex == 'm'){
-        htmlElement.append('<strong>Attenzione!</strong><br/> Il ' + elementName + ' inserito non è valido.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> Il ' + elementName + ' inserito non è valido.<br/>');
       } else if (sex == 'f') {
-        htmlElement.append('<strong>Attenzione!</strong><br/> La ' + elementName + ' inserita non è valida.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> La ' + elementName + ' inserita non è valida.<br/>');
       } else if (sex == 'am') {
-        htmlElement.append('<strong>Attenzione!</strong><br/> L\'' + elementName + ' inserito non è valido.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> L\'' + elementName + ' inserito non è valido.<br/>');
       } else {
-        htmlElement.append('<strong>Attenzione!</strong><br/> L\'' + elementName + ' inserita non è valida.<br/>');
+        htmlElement.append('<strong>Attenzione!</strong> L\'' + elementName + ' inserita non è valida.<br/>');
       }
 
     } else {
