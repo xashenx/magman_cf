@@ -154,9 +154,6 @@
         $(document).ready(function () {
           $('#dataTables-boxes').dataTable();
 
-          //ON BLUR
-          //$('#new-box').find('#name').closest('.form-group') aggiungere has-error o has-success
-
           $('#new-box').on('submit', function () {
             $('#alert-1').hide();
             $('#alert-1').find('.success').hide();

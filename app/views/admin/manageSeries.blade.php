@@ -109,30 +109,34 @@
                         </div>
                         <div class="tab-pane fade" id="new">
                             <div>
-                                {{ Form::open(array('action' => 'SeriesController@create', 'class' => 'form-horizontal')) }}
-                                <div class="form-group">
+                                {{ Form::open(array('action' => 'SeriesController@create', 'id' => 'new-series', 'class' => 'form-horizontal')) }}
+                                <div class="form-group has-feedback">
                                     {{ Form::label('name', 'Nome', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
                                         {{ Form::text('name', "", array('class' => 'form-control')) }}
+                                        <div></div>
                                     </div>
                                     {{ Form::hidden('id')}}
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group has-feedback">
                                     {{ Form::label('version','Versione', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
                                         {{ Form::text('version', "", array('class' => 'form-control')) }}
+                                        <div></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group has-feedback">
                                     {{ Form::label('author', 'Autore', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
                                         {{ Form::text('author', "", array('class' => 'form-control')) }}
+                                        <div></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group has-feedback">
                                     {{ Form::label('publisher', 'Editore', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
                                         {{ Form::text('publisher', "", array('class' => 'form-control')) }}
+                                        <div></div>
                                     </div>
                                 </div>
                                 {{--<div class="form-group">--}}
@@ -148,9 +152,13 @@
                                 {{--</div>--}}
                                 {{--</div>--}}
                                 <div>
-                                    {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary no-radius')) }}
+                                    {{ Form::submit('Aggiungi', array('class' => 'btn btn-primary no-radius')) }}
                                 </div>
                                 {{ Form::close() }}
+                                <div class="cAlert" id="alert-1">
+                                    <div class="alert alert-success success no-radius"></div>
+                                    <div class="alert alert-danger error no-radius"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -215,6 +223,132 @@
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
+
+            $('#new-series').on('submit', function () {
+                $('#alert-1').hide();
+                $('#alert-1').find('.success').hide();
+                $('#alert-1').find('.error').hide();
+                $('#alert-1').find('.success').html("");
+                $('#alert-1').find('.error').html("");
+
+                //value
+                var name = $('#new-series').find('#name').val();
+                var version = $('#new-series').find('#version').val();
+                var author = $('#new-series').find('#author').val();
+                var publisher = $('#new-series').find('#publisher').val();
+
+                var error_icon ='<span class=\"glyphicon glyphicon-remove form-control-feedback\" aria-hidden=\"true\"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>'
+                var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>'
+                var notnecessary_icon = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>'
+                //submit = true
+                var submit = true;
+                //start the check!
+                //NAME
+                var result = checkInputValue(name, "message", 128, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-1').show();
+                  $('#alert-1').find('.error').show();
+                  $('#new-series').find('#name').closest('.form-group').removeClass('has-success');
+                  $('#new-series').find('#name').closest('.form-group').addClass('has-error');
+                  $('#new-series').find('#name ~ div').html(error_icon);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-1').find('.error'),
+                    sex: "m",
+                    elementName: "nome",
+                    maxLength: 128,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#new-series').find('#name').closest('.form-group').removeClass('has-error');
+                  $('#new-series').find('#name').closest('.form-group').addClass('has-success');
+                  $('#new-series').find('#name ~ div').html(success_icon);
+                }
+
+                //VERSION
+                var result = checkInputValue(version, "message", 128, -1);
+                if (result['status'] == 'ko') {
+                  $('#alert-1').show();
+                  $('#alert-1').find('.error').show();
+                  $('#new-series').find('#version').closest('.form-group').removeClass('not-necessary');
+                  $('#new-series').find('#version').closest('.form-group').addClass('has-error');
+                  $('#new-series').find('#version ~ div').html(error_icon);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-1').find('.error'),
+                    sex: "f",
+                    elementName: "versione",
+                    maxLength: 30,
+                    minLength: -1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#new-series').find('#version').closest('.form-group').removeClass('has-error');
+                  $('#new-series').find('#version').closest('.form-group').addClass('not-necessary');
+                  $('#new-series').find('#version ~ div').html(notnecessary_icon);
+                }
+
+                //AUTHOR
+                var result = checkInputValue(author, "message", 128, -1);
+                if (result['status'] == 'ko') {
+                  $('#alert-1').show();
+                  $('#alert-1').find('.error').show();
+                  $('#new-series').find('#author').closest('.form-group').removeClass('not-necessary');
+                  $('#new-series').find('#author').closest('.form-group').addClass('has-error');
+                  $('#new-series').find('#author ~ div').html(error_icon);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-1').find('.error'),
+                    sex: "am",
+                    elementName: "autore",
+                    maxLength: 128,
+                    minLength: -1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#new-series').find('#author').closest('.form-group').removeClass('has-error');
+                  $('#new-series').find('#author').closest('.form-group').addClass('not-necessary');
+                  $('#new-series').find('#author ~ div').html(notnecessary_icon);
+                }
+
+                //PUBLISHER
+                var result = checkInputValue(publisher, "message", 128, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-1').show();
+                  $('#alert-1').find('.error').show();
+                  $('#new-series').find('#publisher').closest('.form-group').removeClass('has-success');
+                  $('#new-series').find('#publisher').closest('.form-group').addClass('has-error');
+                  $('#new-series').find('#publisher ~ div').html(error_icon);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-1').find('.error'),
+                    sex: "am",
+                    elementName: "editore",
+                    maxLength: 128,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#new-series').find('#publisher').closest('.form-group').removeClass('has-error');
+                  $('#new-series').find('#publisher').closest('.form-group').addClass('has-success');
+                  $('#new-series').find('#publisher ~ div').html(success_icon);
+                }
+
+                if (submit){
+                  //chiamata ajax
+                }
+                return false;
+            });
+
         });
     </script>
     <!-- CUSTOM SCRIPTS -->

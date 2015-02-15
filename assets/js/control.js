@@ -16,6 +16,7 @@ var patterns = {
 // textToCheck    =>    testo che deve essere convalidato
 // type           =>    deve essere una delle chiavi presenti nel oggetto patterns
 // maxLength      =>    Optional. se inserito viene utilizzato come controllo dei caratteri massimi
+// minLength      =>    se -1 non controllo l'empty
 
 function checkInputValue(textToCheck, type, maxLength, minLength){
   maxLength = maxLength || null
@@ -28,10 +29,12 @@ function checkInputValue(textToCheck, type, maxLength, minLength){
     return answer;
   }
 
-  if (textToCheck.length == 0){
-    answer.status = 'ko';
-    answer.msg = 'empty';
-    return answer;
+  if (minLength != -1){
+    if (textToCheck.length == 0){
+      answer.status = 'ko';
+      answer.msg = 'empty';
+      return answer;
+    }
   }
 
   if (maxLength != null){
@@ -42,7 +45,7 @@ function checkInputValue(textToCheck, type, maxLength, minLength){
     }
   }
 
-  if (minLength != null){
+  if (minLength != null && minLength > -1){
     if(textToCheck.length < minLength){
       answer.status = 'ko';
       answer.msg = 'underflow';

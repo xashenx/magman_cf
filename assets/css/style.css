@@ -122,3 +122,35 @@ select.form-control:focus{
   }
 }
 
+/*VALIDATOR*/
+.not-necessary .help-block,
+.not-necessary .control-label,
+.not-necessary .radio,
+.not-necessary .checkbox,
+.not-necessary .radio-inline,
+.not-necessary .checkbox-inline,
+.not-necessary.radio label,
+.not-necessary.checkbox label,
+.not-necessary.radio-inline label,
+.not-necessary.checkbox-inline label {
+  color: #2FB7FF;
+}
+.not-necessary .form-control {
+  border-color: #2FB7FF;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+.not-necessary .form-control:focus {
+  border-color: #2FB7FF;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #2FB7FF;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #2FB7FF;
+}
+.not-necessary .input-group-addon {
+  color: #2FB7FF;
+  background-color: #2FB7FF;
+  border-color: #2FB7FF;
+}
+.not-necessary .form-control-feedback {
+  color: #2FB7FF;
+}
+
