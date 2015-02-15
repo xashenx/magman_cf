@@ -102,7 +102,7 @@ class UsersController extends BaseController
         $user = User::find($id);
         $old_password = Input::get('old_pass');
         if (!Hash::check($old_password, $user->password)) {
-            $message = 'la password attuale non è corretta';
+            $message = 'La password attuale inserita non è corretta.';
             $errors = array('old_pass' => $message);
             return Redirect::to('profile')->withErrors($errors);
         }
