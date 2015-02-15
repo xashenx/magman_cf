@@ -11,7 +11,7 @@ class Series extends Eloquent
   protected $table = 'bm_series';
   private $rules = array(
     'name' => 'required|regex:/^[A-z 0-9\'àèìòù&,\.\?\!()\$\€%"£^\@\n\+\-]*$/',
-    'version' => 'required|regex:/^[A-z 0-9\'àèìòù&,\.\?\!()\$\€%"£^\@\n\+\-]*$/',
+    'version' => 'regex:/^[A-z 0-9\'àèìòù&,\.\?\!()\$\€%"£^\@\n\+\-]*$/',
     'author' => 'required|regex:/^[A-z 0-9\'àèìòù&,\.\?\!()\$\€%"£^\@\n\+\-]*$/',
     'publisher' => 'required|regex:/^[A-z 0-9\'àèìòù&,\.\?\!()\$\€%"£^\@\n\+\-]*$/',
     'active' => 'regex:/^[0,1]$/',
