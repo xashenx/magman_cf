@@ -157,6 +157,11 @@
                                 {{ Form::close() }}
                                 <div class="cAlert" id="alert-1">
                                     <div class="alert alert-success success no-radius"></div>
+                                    <div class="alert alert-info no-radius">
+                                        I campi con
+                                        <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                                        sono opzionali.
+                                    </div>
                                     <div class="alert alert-danger error no-radius"></div>
                                 </div>
                             </div>
@@ -294,11 +299,11 @@
                 }
 
                 //AUTHOR
-                var result = checkInputValue(author, "message", 128, -1);
+                var result = checkInputValue(author, "message", 128, 1);
                 if (result['status'] == 'ko') {
                   $('#alert-1').show();
                   $('#alert-1').find('.error').show();
-                  $('#new-series').find('#author').closest('.form-group').removeClass('not-necessary');
+                  $('#new-series').find('#author').closest('.form-group').removeClass('has-success');
                   $('#new-series').find('#author').closest('.form-group').addClass('has-error');
                   $('#new-series').find('#author ~ div').html(error_icon);
 
@@ -308,13 +313,13 @@
                     sex: "am",
                     elementName: "autore",
                     maxLength: 128,
-                    minLength: -1
+                    minLength: 1
                   };
                   showErrorMsg(obj);
                   submit = false;
                 } else {
                   $('#new-series').find('#author').closest('.form-group').removeClass('has-error');
-                  $('#new-series').find('#author').closest('.form-group').addClass('not-necessary');
+                  $('#new-series').find('#author').closest('.form-group').addClass('has-success');
                   $('#new-series').find('#author ~ div').html(notnecessary_icon);
                 }
 
@@ -346,7 +351,7 @@
                 if (submit){
                   //chiamata ajax
                 }
-                return false;
+                return submit;
             });
 
         });
