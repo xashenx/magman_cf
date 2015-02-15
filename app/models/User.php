@@ -19,14 +19,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $fillable = array('password', 'name', 'surname', 'number', 'discount', 'active');
 	protected $guarded = array('id','remember_token','level_id');
 	private $rules = array(
-		'username' => 'required|email',
-		'password' => 'required|regex:/^[0-9a-zA-Z\!\_\-\#]*$/|min:7',
+		'username' => 'required|email|unique:bm_users,username',
+		'password' => 'required|regex:/^[\w\.-@\!\_\-\#]+$/|min:6',
+		'newpassword' => 'regex:/^[\w\.-@\!\_\-\#]+$/|min:6',
 		'name'  => 'required|alpha',
 		'surname'  => 'required|alpha',
 		'number' => 'required|numeric',
 		'show_price' => 'regex:/^[0,1]$/',
 		'active' => 'regex:/^[0,1]$/'
 	);
+
 	private $errors;
 
 	public function validate($data){

@@ -427,7 +427,7 @@
                                     {{ Form::text('surname', $user->surname, array('class' => 'form-control')) }}
                                 </div>
                                 {{ Form::hidden('id')}}
-                                {{ Form::hidden('username')}}
+                                {{--{{ Form::hidden('username')}}--}}
                             </div>
                             <div class="form-group">
                                 {{ Form::label('number','Numero', array('class' => 'col-md-1 label-padding')) }}
@@ -436,10 +436,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                {{ Form::label('password', 'Password', array('class' => 'col-md-1 label-padding')) }}
+                                {{ Form::label('newusername', 'Username', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
-                                    {{ Form::password('password', array('class' => 'form-control')) }}
+                                    {{ Form::text('newusername', $user->username, array('class' => 'form-control')) }}
                                 </div>
+                                {{ Form::hidden('username','dummy@user.it') }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('newpassword', 'Password', array('class' => 'col-md-1 label-padding')) }}
+                                <div class="col-md-11">
+                                    {{ Form::password('newpassword', array('class' => 'form-control')) }}
+                                </div>
+                                {{ Form::hidden('password','dummypassword') }}
                             </div>
                             <div class="form-group">
                                 {{ Form::label('show_price', 'Visualizza Conto', array('class' => 'col-md-1 label-padding')) }}
