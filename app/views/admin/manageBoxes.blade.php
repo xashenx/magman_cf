@@ -275,7 +275,7 @@
             }
 
             //PASSWORD
-            var result = checkInputValue(password, "pwd", 30, 6);
+            var result = checkInputValue(password, "pwd", 30, 8);
             if (result['status'] == 'ko') {
               $('#alert-1').show();
               $('#alert-1').find('.error').show();
@@ -289,7 +289,7 @@
                 sex: "f",
                 elementName: "password",
                 maxLength: 30,
-                minLength: 6
+                minLength: 8
               };
               showErrorMsg(obj);
               submit = false;
@@ -301,7 +301,7 @@
 
             //PASSWORD CONFIRMATION
             if (password == password_confirmation){
-              var result = checkInputValue(password_confirmation, "pwd", 30, 6);
+              var result = checkInputValue(password_confirmation, "pwd", 30, 8);
               if (result['status'] == 'ko') {
                 $('#alert-1').show();
                 $('#alert-1').find('.error').show();
@@ -315,7 +315,7 @@
                   sex: "f",
                   elementName: "conferma della password",
                   maxLength: 30,
-                  minLength: 6
+                  minLength: 8
                 };
                 showErrorMsg(obj);
                 submit = false;

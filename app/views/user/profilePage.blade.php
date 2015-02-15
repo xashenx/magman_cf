@@ -44,7 +44,7 @@
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> {{{$errors->first('old_pass') }}}<br/>
             @endif
             @if($errors->first('pass') != null)
-              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong>{{{ $errors->first('pass') }}}<br/>
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> {{{ $errors->first('pass') }}}<br/>
             @endif
           </div>
         </div>
@@ -77,7 +77,7 @@
       //start the check!
 
       //OLD_PASS
-      var result = checkInputValue(old_pass, "pwd", 30, 6);
+      var result = checkInputValue(old_pass, "pwd", 30, 8);
       if (result['status'] == 'ko') {
         $('#alert-1').show();
         $('#alert-1').find('.error').show();
@@ -91,7 +91,7 @@
           sex: "f",
           elementName: "password attuale",
           maxLength: 30,
-          minLength: 6
+          minLength: 8
         };
         showErrorMsg(obj);
         submit = false;
@@ -102,7 +102,7 @@
       }
 
       //PASSWORD
-      var result = checkInputValue(pass, "pwd", 30, 6);
+      var result = checkInputValue(pass, "pwd", 30, 8);
       if (result['status'] == 'ko') {
         $('#alert-1').show();
         $('#alert-1').find('.error').show();
@@ -116,7 +116,7 @@
           sex: "f",
           elementName: "password",
           maxLength: 30,
-          minLength: 6
+          minLength: 8
         };
         showErrorMsg(obj);
         submit = false;
@@ -128,7 +128,7 @@
 
       //PASSWORD CONFIRMATION
       if (pass == pass_confirmation){
-        var result = checkInputValue(pass_confirmation, "pwd", 30, 6);
+        var result = checkInputValue(pass_confirmation, "pwd", 30, 8);
         if (result['status'] == 'ko') {
           $('#alert-1').show();
           $('#alert-1').find('.error').show();
@@ -142,7 +142,7 @@
             sex: "f",
             elementName: "conferma della password",
             maxLength: 30,
-            minLength: 6
+            minLength: 8
           };
           showErrorMsg(obj);
           submit = false;
