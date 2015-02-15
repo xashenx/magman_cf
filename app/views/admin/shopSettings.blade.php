@@ -12,13 +12,13 @@
     <div class="col-md-12 col-sm-12">
       <div class="panel panel-default no-radius">
         <div class="panel-heading no-radius">
-          <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Gestione Configurazioni
+          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Gestione Configurazioni
         </div>
         <div class="panel-body">
           <div>
             {{ Form::open(array('action' => 'ShopConfController@update', 'class' => 'form-horizontal')) }}
             <div class="form-group">
-              {{ Form::label('email', 'Email', array('class' => 'col-md-2 label-padding')) }}
+              {{ Form::label('email', 'Email di Contatto', array('class' => 'col-md-2 label-padding')) }}
               <div class="col-md-10">
                 {{ Form::text('email', ShopConf::find(3)->value, array('class' => 'form-control')) }}
               </div>
@@ -53,12 +53,16 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback has-success">
               {{ Form::label('defaulting', 'Soglia di Dispersione', array('class' => 'col-md-2 label-padding')) }}
               <div class="col-md-10">
                   {{ Form::select('defaulting',
                   array('30' => '1 mese','60' => '2 mesi','90' => '3 mesi','180' => '6 mesi','365' => '1 anno'),ShopConf::find(2)->value,
-                  array('class' => 'form-control')) }}
+                  array('class' => 'form-control', 'style' =>'outline-color:#3c763d')) }}
+                  <div>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="padding-right:15px"></span>
+                    <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                  </div>
               </div>
             </div>
 
