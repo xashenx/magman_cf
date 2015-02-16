@@ -19,7 +19,9 @@ class ComicsController extends BaseController
             $comic->price = $comic_price;
             $comic->series_id = $series_id;
             $comic->save();
-            $this->updateComicUser($series_id, $comic);
+            if(!Input::get('no_follow')){
+                $this->updateComicUser($series_id, $comic);
+            }
             return Redirect::to('series/' . $series_id);
         } else {
             $errors = $comic->errors();

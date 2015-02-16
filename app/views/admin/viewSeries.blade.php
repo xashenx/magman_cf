@@ -244,6 +244,12 @@
                                         </div>
                                     </div>
                                 @endif
+                                <div class="form-group">
+                                    {{ Form::label('no_follow', 'Auto inserimento disabilitato', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
+                                        {{ Form::select('no_follow',array('1' => 'Sì','0' => 'No'),'1',array('class' => 'form-control')) }}
+                                    </div>
+                                </div>
                                 <div>
                                     {{ Form::submit('Inserisci', array('class' => 'btn btn-primary no-radius')) }}
                                 </div>
