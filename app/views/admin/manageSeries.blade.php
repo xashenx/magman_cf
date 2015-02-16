@@ -31,7 +31,7 @@
                             <div>
                                 <div>
                                     <table class="table table-striped table-bordered table-hover"
-                                           id="dataTables-example">
+                                           id="dataTables-series">
                                         <thead>
                                         <tr>
                                             <th>Editore</th>
@@ -227,7 +227,7 @@
 
     <script>
         $(document).ready(function () {
-            $('#dataTables-example').dataTable();
+            $('#dataTables-series').dataTable();
 
             $('#new-series').on('submit', function () {
                 $('#alert-1').hide();
@@ -287,7 +287,7 @@
                     htmlElement: $('#alert-1').find('.error'),
                     sex: "f",
                     elementName: "versione",
-                    maxLength: 30,
+                    maxLength: 128,
                     minLength: -1
                   };
                   showErrorMsg(obj);
