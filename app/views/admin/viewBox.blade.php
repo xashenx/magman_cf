@@ -365,11 +365,12 @@
                             </div>
 
                             <div class="tab-pane fade" id="newvoucher">
-                                {{ Form::open(array('action' => 'VouchersController@create', 'class' => 'form-horizontal')) }}
-                                <div class="form-group">
-                                    {{ Form::label('number', 'Descrizione', array('class' => 'col-md-1 label-padding')) }}
+                                {{ Form::open(array('action' => 'VouchersController@create', 'id' => 'new-voucher', 'class' => 'form-horizontal')) }}
+                                <div class="form-group has-feedback">
+                                    {{ Form::label('description', 'Descrizione', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
                                         {{ Form::text('description', '', array('class' => 'form-control')) }}
+                                        <div></div>
                                     </div>
                                     {{ Form::hidden('user_id', $user->id) }}
                                 </div>
@@ -379,13 +380,18 @@
                                         <div class="input-group">
                                             <span class="input-group-addon no-radius" id="basic-addon1">€</span>
                                             {{ Form::text('amount', '', array('class' => 'form-control')) }}
+                                            <div></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{ Form::submit('Aggiungi', array('id' => 'add_voucher','disabled' => 'disabled', 'class' => 'btn btn-primary button-margin no-radius')) }}
+                                    {{ Form::submit('Aggiungi', array('id' => 'add_voucher', 'class' => 'btn btn-primary button-margin no-radius')) }}
                                 </div>
                                 {{ Form::close() }}
+                                <div class="cAlert" id="alert-1">
+                                    <div class="alert alert-success success no-radius"></div>
+                                    <div class="alert alert-danger error no-radius"></div>
+                                </div>
                             </div>
                             {{--*/ $active = '' /*--}}
                         @else
@@ -640,24 +646,81 @@
         });
     </script>
     <script>
-        $('#amount').on('change', function () {
-            var actual = $('#amount').val();
-            if (actual != '') {
-                var other_par = $('#description').val();
-                if (other_par != '')
-                    $('#add_voucher').prop('disabled', false);
-            } else
-                $('#add_voucher').prop('disabled', 'disabled');
-        });
+        $(document).ready(function () {
+            $('#new-voucher').on('submit', function () {
+                $('#alert-1').hide();
+                $('#alert-1').find('.success').hide();
+                $('#alert-1').find('.error').hide();
+                $('#alert-1').find('.success').html("");
+                $('#alert-1').find('.error').html("");
 
-        $('#description').on('change', function () {
-            var actual = $('#amount').val();
-            if (actual != '') {
-                var other_par = $('#amount').val();
-                if (other_par != '')
-                    $('#add_voucher').prop('disabled', false);
-            } else
-                $('#add_voucher').prop('disabled', 'disabled');
+                //value
+                var description = $('#new-voucher').find('#description').val();
+                var amount = $('#new-voucher').find('#amount').val();
+
+                var error_icon ='<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>';
+                var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
+                var error_icon_select ='<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(error)</span>';
+                var success_icon_select = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(success)</span>';
+
+                var notnecessary_icon = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
+                //submit = true
+                var submit = true;
+                //start the check!
+                //description
+                var result = checkInputValue(description, "message", 128, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-1').show();
+                  $('#alert-1').find('.error').show();
+                  $('#new-voucher').find('#description').closest('.form-group').removeClass('has-success');
+                  $('#new-voucher').find('#description').closest('.form-group').addClass('has-error');
+                  $('#new-voucher').find('#description ~ div').html(error_icon);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-1').find('.error'),
+                    sex: "f",
+                    elementName: "descrizione",
+                    maxLength: 128,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#new-voucher').find('#description').closest('.form-group').removeClass('has-error');
+                  $('#new-voucher').find('#description').closest('.form-group').addClass('has-success');
+                  $('#new-voucher').find('#description ~ div').html(success_icon);
+                }
+
+                //AMOUNT
+                var result = checkInputValue(amount, "number", 11, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-1').show();
+                  $('#alert-1').find('.error').show();
+                  $('#new-voucher').find('#amount').closest('.form-group').removeClass('has-success');
+                  $('#new-voucher').find('#amount').closest('.form-group').addClass('has-error');
+                  $('#new-voucher').find('#amount ~ div').html(error_icon);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-1').find('.error'),
+                    sex: "m",
+                    elementName: "valore del buono",
+                    maxLength: 11,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#new-voucher').find('#amount').closest('.form-group').removeClass('has-error');
+                  $('#new-voucher').find('#amount').closest('.form-group').addClass('has-success');
+                  $('#new-voucher').find('#amount ~ div').html(success_icon);
+                }
+                if (submit){
+                  //chiamata ajax
+                }
+                return submit;
+            });
         });
     </script>
 @stop
