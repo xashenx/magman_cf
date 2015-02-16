@@ -399,17 +399,19 @@
                         @endif
 
                         <div class="tab-pane fade {{{ $active }}}" id="contact">
-                            {{ Form::open(array('action' => 'MailController@mailToCustomer', 'class' => 'form-horizontal')) }}
-                            <div class="form-group">
+                            {{ Form::open(array('action' => 'MailController@mailToCustomer','id' => 'mail-contact' , 'class' => 'form-horizontal')) }}
+                            <div class="form-group has-feedback">
                                 {{ Form::label('subject', 'Oggetto', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
                                     {{ Form::text('subject', $errors->first('subject') ? $errors->first('subject') : '', array('class' => 'form-control')) }}
+                                    <div></div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group has-feedback">
                                 <div class="col-md-12">
-                                    {{ Form::textarea('message', $errors->first('message') ? $errors->first('message') : '', array('class' => 'form-control')) }}
+                                    {{ Form::textarea('message', $errors->first('message') ? $errors->first('message') : '', array('id' => 'message', 'class' => 'form-control')) }}
+                                    <div></div>
                                 </div>
                                 {{ Form::hidden('to',$user->id) }}
                             </div>
@@ -417,6 +419,10 @@
                                 {{ Form::submit('Invia mail', array('class' => 'btn btn-primary button-margin no-radius')) }}
                             </div>
                             {{ Form::close() }}
+                            <div class="cAlert" id="alert-2">
+                                <div class="alert alert-success success no-radius"></div>
+                                <div class="alert alert-danger error no-radius"></div>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="edit">
@@ -715,6 +721,81 @@
                   $('#new-voucher').find('#amount').closest('.form-group').removeClass('has-error');
                   $('#new-voucher').find('#amount').closest('.form-group').addClass('has-success');
                   $('#new-voucher').find('#amount ~ div').html(success_icon);
+                }
+                if (submit){
+                  //chiamata ajax
+                }
+                return submit;
+            });
+
+            $('#mail-contact').on('submit', function () {
+                $('#alert-2').hide();
+                $('#alert-2').find('.success').hide();
+                $('#alert-2').find('.error').hide();
+                $('#alert-2').find('.success').html("");
+                $('#alert-2').find('.error').html("");
+
+                //value
+                var subject = $('#mail-contact').find('#subject').val();
+                var message = $('#mail-contact').find('#message').val();
+
+                var error_icon ='<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>';
+                var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
+                var error_icon_select ='<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(error)</span>';
+                var success_icon_select = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(success)</span>';
+
+                var notnecessary_icon = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
+                //submit = true
+                var submit = true;
+                //start the check!
+                //subject
+                var result = checkInputValue(subject, "message", 150, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-2').show();
+                  $('#alert-2').find('.error').show();
+                  $('#mail-contact').find('#subject').closest('.form-group').removeClass('has-success');
+                  $('#mail-contact').find('#subject').closest('.form-group').addClass('has-error');
+                  $('#mail-contact').find('#subject ~ div').html(error_icon);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-2').find('.error'),
+                    sex: "am",
+                    elementName: "oggetto",
+                    maxLength: 150,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#mail-contact').find('#subject').closest('.form-group').removeClass('has-error');
+                  $('#mail-contact').find('#subject').closest('.form-group').addClass('has-success');
+                  $('#mail-contact').find('#subject ~ div').html(success_icon);
+                }
+
+                //message
+                var result = checkInputValue(message, "message", 1000, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-2').show();
+                  $('#alert-2').find('.error').show();
+                  $('#mail-contact').find('#message').closest('.form-group').removeClass('has-success');
+                  $('#mail-contact').find('#message').closest('.form-group').addClass('has-error');
+                  $('#mail-contact').find('#message ~ div').html(error_icon);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-2').find('.error'),
+                    sex: "m",
+                    elementName: "messaggio",
+                    maxLength: 1000,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#mail-contact').find('#message').closest('.form-group').removeClass('has-error');
+                  $('#mail-contact').find('#message').closest('.form-group').addClass('has-success');
+                  $('#mail-contact').find('#message ~ div').html(success_icon);
                 }
                 if (submit){
                   //chiamata ajax
