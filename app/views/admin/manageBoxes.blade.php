@@ -225,7 +225,7 @@
             }
 
             //NUMBER
-            var result = checkInputValue(number, "number", 11, 1);
+            var result = checkInputValue(number, "integer", 11, 1);
             if (result['status'] == 'ko') {
               $('#alert-1').show();
               $('#alert-1').find('.error').show();

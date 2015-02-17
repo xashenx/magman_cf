@@ -312,8 +312,8 @@
                             <div class="tab-pane fade {{{ $active }}}" id="newseries">
                                 {{ Form::open(array('action' => 'SeriesUserController@create', 'class' => 'form-horizontal')) }}
                                 <div class="form-group">
-                                    {{ Form::label('series_id', 'Serie', array('class' => 'col-md-1 label-padding')) }}
-                                    <div class="col-md-11">
+                                    {{ Form::label('series_id', 'Serie', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
                                         <select name="series_id" id="series_id" class="form-control">
                                             @foreach($active_series as $serie)
                                                 <option value="{{ $serie->id }}"
@@ -335,8 +335,8 @@
                             <div class="tab-pane fade" id="newsinglecomic">
                                 {{ Form::open(array('action' => 'ComicUserController@create', 'class' => 'form-horizontal')) }}
                                 <div class="form-group">
-                                    {{ Form::label('single_series_id', 'Serie', array('class' => 'col-md-1 label-padding')) }}
-                                    <div class="col-md-11">
+                                    {{ Form::label('single_series_id', 'Serie', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
                                         <select name="single_series_id" id="single_series_id" class="form-control">
                                             <option value="-1" selected>-- Seleziona una serie --</option>
                                             @foreach($active_series as $serie)
@@ -350,8 +350,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{ Form::label('number', 'Numero', array('class' => 'col-md-1 label-padding')) }}
-                                    <div class="col-md-11">
+                                    {{ Form::label('number', 'Numero', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
                                         <select name="single_number_id" id="single_number_id" class="form-control"
                                                 disabled>
                                         </select>
@@ -367,16 +367,16 @@
                             <div class="tab-pane fade" id="newvoucher">
                                 {{ Form::open(array('action' => 'VouchersController@create', 'id' => 'new-voucher', 'class' => 'form-horizontal')) }}
                                 <div class="form-group has-feedback">
-                                    {{ Form::label('description', 'Descrizione', array('class' => 'col-md-1 label-padding')) }}
-                                    <div class="col-md-11">
+                                    {{ Form::label('description', 'Descrizione', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
                                         {{ Form::text('description', '', array('class' => 'form-control')) }}
                                         <div></div>
                                     </div>
                                     {{ Form::hidden('user_id', $user->id) }}
                                 </div>
                                 <div class="form-group">
-                                    {{ Form::label('amount', 'Valore', array('class' => 'col-md-1 label-padding')) }}
-                                    <div class="col-md-11">
+                                    {{ Form::label('amount', 'Valore', array('class' => 'col-md-2 label-padding')) }}
+                                    <div class="col-md-10">
                                         <div class="input-group">
                                             <span class="input-group-addon no-radius" id="basic-addon1">€</span>
                                             {{ Form::text('amount', '', array('class' => 'form-control')) }}
@@ -401,8 +401,8 @@
                         <div class="tab-pane fade {{{ $active }}}" id="contact">
                             {{ Form::open(array('action' => 'MailController@mailToCustomer','id' => 'mail-contact' , 'class' => 'form-horizontal')) }}
                             <div class="form-group has-feedback">
-                                {{ Form::label('subject', 'Oggetto', array('class' => 'col-md-1 label-padding')) }}
-                                <div class="col-md-11">
+                                {{ Form::label('subject', 'Oggetto', array('class' => 'col-md-2 label-padding')) }}
+                                <div class="col-md-10">
                                     {{ Form::text('subject', $errors->first('subject') ? $errors->first('subject') : '', array('class' => 'form-control')) }}
                                     <div></div>
                                 </div>
@@ -428,15 +428,15 @@
                         <div class="tab-pane fade" id="edit">
                             {{ Form::model($user, array('action' => 'UsersController@update', 'id' => 'edit-user', 'class' => 'form-horizontal')) }}
                             <div class="form-group has-feedback">
-                                {{ Form::label('name', 'Nome', array('class' => 'col-md-1 label-padding')) }}
-                                <div class="col-md-11">
+                                {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
+                                <div class="col-md-10">
                                     {{ Form::text('name', $user->name, array('class' => 'form-control')) }}
                                     <div></div>
                                 </div>
                             </div>
                             <div class="form-group has-feedback">
-                                {{ Form::label('surname','Cognome', array('class' => 'col-md-1 label-padding')) }}
-                                <div class="col-md-11">
+                                {{ Form::label('surname','Cognome', array('class' => 'col-md-2 label-padding')) }}
+                                <div class="col-md-10">
                                     {{ Form::text('surname', $user->surname, array('class' => 'form-control')) }}
                                     <div></div>
                                 </div>
@@ -444,38 +444,38 @@
                                 {{--{{ Form::hidden('username')}}--}}
                             </div>
                             <div class="form-group has-feedback">
-                                {{ Form::label('number','Numero', array('class' => 'col-md-1 label-padding')) }}
-                                <div class="col-md-11">
+                                {{ Form::label('number','Numero', array('class' => 'col-md-2 label-padding')) }}
+                                <div class="col-md-10">
                                     {{ Form::text('number', $user->number, array('class' => 'form-control')) }}
                                     <div></div>
                                 </div>
                             </div>
                             <div class="form-group has-feedback">
-                                {{ Form::label('newusername', 'Username', array('class' => 'col-md-1 label-padding')) }}
-                                <div class="col-md-11">
+                                {{ Form::label('newusername', 'Username', array('class' => 'col-md-2 label-padding')) }}
+                                <div class="col-md-10">
                                     {{ Form::text('newusername', $user->username, array('class' => 'form-control')) }}
                                     <div></div>
                                 </div>
                                 {{ Form::hidden('username','dummy@user.it') }}
                             </div>
                             <div class="form-group has-feedback">
-                                {{ Form::label('newpassword', 'Password', array('class' => 'col-md-1 label-padding')) }}
-                                <div class="col-md-11">
+                                {{ Form::label('newpassword', 'Password', array('class' => 'col-md-2 label-padding')) }}
+                                <div class="col-md-10">
                                     {{ Form::password('newpassword', array('class' => 'form-control')) }}
                                     <div></div>
                                 </div>
                                 {{ Form::hidden('password','dummypassword') }}
                             </div>
                             <div class="form-group has-feedback">
-                                {{ Form::label('show_price', 'Visualizza Conto', array('class' => 'col-md-1 label-padding')) }}
-                                <div class="col-md-11">
+                                {{ Form::label('show_price', 'Visualizza Conto', array('class' => 'col-md-2 label-padding')) }}
+                                <div class="col-md-10">
                                     {{ Form::select('show_price',array('1' => 'Sì','0' => 'No'),$user->show_price,array('class' => 'form-control')) }}
                                     <div></div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                {{ Form::label('discount', 'Sconto', array('class' => 'col-md-1 label-padding')) }}
-                                <div class="col-md-11">
+                                {{ Form::label('discount', 'Sconto', array('class' => 'col-md-2 label-padding')) }}
+                                <div class="col-md-10">
                                     <div class="input-group">
                                         <span class="input-group-addon no-radius" id="basic-addon1">%</span>
                                         {{ Form::text('discount', $user->discount, array('class' => 'form-control')) }}
@@ -808,6 +808,200 @@
                   $('#mail-contact').find('#message').closest('.form-group').addClass('has-success');
                   $('#mail-contact').find('#message ~ div').html(success_icon);
                 }
+                if (submit){
+                  //chiamata ajax
+                }
+                return submit;
+            });
+
+            $('#edit-user').on('submit', function () {
+                $('#alert-3').hide();
+                $('#alert-3').find('.success').hide();
+                $('#alert-3').find('.error').hide();
+                $('#alert-3').find('.success').html("");
+                $('#alert-3').find('.error').html("");
+
+                //value
+                var name = $('#edit-user').find('#name').val();
+                var surname = $('#edit-user').find('#surname').val();
+                var number = $('#edit-user').find('#number').val();
+                var newusername = $('#edit-user').find('#newusername').val();
+                var newpassword = $('#edit-user').find('#newpassword').val();
+                var show_price = $('#edit-user').find('#show_price').val();
+                var discount = $('#edit-user').find('#discount').val();
+
+                var error_icon ='<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>';
+                var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
+                var error_icon_select ='<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(error)</span>';
+                var success_icon_select = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(success)</span>';
+
+                var notnecessary_icon = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
+                var notnecessary_icon_select = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(success)</span>';
+                //submit = true
+                var submit = true;
+                //start the check!
+                //NAME
+                var result = checkInputValue(name, "text", 30, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-3').show();
+                  $('#alert-3').find('.error').show();
+                  $('#edit-user').find('#name').closest('.form-group').removeClass('has-success');
+                  $('#edit-user').find('#name').closest('.form-group').addClass('has-error');
+                  $('#edit-user').find('#name ~ div').html(error_icon_select);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-3').find('.error'),
+                    sex: "m",
+                    elementName: "nome",
+                    maxLength: 30,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#edit-user').find('#name').closest('.form-group').removeClass('has-error');
+                  $('#edit-user').find('#name').closest('.form-group').addClass('has-success');
+                  $('#edit-user').find('#name ~ div').html(success_icon_select);
+                }
+
+                //SURNAME
+                var result = checkInputValue(surname, "text", 30, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-3').show();
+                  $('#alert-3').find('.error').show();
+                  $('#edit-user').find('#surname').closest('.form-group').removeClass('has-success');
+                  $('#edit-user').find('#surname').closest('.form-group').addClass('has-error');
+                  $('#edit-user').find('#surname ~ div').html(error_icon_select);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-3').find('.error'),
+                    sex: "m",
+                    elementName: "cognome",
+                    maxLength: 30,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#edit-user').find('#surname').closest('.form-group').removeClass('has-error');
+                  $('#edit-user').find('#surname').closest('.form-group').addClass('has-success');
+                  $('#edit-user').find('#surname ~ div').html(success_icon_select);
+                }
+
+                //NUMBER
+                var result = checkInputValue(number, "integer", 11, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-3').show();
+                  $('#alert-3').find('.error').show();
+                  $('#edit-user').find('#number').closest('.form-group').removeClass('has-success');
+                  $('#edit-user').find('#number').closest('.form-group').addClass('has-error');
+                  $('#edit-user').find('#number ~ div').html(error_icon_select);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-3').find('.error'),
+                    sex: "m",
+                    elementName: "numero casella",
+                    maxLength: 11,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#edit-user').find('#number').closest('.form-group').removeClass('has-error');
+                  $('#edit-user').find('#number').closest('.form-group').addClass('has-success');
+                  $('#edit-user').find('#number ~ div').html(success_icon_select);
+                }
+
+                //NEWUSERNAME
+                var result = checkInputValue(newusername, "email", 128, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-3').show();
+                  $('#alert-3').find('.error').show();
+                  $('#edit-user').find('#newusername').closest('.form-group').removeClass('has-success');
+                  $('#edit-user').find('#newusername').closest('.form-group').addClass('has-error');
+                  $('#edit-user').find('#newusername ~ div').html(error_icon_select);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-3').find('.error'),
+                    sex: "am",
+                    elementName: "username",
+                    maxLength: 128,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#edit-user').find('#newusername').closest('.form-group').removeClass('has-error');
+                  $('#edit-user').find('#newusername').closest('.form-group').addClass('has-success');
+                  $('#edit-user').find('#newusername ~ div').html(success_icon_select);
+                }
+
+                //NEWPASSWORD
+                if (newpassword.length != 0){
+                    var result = checkInputValue(newpassword, "pwd", 30, 8);
+                    if (result['status'] == 'ko') {
+                      $('#alert-3').show();
+                      $('#alert-3').find('.error').show();
+                      $('#edit-user').find('#newpassword').closest('.form-group').removeClass('not-necessary');
+                      $('#edit-user').find('#newpassword').closest('.form-group').addClass('has-error');
+                      $('#edit-user').find('#newpassword ~ div').html(error_icon_select);
+
+                      var obj = {
+                        result: result,
+                        htmlElement: $('#alert-3').find('.error'),
+                        sex: "f",
+                        elementName: "nuova password",
+                        maxLength: 30,
+                        minLength: 8
+                      };
+                      showErrorMsg(obj);
+                      submit = false;
+                    } else {
+                      $('#edit-user').find('#newpassword').closest('.form-group').removeClass('has-error');
+                      $('#edit-user').find('#newpassword').closest('.form-group').addClass('not-necessary');
+                      $('#edit-user').find('#newpassword ~ div').html(success_icon_select);
+                    }
+                } else {
+                    $('#edit-user').find('#newpassword').closest('.form-group').removeClass('has-error');
+                    $('#edit-user').find('#newpassword').closest('.form-group').addClass('not-necessary');
+                    $('#edit-user').find('#newpassword ~ div').html(notnecessary_icon_select);
+                }
+
+                //SHOW PRICE
+                $('#edit-user').find('#show_price').closest('.form-group').removeClass('has-error');
+                $('#edit-user').find('#show_price').closest('.form-group').addClass('has-success');
+                $('#edit-user').find('#show_price ~ div').html(success_icon_select);
+                $('#edit-user').find('#show_price').css('outline-color', '#3c763d');
+
+                //DISCOUNT
+                var result = checkInputValue(discount, "number", 2, 1);
+                if (result['status'] == 'ko') {
+                  $('#alert-3').show();
+                  $('#alert-3').find('.error').show();
+                  $('#edit-user').find('#discount').closest('.form-group').removeClass('has-success');
+                  $('#edit-user').find('#discount').closest('.form-group').addClass('has-error');
+                  $('#edit-user').find('#discount ~ div').html(error_icon_select);
+
+                  var obj = {
+                    result: result,
+                    htmlElement: $('#alert-3').find('.error'),
+                    sex: "f",
+                    elementName: "percentuale di sconto",
+                    maxLength: 2,
+                    minLength: 1
+                  };
+                  showErrorMsg(obj);
+                  submit = false;
+                } else {
+                  $('#edit-user').find('#discount').closest('.form-group').removeClass('has-error');
+                  $('#edit-user').find('#discount').closest('.form-group').addClass('has-success');
+                  $('#edit-user').find('#discount ~ div').html(success_icon_select);
+                }
+
                 if (submit){
                   //chiamata ajax
                 }

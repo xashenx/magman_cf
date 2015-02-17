@@ -320,7 +320,7 @@
                 } else {
                   $('#new-series').find('#author').closest('.form-group').removeClass('has-error');
                   $('#new-series').find('#author').closest('.form-group').addClass('has-success');
-                  $('#new-series').find('#author ~ div').html(notnecessary_icon);
+                  $('#new-series').find('#author ~ div').html(success_icon);
                 }
 
                 //PUBLISHER
