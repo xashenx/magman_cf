@@ -426,45 +426,51 @@
                         </div>
 
                         <div class="tab-pane fade" id="edit">
-                            {{ Form::model($user, array('action' => 'UsersController@update', 'class' => 'form-horizontal')) }}
-                            <div class="form-group">
+                            {{ Form::model($user, array('action' => 'UsersController@update', 'id' => 'edit-user', 'class' => 'form-horizontal')) }}
+                            <div class="form-group has-feedback">
                                 {{ Form::label('name', 'Nome', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
                                     {{ Form::text('name', $user->name, array('class' => 'form-control')) }}
+                                    <div></div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group has-feedback">
                                 {{ Form::label('surname','Cognome', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
                                     {{ Form::text('surname', $user->surname, array('class' => 'form-control')) }}
+                                    <div></div>
                                 </div>
                                 {{ Form::hidden('id')}}
                                 {{--{{ Form::hidden('username')}}--}}
                             </div>
-                            <div class="form-group">
+                            <div class="form-group has-feedback">
                                 {{ Form::label('number','Numero', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
                                     {{ Form::text('number', $user->number, array('class' => 'form-control')) }}
+                                    <div></div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group has-feedback">
                                 {{ Form::label('newusername', 'Username', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
                                     {{ Form::text('newusername', $user->username, array('class' => 'form-control')) }}
+                                    <div></div>
                                 </div>
                                 {{ Form::hidden('username','dummy@user.it') }}
                             </div>
-                            <div class="form-group">
+                            <div class="form-group has-feedback">
                                 {{ Form::label('newpassword', 'Password', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
                                     {{ Form::password('newpassword', array('class' => 'form-control')) }}
+                                    <div></div>
                                 </div>
                                 {{ Form::hidden('password','dummypassword') }}
                             </div>
-                            <div class="form-group">
+                            <div class="form-group has-feedback">
                                 {{ Form::label('show_price', 'Visualizza Conto', array('class' => 'col-md-1 label-padding')) }}
                                 <div class="col-md-11">
                                     {{ Form::select('show_price',array('1' => 'Sì','0' => 'No'),$user->show_price,array('class' => 'form-control')) }}
+                                    <div></div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -473,6 +479,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon no-radius" id="basic-addon1">%</span>
                                         {{ Form::text('discount', $user->discount, array('class' => 'form-control')) }}
+                                        <div></div>
                                     </div>
                                 </div>
                             </div>
@@ -480,6 +487,10 @@
                                 {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary button-margin no-radius')) }}
                             </div>
                             {{ Form::close() }}
+                            <div class="cAlert" id="alert-3">
+                                <div class="alert alert-success success no-radius"></div>
+                                <div class="alert alert-danger error no-radius"></div>
+                            </div>
                         </div>
 
                         {{--@if(count($purchases)>0)--}}
