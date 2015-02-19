@@ -147,7 +147,7 @@ select.form-control:focus{
 }
 .not-necessary .input-group-addon {
   color: #2FB7FF;
-  background-color: #2FB7FF;
+  background-color: #b9e5fd;
   border-color: #2FB7FF;
 }
 .not-necessary .form-control-feedback {

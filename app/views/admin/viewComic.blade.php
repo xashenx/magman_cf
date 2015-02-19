@@ -159,11 +159,12 @@
               @endif
               <div class="tab-pane fade" id="edit">
                 <div>
-                  {{ Form::model($comic, array('action' => 'ComicsController@update', 'class' => 'form-horizontal')) }}
-                  <div class="form-group">
+                  {{ Form::model($comic, array('action' => 'ComicsController@update', 'id' => 'edit-comic', 'class' => 'form-horizontal')) }}
+                  <div class="form-group has-feedback">
                     {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
                       {{ Form::text('name', $comic->name, array('class' => 'form-control')) }}
+                      <div></div>
                     </div>
                     {{ Form::hidden('id') }}
                     {{ Form::hidden('series_id') }}
@@ -173,24 +174,27 @@
                       {{ Form::hidden('return','series') }}
                     @endif
                   </div>
-                  <div class="form-group">
+                  <div class="form-group has-feedback">
                     {{ Form::label('number', 'Numero', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
                       {{ Form::text('number', $comic->number, array('class' => 'form-control')) }}
+                      <div></div>
                     </div>
                   </div>
                   @if($inv_state == 1)
-                    <div class="form-group">
+                    <div class="form-group has-feedback">
                       {{ Form::label('available', 'Disponibilità', array('class' => 'col-md-2 label-padding')) }}
                       <div class="col-md-10">
                         {{ Form::text('available', $comic->available, array('class' => 'form-control')) }}
+                        <div></div>
                       </div>
                     </div>
                   @endif
-                  <div class="form-group">
+                  <div class="form-group has-feedback">
                     {{ Form::label('image', 'Link Immagine', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
                       {{ Form::text('image', $comic->image, array('class' => 'form-control')) }}
+                      <div></div>
                     </div>
                   </div>
                   <div class="form-group">
@@ -199,6 +203,7 @@
                       <div class="input-group">
                         <span class="input-group-addon no-radius" id="basic-addon1">€</span>
                         {{ Form::text('price', $comic->price, array('class' => 'form-control')) }}
+                        <div></div>
                       </div>
                     </div>
                   </div>
@@ -206,6 +211,15 @@
                     {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary no-radius')) }}
                   </div>
                   {{ Form::close() }}
+                  <div class="cAlert" id="alert-1">
+                    <div class="alert alert-success success no-radius"></div>
+                    <div class="alert alert-info necessary no-radius">
+                      I campi con
+                      <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                      sono opzionali.
+                    </div>
+                    <div class="alert alert-danger error no-radius"></div>
+                  </div>
                 </div>
               </div>
             @endif
@@ -271,5 +285,155 @@
       });
     }
   </script>
+  <script>
+    $(document).ready(function () {
 
+        $('#edit-comic').on('submit', function () {
+            $('#alert-1').hide();
+            $('#alert-1').find('.success').hide();
+            $('#alert-1').find('.error').hide();
+            $('#alert-1').find('.necessary').hide();
+            $('#alert-1').find('.success').html("");
+            $('#alert-1').find('.error').html("");
+
+            //value
+            var name = $('#edit-comic').find('#name').val();
+            var number = $('#edit-comic').find('#number').val();
+            var image = $('#edit-comic').find('#image').val();
+            var price = $('#edit-comic').find('#price').val();
+
+            var error_icon ='<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>';
+            var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
+            var error_icon_select ='<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(error)</span>';
+            var success_icon_select = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(success)</span>';
+
+            var notnecessary_icon = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
+            //submit = true
+            var submit = true;
+            //start the check!
+            //name
+            if (name.length != 0){
+              var result = checkInputValue(name, "message", 128, -1);
+              if (result['status'] == 'ko') {
+                $('#alert-1').show();
+                $('#alert-1').find('.error').show();
+                $('#edit-comic').find('#name').closest('.form-group').removeClass('has-success');
+                $('#edit-comic').find('#name').closest('.form-group').removeClass('not-necessary');
+                $('#edit-comic').find('#name').closest('.form-group').addClass('has-error');
+                $('#edit-comic').find('#name ~ div').html(error_icon);
+
+                var obj = {
+                  result: result,
+                  htmlElement: $('#alert-1').find('.error'),
+                  sex: "m",
+                  elementName: "nome",
+                  maxLength: 128,
+                  minLength: -1
+                };
+                showErrorMsg(obj);
+                submit = false;
+              } else {
+                $('#edit-comic').find('#name').closest('.form-group').removeClass('not-necessary');
+                $('#edit-comic').find('#name').closest('.form-group').removeClass('has-error');
+                $('#edit-comic').find('#name').closest('.form-group').addClass('has-success');
+                $('#edit-comic').find('#name ~ div').html(success_icon);
+              }
+            } else {
+              $('#alert-1').find('.necessary').show();
+              $('#edit-comic').find('#name').closest('.form-group').removeClass('has-error');
+              $('#edit-comic').find('#name').closest('.form-group').addClass('not-necessary');
+              $('#edit-comic').find('#name ~ div').html(notnecessary_icon);
+            }
+
+            //number
+            var result = checkInputValue(number, "integer", 11, 1);
+            if (result['status'] == 'ko') {
+              $('#alert-1').show();
+              $('#alert-1').find('.error').show();
+              $('#edit-comic').find('#number').closest('.form-group').removeClass('has-success');
+              $('#edit-comic').find('#number').closest('.form-group').addClass('has-error');
+              $('#edit-comic').find('#number ~ div').html(error_icon);
+
+              var obj = {
+                result: result,
+                htmlElement: $('#alert-1').find('.error'),
+                sex: "m",
+                elementName: "numero",
+                maxLength: 11,
+                minLength: 1
+              };
+              showErrorMsg(obj);
+              submit = false;
+            } else {
+              $('#edit-comic').find('#number').closest('.form-group').removeClass('has-error');
+              $('#edit-comic').find('#number').closest('.form-group').addClass('has-success');
+              $('#edit-comic').find('#number ~ div').html(success_icon);
+            }
+
+            //image
+            if (image.length != 0){
+              var result = checkInputValue(image, "url", 128, -1);
+              if (result['status'] == 'ko') {
+                $('#alert-1').show();
+                $('#alert-1').find('.error').show();
+                $('#edit-comic').find('#image').closest('.form-group').removeClass('not-necessary');
+                $('#edit-comic').find('#image').closest('.form-group').removeClass('has-success');
+                $('#edit-comic').find('#image').closest('.form-group').addClass('has-error');
+                $('#edit-comic').find('#image ~ div').html(error_icon);
+
+                var obj = {
+                  result: result,
+                  htmlElement: $('#alert-1').find('.error'),
+                  sex: "m",
+                  elementName: "link all'immagine",
+                  maxLength: 128,
+                  minLength: -1
+                };
+                showErrorMsg(obj);
+                submit = false;
+              } else {
+                $('#edit-comic').find('#image').closest('.form-group').removeClass('not-necessary');
+                $('#edit-comic').find('#image').closest('.form-group').removeClass('has-error');
+                $('#edit-comic').find('#image').closest('.form-group').addClass('has-success');
+                $('#edit-comic').find('#image ~ div').html(success_icon);
+              }
+            } else {
+              $('#alert-1').find('.necessary').show();
+              $('#edit-comic').find('#image').closest('.form-group').removeClass('has-error');
+              $('#edit-comic').find('#image').closest('.form-group').addClass('not-necessary');
+              $('#edit-comic').find('#image ~ div').html(notnecessary_icon);
+            }
+
+            //price
+            var result = checkInputValue(price, "number", 128, 1);
+            if (result['status'] == 'ko') {
+              $('#alert-1').show();
+              $('#alert-1').find('.error').show();
+              $('#edit-comic').find('#price').closest('.form-group').removeClass('has-success');
+              $('#edit-comic').find('#price').closest('.form-group').addClass('has-error');
+              $('#edit-comic').find('#price ~ div').html(error_icon);
+
+              var obj = {
+                result: result,
+                htmlElement: $('#alert-1').find('.error'),
+                sex: "m",
+                elementName: "prezzo",
+                maxLength: 128,
+                minLength: 1
+              };
+              showErrorMsg(obj);
+              submit = false;
+            } else {
+              $('#edit-comic').find('#price').closest('.form-group').removeClass('has-error');
+              $('#edit-comic').find('#price').closest('.form-group').addClass('has-success');
+              $('#edit-comic').find('#price ~ div').html(success_icon);
+            }
+            if (submit){
+              //chiamata ajax
+            }
+            return submit;
+        });
+
+    });
+  </script>
 @stop

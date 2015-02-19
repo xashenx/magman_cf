@@ -489,7 +489,7 @@
                             {{ Form::close() }}
                             <div class="cAlert" id="alert-3">
                                 <div class="alert alert-success success no-radius"></div>
-                                <div class="alert alert-info no-radius">
+                                <div class="alert alert-info necessary no-radius">
                                     I campi con
                                     <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
                                     sono opzionali.
@@ -823,6 +823,7 @@
                 $('#alert-3').hide();
                 $('#alert-3').find('.success').hide();
                 $('#alert-3').find('.error').hide();
+                $('#alert-3').find('.necessary').hide();
                 $('#alert-3').find('.success').html("");
                 $('#alert-3').find('.error').html("");
 
@@ -952,6 +953,7 @@
                       $('#alert-3').show();
                       $('#alert-3').find('.error').show();
                       $('#edit-user').find('#newpassword').closest('.form-group').removeClass('not-necessary');
+                      $('#edit-user').find('#newpassword').closest('.form-group').removeClass('has-success');
                       $('#edit-user').find('#newpassword').closest('.form-group').addClass('has-error');
                       $('#edit-user').find('#newpassword ~ div').html(error_icon_select);
 
@@ -967,10 +969,11 @@
                       submit = false;
                     } else {
                       $('#edit-user').find('#newpassword').closest('.form-group').removeClass('has-error');
-                      $('#edit-user').find('#newpassword').closest('.form-group').addClass('not-necessary');
+                      $('#edit-user').find('#newpassword').closest('.form-group').addClass('has-success');
                       $('#edit-user').find('#newpassword ~ div').html(success_icon_select);
                     }
                 } else {
+                    $('#alert-3').find('.necessary').show();
                     $('#edit-user').find('#newpassword').closest('.form-group').removeClass('has-error');
                     $('#edit-user').find('#newpassword').closest('.form-group').addClass('not-necessary');
                     $('#edit-user').find('#newpassword ~ div').html(notnecessary_icon_select);
