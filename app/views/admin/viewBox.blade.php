@@ -489,6 +489,11 @@
                             {{ Form::close() }}
                             <div class="cAlert" id="alert-3">
                                 <div class="alert alert-success success no-radius"></div>
+                                <div class="alert alert-info no-radius">
+                                    I campi con
+                                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                                    sono opzionali.
+                                </div>
                                 <div class="alert alert-danger error no-radius"></div>
                             </div>
                         </div>
