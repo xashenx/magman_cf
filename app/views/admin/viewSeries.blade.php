@@ -11,19 +11,19 @@
           @if($series->active)
             <button type="button" title="Disattiva serie"
                     onclick="showConfirmModal({{$series->id}},0,0)"
-                    class="btn btn-danger btn-xs no-radius little-icon">
-              <i class="fa fa-remove"></i>
+                    class="btn btn-danger btn-xs no-radius little-icon little-icon-padding">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
           @else
             <button type="button" title="Riattiva serie"
                     onclick="showConfirmModal({{$series->id}},0,1)"
-                    class="btn btn-success btn-xs no-radius little-icon">
-              <i class="fa fa-smile-o"></i>
+                    class="btn btn-success btn-xs no-radius little-icon little-icon-padding">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </button>
             <button type="button" title="Riattiva serie con fumetti"
                     onclick="showConfirmModal({{$series->id}},1,1)"
-                    class="btn btn-warning btn-xs little-icon">
-              <i class="fa fa-book"></i>
+                    class="btn btn-warning btn-xs no-radius little-icon little-icon-padding">
+              <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
             </button>
           @endif
         </div>
@@ -284,30 +284,34 @@
             </div>
             <div class="tab-pane fade" id="edit">
               <div>
-                {{ Form::model($series, array('action' => 'SeriesController@update', 'class' => 'form-horizontal')) }}
-                <div class="form-group">
+                {{ Form::model($series, array('action' => 'SeriesController@update', 'id' => 'edit-series', 'class' => 'form-horizontal')) }}
+                <div class="form-group has-feedback">
                   {{ Form::label('name', 'Nome', array('class' => 'col-md-1 label-padding')) }}
                   <div class="col-md-11">
                     {{ Form::text('name', $series->name, array('class' => 'form-control')) }}
+                    <div></div>
                   </div>
                   {{ Form::hidden('id')}}
                 </div>
-                <div class="form-group">
+                <div class="form-group has-feedback">
                   {{ Form::label('version','Versione', array('class' => 'col-md-1 label-padding')) }}
                   <div class="col-md-11">
                     {{ Form::text('version', $series->version, array('class' => 'form-control')) }}
+                    <div></div>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group has-feedback">
                   {{ Form::label('author', 'Autore', array('class' => 'col-md-1 label-padding')) }}
                   <div class="col-md-11">
                     {{ Form::text('author', $series->author, array('class' => 'form-control')) }}
+                    <div></div>
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group has-feedback">
                   {{ Form::label('publisher', 'Editore', array('class' => 'col-md-1 label-padding')) }}
                   <div class="col-md-11">
                     {{ Form::text('publisher', $series->subtype_id, array('class' => 'form-control')) }}
+                    <div></div>
                   </div>
                 </div>
                 {{--<div class="form-group">--}}
@@ -322,10 +326,11 @@
                 {{--{{ Form::text('subtype_id', $series->subtype_id, array('class' => 'form-control')) }}--}}
                 {{--</div>--}}
                 {{--</div>--}}
-                <div class="form-group">
+                <div class="form-group has-feedback">
                   {{ Form::label('concluded', 'Conclusa', array('class' => 'col-md-1 label-padding')) }}
                   <div class="col-md-11">
                     {{ Form::select('concluded',array('1' => 'Sì','0' => 'No'),$series->concluded,array('class' => 'form-control')) }}
+                    <div></div>
                   </div>
                 </div>
                 {{--<div class="form-group">--}}
@@ -342,6 +347,15 @@
                   {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary no-radius')) }}
                 </div>
                 {{ Form::close() }}
+                <div class="cAlert" id="alert-2">
+                  <div class="alert alert-success success no-radius"></div>
+                  <div class="alert alert-info necessary no-radius">
+                    I campi con
+                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                    sono opzionali.
+                  </div>
+                  <div class="alert alert-danger error no-radius"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -535,7 +549,152 @@
         }
         return submit;
       });
+      $('#edit-series').on('submit', function () {
+        $('#alert-2').hide();
+        $('#alert-2').find('.success').hide();
+        $('#alert-2').find('.error').hide();
+        $('#alert-2').find('.necessary').hide();
+        $('#alert-2').find('.success').html("");
+        $('#alert-2').find('.error').html("");
 
+        //value
+        var name = $('#edit-series').find('#name').val();
+        var version = $('#edit-series').find('#version').val();
+        var author = $('#edit-series').find('#author').val();
+        var publisher = $('#edit-series').find('#publisher').val();
+
+        var error_icon ='<span class=\"glyphicon glyphicon-remove form-control-feedback\" aria-hidden=\"true\"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>'
+        var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>'
+        var notnecessary_icon = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>'
+
+        var error_icon_select ='<span class=\"glyphicon glyphicon-remove form-control-feedback\" aria-hidden=\"true\" style="padding-right:15px"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>'
+        var success_icon_select = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(success)</span>'
+        var notnecessary_icon_select = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(success)</span>'
+
+        //submit = true
+        var submit = true;
+        //start the check!
+        //NAME
+        var result = checkInputValue(name, "message", 128, 1);
+        if (result['status'] == 'ko') {
+          $('#alert-2').show();
+          $('#alert-2').find('.error').show();
+          $('#edit-series').find('#name').closest('.form-group').removeClass('has-success');
+          $('#edit-series').find('#name').closest('.form-group').addClass('has-error');
+          $('#edit-series').find('#name ~ div').html(error_icon_select);
+
+          var obj = {
+            result: result,
+            htmlElement: $('#alert-2').find('.error'),
+            sex: "m",
+            elementName: "nome",
+            maxLength: 128,
+            minLength: 1
+          };
+          showErrorMsg(obj);
+          submit = false;
+        } else {
+          $('#edit-series').find('#name').closest('.form-group').removeClass('has-error');
+          $('#edit-series').find('#name').closest('.form-group').addClass('has-success');
+          $('#edit-series').find('#name ~ div').html(success_icon_select);
+        }
+
+        //VERSION
+        if (version.length != 0){
+          var result = checkInputValue(version, "message", 128, -1);
+          if (result['status'] == 'ko') {
+            $('#alert-2').show();
+            $('#alert-2').find('.error').show();
+            $('#edit-series').find('#version').closest('.form-group').removeClass('has-success');
+            $('#edit-series').find('#version').closest('.form-group').removeClass('not-necessary');
+            $('#edit-series').find('#version').closest('.form-group').addClass('has-error');
+            $('#edit-series').find('#version ~ div').html(error_icon_select);
+
+            var obj = {
+              result: result,
+              htmlElement: $('#alert-2').find('.error'),
+              sex: "f",
+              elementName: "versione",
+              maxLength: 128,
+              minLength: -1
+            };
+            showErrorMsg(obj);
+            submit = false;
+          } else {
+            $('#edit-series').find('#version').closest('.form-group').removeClass('has-error');
+            $('#edit-series').find('#version').closest('.form-group').removeClass('not-necessary');
+            $('#edit-series').find('#version').closest('.form-group').addClass('has-success');
+            $('#edit-series').find('#version ~ div').html(success_icon_select);
+          }
+        } else {
+          $('#alert-2').find('.necessary').show();
+          $('#edit-series').find('#version').closest('.form-group').removeClass('has-success');
+          $('#edit-series').find('#version').closest('.form-group').removeClass('has-error');
+          $('#edit-series').find('#version').closest('.form-group').addClass('not-necessary');
+          $('#edit-series').find('#version ~ div').html(notnecessary_icon_select);
+        }
+
+        //AUTHOR
+        var result = checkInputValue(author, "message", 128, 1);
+        if (result['status'] == 'ko') {
+          $('#alert-2').show();
+          $('#alert-2').find('.error').show();
+          $('#edit-series').find('#author').closest('.form-group').removeClass('has-success');
+          $('#edit-series').find('#author').closest('.form-group').addClass('has-error');
+          $('#edit-series').find('#author ~ div').html(error_icon_select);
+
+          var obj = {
+            result: result,
+            htmlElement: $('#alert-2').find('.error'),
+            sex: "am",
+            elementName: "autore",
+            maxLength: 128,
+            minLength: 1
+          };
+          showErrorMsg(obj);
+          submit = false;
+        } else {
+          $('#edit-series').find('#author').closest('.form-group').removeClass('has-error');
+          $('#edit-series').find('#author').closest('.form-group').addClass('has-success');
+          $('#edit-series').find('#author ~ div').html(success_icon_select);
+        }
+
+        //PUBLISHER
+        var result = checkInputValue(publisher, "message", 128, 1);
+        if (result['status'] == 'ko') {
+          $('#alert-2').show();
+          $('#alert-2').find('.error').show();
+          $('#edit-series').find('#publisher').closest('.form-group').removeClass('has-success');
+          $('#edit-series').find('#publisher').closest('.form-group').addClass('has-error');
+          $('#edit-series').find('#publisher ~ div').html(error_icon_select);
+
+          var obj = {
+            result: result,
+            htmlElement: $('#alert-2').find('.error'),
+            sex: "am",
+            elementName: "editore",
+            maxLength: 128,
+            minLength: 1
+          };
+          showErrorMsg(obj);
+          submit = false;
+        } else {
+          $('#edit-series').find('#publisher').closest('.form-group').removeClass('has-error');
+          $('#edit-series').find('#publisher').closest('.form-group').addClass('has-success');
+          $('#edit-series').find('#publisher ~ div').html(success_icon_select);
+        }
+
+        //no_follow
+        $('#edit-series').find('#concluded').closest('.form-group').removeClass('has-error');
+        $('#edit-series').find('#concluded').closest('.form-group').addClass('has-success');
+        $('#edit-series').find('#concluded ~ div').html(success_icon_select);
+        $('#edit-series').find('#concluded').css('outline-color', '#3c763d');
+
+        if (submit){
+          //chiamata ajax
+        }
+        return submit;
+    });
     });
   </script>
   <script>
