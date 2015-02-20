@@ -56,7 +56,7 @@
                                                     <td><a href="series/{{$serie->id}}">{{$serie->name}}</a></td>
                                                     <td>{{$serie->version}}</td>
                                                     <td>{{$serie->author}}</td>
-                                                    <td>{{$serie->listActive->max('number')}}</td>
+                                                    <td>{{ $serie->listActive->max('number') != null ? $serie->listActive->max('number') : 0 }}</td>
                                                     <td>
                                                         @if($serie->active)
                                                             <button type="button" title="Disabilita"
