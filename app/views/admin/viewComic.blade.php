@@ -15,8 +15,8 @@
                     @else
                     onclick="showConfirmModal({{$comic->id}},{{$comic->series->id}},0)"
                     @endif
-                    class="btn btn-danger btn-xs no-radius"><i
-                      class="fa fa-remove"></i>
+                    class="btn btn-danger btn-xs no-radius little-icon little-icon-padding">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
           @else
             <button type="button" title="Riattiva fumetto"
@@ -25,8 +25,8 @@
                     @else
                     onclick="showConfirmModal({{$comic->id}},{{$comic->series->id}},1)"
                     @endif
-                    class="btn btn-success btn-sm"><i
-                      class="fa fa-thumbs-o-up"></i>
+                    class="btn btn-success btn-xs no-radius little-icon little-icon-padding">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </button>
           @endif
         </div>

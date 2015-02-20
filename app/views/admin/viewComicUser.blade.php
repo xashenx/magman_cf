@@ -1,7 +1,7 @@
 @section('content')
   <div class="row">
     <div class="col-md-12 col-sm-12">
-      <div class="panel panel-warning no-radius">
+      <div class="panel panel-default no-radius">
         <div class="panel-heading no-radius">
           <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Fumetto Ordinato
         </div>
@@ -33,7 +33,6 @@
           </div>
 
           <hr>
-
           <div class="row" style="padding:15px">
             {{ Form::model($comic, array('action' => 'ComicUserController@update', 'id' => 'edit-comic-user', 'class' => 'form-horizontal')) }}
             <div class="form-group">
