@@ -10813,7 +10813,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span>",
+			"sSearch": "<div class=\"col-xs-12\" style=\"magin-right:0px;padding-right:0px\"><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\" style=\"display:inline-block;\"></span> _INPUT_ </div>",
 
 
 			/**

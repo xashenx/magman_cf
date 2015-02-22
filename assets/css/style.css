@@ -153,3 +153,10 @@ select.form-control:focus{
 .not-necessary .form-control-feedback {
   color: #2FB7FF;
 }
+/*DATATABLES*/
+input[type="search"]{
+  display: inline-block;
+}
+select.input-sm{
+  display: inline-block;
+}
