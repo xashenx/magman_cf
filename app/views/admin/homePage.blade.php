@@ -106,8 +106,16 @@
 
 <script>
   $(document).ready(function () {
-    $('#dataTables-comics').dataTable();
-    $('#dataTables-warning').dataTable();
+    $('#dataTables-comics').dataTable({
+      "language": {
+        "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+      }
+    } );
+    $('#dataTables-warning').dataTable({
+      "language": {
+        "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+      }
+    } );
   });
 </script>
 

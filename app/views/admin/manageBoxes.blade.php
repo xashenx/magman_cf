@@ -152,7 +152,11 @@
 @include('../layouts/js-include')
     <script>
         $(document).ready(function () {
-          $('#dataTables-boxes').dataTable();
+          $('#dataTables-boxes').dataTable({
+            "language": {
+              "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+            }
+          } );
 
           $('#new-box').on('submit', function () {
             $('#alert-1').hide();

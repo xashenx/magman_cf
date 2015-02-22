@@ -21,7 +21,9 @@
       <!-- GOOGLE FONTS-->
       <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
       <!-- TABLE STYLES-->
+      <link href="{{ URL::asset('assets/css/dataTables/jquery.dataTables.css') }}" rel="stylesheet"/>
       <link href="{{ URL::asset('assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+      <!-- RESPONSIVE TABLE-->
   </head>
 
   <body>

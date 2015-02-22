@@ -227,7 +227,11 @@
 
     <script>
         $(document).ready(function () {
-            $('#dataTables-series').dataTable();
+            $('#dataTables-series').dataTable({
+              "language": {
+                "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+              }
+            } );
 
             $('#new-series').on('submit', function () {
                 $('#alert-1').hide();

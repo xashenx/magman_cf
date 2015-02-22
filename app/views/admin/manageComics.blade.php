@@ -60,7 +60,11 @@
 @include('../layouts/js-include')
 <script>
   $(document).ready(function() {
-    $('#dataTables-example').dataTable();
+    $('#dataTables-example').dataTable({
+      "language": {
+        "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+      }
+    } );
   });
 </script>
 <!-- CUSTOM SCRIPTS -->
