@@ -160,3 +160,18 @@ input[type="search"]{
 select.input-sm{
   display: inline-block;
 }
+
+.legend-green{
+  margin: 5px 10px 0 0;
+  width: 30px;
+  height: 10px;
+  background-color: #dff0d8;
+  border: 1px solid #ddd;
+}
+.legend-yellow{
+  margin: 5px 10px 0 0;
+  width: 30px;
+  height: 10px;
+  background-color: #fcf8e3;
+  border: 1px solid #ddd;
+}

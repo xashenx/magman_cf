@@ -814,7 +814,7 @@
         }
 
         //message
-        var result = checkInputValue(message, "message", 1000, 1);
+        var result = checkInputValue(message, "message", 2000, 1);
         if (result['status'] == 'ko') {
           $('#alert-2').show();
           $('#alert-2').find('.error').show();
@@ -827,7 +827,7 @@
             htmlElement: $('#alert-2').find('.error'),
             sex: "m",
             elementName: "messaggio",
-            maxLength: 1000,
+            maxLength: 2000,
             minLength: 1
           };
           showErrorMsg(obj);
