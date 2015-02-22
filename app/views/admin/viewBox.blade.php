@@ -534,7 +534,7 @@
                         <td>{{$purchase->series->name}} - {{$purchase->series->version}}
                           nr. {{$purchase->comic->number}}</td>
                       @endif
-                      <td>{{round($purchase->price,2)}}</td>
+                      <td>{{round($purchase->price,2)}} €</td>
                     </tr>
                   @endforeach
                   </tbody>
