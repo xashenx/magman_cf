@@ -1,12 +1,14 @@
 @section('content')
   @if(count($errors)>0)
-    <h3>Whhops: E' avvenuto un errore!!<br/>
-      Se il problema persiste contattare un amministratore</h3>
-    {{$errors->first('shop_card_duration')}}
-    {{$errors->first('shop_card_cost')}}
-    {{$errors->first('insolvency')}}
-    {{$errors->first('defaulting')}}
-    {{$errors->first('email')}}
+    <div class="alert alert-danger error no-radius">
+      <h3>Whhops: E' avvenuto un errore!!<br/>
+        Se il problema persiste contattare un amministratore</h3>
+      {{$errors->first('shop_card_duration')}}
+      {{$errors->first('shop_card_cost')}}
+      {{$errors->first('insolvency')}}
+      {{$errors->first('defaulting')}}
+      {{$errors->first('email')}}
+    </div>
   @endif
   <div class="row">
     <div class="col-md-12 col-sm-12">
@@ -20,7 +22,7 @@
             <div class="form-group has-feedback">
               {{ Form::label('email', 'Email di Contatto', array('class' => 'col-md-2 label-padding')) }}
               <div class="col-md-10">
-                {{ Form::text('email', ShopConf::find(3)->value, array('class' => 'form-control')) }}
+                {{ Form::text('email', ShopConf::find(3)->value, array('class' => 'form-control', 'placeholder' => 'Email del negoziante')) }}
                 <div></div>
               </div>
             </div>
@@ -29,7 +31,7 @@
               <div class="col-md-10">
                 <div class="input-group">
                   <span class="input-group-addon no-radius" id="basic-addon1">€</span>
-                  {{ Form::text('shop_card_cost', ShopConf::find(4)->value, array('class' => 'form-control')) }}
+                  {{ Form::text('shop_card_cost', ShopConf::find(4)->value, array('class' => 'form-control', 'placeholder' => 'Prezzo della tessera')) }}
                   <div></div>
                 </div>
               </div>

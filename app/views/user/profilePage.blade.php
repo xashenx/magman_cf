@@ -10,7 +10,7 @@
         <div class="form-group has-feedback">
           {{ Form::label('old_pass', 'Password attuale', array('class' => 'col-md-2 label-padding')) }}
           <div class="col-md-10">
-            {{ Form::password('old_pass', array('class' => 'form-control')) }}
+            {{ Form::password('old_pass', array('class' => 'form-control', 'placeholder' => 'Vecchia password')) }}
             <div></div>
           </div>
           {{ Form::hidden('id') }}
@@ -18,14 +18,14 @@
         <div class="form-group has-feedback">
           {{ Form::label('pass', 'Nuova Password', array('class' => 'col-md-2 label-padding')) }}
           <div class="col-md-10">
-            {{ Form::password('pass', array('class' => 'form-control')) }}
+            {{ Form::password('pass', array('class' => 'form-control', 'placeholder' => 'Nuova password')) }}
             <div></div>
           </div>
         </div>
         <div class="form-group has-feedback">
           {{ Form::label('pass_confirmation', 'Conferma Password', array('class' => 'col-md-2 label-padding')) }}
           <div class="col-md-10">
-            {{ Form::password('pass_confirmation', array('class' => 'form-control')) }}
+            {{ Form::password('pass_confirmation', array('class' => 'form-control', 'placeholder' => 'Conferma la nuova password')) }}
             <div></div>
           </div>
         </div>

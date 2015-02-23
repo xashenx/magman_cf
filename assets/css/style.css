@@ -175,3 +175,10 @@ select.input-sm{
   background-color: #fcf8e3;
   border: 1px solid #ddd;
 }
+.legend-red{
+  margin: 5px 10px 0 0;
+  width: 30px;
+  height: 10px;
+  background-color: #f2dede;
+  border: 1px solid #ddd;
+}

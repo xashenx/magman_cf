@@ -6,6 +6,12 @@
         <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Gestione Fumetti
       </div>
       <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="legend-red col-xs-2"></div>
+            Fumetto disattivato
+          </div>
+        </div>
         <div>
           <div class="tab-content">
             <div>

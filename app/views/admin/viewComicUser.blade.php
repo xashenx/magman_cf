@@ -40,7 +40,7 @@
               <div class="col-md-10">
                 <div class="input-group">
                   <span class="input-group-addon no-radius" id="basic-addon1">€</span>
-                  {{ Form::text('price', $comic->price, array('class' => 'form-control')) }}
+                  {{ Form::text('price', $comic->price, array('class' => 'form-control', 'placeholder' => 'Prezzo per questo cliente')) }}
                   <div></div>
                 </div>
               </div>

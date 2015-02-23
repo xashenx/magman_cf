@@ -1,7 +1,9 @@
 @section('content')
     @if(count($errors)>0)
+      <div class="alert alert-danger error no-radius">
         <h3>Whhops: E' avvenuto un errore!!<br/>
             Se il problema persiste contattare un amministratore</h3>
+      </div>
     @endif
     <div class="row">
         <div class="col-md-12">
@@ -30,6 +32,16 @@
                         <div class="tab-pane fade active in" id="series">
                             <div>
                                 <div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <div class="legend-green col-xs-2"></div>
+                                      Serie conclusa
+                                    </div>
+                                    <div class="col-xs-12">
+                                      <div class="legend-red col-xs-2"></div>
+                                      Serie disabilitata
+                                    </div>
+                                  </div>
                                     <table class="table table-striped table-bordered table-hover"
                                            id="dataTables-series">
                                         <thead>
@@ -113,7 +125,7 @@
                                 <div class="form-group has-feedback">
                                     {{ Form::label('name', 'Nome', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
-                                        {{ Form::text('name', "", array('class' => 'form-control')) }}
+                                        {{ Form::text('name', "", array('class' => 'form-control', 'placeholder' => 'Nome della serie')) }}
                                         <div></div>
                                     </div>
                                     {{ Form::hidden('id')}}
@@ -121,21 +133,21 @@
                                 <div class="form-group has-feedback">
                                     {{ Form::label('version','Versione', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
-                                        {{ Form::text('version', "", array('class' => 'form-control')) }}
+                                        {{ Form::text('version', "", array('class' => 'form-control', 'placeholder' => 'Versione della serie *')) }}
                                         <div></div>
                                     </div>
                                 </div>
                                 <div class="form-group has-feedback">
                                     {{ Form::label('author', 'Autore', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
-                                        {{ Form::text('author', "", array('class' => 'form-control')) }}
+                                        {{ Form::text('author', "", array('class' => 'form-control', 'placeholder' => 'Autore della serie')) }}
                                         <div></div>
                                     </div>
                                 </div>
                                 <div class="form-group has-feedback">
                                     {{ Form::label('publisher', 'Editore', array('class' => 'col-md-1 label-padding')) }}
                                     <div class="col-md-11">
-                                        {{ Form::text('publisher', "", array('class' => 'form-control')) }}
+                                        {{ Form::text('publisher', "", array('class' => 'form-control', 'placeholder' => 'Editore della serie')) }}
                                         <div></div>
                                     </div>
                                 </div>
@@ -229,7 +241,7 @@
         $(document).ready(function () {
             $('#dataTables-series').dataTable({
               "language": {
-                "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+                "url": "{{ URL::asset('assets/js/dataTables/series.lang') }}"
               }
             } );
 

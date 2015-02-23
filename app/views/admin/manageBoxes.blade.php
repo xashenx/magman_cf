@@ -1,7 +1,9 @@
 @section('content')
     @if(count($errors)>0)
+      <div class="alert alert-danger error no-radius">
         <h3>Whhops: E' avvenuto un errore!!<br/>
             Se il problema persiste contattare un amministratore</h3>
+      </div>
     @endif
     <div class="row">
         <div class="col-md-12">
@@ -30,6 +32,18 @@
                             <div>
 
                                 <div>
+                                  <div class="row" >
+
+                                      <div class="col-xs-12">
+                                        <div class="legend-red col-xs-2"></div>
+                                        Casella non attiva
+                                      </div>
+                                      <div class="col-xs-12">
+                                        <div class="legend-yellow col-xs-2"></div>
+                                        Casella da rinnovare
+                                      </div>
+
+                                  </div>
                                     <table class="table table-striped table-bordered table-hover"
                                            id="dataTables-boxes">
                                         <thead>
@@ -84,42 +98,42 @@
                                 <div class="form-group has-feedback">
                                     {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::text('name', "", array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        {{ Form::text('name', "", array('class' => 'form-control', 'placeholder' => 'Nome del cliente')) }}
                                         <div></div>
                                     </div>
                                 </div>
                                 <div class="form-group has-feedback">
                                     {{ Form::label('surname', 'Cognome', array('class' => 'col-md-2 label-padding', 'aria-describedby' => 'inputSuccess2Status')) }}
                                     <div class="col-md-10">
-                                        {{ Form::text('surname', "", array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        {{ Form::text('surname', "", array('class' => 'form-control', 'placeholder' => 'Cognome del cliente')) }}
                                         <div></div>
                                     </div>
                                 </div>
                                 <div class="form-group has-feedback">
                                     {{ Form::label('number', 'Numero Casella', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::text('number', $next_box_id, array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        {{ Form::text('number', $next_box_id, array('class' => 'form-control', 'placeholder' => 'Numero della casella')) }}
                                         <div></div>
                                     </div>
                                 </div>
                                 <div class="form-group has-feedback">
                                     {{ Form::label('username','Username', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::text('username', "", array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        {{ Form::text('username', "", array('class' => 'form-control', 'placeholder' => 'Email del cliente')) }}
                                         <div></div>
                                     </div>
                                 </div>
                                 <div class="form-group has-feedback">
                                     {{ Form::label('password','Password', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::password('password', array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        {{ Form::password('password', array('class' => 'form-control', 'placeholder' => 'Password')) }}
                                         <div></div>
                                     </div>
                                 </div>
                                 <div class="form-group has-feedback">
                                     {{ Form::label('password_confirmation','Conferma Password', array('class' => 'col-md-2 label-padding')) }}
                                     <div class="col-md-10">
-                                        {{ Form::password('password_confirmation', array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                        {{ Form::password('password_confirmation', array('class' => 'form-control', 'placeholder' => 'Conferma la password')) }}
                                         <div></div>
                                     </div>
                                 </div>
@@ -128,7 +142,7 @@
                                     <div class="col-md-10">
                                         <div class="input-group">
                                             <span class="input-group-addon no-radius" id="basic-addon1">%</span>
-                                            {{ Form::text('discount', '10', array('class' => 'form-control', 'aria-describedby' => "inputIcon")) }}
+                                            {{ Form::text('discount', '10', array('class' => 'form-control', 'placeholder' => 'Percentuale di sconto')) }}
                                             <div></div>
                                         </div>
                                     </div>

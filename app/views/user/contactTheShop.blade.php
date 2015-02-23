@@ -18,7 +18,7 @@
           {{ Form::open(array('action' => 'MailController@mailToShop', 'id' => 'mail-contact', 'class' => 'form-horizontal')) }}
           <div class="form-group has-feedback">
             <div class="col-md-12">
-              {{ Form::textarea('message', $errors->first('message') ? $errors->first('message') : '' , array('id' => 'message','class' => 'form-control')) }}
+              {{ Form::textarea('message', $errors->first('message') ? $errors->first('message') : '' , array('id' => 'message','class' => 'form-control', 'placeholder' => 'Testo del messaggio')) }}
               <div></div>
             </div>
           </div>

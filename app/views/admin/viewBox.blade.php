@@ -120,6 +120,16 @@
               {{--*/ $active = 'active in' /*--}}
               @if(count($comics)>0)
                 <div class="tab-pane fade {{{ $active }}}" id="orderedComics">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="legend-green col-xs-2"></div>
+                      Disponibilità garantita
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="legend-yellow col-xs-2"></div>
+                      Disponibilità non garantita
+                    </div>
+                  </div>
                   <table
                           class="table table-striped table-bordered table-hover"
                           id="dataTables-comics">
@@ -383,7 +393,7 @@
                 <div class="form-group has-feedback">
                   {{ Form::label('description', 'Descrizione', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
-                    {{ Form::text('description', '', array('class' => 'form-control')) }}
+                    {{ Form::text('description', '', array('class' => 'form-control', 'placeholder' => 'Descrizione del buono')) }}
                     <div></div>
                   </div>
                   {{ Form::hidden('user_id', $user->id) }}
@@ -393,7 +403,7 @@
                   <div class="col-md-10">
                     <div class="input-group">
                       <span class="input-group-addon no-radius" id="basic-addon1">€</span>
-                      {{ Form::text('amount', '', array('class' => 'form-control')) }}
+                      {{ Form::text('amount', '', array('class' => 'form-control', 'placeholder' => 'Valore del buono')) }}
                       <div></div>
                     </div>
                   </div>
@@ -417,14 +427,14 @@
               <div class="form-group has-feedback">
                 {{ Form::label('subject', 'Oggetto', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::text('subject', $errors->first('subject') ? $errors->first('subject') : '', array('class' => 'form-control')) }}
+                  {{ Form::text('subject', $errors->first('subject') ? $errors->first('subject') : '', array('class' => 'form-control', 'placeholder' => 'Oggetto del messaggio')) }}
                   <div></div>
                 </div>
               </div>
 
               <div class="form-group has-feedback">
                 <div class="col-md-12">
-                  {{ Form::textarea('message', $errors->first('message') ? $errors->first('message') : '', array('id' => 'message', 'class' => 'form-control')) }}
+                  {{ Form::textarea('message', $errors->first('message') ? $errors->first('message') : '', array('id' => 'message', 'class' => 'form-control', 'placeholder' => 'Testo del messaggio')) }}
                   <div></div>
                 </div>
                 {{ Form::hidden('to',$user->id) }}
@@ -444,14 +454,14 @@
               <div class="form-group has-feedback">
                 {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::text('name', $user->name, array('class' => 'form-control')) }}
+                  {{ Form::text('name', $user->name, array('class' => 'form-control', 'placeholder' => 'Nome del cliente')) }}
                   <div></div>
                 </div>
               </div>
               <div class="form-group has-feedback">
                 {{ Form::label('surname','Cognome', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::text('surname', $user->surname, array('class' => 'form-control')) }}
+                  {{ Form::text('surname', $user->surname, array('class' => 'form-control', 'placeholder' => 'Cognome del cliente')) }}
                   <div></div>
                 </div>
                 {{ Form::hidden('id')}}
@@ -460,14 +470,14 @@
               <div class="form-group has-feedback">
                 {{ Form::label('number','Numero', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::text('number', $user->number, array('class' => 'form-control')) }}
+                  {{ Form::text('number', $user->number, array('class' => 'form-control', 'placeholder' => 'Numero della casella')) }}
                   <div></div>
                 </div>
               </div>
               <div class="form-group has-feedback">
                 {{ Form::label('newusername', 'Username', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::text('newusername', $user->username, array('class' => 'form-control')) }}
+                  {{ Form::text('newusername', $user->username, array('class' => 'form-control', 'placeholder' => 'Email del cliente')) }}
                   <div></div>
                 </div>
                 {{ Form::hidden('username','dummy@user.it') }}
@@ -475,7 +485,7 @@
               <div class="form-group has-feedback">
                 {{ Form::label('newpassword', 'Password', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::password('newpassword', array('class' => 'form-control')) }}
+                  {{ Form::password('newpassword', array('class' => 'form-control', 'placeholder' => 'Password')) }}
                   <div></div>
                 </div>
                 {{ Form::hidden('password','dummypassword') }}
@@ -492,7 +502,7 @@
                 <div class="col-md-10">
                   <div class="input-group">
                     <span class="input-group-addon no-radius" id="basic-addon1">%</span>
-                    {{ Form::text('discount', $user->discount, array('class' => 'form-control')) }}
+                    {{ Form::text('discount', $user->discount, array('class' => 'form-control', 'placeholder' => 'Percentuale di sconto')) }}
                     <div></div>
                   </div>
                 </div>
@@ -635,12 +645,12 @@
     $(document).ready(function () {
       $('#dataTables-comics').dataTable({
         "language": {
-          "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+          "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
         }
       } );
       $('#dataTables-series').dataTable({
         "language": {
-          "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+          "url": "{{ URL::asset('assets/js/dataTables/series.lang') }}"
         }
       } );
       $('#dataTables-vouchers').dataTable({

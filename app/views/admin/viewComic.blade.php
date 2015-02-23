@@ -1,7 +1,9 @@
 @section('content')
   @if(count($errors)>0)
-    <h3>Whhops: E' avvenuto un errore!!<br/>
-      Se il problema persiste contattare un amministratore</h3>
+    <div class="alert alert-danger error no-radius">
+      <h3>Whhops: E' avvenuto un errore!!<br/>
+        Se il problema persiste contattare un amministratore</h3>
+    </div>
   @endif
   @if($comic->active)
     {{--*/ $color_header = 'default' /*--}}
@@ -172,7 +174,7 @@
                   <div class="form-group has-feedback">
                     {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
-                      {{ Form::text('name', $comic->name, array('class' => 'form-control')) }}
+                      {{ Form::text('name', $comic->name, array('class' => 'form-control', 'placeholder' => 'Nome del fumetto *')) }}
                       <div></div>
                     </div>
                     {{ Form::hidden('id') }}
@@ -186,7 +188,7 @@
                   <div class="form-group has-feedback">
                     {{ Form::label('number', 'Numero', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
-                      {{ Form::text('number', $comic->number, array('class' => 'form-control')) }}
+                      {{ Form::text('number', $comic->number, array('class' => 'form-control', 'placeholder' => 'Numero del fumetto')) }}
                       <div></div>
                     </div>
                   </div>
@@ -194,7 +196,7 @@
                     <div class="form-group has-feedback">
                       {{ Form::label('available', 'Disponibilità', array('class' => 'col-md-2 label-padding')) }}
                       <div class="col-md-10">
-                        {{ Form::text('available', $comic->available, array('class' => 'form-control')) }}
+                        {{ Form::text('available', $comic->available, array('class' => 'form-control', 'placeholder' => 'Disponibilità del fumetto')) }}
                         <div></div>
                       </div>
                     </div>
@@ -202,7 +204,7 @@
                   <div class="form-group has-feedback">
                     {{ Form::label('image', 'Link Immagine', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
-                      {{ Form::text('image', $comic->image, array('class' => 'form-control')) }}
+                      {{ Form::text('image', $comic->image, array('class' => 'form-control', 'placeholder' => 'Link all\'immagine *')) }}
                       <div></div>
                     </div>
                   </div>
@@ -211,7 +213,7 @@
                     <div class="col-md-10">
                       <div class="input-group">
                         <span class="input-group-addon no-radius" id="basic-addon1">€</span>
-                        {{ Form::text('price', $comic->price, array('class' => 'form-control')) }}
+                        {{ Form::text('price', $comic->price, array('class' => 'form-control', 'placeholder' => 'Prezzo del fumetto')) }}
                         <div></div>
                       </div>
                     </div>
