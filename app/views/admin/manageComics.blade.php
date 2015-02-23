@@ -68,7 +68,7 @@
   $(document).ready(function() {
     $('#dataTables-example').dataTable({
       "language": {
-        "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+        "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
       }
     } );
   });

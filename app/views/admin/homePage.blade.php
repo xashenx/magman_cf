@@ -108,12 +108,12 @@
   $(document).ready(function () {
     $('#dataTables-comics').dataTable({
       "language": {
-        "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+        "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
       }
     } );
     $('#dataTables-warning').dataTable({
       "language": {
-        "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+        "url": "{{ URL::asset('assets/js/dataTables/box.lang') }}"
       }
     } );
   });
