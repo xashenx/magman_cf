@@ -30,8 +30,9 @@ class UsersController extends BaseController
             $user->name = Input::get('name');
             $user->surname = Input::get('surname');
             $user->number = Input::get('number');
-            $new_password = Input::get('password');
+            $new_password = Input::get('newpassword');
             $new_hash = Hash::make($new_password);
+            echo $new_password;
             if ($new_hash != $user->password && $new_password != null) {
                 $user->password = $new_hash;
             }
@@ -48,12 +49,6 @@ class UsersController extends BaseController
                     return Redirect::to('boxes/' . $id)->withErrors($validator);
                 }
             }
-//            if (Input::get('active')) {
-//                $user->active = 1;
-//            } else {
-//                $user->active = 0;
-//                $this->delete($id);
-//            }
             $user->update();
             return Redirect::to('boxes/' . $id);
         } else {
