@@ -10,16 +10,47 @@ class ComicUserController extends BaseController
     $series = Series::find($series_id);
     $complete_series = Input::get('complete_series');
     if (count($series) > 0) {
-      $comics_of_series = $series->listActive;
+//      $comics_of_series = $series->listActive->get();
+      $comics_of_series = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1')->orderBy('number', 'asc')->get();
       $user_id = Input::get('user_id');
+      $seriesUser = SeriesUser::whereRaw('user_id = ' . $user_id . ' AND series_id = ' . $series_id)->get();
+      if ($series->completed != 1 && count($seriesUser) == 0) {
+        $new_series_user = new SeriesUser();
+        $new_series_user->series_id = $series_id;
+        $new_series_user->user_id = $user_id;
+        $new_series_user->save();
+      } else if (count($seriesUser) > 0) {
+        foreach ($seriesUser as $su) {
+          $su->active = 1;
+          $su->update();
+        }
+      }
+
       if ($complete_series) {
         // insertion of the complete series
+        $comics_counter = 1;
         foreach ($comics_of_series as $comic) {
+          while ($comics_counter < $comic->number) {
+            $new_comic = new Comic;
+            $new_comic->series_id = $series_id;
+            $new_comic->number = $comics_counter++;
+            $new_comic->price = $comic->price;
+            $new_comic->state = 2;
+            $new_comic->arrived_at = date('Y-m-d H:i:s', strtotime('-2 week'));
+            $new_comic->save();
+
+            $comicUser = new ComicUser;
+            $comicUser->comic_id = $new_comic->id;
+            $comicUser->user_id = $user_id;
+            $comicUser->price = $comic->price;
+            $comicUser->save();
+          }
           $comicUser = new ComicUser;
           $comicUser->comic_id = $comic->id;
           $comicUser->user_id = $user_id;
           $comicUser->price = $comic->price;
           $comicUser->save();
+          $comics_counter++;
         }
         return Redirect::to('boxes/' . $user_id);
       } else {

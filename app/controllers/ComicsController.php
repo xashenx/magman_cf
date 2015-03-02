@@ -123,7 +123,7 @@ class ComicsController extends BaseController
   public function listAllComics()
   {
     $inv_state = $this->module_state('inventory');
-    $comics = Comic::all();
+    $comics = Comic::orderBy('number','asc')->get();
     $this->layout->content = View::make('admin/manageComics', array('comics' => $comics, 'inv_state' => $inv_state));
   }
 
