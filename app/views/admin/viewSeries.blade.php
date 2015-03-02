@@ -1,31 +1,37 @@
 @section('content')
   @if(count($errors)>0)
-    <h3>Whhops: E' avvenuto un errore!!<br/>
-      Se il problema persiste contattare un amministratore</h3>
+    <div class="alert alert-danger error no-radius">
+      <h3>Whhops: E' avvenuto un errore!!<br/>
+        Se il problema persiste contattare un amministratore</h3>
+    </div>
+  @endif
+  @if($series->active)
+    {{--*/ $color_header = 'default' /*--}}
+  @else
+    {{--*/ $color_header = 'danger' /*--}}
   @endif
   <div class="row">
     <div class="col-md-12 col-sm-12">
-      <div class="panel panel-default no-radius">
+      <div class="panel panel-{{$color_header}} no-radius">
         <div class="panel-heading no-radius">
           <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Serie: {{$series->name}}
-          @if($series->active)
-            <button type="button" title="Disattiva serie"
-                    onclick="showConfirmModal({{$series->id}},0,0)"
-                    class="btn btn-danger btn-xs no-radius little-icon little-icon-padding">
-              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
-          @else
-            <button type="button" title="Riattiva serie"
-                    onclick="showConfirmModal({{$series->id}},0,1)"
-                    class="btn btn-success btn-xs no-radius little-icon little-icon-padding">
-              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-            </button>
-            <button type="button" title="Riattiva serie con fumetti"
-                    onclick="showConfirmModal({{$series->id}},1,1)"
-                    class="btn btn-warning btn-xs no-radius little-icon little-icon-padding">
-              <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-            </button>
-          @endif
+          <div class="btn-group">
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle little-icon little-icon-padding no-radius" aria-expanded="false"><span class="caret"></span></button>
+            <ul class="dropdown-menu no-radius">
+              @if($series->active)
+                <li><a href="#" onclick="showConfirmModal({{$series->id}},0,0)">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  Disattiva Serie</a></li>
+              @else
+                <li><a href="#" onclick="showConfirmModal({{$series->id}},1,1)">
+                  <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                  Riattiva Serie con tutti i Fumetti</a></li>
+                <li><a href="#" onclick="showConfirmModal({{$series->id}},0,1)">
+                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                  Riattiva Serie</a></li>
+              @endif
+            </ul>
+          </div>
         </div>
         <div class="panel-body">
           <ul class="nav nav-tabs margin-bottom">
@@ -137,75 +143,69 @@
             </div>
             @if(count($series->inBoxes)>0)
               <div class="tab-pane fade" id="boxes">
-                <div>
-                  <div class="panel-body">
-                    <div>
-                      <table class="table table-striped table-bordered table-hover"
-                             id="dataTables-boxes">
-                        <thead>
-                        <tr>
-                          <th>Casellante</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($series->inBoxes as $series_user)
-                          <tr class="odd GradeX">
-                            <td>{{$series_user->box->name}} {{$series_user->box->surname}}</td>
-                          </tr>
-                        @endforeach
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+                <table class="table table-striped table-bordered table-hover"
+                       id="dataTables-boxes">
+                  <thead>
+                  <tr>
+                    <th>Casellante</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  @foreach ($series->inBoxes as $series_user)
+                    <tr class="odd GradeX">
+                      <td>{{$series_user->box->name}} {{$series_user->box->surname}}</td>
+                    </tr>
+                  @endforeach
+                  </tbody>
+                </table>
               </div>
             @endif
             @if(count($series->listComics)>0)
               <div class="tab-pane fade" id="numbers">
-                <div>
-                  <div class="panel-body">
-                    <div>
-                      <table class="table table-striped table-bordered table-hover"
-                             id="dataTables-comics">
-                        <thead>
-                        <tr>
-                          <th>Numero</th>
-                          <th>Nome</th>
-                          <th>Cover</th>
-                          <th>Prezzo</th>
-                          @if($inv_state == 1)
-                            <th>Disponibilità</th>
-                          @endif
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($series->listComics as $comic)
-                          @if($comic->active)
-                            <tr class="odd gradeX">
-                          @else
-                            <tr class="danger">
-                              @endif
-                              <td>{{$comic->number}}</td>
-                              <td>
-                                <a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a>
-                              </td>
-                              <td>
-                                @if($comic->image)
-                                  <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt=""
-                                                                                   height="42" width="42"></a>
-                                @endif
-                              </td>
-                              <td>{{round($comic->price,2)}} €</td>
-                              @if($inv_state == 1)
-                                <td>{{$comic->available}}</td>
-                              @endif
-                            </tr>
-                            @endforeach
-                        </tbody>
-                      </table>
-                    </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="legend-red col-xs-2"></div>
+                    Fumetto disattivato
                   </div>
                 </div>
+                <table class="table table-striped table-bordered table-hover"
+                       id="dataTables-comics">
+                  <thead>
+                  <tr>
+                    <th>Numero</th>
+                    <th>Nome</th>
+                    <th>Cover</th>
+                    <th>Prezzo</th>
+                    @if($inv_state == 1)
+                      <th>Disponibilità</th>
+                    @endif
+                  </tr>
+                  </thead>
+                  <tbody>
+                  @foreach ($series->listComics as $comic)
+                    @if($comic->active)
+                      <tr class="odd gradeX">
+                    @else
+                      <tr class="danger">
+                        @endif
+                        <td>{{$comic->number}}</td>
+                        <td>
+                          <a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a>
+                        </td>
+                        <td>
+                          @if($comic->image)
+                            <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt=""
+                                                                             height="42" width="42"></a>
+                          @endif
+                        </td>
+                        <td>{{round($comic->price,2)}} €</td>
+                        @if($inv_state == 1)
+                          <td>{{$comic->available}}</td>
+                        @endif
+                      </tr>
+                      @endforeach
+                  </tbody>
+                </table>
               </div>
             @endif
             <div class="tab-pane fade" id="newnumber">
@@ -214,7 +214,7 @@
                 <div class="form-group has-feedback">
                   {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
-                    {{ Form::text('name', "", array('class' => 'form-control')) }}
+                    {{ Form::text('name', "", array('class' => 'form-control', 'placeholder' => 'Nome del fumetto *')) }}
                     <div></div>
                   </div>
                   {{ Form::hidden('series_id', $series->id, array('id' => 'comic_series_id'))}}
@@ -223,9 +223,9 @@
                   {{ Form::label('number','Numero', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
                     @if($last_comic != null)
-                      {{ Form::text('number', $last_comic->number+1, array('id' => 'comic_number', 'class' => 'form-control')) }}
+                      {{ Form::text('number', $last_comic->number+1, array('id' => 'comic_number', 'class' => 'form-control', 'placeholder' => 'Numero del fumetto')) }}
                     @else
-                      {{ Form::text('number', '', array('id' => 'comic_number', 'class' => 'form-control')) }}
+                      {{ Form::text('number', '', array('id' => 'comic_number', 'class' => 'form-control', 'placeholder' => 'Numero del fumetto')) }}
                     @endif
                     <div></div>
                   </div>
@@ -233,7 +233,7 @@
                 <div class="form-group has-feedback">
                   {{ Form::label('image', 'Link Immagine', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
-                    {{ Form::text('image', "", array('class' => 'form-control')) }}
+                    {{ Form::text('image', "", array('class' => 'form-control', 'placeholder' => 'Link all\'immagine *')) }}
                     <div></div>
                   </div>
                 </div>
@@ -243,9 +243,9 @@
                     <div class="input-group">
                       <span class="input-group-addon no-radius" id="basic-addon1">€</span>
                       @if($last_comic != null)
-                        {{ Form::text('price', $last_comic->price, array('id' => 'comic_price', 'class' => 'form-control')) }}
+                        {{ Form::text('price', $last_comic->price, array('id' => 'comic_price', 'class' => 'form-control', 'placeholder' => 'Prezzo del fumetto')) }}
                       @else
-                        {{ Form::text('price', '', array('id' => 'comic_price', 'class' => 'form-control')) }}
+                        {{ Form::text('price', '', array('id' => 'comic_price', 'class' => 'form-control', 'placeholder' => 'Prezzo del fumetto')) }}
                       @endif
                       <div></div>
                     </div>
@@ -288,7 +288,7 @@
                 <div class="form-group has-feedback">
                   {{ Form::label('name', 'Nome', array('class' => 'col-md-1 label-padding')) }}
                   <div class="col-md-11">
-                    {{ Form::text('name', $series->name, array('class' => 'form-control')) }}
+                    {{ Form::text('name', $series->name, array('class' => 'form-control', 'placeholder' => 'Nome della serie')) }}
                     <div></div>
                   </div>
                   {{ Form::hidden('id')}}
@@ -296,21 +296,21 @@
                 <div class="form-group has-feedback">
                   {{ Form::label('version','Versione', array('class' => 'col-md-1 label-padding')) }}
                   <div class="col-md-11">
-                    {{ Form::text('version', $series->version, array('class' => 'form-control')) }}
+                    {{ Form::text('version', $series->version, array('class' => 'form-control', 'placeholder' => 'Versione della serie *')) }}
                     <div></div>
                   </div>
                 </div>
                 <div class="form-group has-feedback">
                   {{ Form::label('author', 'Autore', array('class' => 'col-md-1 label-padding')) }}
                   <div class="col-md-11">
-                    {{ Form::text('author', $series->author, array('class' => 'form-control')) }}
+                    {{ Form::text('author', $series->author, array('class' => 'form-control', 'placeholder' => 'Autore della serie')) }}
                     <div></div>
                   </div>
                 </div>
                 <div class="form-group has-feedback">
                   {{ Form::label('publisher', 'Editore', array('class' => 'col-md-1 label-padding')) }}
                   <div class="col-md-11">
-                    {{ Form::text('publisher', $series->subtype_id, array('class' => 'form-control')) }}
+                    {{ Form::text('publisher', $series->subtype_id, array('class' => 'form-control', 'placeholder' => 'Editore della serie')) }}
                     <div></div>
                   </div>
                 </div>
@@ -698,6 +698,18 @@
     });
   </script>
   <script>
+    $(document).ready(function () {
+      $('#dataTables-boxes').dataTable({
+        "language": {
+          "url": "{{ URL::asset('assets/js/dataTables/box.lang') }}"
+        }
+      } );
+      $('#dataTables-comics').dataTable({
+        "language": {
+          "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
+        }
+      } );
+    });
     function showConfirmModal(object_id, restore_comics, mode) {
       document.confirmForm.comics.value = restore_comics;
       if (mode == 0) {

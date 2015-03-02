@@ -3,34 +3,45 @@
     <h3>Whoops! C'è stato un errore!!! <br/>
       Se il problema persiste, contattare un amministratore!</h3>
   @endif
+  @if($user->active)
+    @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+      {{--*/ $color_header = 'warning' /*--}}
+    @else
+      {{--*/ $color_header = 'default' /*--}}
+    @endif
+  @else
+    {{--*/ $color_header = 'danger' /*--}}
+  @endif
   <div class="row">
     <div class="col-md-12 col-sm-12">
-      <div class="panel panel-default no-radius">
+      <div class="panel panel-{{ $color_header }} no-radius">
         <div class="panel-heading no-radius">
           <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
           Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
-          @if($user->active)
-            @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
-              <button type="button" title="Rinnova Tessera" onclick="showConfirmModal({{$user->id}},0,6)"
-                      class="btn btn-warning btn-xs no-radius little-icon little-icon-padding">
-                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-              </button>
-            @endif
-            <button type="button" title="Disattiva casella"
-                    onclick="showConfirmModal({{$user->id}},0,4)"
-                    class="btn btn-danger btn-xs no-radius little-icon little-icon-padding">
-              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
-          @else
-            <button type="button" title="Riattiva casella"
-                    onclick="showConfirmModal({{$user->id}},0,5)"
-                    class="btn btn-success btn-xs no-radius little-icon little-icon-padding">
-              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-            </button>
-          @endif
           (<i>Saldo</i> : {{ $due }}€)
+          <div class="btn-group">
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle little-icon little-icon-padding no-radius" aria-expanded="false"><span class="caret"></span></button>
+            <ul class="dropdown-menu no-radius">
+              @if($user->active)
+                @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+                  <li><a href="#" onclick="showConfirmModal({{$user->id}},0,6)">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    Rinnova Casella</a></li>
+                @endif
+                <li><a href="#" onclick="showConfirmModal({{$user->id}},0,4)">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  Disattiva Casella</a></li>
+              @else
+                <li><a href="#" onclick="showConfirmModal({{$user->id}},0,5)">
+                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                  Riattiva Casella</a></li>
+              @endif
+            </ul>
+          </div>
         </div>
+
         <div class="panel-body">
+
           <ul class="nav nav-tabs margin-bottom">
             {{--*/ $active = 'active' /*--}}
             @if($user->active)
@@ -91,7 +102,10 @@
             </li>
             @if(count($purchases)>0)
               <li class="">
-                <a href="#purchases" data-toggle="tab">Storico Acquisti</a>
+                <a href="#purchases" data-toggle="tab">
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                  <span class="titoli-tab">Storico Acquisti</span>
+                </a>
               </li>
             @endif
             <li class="">
@@ -106,6 +120,16 @@
               {{--*/ $active = 'active in' /*--}}
               @if(count($comics)>0)
                 <div class="tab-pane fade {{{ $active }}}" id="orderedComics">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="legend-green col-xs-2"></div>
+                      Disponibilità garantita
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="legend-yellow col-xs-2"></div>
+                      Disponibilità non garantita
+                    </div>
+                  </div>
                   <table
                           class="table table-striped table-bordered table-hover"
                           id="dataTables-comics">
@@ -370,7 +394,7 @@
                 <div class="form-group has-feedback">
                   {{ Form::label('description', 'Descrizione', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
-                    {{ Form::text('description', '', array('class' => 'form-control')) }}
+                    {{ Form::text('description', '', array('class' => 'form-control', 'placeholder' => 'Descrizione del buono')) }}
                     <div></div>
                   </div>
                   {{ Form::hidden('user_id', $user->id) }}
@@ -380,7 +404,7 @@
                   <div class="col-md-10">
                     <div class="input-group">
                       <span class="input-group-addon no-radius" id="basic-addon1">€</span>
-                      {{ Form::text('amount', '', array('class' => 'form-control')) }}
+                      {{ Form::text('amount', '', array('class' => 'form-control', 'placeholder' => 'Valore del buono')) }}
                       <div></div>
                     </div>
                   </div>
@@ -404,14 +428,14 @@
               <div class="form-group has-feedback">
                 {{ Form::label('subject', 'Oggetto', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::text('subject', $errors->first('subject') ? $errors->first('subject') : '', array('class' => 'form-control')) }}
+                  {{ Form::text('subject', $errors->first('subject') ? $errors->first('subject') : '', array('class' => 'form-control', 'placeholder' => 'Oggetto del messaggio')) }}
                   <div></div>
                 </div>
               </div>
 
               <div class="form-group has-feedback">
                 <div class="col-md-12">
-                  {{ Form::textarea('message', $errors->first('message') ? $errors->first('message') : '', array('id' => 'message', 'class' => 'form-control')) }}
+                  {{ Form::textarea('message', $errors->first('message') ? $errors->first('message') : '', array('id' => 'message', 'class' => 'form-control', 'placeholder' => 'Testo del messaggio')) }}
                   <div></div>
                 </div>
                 {{ Form::hidden('to',$user->id) }}
@@ -431,14 +455,14 @@
               <div class="form-group has-feedback">
                 {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::text('name', $user->name, array('class' => 'form-control')) }}
+                  {{ Form::text('name', $user->name, array('class' => 'form-control', 'placeholder' => 'Nome del cliente')) }}
                   <div></div>
                 </div>
               </div>
               <div class="form-group has-feedback">
                 {{ Form::label('surname','Cognome', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::text('surname', $user->surname, array('class' => 'form-control')) }}
+                  {{ Form::text('surname', $user->surname, array('class' => 'form-control', 'placeholder' => 'Cognome del cliente')) }}
                   <div></div>
                 </div>
                 {{ Form::hidden('id')}}
@@ -447,14 +471,14 @@
               <div class="form-group has-feedback">
                 {{ Form::label('number','Numero', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::text('number', $user->number, array('class' => 'form-control')) }}
+                  {{ Form::text('number', $user->number, array('class' => 'form-control', 'placeholder' => 'Numero della casella')) }}
                   <div></div>
                 </div>
               </div>
               <div class="form-group has-feedback">
                 {{ Form::label('newusername', 'Username', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::text('newusername', $user->username, array('class' => 'form-control')) }}
+                  {{ Form::text('newusername', $user->username, array('class' => 'form-control', 'placeholder' => 'Email del cliente')) }}
                   <div></div>
                 </div>
                 {{ Form::hidden('username','dummy@user.it') }}
@@ -462,7 +486,7 @@
               <div class="form-group has-feedback">
                 {{ Form::label('newpassword', 'Password', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
-                  {{ Form::password('newpassword', array('class' => 'form-control')) }}
+                  {{ Form::password('newpassword', array('class' => 'form-control', 'placeholder' => 'Password')) }}
                   <div></div>
                 </div>
                 {{ Form::hidden('password','dummypassword') }}
@@ -479,7 +503,7 @@
                 <div class="col-md-10">
                   <div class="input-group">
                     <span class="input-group-addon no-radius" id="basic-addon1">%</span>
-                    {{ Form::text('discount', $user->discount, array('class' => 'form-control')) }}
+                    {{ Form::text('discount', $user->discount, array('class' => 'form-control', 'placeholder' => 'Percentuale di sconto')) }}
                     <div></div>
                   </div>
                 </div>
@@ -499,42 +523,35 @@
               </div>
             </div>
 
-              @if(count($purchases)>0)
-                <div class="tab-pane fade" id="purchases">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h5>Storico degli Acquisti</h5>
-                    </div>
-                    <div class="table-responsive table-bordered">
-                      <table class="table table-striped table-bordered table-hover"
-                             id="dataTables-example">
-                        <thead>
-                        <tr>
-                          <th>Data Acquisto</th>
-                          <th>Fumetto</th>
-                          <th>Prezzo</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($purchases as $purchase)
-                          <tr class="odd gradeX">
-                            <td>{{date('d/m/Y',strtotime($purchase->buy_time))}}</td>
-                            @if($purchase->series->version == null)
-                              <td>{{$purchase->series->name}}
-                                nr. {{$purchase->comic->number}}</td>
-                            @else
-                              <td>{{$purchase->series->name}} - {{$purchase->series->version}}
-                                nr. {{$purchase->comic->number}}</td>
-                            @endif
-                            <td>{{round($purchase->price,2)}}</td>
-                          </tr>
-                        @endforeach
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              @endif
+            @if(count($purchases)>0)
+              <div class="tab-pane fade" id="purchases">
+                <table class="table table-striped table-bordered table-hover"
+                       id="dataTables-history">
+                  <thead>
+                  <tr>
+                    <th>Data Acquisto</th>
+                    <th>Fumetto</th>
+                    <th>Prezzo</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  @foreach ($purchases as $purchase)
+                    <tr class="odd gradeX">
+                      <td>{{date('d/m/Y',strtotime($purchase->buy_time))}}</td>
+                      @if($purchase->series->version == null)
+                        <td>{{$purchase->series->name}}
+                          nr. {{$purchase->comic->number}}</td>
+                      @else
+                        <td>{{$purchase->series->name}} - {{$purchase->series->version}}
+                          nr. {{$purchase->comic->number}}</td>
+                      @endif
+                      <td>{{round($purchase->price,2)}} €</td>
+                    </tr>
+                  @endforeach
+                  </tbody>
+                </table>
+              </div>
+            @endif
           </div>
         </div>
       </div>
@@ -627,9 +644,26 @@
   </script>
   <script>
     $(document).ready(function () {
-      $('#dataTables-comics').dataTable();
-      $('#dataTables-series').dataTable();
-      $('#dataTables-vouchers').dataTable();
+      $('#dataTables-comics').dataTable({
+        "language": {
+          "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
+        }
+      } );
+      $('#dataTables-series').dataTable({
+        "language": {
+          "url": "{{ URL::asset('assets/js/dataTables/series.lang') }}"
+        }
+      } );
+      $('#dataTables-vouchers').dataTable({
+        "language": {
+          "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+        }
+      } );
+      $('#dataTables-history').dataTable({
+        "language": {
+          "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
+        }
+      } );
     });
   </script>
   <!-- CUSTOM SCRIPTS -->
@@ -797,7 +831,7 @@
         }
 
         //message
-        var result = checkInputValue(message, "message", 1000, 1);
+        var result = checkInputValue(message, "message", 2000, 1);
         if (result['status'] == 'ko') {
           $('#alert-2').show();
           $('#alert-2').find('.error').show();
@@ -810,7 +844,7 @@
             htmlElement: $('#alert-2').find('.error'),
             sex: "m",
             elementName: "messaggio",
-            maxLength: 1000,
+            maxLength: 2000,
             minLength: 1
           };
           showErrorMsg(obj);

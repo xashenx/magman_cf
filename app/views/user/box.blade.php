@@ -48,29 +48,20 @@
                 @endif
               </div>
             @endif
-            @if(!$user->show_price)
-              <br/>
-              <div>
-                <strong><u>Legenda</u></strong>
-
-                <div>
-                  <label title="guaranteed"
-                         class="label label-success no-radius medium-icon little-icon-padding">
-                    Disponibilità Garantita
-                  </label>
-                </div>
-                <div>
-                  <label title="not_guaranteed"
-                         class="label label-warning no-radius medium-icon little-icon-padding">
-                    Disponibilità Non Garantita
-                  </label>
-                </div>
-              </div>
-            @endif
           </strong>
         </div>
         @if(count($comics)>0)
           <div class="panel-body">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="legend-green col-xs-2"></div>
+                Disponibilità garantita - <small><i>uscita da meno di un mese</i></small>
+              </div>
+              <div class="col-xs-12">
+                <div class="legend-yellow col-xs-2"></div>
+                Disponibilità non garantita - <small><i>uscita da più di un mese</i></small>
+              </div>
+            </div>
             <table class="table table-striped table-bordered table-hover" id="dataTables-comics">
               <thead>
               <tr>
@@ -168,8 +159,16 @@
 
   <script>
     $(document).ready(function () {
-      $('#dataTables-comics').dataTable();
-      $('#dataTables-series').dataTable();
+      $('#dataTables-comics').dataTable({
+      "language": {
+        "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
+      }
+    } );
+      $('#dataTables-series').dataTable({
+      "language": {
+        "url": "{{ URL::asset('assets/js/dataTables/series.lang') }}"
+      }
+    } );
     });
   </script>
 

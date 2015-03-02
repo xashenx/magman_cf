@@ -1,34 +1,45 @@
 @section('content')
   @if(count($errors)>0)
-    <h3>Whhops: E' avvenuto un errore!!<br/>
-      Se il problema persiste contattare un amministratore</h3>
+    <div class="alert alert-danger error no-radius">
+      <h3>Whhops: E' avvenuto un errore!!<br/>
+        Se il problema persiste contattare un amministratore</h3>
+    </div>
+  @endif
+  @if($comic->active)
+    {{--*/ $color_header = 'default' /*--}}
+  @else
+    {{--*/ $color_header = 'danger' /*--}}
   @endif
   <div class="row">
     <div class="col-md-12 col-sm-12">
-      <div class="panel panel-default no-radius">
+      <div class="panel panel-{{ $color_header }} no-radius">
         <div class="panel-heading no-radius">
           <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Gestione Fumetto
-          @if($comic->active)
-            <button type="button" title="Disattiva fumetto"
-            @if($path == '../')
+          <div class="btn-group">
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle little-icon little-icon-padding no-radius" aria-expanded="false"><span class="caret"></span></button>
+            <ul class="dropdown-menu no-radius">
+              @if($comic->active)
+                <li><a href="#"             @if($path == '../')
                     onclick="showConfirmModal({{$comic->id}},0,0)"
                     @else
                     onclick="showConfirmModal({{$comic->id}},{{$comic->series->id}},0)"
                     @endif
-                    class="btn btn-danger btn-xs no-radius little-icon little-icon-padding">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
-          @else
-            <button type="button" title="Riattiva fumetto"
-            @if($path == '../')
+                    >
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  Disattiva Fumetto</a></li>
+              @else
+                <li><a href="#"
+                  @if($path == '../')
                     onclick="showConfirmModal({{$comic->id}},0,1)"
-                    @else
+                  @else
                     onclick="showConfirmModal({{$comic->id}},{{$comic->series->id}},1)"
-                    @endif
-                    class="btn btn-success btn-xs no-radius little-icon little-icon-padding">
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-            </button>
-          @endif
+                  @endif
+                  >
+                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                  Riattiva Fumetto</a></li>
+              @endif
+            </ul>
+          </div>
         </div>
         <div class="panel-body">
           <ul class="nav nav-tabs margin-bottom">
@@ -163,7 +174,7 @@
                   <div class="form-group has-feedback">
                     {{ Form::label('name', 'Nome', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
-                      {{ Form::text('name', $comic->name, array('class' => 'form-control')) }}
+                      {{ Form::text('name', $comic->name, array('class' => 'form-control', 'placeholder' => 'Nome del fumetto *')) }}
                       <div></div>
                     </div>
                     {{ Form::hidden('id') }}
@@ -177,7 +188,7 @@
                   <div class="form-group has-feedback">
                     {{ Form::label('number', 'Numero', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
-                      {{ Form::text('number', $comic->number, array('class' => 'form-control')) }}
+                      {{ Form::text('number', $comic->number, array('class' => 'form-control', 'placeholder' => 'Numero del fumetto')) }}
                       <div></div>
                     </div>
                   </div>
@@ -185,7 +196,7 @@
                     <div class="form-group has-feedback">
                       {{ Form::label('available', 'Disponibilità', array('class' => 'col-md-2 label-padding')) }}
                       <div class="col-md-10">
-                        {{ Form::text('available', $comic->available, array('class' => 'form-control')) }}
+                        {{ Form::text('available', $comic->available, array('class' => 'form-control', 'placeholder' => 'Disponibilità del fumetto')) }}
                         <div></div>
                       </div>
                     </div>
@@ -193,7 +204,7 @@
                   <div class="form-group has-feedback">
                     {{ Form::label('image', 'Link Immagine', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
-                      {{ Form::text('image', $comic->image, array('class' => 'form-control')) }}
+                      {{ Form::text('image', $comic->image, array('class' => 'form-control', 'placeholder' => 'Link all\'immagine *')) }}
                       <div></div>
                     </div>
                   </div>
@@ -202,7 +213,7 @@
                     <div class="col-md-10">
                       <div class="input-group">
                         <span class="input-group-addon no-radius" id="basic-addon1">€</span>
-                        {{ Form::text('price', $comic->price, array('class' => 'form-control')) }}
+                        {{ Form::text('price', $comic->price, array('class' => 'form-control', 'placeholder' => 'Prezzo del fumetto')) }}
                         <div></div>
                       </div>
                     </div>
