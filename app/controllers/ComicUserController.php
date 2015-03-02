@@ -19,19 +19,24 @@ class ComicUserController extends BaseController
         $last_comic = Comic::find($comics_of_series->max('id'));
         $last_comic->price = round($last_comic->price, 2);
       }
-      $new_comic = new Comic;
-      $new_comic->series_id = $series_id;
-      $new_comic->number = $comic_number;
-      $new_comic->price = $last_comic->price;
-      echo $new_comic->price . " " . $last_comic->price;
-      $new_comic->save();
+      if ($last_comic->number > $comic_number) {
+        $new_comic = new Comic;
+        $new_comic->series_id = $series_id;
+        $new_comic->number = $comic_number;
+        $new_comic->price = $last_comic->price;
+        $new_comic->state = 2;
+        $new_comic->arrived_at = date('Y-m-d H:i:s', strtotime('-2 week'));
+        echo $new_comic->arrived_at;
+        $new_comic->save();
+      } else {
+        //TODO HANDLE ERROR (IT SHOULD BE ALREADY HANDLED BY JS VALIDATION)
+      }
     }
     $user_id = Input::get('user_id');
     if (count($series) > 0) {
 //      $comics = $series->listActive()->where('id', '=', $comic_id)->get();
       $comics = $series->listActive()->where('number', '=', $comic_number)->get();
       if (count($comics) > 1) {
-        echo "qui!";
         //TODO warning, no more than one number for series should be present!
       } else {
         foreach ($comics as $comic) {
@@ -53,7 +58,7 @@ class ComicUserController extends BaseController
         }
       }
     }
-      return Redirect::to('boxes/' . $user_id);
+    return Redirect::to('boxes/' . $user_id);
   }
 
   public function update()
