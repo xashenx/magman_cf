@@ -241,207 +241,146 @@
       </div>
     </div>
   </div>
-  </div>
-  </div>
-  </div>
-  <!--End Advanced Tables -->
-  </div>
-  </div>
-
-  <<<<<<< HEAD
-  <div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            &times;
-          </button>
-          <h3 class="modal-title">Conferma azione</h3>
-        </div>
-        <div class="modal-body">
-          <p id="confirmPageName" class="text-danger"></p>
-        </div>
-        <div class="modal-footer">
-          {{ Form::open(array('name' => 'confirmForm')) }}
-          {{ Form::hidden('id') }}
-          {{ Form::hidden('comics') }}
-          {{ Form::hidden('return') }}
-          {{ Form::button('Annulla', array(
-          'data-dismiss' => 'modal',
-          'class' => 'btn btn-danger btn-sm')) }}
-          {{ Form::submit('Sì', array('class' => 'btn btn-danger btn-sm',)) }}
-          {{ Form::close() }}
-        </div>
-      </div>
-      {{-- /.modal-content --}}
-    </div>
-    {{-- /.modal-dialog --}}
-  </div>
-  {{-- /.modal --}}
-  @include('../layouts/js-include')
-  <script>
-    function showConfirmModal(name, version, serie_id, mode) {
-      document.confirmForm.id.value = serie_id;
-      document.confirmForm.return.value = 'series';
-      if (mode == 0) {
-        document.confirmForm.action = 'deleteSeries';
-        $('#confirmPageName').text('Sei sicuro di voler disabilitare la serie ' + "'" + name + " - " + version + "'?");
-      } else if (mode == 1) {
-        document.confirmForm.action = 'restoreSeries';
-        $('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "'?");
-      } else {
-        document.confirmForm.action = 'restoreSeries';
-        document.confirmForm.comics.value = '1';
-        $('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "' e i relativi fumetti?");
-      }
-      $('#modal-confirm').modal({
-        show: true
-      });
-    }
-  </script>
+  {{--</div>--}}
+  {{--</div>--}}
+  {{--</div>--}}
+  {{--<!--End Advanced Tables -->--}}
+  {{--</div>--}}
+  {{--</div>--}}
 
   <script>
     $(document).ready(function () {
-      $('#dataTables-series').dataTable();
-      ======
-      =
-      <
-      script >
-      $(document).ready(function () {
-        $('#dataTables-series').dataTable({
-          "language": {
-            "url": "{{ URL::asset('assets/js/dataTables/series.lang') }}"
-          }
-        });
-        >>>>>>>
-        c2f5ffcfb0c65b469d6bbade6049bebc98996523
-
-        $('#new-series').on('submit', function () {
-          $('#alert-1').hide();
-          $('#alert-1').find('.success').hide();
-          $('#alert-1').find('.error').hide();
-          $('#alert-1').find('.success').html("");
-          $('#alert-1').find('.error').html("");
-
-          //value
-          var name = $('#new-series').find('#name').val();
-          var version = $('#new-series').find('#version').val();
-          var author = $('#new-series').find('#author').val();
-          var publisher = $('#new-series').find('#publisher').val();
-
-          var error_icon = '<span class=\"glyphicon glyphicon-remove form-control-feedback\" aria-hidden=\"true\"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>'
-          var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>'
-          var notnecessary_icon = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>'
-          //submit = true
-          var submit = true;
-          //start the check!
-          //NAME
-          var result = checkInputValue(name, "message", 128, 1);
-          if (result['status'] == 'ko') {
-            $('#alert-1').show();
-            $('#alert-1').find('.error').show();
-            $('#new-series').find('#name').closest('.form-group').removeClass('has-success');
-            $('#new-series').find('#name').closest('.form-group').addClass('has-error');
-            $('#new-series').find('#name ~ div').html(error_icon);
-
-            var obj = {
-              result: result,
-              htmlElement: $('#alert-1').find('.error'),
-              sex: "m",
-              elementName: "nome",
-              maxLength: 128,
-              minLength: 1
-            };
-            showErrorMsg(obj);
-            submit = false;
-          } else {
-            $('#new-series').find('#name').closest('.form-group').removeClass('has-error');
-            $('#new-series').find('#name').closest('.form-group').addClass('has-success');
-            $('#new-series').find('#name ~ div').html(success_icon);
-          }
-
-          //VERSION
-          var result = checkInputValue(version, "message", 128, -1);
-          if (result['status'] == 'ko') {
-            $('#alert-1').show();
-            $('#alert-1').find('.error').show();
-            $('#new-series').find('#version').closest('.form-group').removeClass('not-necessary');
-            $('#new-series').find('#version').closest('.form-group').addClass('has-error');
-            $('#new-series').find('#version ~ div').html(error_icon);
-
-            var obj = {
-              result: result,
-              htmlElement: $('#alert-1').find('.error'),
-              sex: "f",
-              elementName: "versione",
-              maxLength: 128,
-              minLength: -1
-            };
-            showErrorMsg(obj);
-            submit = false;
-          } else {
-            $('#new-series').find('#version').closest('.form-group').removeClass('has-error');
-            $('#new-series').find('#version').closest('.form-group').addClass('not-necessary');
-            $('#new-series').find('#version ~ div').html(notnecessary_icon);
-          }
-
-          //AUTHOR
-          var result = checkInputValue(author, "message", 128, 1);
-          if (result['status'] == 'ko') {
-            $('#alert-1').show();
-            $('#alert-1').find('.error').show();
-            $('#new-series').find('#author').closest('.form-group').removeClass('has-success');
-            $('#new-series').find('#author').closest('.form-group').addClass('has-error');
-            $('#new-series').find('#author ~ div').html(error_icon);
-
-            var obj = {
-              result: result,
-              htmlElement: $('#alert-1').find('.error'),
-              sex: "am",
-              elementName: "autore",
-              maxLength: 128,
-              minLength: 1
-            };
-            showErrorMsg(obj);
-            submit = false;
-          } else {
-            $('#new-series').find('#author').closest('.form-group').removeClass('has-error');
-            $('#new-series').find('#author').closest('.form-group').addClass('has-success');
-            $('#new-series').find('#author ~ div').html(success_icon);
-          }
-
-          //PUBLISHER
-          var result = checkInputValue(publisher, "message", 128, 1);
-          if (result['status'] == 'ko') {
-            $('#alert-1').show();
-            $('#alert-1').find('.error').show();
-            $('#new-series').find('#publisher').closest('.form-group').removeClass('has-success');
-            $('#new-series').find('#publisher').closest('.form-group').addClass('has-error');
-            $('#new-series').find('#publisher ~ div').html(error_icon);
-
-            var obj = {
-              result: result,
-              htmlElement: $('#alert-1').find('.error'),
-              sex: "am",
-              elementName: "editore",
-              maxLength: 128,
-              minLength: 1
-            };
-            showErrorMsg(obj);
-            submit = false;
-          } else {
-            $('#new-series').find('#publisher').closest('.form-group').removeClass('has-error');
-            $('#new-series').find('#publisher').closest('.form-group').addClass('has-success');
-            $('#new-series').find('#publisher ~ div').html(success_icon);
-          }
-
-          if (submit) {
-            //chiamata ajax
-          }
-          return submit;
-        });
-
+      $('#dataTables-series').dataTable({
+        "language": {
+          "url": "{{ URL::asset('assets/js/dataTables/series.lang') }}"
+        }
       });
+      $('#new-series').on('submit', function () {
+        $('#alert-1').hide();
+        $('#alert-1').find('.success').hide();
+        $('#alert-1').find('.error').hide();
+        $('#alert-1').find('.success').html("");
+        $('#alert-1').find('.error').html("");
+
+        //value
+        var name = $('#new-series').find('#name').val();
+        var version = $('#new-series').find('#version').val();
+        var author = $('#new-series').find('#author').val();
+        var publisher = $('#new-series').find('#publisher').val();
+
+        var error_icon = '<span class=\"glyphicon glyphicon-remove form-control-feedback\" aria-hidden=\"true\"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>'
+        var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>'
+        var notnecessary_icon = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>'
+        //submit = true
+        var submit = true;
+        //start the check!
+        //NAME
+        var result = checkInputValue(name, "message", 128, 1);
+        if (result['status'] == 'ko') {
+          $('#alert-1').show();
+          $('#alert-1').find('.error').show();
+          $('#new-series').find('#name').closest('.form-group').removeClass('has-success');
+          $('#new-series').find('#name').closest('.form-group').addClass('has-error');
+          $('#new-series').find('#name ~ div').html(error_icon);
+
+          var obj = {
+            result: result,
+            htmlElement: $('#alert-1').find('.error'),
+            sex: "m",
+            elementName: "nome",
+            maxLength: 128,
+            minLength: 1
+          };
+          showErrorMsg(obj);
+          submit = false;
+        } else {
+          $('#new-series').find('#name').closest('.form-group').removeClass('has-error');
+          $('#new-series').find('#name').closest('.form-group').addClass('has-success');
+          $('#new-series').find('#name ~ div').html(success_icon);
+        }
+
+        //VERSION
+        var result = checkInputValue(version, "message", 128, -1);
+        if (result['status'] == 'ko') {
+          $('#alert-1').show();
+          $('#alert-1').find('.error').show();
+          $('#new-series').find('#version').closest('.form-group').removeClass('not-necessary');
+          $('#new-series').find('#version').closest('.form-group').addClass('has-error');
+          $('#new-series').find('#version ~ div').html(error_icon);
+
+          var obj = {
+            result: result,
+            htmlElement: $('#alert-1').find('.error'),
+            sex: "f",
+            elementName: "versione",
+            maxLength: 128,
+            minLength: -1
+          };
+          showErrorMsg(obj);
+          submit = false;
+        } else {
+          $('#new-series').find('#version').closest('.form-group').removeClass('has-error');
+          $('#new-series').find('#version').closest('.form-group').addClass('not-necessary');
+          $('#new-series').find('#version ~ div').html(notnecessary_icon);
+        }
+
+        //AUTHOR
+        var result = checkInputValue(author, "message", 128, 1);
+        if (result['status'] == 'ko') {
+          $('#alert-1').show();
+          $('#alert-1').find('.error').show();
+          $('#new-series').find('#author').closest('.form-group').removeClass('has-success');
+          $('#new-series').find('#author').closest('.form-group').addClass('has-error');
+          $('#new-series').find('#author ~ div').html(error_icon);
+
+          var obj = {
+            result: result,
+            htmlElement: $('#alert-1').find('.error'),
+            sex: "am",
+            elementName: "autore",
+            maxLength: 128,
+            minLength: 1
+          };
+          showErrorMsg(obj);
+          submit = false;
+        } else {
+          $('#new-series').find('#author').closest('.form-group').removeClass('has-error');
+          $('#new-series').find('#author').closest('.form-group').addClass('has-success');
+          $('#new-series').find('#author ~ div').html(success_icon);
+        }
+
+        //PUBLISHER
+        var result = checkInputValue(publisher, "message", 128, 1);
+        if (result['status'] == 'ko') {
+          $('#alert-1').show();
+          $('#alert-1').find('.error').show();
+          $('#new-series').find('#publisher').closest('.form-group').removeClass('has-success');
+          $('#new-series').find('#publisher').closest('.form-group').addClass('has-error');
+          $('#new-series').find('#publisher ~ div').html(error_icon);
+
+          var obj = {
+            result: result,
+            htmlElement: $('#alert-1').find('.error'),
+            sex: "am",
+            elementName: "editore",
+            maxLength: 128,
+            minLength: 1
+          };
+          showErrorMsg(obj);
+          submit = false;
+        } else {
+          $('#new-series').find('#publisher').closest('.form-group').removeClass('has-error');
+          $('#new-series').find('#publisher').closest('.form-group').addClass('has-success');
+          $('#new-series').find('#publisher ~ div').html(success_icon);
+        }
+
+        if (submit) {
+          //chiamata ajax
+        }
+        return submit;
+      });
+
+    });
   </script>
   <!-- CUSTOM SCRIPTS -->
 @stop
