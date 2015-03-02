@@ -509,6 +509,15 @@
                 </div>
               </div>
               <div class="form-group">
+                {{ Form::label('notes', 'Note', array('class' => 'col-md-2 label-padding')) }}
+                <div class="col-md-10">
+                  <div class="input-group">
+                    {{ Form::textarea('notes', $user->notes, array('class' => 'form-control', 'placeholder' => 'Note')) }}
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
                 {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary button-margin no-radius')) }}
               </div>
               {{ Form::close() }}
@@ -876,6 +885,7 @@
         var newpassword = $('#edit-user').find('#newpassword').val();
         var show_price = $('#edit-user').find('#show_price').val();
         var discount = $('#edit-user').find('#discount').val();
+        var notes = $('#edit-user').find('#notes').val();
 
         var error_icon = '<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>';
         var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
@@ -1050,6 +1060,32 @@
           $('#edit-user').find('#discount').closest('.form-group').addClass('has-success');
           $('#edit-user').find('#discount ~ div').html(success_icon_select);
         }
+
+        //NOTES
+        var result = checkInputValue(notes, "message", 2000, 0);
+        if (result['status'] == 'ko' && result['msg'] != 'empty'){
+          $('#alert-3').show();
+          $('#alert-3').find('.error').show();
+          $('#mail-contact').find('#message').closest('.form-group').removeClass('has-success');
+          $('#mail-contact').find('#message').closest('.form-group').addClass('has-error');
+          $('#mail-contact').find('#message ~ div').html(error_icon);
+
+          var obj = {
+            result: result,
+            htmlElement: $('#alert-3').find('.error'),
+            sex: "f",
+            elementName: "nota",
+            maxLength: 2000,
+            minLength: 0
+          };
+          showErrorMsg(obj);
+          submit = false;
+        } else {
+          $('#edit-user').find('#notes').closest('.form-group').removeClass('has-error');
+          $('#edit-user').find('#notes').closest('.form-group').addClass('has-success');
+          $('#edit-user').find('#notes ~ div').html(success_icon);
+        }
+
 
         if (submit) {
           //chiamata ajax

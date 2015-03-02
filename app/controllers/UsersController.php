@@ -31,6 +31,7 @@ class UsersController extends BaseController
             $user->surname = Input::get('surname');
             $user->number = Input::get('number');
             $new_password = Input::get('newpassword');
+            $user->notes = Input::get('notes');
             $new_hash = Hash::make($new_password);
             echo $new_password;
             if ($new_hash != $user->password && $new_password != null) {
