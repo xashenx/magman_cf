@@ -114,7 +114,7 @@
                     <strong class="col-md-1 margin-bottom">Fumetti</strong>
 
                     <div class="col-md-11 margin-bottom">
-                      {{$fumetti}}
+                      {{$series->listActive->max('number') != null ? $series->listActive->max('number') : 0}}
                     </div>
                   </div>
 
