@@ -18,7 +18,7 @@
         <div class="panel-heading no-radius">
           <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
           Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
-          (<i>Saldo</i> : {{ $due }}€)
+          (<i>Saldo</i> : {{$due != 0 ? number_format((float)$due, 2, '.', '') : 0}}€)
           <div class="btn-group">
             <button data-toggle="dropdown"
                     class="btn btn-default dropdown-toggle little-icon little-icon-padding no-radius"
@@ -178,7 +178,7 @@
                                                                                     alt="" height="42" width="42"></a>
                           @endif
                         </td>
-                        <td>{{ round($comic->price,2) }} €</td>
+                        <td>{{$comic->price != 0 ? number_format((float)$comic->price, 2, '.', '') : 0}} €</td>
                         <td>
                           @if($comic->comic->state == 2)
                             <button type="button" title="Acquista"
@@ -312,7 +312,7 @@
                     @foreach ($user->availableVouchers as $voucher)
                       <tr class="odd gradeX">
                         <td>{{$voucher->description}}</td>
-                        <td>{{$voucher->amount}} €</td>
+                        <td>{{number_format((float)$voucher->amount, 2, '.', '')}} €</td>
                         <td>
                           <button type="button" title="Usa"
                                   onclick="showConfirmModal({{$voucher->id}},{{$user->id}},7)"
@@ -567,7 +567,7 @@
                         <td>{{$purchase->series->name}} - {{$purchase->series->version}}
                           nr. {{$purchase->comic->number}}</td>
                       @endif
-                      <td>{{round($purchase->price,2)}} €</td>
+                      <td>{{number_format((float)$purchase->price, 2, '.', '')}} €</td>
                     </tr>
                   @endforeach
                   </tbody>

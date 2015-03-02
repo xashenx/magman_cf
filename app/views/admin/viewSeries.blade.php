@@ -198,7 +198,7 @@
                                                                              height="42" width="42"></a>
                           @endif
                         </td>
-                        <td>{{round($comic->price,2)}} €</td>
+                        <td>{{number_format((float)$comic->price, 2, '.', '')}} €</td>
                         @if($inv_state == 1)
                           <td>{{$comic->available}}</td>
                         @endif
@@ -261,9 +261,9 @@
                   </div>
                 @endif
                 <div class="form-group has-feedback">
-                  {{ Form::label('no_follow', 'Auto inserimento disabilitato', array('class' => 'col-md-2 label-padding')) }}
+                  {{ Form::label('auto_insertion', 'Auto inserimento', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
-                    {{ Form::select('no_follow',array('1' => 'Sì','0' => 'No'),'1',array('class' => 'form-control')) }}
+                    {{ Form::select('auto_insertion',array('1' => 'Abilitato','0' => 'Disabilitato'),'0',array('class' => 'form-control')) }}
                     <div></div>
                   </div>
                 </div>
