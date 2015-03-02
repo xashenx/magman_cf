@@ -315,7 +315,7 @@
                   {{ Form::label('series_id', 'Serie', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
                     <select name="series_id" id="series_id" class="form-control">
-                      @foreach($active_series as $serie)
+                      @foreach($not_followed_series as $serie)
                         <option value="{{ $serie->id }}"
                                 rel="{{ $serie->name }}">
                           {{ $serie->name }}
@@ -352,9 +352,10 @@
                 <div class="form-group">
                   {{ Form::label('number', 'Numero', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
-                    <select name="single_number_id" id="single_number_id" class="form-control"
-                            disabled>
-                    </select>
+                    {{--<select name="single_number_id" id="single_number_id" class="form-control"--}}
+                            {{--disabled>--}}
+                    {{--</select>--}}
+                    {{ Form::text('single_number_value','', array('id' => 'single_number_value','disabled' => 'disabled','class' => 'form-control')) }}
                   </div>
                   {{ Form::hidden('user_id', $user->id) }}
                 </div>
@@ -636,8 +637,10 @@
     $('select#single_series_id').on('change', function () {
       var selected_id = $('select#single_series_id').val();
       if (selected_id == -1) {
-        $('select#single_number_id').prop('disabled', 'disabled');
-        $('select#single_number_id').empty();
+//        $('select#single_number_id').prop('disabled', 'disabled');
+//        $('select#single_number_id').empty();
+        $('#single_number_value').prop('disabled', 'disabled');
+        $('#single_number_value').empty();
         $('#add_single_number').prop('disabled', 'disabled');
       } else {
         $.ajax({
@@ -645,23 +648,27 @@
           type: 'POST',
           data: {'series_id': selected_id},
           success: function (data) {
-            $('select#single_number_id').empty();
-            $('select#single_number_id').prop('disabled', false);
-            $('select#single_number_id').append('<option value="-1">-- Seleziona un numero --</option>');
-            $.each(data, function (index, value) {
-              $('select#single_number_id').append('<option value="' + value.id + '">' + value.number + '</option>');
-            });
+//            $('select#single_number_id').empty();
+//            $('select#single_number_id').prop('disabled', false);
+//            $('select#single_number_id').append('<option value="-1">-- Seleziona un numero --</option>');
+            $('#single_number_value').empty();
+            $('#single_number_value').prop('disabled', false);
+//            $.each(data, function (index, value) {
+//              $('select#single_number_id').append('<option value="' + value.id + '">' + value.number + '</option>');
+//            });
           },
           error: function () {
-            $('select#single_number_id').prop('disabled', 'disabled');
+//            $('select#single_number_id').prop('disabled', 'disabled');
+            $('#single_number_value').prop('disabled', 'disabled');
             $('#add_single_number').prop('disabled', 'disabled');
           }
         });
       }
     });
 
-    $('select#single_number_id').on('change', function () {
-      var selected_id = $('select#single_number_id').val();
+//    $('select#single_number_id').on('change', function () {
+    $('#single_number_value').on('change', function () {
+      var selected_id = $('#single_number_value').val();
       if (selected_id != -1) {
         $('#add_single_number').prop('disabled', false);
       }
