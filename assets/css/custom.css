@@ -266,7 +266,7 @@ max-width:170px;
 	color:#fff;
 	background:#202020;
 	text-shadow:none;
-
+  height: 60px;
 }
 .sidebar-collapse > .nav > li > a {
 	padding:15px 10px;
@@ -276,7 +276,7 @@ max-width:170px;
 }
 .sidebar-collapse .nav > li > a:hover,
 .sidebar-collapse .nav > li > a:focus {
-
+  height:60px;
 	background:#0A0A0A;
 	outline:0;
 }
@@ -391,7 +391,6 @@ line-height: 1.428571429;
         min-height: 1200px;
 
     }
-
 
     .navbar-side {
         z-index: 1;

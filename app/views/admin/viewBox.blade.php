@@ -181,14 +181,14 @@
                           @if($comic->comic->state == 2)
                             <button type="button" title="Acquista"
                                     onclick="showConfirmModal({{$comic->id}},{{$user->id}},0)"
-                                    class="btn btn-success btn-sm no-radius medium-icon little-icon-padding">
+                                    class="btn btn-success btn-sm no-radius medium-icon">
                                                             <span class="glyphicon glyphicon-euro"
                                                                   aria-hidden="true"></span>
                             </button>
                           @endif
                           <button type="button" title="Rimuovi"
                                   onclick="showConfirmModal({{$comic->id}},{{$user->id}},1)"
-                                  class="btn btn-danger btn-sm no-radius medium-icon little-icon-padding">
+                                  class="btn btn-danger btn-sm no-radius medium-icon">
                                                         <span class="glyphicon glyphicon-trash"
                                                               aria-hidden="true"></span>
                           </button>
@@ -219,6 +219,16 @@
 
               @if(count($series)>0)
                 <div class="tab-pane fade {{{ $active }}}" id="series">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="legend-green col-xs-2"></div>
+                      Serie conclusa
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="legend-red col-xs-2"></div>
+                      Serie non più seguita/disabilitata
+                    </div>
+                  </div>
                   <table class="table table-striped table-bordered table-hover"
                          id="dataTables-series">
                     <thead>
@@ -256,14 +266,14 @@
                             @if($serie->active)
                               <button type="button" title="Abbandona"
                                       onclick="showConfirmModal({{$serie->id}},{{$user->id}},2)"
-                                      class="btn btn-danger btn-sm no-radius medium-icon little-icon-padding">
+                                      class="btn btn-danger btn-sm no-radius medium-icon">
                                                                 <span class="glyphicon glyphicon-remove"
                                                                       aria-hidden="true"></span>
                               </button>
                             @elseif($serie->series->active)
                               <button type="button" title="Segui"
                                       onclick="showConfirmModal({{$serie->id}},{{$user->id}},3)"
-                                      class="btn btn-success btn-sm no-radius medium-icon little-icon-padding">
+                                      class="btn btn-success btn-sm no-radius medium-icon">
                                                                 <span class="glyphicon glyphicon-heart"
                                                                       aria-hidden="true"></span>
                               </button>
@@ -314,13 +324,13 @@
                         <td>
                           <button type="button" title="Usa"
                                   onclick="showConfirmModal({{$voucher->id}},{{$user->id}},7)"
-                                  class="btn btn-success btn-sm no-radius medium-icon little-icon-padding">
+                                  class="btn btn-success btn-sm no-radius medium-icon">
                                                         <span class="glyphicon glyphicon-euro"
                                                               aria-hidden="true"></span>
                           </button>
                           <button type="button" title="Rimuovi"
                                   onclick="showConfirmModal({{$voucher->id}},{{$user->id}},8)"
-                                  class="btn btn-danger btn-sm no-radius medium-icon little-icon-padding">
+                                  class="btn btn-danger btn-sm no-radius medium-icon">
                                                         <span class="glyphicon glyphicon-remove"
                                                               aria-hidden="true"></span>
                           </button>

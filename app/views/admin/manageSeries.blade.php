@@ -73,20 +73,20 @@
                                                         @if($serie->active)
                                                             <button type="button" title="Disabilita"
                                                                     onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},0)"
-                                                                    class="btn btn-danger btn-sm no-radius medium-icon little-icon-padding">
+                                                                    class="btn btn-danger btn-sm no-radius medium-icon">
                                                                 <span class="glyphicon glyphicon-remove"
                                                                       aria-hidden="true"></span>
                                                             </button>
                                                         @else
                                                             <button type="button" title="Abilita"
                                                                     onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},1)"
-                                                                    class="btn btn-success btn-sm no-radius medium-icon little-icon-padding">
+                                                                    class="btn btn-success btn-sm no-radius medium-icon">
                                                                 <span class="glyphicon glyphicon-ok	"
                                                                       aria-hidden="true"></span>
                                                             </button>
                                                             <button type="button" title="Abilita con Fumetti"
                                                                     onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},2)"
-                                                                    class="btn btn-warning btn-sm no-radius medium-icon little-icon-padding">
+                                                                    class="btn btn-warning btn-sm no-radius medium-icon">
                                                                 <span class="glyphicon glyphicon-book"
                                                                       aria-hidden="true"></span>
                                                             </button>
@@ -186,35 +186,7 @@
     </div>
     </div>
 
-    <div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h3 class="modal-title">Conferma azione</h3>
-                </div>
-                <div class="modal-body">
-                    <p id="confirmPageName" class="text-danger"></p>
-                </div>
-                <div class="modal-footer">
-                    {{ Form::open(array('name' => 'confirmForm')) }}
-                    {{ Form::hidden('id') }}
-                    {{ Form::hidden('comics') }}
-                    {{ Form::hidden('return') }}
-                    {{ Form::button('Annulla', array(
-                    'data-dismiss' => 'modal',
-                    'class' => 'btn btn-danger btn-sm')) }}
-                    {{ Form::submit('Sì', array('class' => 'btn btn-danger btn-sm',)) }}
-                    {{ Form::close() }}
-                </div>
-            </div>
-            {{-- /.modal-content --}}
-        </div>
-        {{-- /.modal-dialog --}}
-    </div>
-    {{-- /.modal --}}
+    @include('../layouts/confirmation-box')
     @include('../layouts/js-include')
     <script>
         function showConfirmModal(name, version, serie_id, mode) {
