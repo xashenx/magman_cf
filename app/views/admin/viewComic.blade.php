@@ -121,7 +121,7 @@
                 <strong class="col-md-1 margin-bottom">Prezzo</strong>
 
                 <div class="col-md-11 margin-bottom">
-                  {{$comic->price}} €
+                  {{number_format((float)$comic->price, 2, '.', '')}} €
                 </div>
               </div>
               @if($comic->image)
@@ -157,7 +157,7 @@
                               <td>
                                 <a href="{{ $path }}boxes/{{ $order->box->id }}">{{ $order->box->name }} {{ $order->box->surname }}</a>
                               </td>
-                              <td>{{ round($order->price,2) }} €</td>
+                              <td>{{number_format((float)$order->price, 2, '.', '')}} €</td>
                               <td>{{ date('d/m/Y',strtotime($order->created_at)) }}</td>
                             </tr>
                           @endforeach

@@ -1,5 +1,17 @@
 @section('content')
   <div class="row">
+    @if(Auth::user()->notes)
+    <div class="col-md-12">
+      <div class="panel panel-default no-radius">
+        <div class="panel-heading no-radius">
+          Messaggi dal negoziante
+        </div>
+          <div class="panel-body">
+            {{ nl2br(Auth::user()->notes) }}
+          </div>
+      </div>
+    </div>
+    @endif
     @if(count($news)!=null && (count($comics)>0 || date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now'))))
       {{--*/ $col = 6 /*--}}
     @else
@@ -52,11 +64,13 @@
               <div class="row">
                 <div class="col-xs-12">
                   <div class="legend-green col-xs-2"></div>
-                  Disponibilità garantita - <small><i>uscita da meno di un mese</i></small>
+                  Disponibilità garantita -
+                  <small><i>uscita da meno di un mese</i></small>
                 </div>
                 <div class="col-xs-12">
                   <div class="legend-yellow col-xs-2"></div>
-                  Disponibilità non garantita - <small><i>uscita da più di un mese</i></small>
+                  Disponibilità non garantita -
+                  <small><i>uscita da più di un mese</i></small>
                 </div>
               </div>
               <table class="table table-striped table-bordered table-hover" id="dataTables-comics">
@@ -167,15 +181,15 @@
   <script>
     $(document).ready(function () {
       $('#dataTables-comics').dataTable({
-      "language": {
-        "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
-      }
-    } );
+        "language": {
+          "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
+        }
+      });
       $('#dataTables-news').dataTable({
-      "language": {
-        "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
-      }
-    } );
+        "language": {
+          "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
+        }
+      });
     });
   </script>
 

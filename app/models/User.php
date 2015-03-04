@@ -26,7 +26,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		'surname'  => 'required|alpha',
 		'number' => 'required|numeric',
 		'show_price' => 'regex:/^[0,1]$/',
-		'active' => 'regex:/^[0,1]$/'
+		'active' => 'regex:/^[0,1]$/',
+		'notes' => 'regex:/^[A-z 0-9àèéìòù&\',\.\?\!()\$\€%"£^\@\;\:\r\n\+\-]*$/'
 	);
 
 	private $errors;

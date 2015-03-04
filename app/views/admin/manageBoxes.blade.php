@@ -74,7 +74,7 @@
                                                     @if (count($box->availableComics) > 0)
                                                         <td>{{array_get($available,$box->id)}}</td>
                                                         <td>{{$box->discount}} %</td>
-                                                        <td>{{array_get($due,$box->id)}} €</td>
+                                                        <td>{{array_get($due,$box->id) != 0 ? number_format((float)array_get($due,$box->id), 2, '.', '') : 0}} €</td>
                                                     @else
                                                         <td>0</td>
                                                         <td>{{$box->discount}} %</td>

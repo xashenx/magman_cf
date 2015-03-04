@@ -47,7 +47,7 @@
                         <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
                       @endif
                     </td>
-                    <td>{{ round($comic->price,2)}} €</td>
+                    <td>{{number_format((float)$comic->price, 2, '.', '')}} €</td>
                     @if($inv_state == 1)
                     <td>{{ $comic->available}}</td>
                       @endif

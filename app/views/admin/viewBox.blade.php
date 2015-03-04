@@ -18,23 +18,25 @@
         <div class="panel-heading no-radius">
           <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
           Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
-          (<i>Saldo</i> : {{ $due }}€)
+          (<i>Saldo</i> : {{$due != 0 ? number_format((float)$due, 2, '.', '') : 0}}€)
           <div class="btn-group">
-            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle little-icon little-icon-padding no-radius" aria-expanded="false"><span class="caret"></span></button>
+            <button data-toggle="dropdown"
+                    class="btn btn-default dropdown-toggle little-icon little-icon-padding no-radius"
+                    aria-expanded="false"><span class="caret"></span></button>
             <ul class="dropdown-menu no-radius">
               @if($user->active)
                 @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
                   <li><a href="#" onclick="showConfirmModal({{$user->id}},0,6)">
-                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-                    Rinnova Casella</a></li>
+                      <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                      Rinnova Casella</a></li>
                 @endif
                 <li><a href="#" onclick="showConfirmModal({{$user->id}},0,4)">
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                  Disattiva Casella</a></li>
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Disattiva Casella</a></li>
               @else
                 <li><a href="#" onclick="showConfirmModal({{$user->id}},0,5)">
-                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                  Riattiva Casella</a></li>
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Riattiva Casella</a></li>
               @endif
             </ul>
           </div>
@@ -176,7 +178,7 @@
                                                                                     alt="" height="42" width="42"></a>
                           @endif
                         </td>
-                        <td>{{ round($comic->price,2) }} €</td>
+                        <td>{{$comic->price != 0 ? number_format((float)$comic->price, 2, '.', '') : 0}} €</td>
                         <td>
                           @if($comic->comic->state == 2)
                             <button type="button" title="Acquista"
@@ -320,7 +322,7 @@
                     @foreach ($user->availableVouchers as $voucher)
                       <tr class="odd gradeX">
                         <td>{{$voucher->description}}</td>
-                        <td>{{$voucher->amount}} €</td>
+                        <td>{{number_format((float)$voucher->amount, 2, '.', '')}} €</td>
                         <td>
                           <button type="button" title="Usa"
                                   onclick="showConfirmModal({{$voucher->id}},{{$user->id}},7)"
@@ -349,7 +351,7 @@
                   {{ Form::label('series_id', 'Serie', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
                     <select name="series_id" id="series_id" class="form-control">
-                      @foreach($active_series as $serie)
+                      @foreach($not_followed_series as $serie)
                         <option value="{{ $serie->id }}"
                                 rel="{{ $serie->name }}">
                           {{ $serie->name }}
@@ -367,7 +369,7 @@
               </div>
 
               <div class="tab-pane fade" id="newsinglecomic">
-                {{ Form::open(array('action' => 'ComicUserController@create', 'class' => 'form-horizontal')) }}
+                {{ Form::open(array('action' => 'ComicUserController@create', 'id' => 'newsinglecomic','class' => 'form-horizontal')) }}
                 <div class="form-group">
                   {{ Form::label('single_series_id', 'Serie', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
@@ -386,16 +388,28 @@
                 <div class="form-group">
                   {{ Form::label('number', 'Numero', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
-                    <select name="single_number_id" id="single_number_id" class="form-control"
-                            disabled>
-                    </select>
+                    {{--<select name="single_number_id" id="single_number_id" class="form-control"--}}
+                    {{--disabled>--}}
+                    {{--</select>--}}
+                    {{ Form::text('single_number_value','', array('id' => 'single_number_value','disabled' => 'disabled','class' => 'form-control')) }}
                   </div>
                   {{ Form::hidden('user_id', $user->id) }}
+                </div>
+                <div class="form-group">
+                  {{ Form::label('complete_series', 'Tutta la serie', array('class' => 'col-md-2 label-padding')) }}
+                  <div class="col-md-10">
+                    {{ Form::select('complete_series',array('1' => 'Sì','0' => 'No'),'0',array('id' => 'complete_series','disabled' => 'disabled','class' => 'form-control')) }}
+                    <div></div>
+                  </div>
                 </div>
                 <div class="form-group">
                   {{ Form::submit('Aggiungi', array('id' => 'add_single_number', 'disabled' => 'disabled', 'class' => 'btn btn-primary button-margin no-radius')) }}
                 </div>
                 {{ Form::close() }}
+                <div class="cAlert" id="alert-2">
+                  <div class="alert alert-success success no-radius"></div>
+                  <div class="alert alert-danger error no-radius"></div>
+                </div>
               </div>
 
               <div class="tab-pane fade" id="newvoucher">
@@ -518,6 +532,15 @@
                 </div>
               </div>
               <div class="form-group">
+                {{ Form::label('notes', 'Note', array('class' => 'col-md-2 label-padding')) }}
+                <div class="col-md-10">
+                  <div class="input-group">
+                    {{ Form::textarea('notes', $user->notes, array('class' => 'form-control', 'placeholder' => 'Note')) }}
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
                 {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary button-margin no-radius')) }}
               </div>
               {{ Form::close() }}
@@ -554,7 +577,7 @@
                         <td>{{$purchase->series->name}} - {{$purchase->series->version}}
                           nr. {{$purchase->comic->number}}</td>
                       @endif
-                      <td>{{round($purchase->price,2)}} €</td>
+                      <td>{{number_format((float)$purchase->price, 2, '.', '')}} €</td>
                     </tr>
                   @endforeach
                   </tbody>
@@ -657,57 +680,84 @@
         "language": {
           "url": "{{ URL::asset('assets/js/dataTables/comic.lang') }}"
         }
-      } );
+      });
       $('#dataTables-series').dataTable({
         "language": {
           "url": "{{ URL::asset('assets/js/dataTables/series.lang') }}"
         }
-      } );
+      });
       $('#dataTables-vouchers').dataTable({
         "language": {
           "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
         }
-      } );
+      });
       $('#dataTables-history').dataTable({
         "language": {
           "url": "{{ URL::asset('assets/js/dataTables/caselle.lang') }}"
         }
-      } );
+      });
     });
   </script>
   <!-- CUSTOM SCRIPTS -->
   <script>
     $('select#single_series_id').on('change', function () {
-      var selected_id = $('select#single_series_id').val();
-      if (selected_id == -1) {
-        $('select#single_number_id').prop('disabled', 'disabled');
-        $('select#single_number_id').empty();
+              var selected_id = $('select#single_series_id').val();
+              if (selected_id == -1) {
+//        $('select#single_number_id').prop('disabled', 'disabled');
+//        $('select#single_number_id').empty();
+                $('#single_number_value').prop('disabled', 'disabled');
+                $('#single_number_value').empty();
+                $('#add_single_number').prop('disabled', 'disabled');
+                $('#complete_series').prop('disabled', 'disabled');
+              } else {
+//        $.ajax({
+//          url: '../getNumberFromSeries',
+//          type: 'POST',
+//          data: {'series_id': selected_id},
+//          success: function (data) {
+//            $('select#single_number_id').empty();
+//            $('select#single_number_id').prop('disabled', false);
+//            $('select#single_number_id').append('<option value="-1">-- Seleziona un numero --</option>');
+                $('#single_number_value').empty();
+                $('#single_number_value').prop('disabled', false);
+                $('#complete_series').prop('disabled', false);
+
+//            $.each(data, function (index, value) {
+//              $('select#single_number_id').append('<option value="' + value.id + '">' + value.number + '</option>');
+//            });
+//          },
+//          error: function () {
+////            $('select#single_number_id').prop('disabled', 'disabled');
+//            $('#single_number_value').prop('disabled', 'disabled');
+//            $('#add_single_number').prop('disabled', 'disabled');
+//          }
+              }
+              ;
+            }
+    );
+
+    //    $('select#single_number_id').on('change', function () {
+    $('#single_number_value').on('change', function () {
+      var value = $('#single_number_value').val();
+      if(value == ''){
+        $('#single_number_value').prop('disabled', false);
+        $('#complete_series').prop('disabled', false);
         $('#add_single_number').prop('disabled', 'disabled');
-      } else {
-        $.ajax({
-          url: '../getNumberFromSeries',
-          type: 'POST',
-          data: {'series_id': selected_id},
-          success: function (data) {
-            $('select#single_number_id').empty();
-            $('select#single_number_id').prop('disabled', false);
-            $('select#single_number_id').append('<option value="-1">-- Seleziona un numero --</option>');
-            $.each(data, function (index, value) {
-              $('select#single_number_id').append('<option value="' + value.id + '">' + value.number + '</option>');
-            });
-          },
-          error: function () {
-            $('select#single_number_id').prop('disabled', 'disabled');
-            $('#add_single_number').prop('disabled', 'disabled');
-          }
-        });
+      }else{
+        $('#add_single_number').prop('disabled', false);
+        $('#complete_series').prop('disabled', 'disabled');
       }
     });
 
-    $('select#single_number_id').on('change', function () {
-      var selected_id = $('select#single_number_id').val();
-      if (selected_id != -1) {
+    $('select#complete_series').on('change', function () {
+      var value = $('select#complete_series').val();
+      if(value == 0){
+        $('#single_number_value').prop('disabled', false);
+        $('#complete_series').prop('disabled', false);
+        $('#add_single_number').prop('disabled', 'disabled');
+      }else if(value == 1){
         $('#add_single_number').prop('disabled', false);
+        $('#single_number_value').prop('disabled', 'disabled');
       }
     });
   </script>
@@ -787,6 +837,111 @@
         }
         return submit;
       });
+
+
+      $('#newsinglecomic').on('submit', function () {
+        $('#alert-2').hide();
+        $('#alert-2').find('.success').hide();
+        $('#alert-2').find('.error').hide();
+        $('#alert-2').find('.success').html("");
+        $('#alert-2').find('.error').html("");
+
+        //value
+        var series_id = $('#newsinglecomic').find('#single_series_id').val();
+        var number = $('#newsinglecomic').find('#single_number_value').val();
+        var complete_insertion = $('#newsinglecomic').find('#complete_series').val();
+
+        var error_icon = '<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>';
+        var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
+        var error_icon_select = '<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(error)</span>';
+        var success_icon_select = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="padding-right:15px"></span><span id="inputIcon" class="sr-only">(success)</span>';
+
+        var notnecessary_icon = '<span class="glyphicon glyphicon-asterisk form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
+        //submit = true
+        var submit = true;
+        //start the check!
+        var result = checkInputValue(series_id, "integer", 11, 1);
+        //series_id
+        if (result['status'] == 'ko') {
+          $('#alert-2').show();
+          $('#alert-2').find('.error').show();
+          $('#newsinglecomic').find('#single_series_id').closest('.form-group').removeClass('has-success');
+          $('#newsinglecomic').find('#single_series_id').closest('.form-group').addClass('has-error');
+          $('#newsinglecomic').find('#single_series_id ~ div').html(error_icon);
+
+          var obj = {
+            result: result,
+            htmlElement: $('#alert-2').find('.error'),
+            sex: "f",
+            elementName: "serie",
+            maxLength: 150,
+            minLength: 1
+          };
+          showErrorMsg(obj);
+          submit = false;
+        } else {
+          $('#newsinglecomic').find('#single_series_id').closest('.form-group').removeClass('has-error');
+          $('#newsinglecomic').find('#single_series_id').closest('.form-group').addClass('has-success');
+          $('#newsinglecomic').find('#single_series_id ~ div').html(success_icon);
+        }
+
+
+
+        if (complete_insertion == 0) {
+          //single number
+          if (result['status'] == 'ko') {
+            $('#alert-2').show();
+            $('#alert-2').find('.error').show();
+            $('#newsinglecomic').find('#single_number_value').closest('.form-group').removeClass('has-success');
+            $('#newsinglecomic').find('#single_number_value').closest('.form-group').addClass('has-error');
+            $('#newsinglecomic').find('#single_number_value ~ div').html(error_icon);
+
+            var obj = {
+              result: result,
+              htmlElement: $('#alert-2').find('.error'),
+              sex: "m",
+              elementName: "numero",
+              maxLength: 150,
+              minLength: 1
+            };
+            showErrorMsg(obj);
+            submit = false;
+          } else {
+            $('#newsinglecomic').find('#single_number_value').closest('.form-group').removeClass('has-error');
+            $('#newsinglecomic').find('#single_number_value').closest('.form-group').addClass('has-success');
+            $('#newsinglecomic').find('#single_number_value ~ div').html(success_icon);
+          }
+        } else {
+          //complete series
+          if (complete_insertion != 1) {
+            $('#alert-2').show();
+            $('#alert-2').find('.error').show();
+            $('#newsinglecomic').find('#complete_series').closest('.form-group').removeClass('has-success');
+            $('#newsinglecomic').find('#complete_series').closest('.form-group').addClass('has-error');
+            $('#newsinglecomic').find('#complete_series ~ div').html(error_icon);
+
+            var obj = {
+              result: result,
+              htmlElement: $('#alert-2').find('.error'),
+              sex: "m",
+              elementName: "parametro di inserimento serie completa",
+              maxLength: 150,
+              minLength: 1
+            };
+            showErrorMsg(obj);
+            submit = false;
+          } else {
+            $('#newsinglecomic').find('#complete_series').closest('.form-group').removeClass('has-error');
+            $('#newsinglecomic').find('#complete_series').closest('.form-group').addClass('has-success');
+            $('#newsinglecomic').find('#complete_series ~ div').html(success_icon);
+          }
+        }
+        if (submit) {
+          //chiamata ajax
+        }
+        return submit;
+      });
+
 
       $('#mail-contact').on('submit', function () {
         $('#alert-2').hide();
@@ -879,6 +1034,7 @@
         var newpassword = $('#edit-user').find('#newpassword').val();
         var show_price = $('#edit-user').find('#show_price').val();
         var discount = $('#edit-user').find('#discount').val();
+        var notes = $('#edit-user').find('#notes').val();
 
         var error_icon = '<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>';
         var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
@@ -1054,11 +1210,38 @@
           $('#edit-user').find('#discount ~ div').html(success_icon_select);
         }
 
+        //NOTES
+        var result = checkInputValue(notes, "message", 2000, 0);
+        if (result['status'] == 'ko' && result['msg'] != 'empty') {
+          $('#alert-3').show();
+          $('#alert-3').find('.error').show();
+          $('#mail-contact').find('#message').closest('.form-group').removeClass('has-success');
+          $('#mail-contact').find('#message').closest('.form-group').addClass('has-error');
+          $('#mail-contact').find('#message ~ div').html(error_icon);
+
+          var obj = {
+            result: result,
+            htmlElement: $('#alert-3').find('.error'),
+            sex: "f",
+            elementName: "nota",
+            maxLength: 2000,
+            minLength: 0
+          };
+          showErrorMsg(obj);
+          submit = false;
+        } else {
+          $('#edit-user').find('#notes').closest('.form-group').removeClass('has-error');
+          $('#edit-user').find('#notes').closest('.form-group').addClass('has-success');
+          $('#edit-user').find('#notes ~ div').html(success_icon);
+        }
+
+
         if (submit) {
           //chiamata ajax
         }
         return submit;
       });
-    });
+    })
+    ;
   </script>
 @stop
