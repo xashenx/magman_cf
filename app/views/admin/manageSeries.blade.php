@@ -80,7 +80,7 @@
                               <button type="button" title="Abilita"
                                       onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},1)"
                                       class="btn btn-success btn-sm no-radius medium-icon little-icon-padding">
-                                                                <span class="glyphicon glyphicon-ok	"
+                                                                <span class="glyphicon glyphicon-ok "
                                                                       aria-hidden="true"></span>
                               </button>
                               <button type="button" title="Abilita con Fumetti"
@@ -117,7 +117,6 @@
                 </div>
               </div>
             </div>
-
             <div class="tab-pane fade" id="new">
               <div>
                 {{ Form::open(array('action' => 'SeriesController@create', 'id' => 'new-series', 'class' => 'form-horizontal')) }}
@@ -181,73 +180,8 @@
         </div>
       </div>
     </div>
-    <div class="tab-pane fade" id="new">
-      <div>
-        {{ Form::open(array('action' => 'SeriesController@create', 'id' => 'new-series', 'class' => 'form-horizontal')) }}
-        <div class="form-group has-feedback">
-          {{ Form::label('name', 'Nome', array('class' => 'col-md-1 label-padding')) }}
-          <div class="col-md-11">
-            {{ Form::text('name', "", array('class' => 'form-control')) }}
-            <div></div>
-          </div>
-          {{ Form::hidden('id')}}
-        </div>
-        <div class="form-group has-feedback">
-          {{ Form::label('version','Versione', array('class' => 'col-md-1 label-padding')) }}
-          <div class="col-md-11">
-            {{ Form::text('version', "", array('class' => 'form-control')) }}
-            <div></div>
-          </div>
-        </div>
-        <div class="form-group has-feedback">
-          {{ Form::label('author', 'Autore', array('class' => 'col-md-1 label-padding')) }}
-          <div class="col-md-11">
-            {{ Form::text('author', "", array('class' => 'form-control')) }}
-            <div></div>
-          </div>
-        </div>
-        <div class="form-group has-feedback">
-          {{ Form::label('publisher', 'Editore', array('class' => 'col-md-1 label-padding')) }}
-          <div class="col-md-11">
-            {{ Form::text('publisher', "", array('class' => 'form-control')) }}
-            <div></div>
-          </div>
-        </div>
-        {{--<div class="form-group">--}}
-        {{--{{ Form::label('type_id', 'Tipo', array('class' => 'col-md-1 label-padding')) }}--}}
-        {{--<div class="col-md-11">--}}
-        {{--{{ Form::text('type_id', "", array('class' => 'form-control')) }}--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--<div class="form-group">--}}
-        {{--{{ Form::label('subtype_id', 'Sotto Tipo', array('class' => 'col-md-1 label-padding')) }}--}}
-        {{--<div class="col-md-11">--}}
-        {{--{{ Form::text('subtype_id', "", array('class' => 'form-control')) }}--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        <div>
-          {{ Form::submit('Aggiungi', array('class' => 'btn btn-primary no-radius')) }}
-        </div>
-        {{ Form::close() }}
-        <div class="cAlert" id="alert-1">
-          <div class="alert alert-success success no-radius"></div>
-          <div class="alert alert-info no-radius">
-            I campi con
-            <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
-            sono opzionali.
-          </div>
-          <div class="alert alert-danger error no-radius"></div>
-        </div>
-      </div>
-    </div>
   </div>
-  {{--</div>--}}
-  {{--</div>--}}
-  {{--</div>--}}
-  {{--<!--End Advanced Tables -->--}}
-  {{--</div>--}}
-  {{--</div>--}}
-
+  @include('../layouts/js-include')
   <script>
     $(document).ready(function () {
       $('#dataTables-series').dataTable({
