@@ -181,7 +181,28 @@
       </div>
     </div>
   </div>
+  @include('../layouts/confirmation-box')
   @include('../layouts/js-include')
+  <script>
+    function showConfirmModal(name, version, serie_id, mode) {
+      document.confirmForm.id.value = serie_id;
+      document.confirmForm.return.value = 'series';
+      if (mode == 0) {
+          document.confirmForm.action = 'deleteSeries';
+          $('#confirmPageName').text('Sei sicuro di voler disabilitare la serie ' + "'" + name + " - " + version + "'?");
+      } else if (mode == 1) {
+          document.confirmForm.action = 'restoreSeries';
+          $('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "'?");
+      } else {
+          document.confirmForm.action = 'restoreSeries';
+          document.confirmForm.comics.value = '1';
+          $('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "' e i relativi fumetti?");
+      }
+      $('#modal-confirm').modal({
+          show: true
+      });
+    }
+  </script>
   <script>
     $(document).ready(function () {
       $('#dataTables-series').dataTable({
