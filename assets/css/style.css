@@ -4,6 +4,14 @@
   border-radius: 0px;
 }
 
+.centerAlign{
+  text-align: center;
+}
+
+.min-height{
+  min-height: 30px;
+}
+
 .margin-bottom{
   margin-bottom: 10px;
 }

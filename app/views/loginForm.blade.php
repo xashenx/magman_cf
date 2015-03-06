@@ -13,6 +13,7 @@
     <link href="{{ URL::asset('assets/css/font-awesome.css') }}" rel="stylesheet" />
     <!-- CUSTOM STYLES-->
     <link href="{{ URL::asset('assets/css/custom.css') }}" rel="stylesheet" />
+    <link href="{{ URL::asset('assets/css/style.css') }}" rel="stylesheet" />
     <!-- GOOGLE FONTS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
      <!-- TABLE STYLES-->
@@ -27,7 +28,7 @@
 
         <div class="col-md-12 col-xs-12" align="center">
           <br/>
-          <div class="outter"><img src="{{ URL::asset('assets/img/GetMAD.jpg') }}" class="image-circle"/></div>
+          <div class="outter"><img src="{{ URL::asset('assets/img/MagMag_piccolo.jpg') }}" class="image-circle"/></div>
           <h1>Benvenuto Ospite</h1>
           <span></span>
           <br/>
@@ -36,20 +37,26 @@
         <div class="col-md-12 col-xs-12 login_control">
           <?php echo Form::open(array('url' => '/login', 'class' => 'box login')); ?>
             <div class="control">
-              <input type="text" class="form-control" name="username" placeholder="Email address" required autofocus/>
+              <input type="text" class="form-control" name="username" placeholder="Indirizzo Email" required autofocus/>
             </div>
 
             <div class="control">
               <input type="password" name="password" class="form-control" placeholder="Password" required/>
             </div>
-
             <div class="control">
               <div class="label">
                 <input type="checkbox" name="persist" tabindex="3">
                 <span>Ricordami</span>
               </div>
             </div>
-
+            <div class="control centerAlign min-height">
+              <?php
+                $message = Session::get('message');
+                if (!empty($message)){
+                  echo $message;
+                }
+              ?>
+            </div>
             <div align="center">
               <button class="btn btn-danger btn-orange">LOGIN</button>
             </div>
