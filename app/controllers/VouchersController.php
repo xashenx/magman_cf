@@ -22,6 +22,25 @@ class VouchersController extends BaseController
         }
     }
 
+    public function update()
+    {
+        $new = Input::all();
+        $user_id = Input::get('user_id');
+        $voucher_id = Input::get('voucher_id');
+        $voucher = Voucher::find($voucher_id);
+        if ($voucher->validate($new)) {
+            $voucher->description = Input::get('description');
+            $voucher_value = str_replace(',', '.', Input::get('amount'));
+            $voucher->amount = $voucher_value;
+            $voucher->update();
+            return Redirect::to('boxes/' . $user_id . '/voucher/' . $voucher_id);
+        }
+        else {
+            $errors = $voucher->errors();
+            return Redirect::to('boxes/' . $user_id)->withErrors($errors);
+        }
+    }
+
     public function delete()
     {
         $voucher_id = Input::get('id');

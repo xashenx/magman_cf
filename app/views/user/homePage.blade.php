@@ -1,17 +1,5 @@
 @section('content')
   <div class="row">
-    @if(Auth::user()->notes)
-    <div class="col-md-12">
-      <div class="panel panel-default no-radius">
-        <div class="panel-heading no-radius">
-          Messaggi dal negoziante
-        </div>
-          <div class="panel-body">
-            {{ nl2br(Auth::user()->notes) }}
-          </div>
-      </div>
-    </div>
-    @endif
     @if(count($news)!=null && (count($comics)>0 || date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now'))))
       {{--*/ $col = 6 /*--}}
     @else
@@ -175,7 +163,18 @@
       </div>
     @endif
   </div>
-
+  @if(Auth::user()->notes)
+    <div class="col-md-12">
+      <div class="panel panel-default no-radius">
+        <div class="panel-heading no-radius">
+          NOTE
+        </div>
+        <div class="panel-body">
+          {{ nl2br(Auth::user()->notes) }}
+        </div>
+      </div>
+    </div>
+  @endif
   @include('../layouts/js-include')
 
   <script>

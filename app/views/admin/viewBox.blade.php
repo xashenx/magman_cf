@@ -47,39 +47,39 @@
           <ul class="nav nav-tabs margin-bottom">
             {{--*/ $active = 'active' /*--}}
             @if($user->active)
-              @if (count($comics) > 0)
-                <li class="{{ $active }}">
-                  <a href="#orderedComics" data-toggle="tab">
-                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-                    <span class="titoli-tab">In arrivo</span>
-                  </a>
-                </li>
-                {{--*/ $active = '' /*--}}
-              @endif
-              @if(count($user->availableVouchers)>0)
-                <li class="{{ $active }}">
-                  <a href="#vouchers" data-toggle="tab">
-                    <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
-                    <span class="titoli-tab">Buoni</span>
-                  </a>
-                </li>
-                {{--*/ $active = '' /*--}}
-              @endif
-              @if(count($series)>0)
-                <li class="{{ $active }}">
-                  <a href="#series" data-toggle="tab">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span class="titoli-tab">Serie Seguite</span>
-                  </a>
-                </li>
-                {{--*/ $active = '' /*--}}
-              @endif
+              {{--@if (count($comics) > 0)--}}
               <li class="{{ $active }}">
-                <a href="#newseries" data-toggle="tab">
-                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                  <span class="titoli-tab">Nuova Serie</span>
+                <a href="#orderedComics" data-toggle="tab">
+                  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                  <span class="titoli-tab">In arrivo</span>
                 </a>
               </li>
+              {{--*/ $active = '' /*--}}
+              {{--@endif--}}
+              {{--              @if(count($user->availableVouchers)>0)--}}
+              <li class="{{ $active }}">
+                <a href="#vouchers" data-toggle="tab">
+                  <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                  <span class="titoli-tab">Buoni</span>
+                </a>
+              </li>
+              {{--*/ $active = '' /*--}}
+              {{--@endif--}}
+              {{--              @if(count($series)>0)--}}
+              <li class="{{ $active }}">
+                <a href="#series" data-toggle="tab">
+                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                  <span class="titoli-tab">Serie Seguite</span>
+                </a>
+              </li>
+              {{--*/ $active = '' /*--}}
+              {{--@endif--}}
+              {{--<li class="{{ $active }}">--}}
+                {{--<a href="#newseries" data-toggle="tab">--}}
+                  {{--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>--}}
+                  {{--<span class="titoli-tab">Nuova Serie</span>--}}
+                {{--</a>--}}
+              {{--</li>--}}
               {{--*/ $active = '' /*--}}
               <li class="">
                 <a href="#newsinglecomic" data-toggle="tab">
@@ -87,12 +87,12 @@
                   <span class="titoli-tab">Nuovo Arretrato/Singolo</span>
                 </a>
               </li>
-              <li class="">
-                <a href="#newvoucher" data-toggle="tab">
-                  <span class="glyphicon glyphicon-gift" aria-hidden="true"></span>
-                  <span class="titoli-tab">Aggiungi Buono</span>
-                </a>
-              </li>
+              {{--<li class="">--}}
+                {{--<a href="#newvoucher" data-toggle="tab">--}}
+                  {{--<span class="glyphicon glyphicon-gift" aria-hidden="true"></span>--}}
+                  {{--<span class="titoli-tab">Aggiungi Buono</span>--}}
+                {{--</a>--}}
+              {{--</li>--}}
               {{-- <li class=""><a href="#details" data-toggle="tab">Dettagli</a></li> --}}
 
             @endif
@@ -120,8 +120,9 @@
           <div class="tab-content">
             @if($user->active)
               {{--*/ $active = 'active in' /*--}}
-              @if(count($comics)>0)
-                <div class="tab-pane fade {{{ $active }}}" id="orderedComics">
+              {{--@if(count($comics)>0)--}}
+              <div class="tab-pane fade {{{ $active }}}" id="orderedComics">
+                @if(count($comics)>0)
                   <div class="row">
                     <div class="col-xs-12">
                       <div class="legend-green col-xs-2"></div>
@@ -215,12 +216,61 @@
                     @endforeach
                     </tbody>
                   </table>
+                @endif
+                {{ Form::model($user, array('action' => 'UsersController@editNote', 'id' => 'edit-note', 'class' => 'form-horizontal')) }}
+                <div class="form-group has-feedback">
+                  <div class="form-group">
+                    <div class="col-md-10">
+                      <div class="input-group">
+                        {{ Form::textarea('notes', $user->notes, array('class' => 'form-control', 'placeholder' => 'Note')) }}
+                        {{ Form::hidden('id')}}
+                        <div></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary button-margin no-radius')) }}
+                  </div>
+                  {{ Form::close() }}
+                  <div class="cAlert" id="alert-4">
+                    <div class="alert alert-success success no-radius"></div>
+                    <div class="alert alert-info necessary no-radius">
+                      I campi con
+                      <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                      sono opzionali.
+                    </div>
+                    <div class="alert alert-danger error no-radius"></div>
+                  </div>
                 </div>
-                {{--*/ $active = '' /*--}}
-              @endif
+              </div>
+              {{--*/ $active = '' /*--}}
+              {{--@endif--}}
 
-              @if(count($series)>0)
-                <div class="tab-pane fade {{{ $active }}}" id="series">
+              {{--@if(count($series)>0)--}}
+              <div class="tab-pane fade {{{ $active }}}" id="series">
+                <div class="row">
+                  {{ Form::open(array('action' => 'SeriesUserController@create', 'class' => 'form-horizontal')) }}
+                  <div class="form-group">
+                    {{ Form::label('series_id', 'Nuova Serie', array('class' => 'col-md-2 label-padding')) }}
+                    <div class="col-md-10">
+                      <select name="series_id" id="series_id" class="form-control">
+                        @foreach($not_followed_series as $serie)
+                          <option value="{{ $serie->id }}"
+                                  rel="{{ $serie->name }}">
+                            {{ $serie->name }}
+                            {{{ ($serie->version != null) ? ' - '.$serie->version : '' }}}
+                          </option>
+                        @endforeach
+                      </select>
+                      {{ Form::hidden('user_id', $user->id) }}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    {{ Form::submit('Aggiungi', array('class' => 'btn btn-primary button-margin no-radius')) }}
+                  </div>
+                  {{ Form::close() }}
+                </div>
+                @if(count($series)>0)
                   <div class="row">
                     <div class="col-xs-12">
                       <div class="legend-green col-xs-2"></div>
@@ -303,12 +353,41 @@
                     @endforeach
                     </tbody>
                   </table>
-                </div>
-                {{--*/ $active = '' /*--}}
-              @endif
+                @endif
+              </div>
+              {{--*/ $active = '' /*--}}
+              {{--@endif--}}
 
-              @if(count($user->availableVouchers)>0)
-                <div class="tab-pane fade {{{ $active }}}" id="vouchers">
+              {{--@if(count($user->availableVouchers)>0)--}}
+              <div class="tab-pane fade {{{ $active }}}" id="vouchers">
+                {{ Form::open(array('action' => 'VouchersController@create', 'id' => 'new-voucher', 'class' => 'form-horizontal')) }}
+                <div class="form-group has-feedback">
+                  {{ Form::label('description', 'Descrizione', array('class' => 'col-md-2 label-padding')) }}
+                  <div class="col-md-10">
+                    {{ Form::text('description', '', array('class' => 'form-control', 'placeholder' => 'Descrizione del buono')) }}
+                    <div></div>
+                  </div>
+                  {{ Form::hidden('user_id', $user->id) }}
+                </div>
+                <div class="form-group">
+                  {{ Form::label('amount', 'Valore', array('class' => 'col-md-2 label-padding')) }}
+                  <div class="col-md-10">
+                    <div class="input-group">
+                      <span class="input-group-addon no-radius" id="basic-addon1">€</span>
+                      {{ Form::text('amount', '', array('class' => 'form-control', 'placeholder' => 'Valore del buono')) }}
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  {{ Form::submit('Aggiungi', array('id' => 'add_voucher', 'class' => 'btn btn-primary button-margin no-radius')) }}
+                </div>
+                {{ Form::close() }}
+                <div class="cAlert" id="alert-1">
+                  <div class="alert alert-success success no-radius"></div>
+                  <div class="alert alert-danger error no-radius"></div>
+                </div>
+                @if(count($user->availableVouchers)>0)
                   <table class="table table-striped table-bordered table-hover"
                          id="dataTables-vouchers">
                     <thead>
@@ -321,7 +400,7 @@
                     <tbody>
                     @foreach ($user->availableVouchers as $voucher)
                       <tr class="odd gradeX">
-                        <td>{{$voucher->description}}</td>
+                        <td><a href='{{$user->id}}/voucher/{{$voucher->id}}'>{{$voucher->description}}</a></td>
                         <td>{{number_format((float)$voucher->amount, 2, '.', '')}} €</td>
                         <td>
                           <button type="button" title="Usa"
@@ -341,32 +420,33 @@
                     @endforeach
                     </tbody>
                   </table>
-                </div>
-                {{--*/ $active = '' /*--}}
-              @endif
-
-              <div class="tab-pane fade {{{ $active }}}" id="newseries">
-                {{ Form::open(array('action' => 'SeriesUserController@create', 'class' => 'form-horizontal')) }}
-                <div class="form-group">
-                  {{ Form::label('series_id', 'Serie', array('class' => 'col-md-2 label-padding')) }}
-                  <div class="col-md-10">
-                    <select name="series_id" id="series_id" class="form-control">
-                      @foreach($not_followed_series as $serie)
-                        <option value="{{ $serie->id }}"
-                                rel="{{ $serie->name }}">
-                          {{ $serie->name }}
-                          {{{ ($serie->version != null) ? ' - '.$serie->version : '' }}}
-                        </option>
-                      @endforeach
-                    </select>
-                    {{ Form::hidden('user_id', $user->id) }}
-                  </div>
-                </div>
-                <div class="form-group">
-                  {{ Form::submit('Aggiungi', array('class' => 'btn btn-primary button-margin no-radius')) }}
-                </div>
-                {{ Form::close() }}
+                @endif
               </div>
+              {{--*/ $active = '' /*--}}
+              {{--@endif--}}
+
+              {{--<div class="tab-pane fade {{{ $active }}}" id="newseries">--}}
+                {{--{{ Form::open(array('action' => 'SeriesUserController@create', 'class' => 'form-horizontal')) }}--}}
+                {{--<div class="form-group">--}}
+                  {{--{{ Form::label('series_id', 'Serie', array('class' => 'col-md-2 label-padding')) }}--}}
+                  {{--<div class="col-md-10">--}}
+                    {{--<select name="series_id" id="series_id" class="form-control">--}}
+                      {{--@foreach($not_followed_series as $serie)--}}
+                        {{--<option value="{{ $serie->id }}"--}}
+                                {{--rel="{{ $serie->name }}">--}}
+                          {{--{{ $serie->name }}--}}
+                          {{--{{{ ($serie->version != null) ? ' - '.$serie->version : '' }}}--}}
+                        {{--</option>--}}
+                      {{--@endforeach--}}
+                    {{--</select>--}}
+                    {{--{{ Form::hidden('user_id', $user->id) }}--}}
+                  {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="form-group">--}}
+                  {{--{{ Form::submit('Aggiungi', array('class' => 'btn btn-primary button-margin no-radius')) }}--}}
+                {{--</div>--}}
+                {{--{{ Form::close() }}--}}
+              {{--</div>--}}
 
               <div class="tab-pane fade" id="newsinglecomic">
                 {{ Form::open(array('action' => 'ComicUserController@create', 'id' => 'newsinglecomic','class' => 'form-horizontal')) }}
@@ -412,35 +492,35 @@
                 </div>
               </div>
 
-              <div class="tab-pane fade" id="newvoucher">
-                {{ Form::open(array('action' => 'VouchersController@create', 'id' => 'new-voucher', 'class' => 'form-horizontal')) }}
-                <div class="form-group has-feedback">
-                  {{ Form::label('description', 'Descrizione', array('class' => 'col-md-2 label-padding')) }}
-                  <div class="col-md-10">
-                    {{ Form::text('description', '', array('class' => 'form-control', 'placeholder' => 'Descrizione del buono')) }}
-                    <div></div>
-                  </div>
-                  {{ Form::hidden('user_id', $user->id) }}
-                </div>
-                <div class="form-group">
-                  {{ Form::label('amount', 'Valore', array('class' => 'col-md-2 label-padding')) }}
-                  <div class="col-md-10">
-                    <div class="input-group">
-                      <span class="input-group-addon no-radius" id="basic-addon1">€</span>
-                      {{ Form::text('amount', '', array('class' => 'form-control', 'placeholder' => 'Valore del buono')) }}
-                      <div></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  {{ Form::submit('Aggiungi', array('id' => 'add_voucher', 'class' => 'btn btn-primary button-margin no-radius')) }}
-                </div>
-                {{ Form::close() }}
-                <div class="cAlert" id="alert-1">
-                  <div class="alert alert-success success no-radius"></div>
-                  <div class="alert alert-danger error no-radius"></div>
-                </div>
-              </div>
+              {{--<div class="tab-pane fade" id="newvoucher">--}}
+                {{--{{ Form::open(array('action' => 'VouchersController@create', 'id' => 'new-voucher', 'class' => 'form-horizontal')) }}--}}
+                {{--<div class="form-group has-feedback">--}}
+                  {{--{{ Form::label('description', 'Descrizione', array('class' => 'col-md-2 label-padding')) }}--}}
+                  {{--<div class="col-md-10">--}}
+                    {{--{{ Form::text('description', '', array('class' => 'form-control', 'placeholder' => 'Descrizione del buono')) }}--}}
+                    {{--<div></div>--}}
+                  {{--</div>--}}
+                  {{--{{ Form::hidden('user_id', $user->id) }}--}}
+                {{--</div>--}}
+                {{--<div class="form-group">--}}
+                  {{--{{ Form::label('amount', 'Valore', array('class' => 'col-md-2 label-padding')) }}--}}
+                  {{--<div class="col-md-10">--}}
+                    {{--<div class="input-group">--}}
+                      {{--<span class="input-group-addon no-radius" id="basic-addon1">€</span>--}}
+                      {{--{{ Form::text('amount', '', array('class' => 'form-control', 'placeholder' => 'Valore del buono')) }}--}}
+                      {{--<div></div>--}}
+                    {{--</div>--}}
+                  {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="form-group">--}}
+                  {{--{{ Form::submit('Aggiungi', array('id' => 'add_voucher', 'class' => 'btn btn-primary button-margin no-radius')) }}--}}
+                {{--</div>--}}
+                {{--{{ Form::close() }}--}}
+                {{--<div class="cAlert" id="alert-1">--}}
+                  {{--<div class="alert alert-success success no-radius"></div>--}}
+                  {{--<div class="alert alert-danger error no-radius"></div>--}}
+                {{--</div>--}}
+              {{--</div>--}}
               {{--*/ $active = '' /*--}}
             @else
               {{--*/ $active = 'active in' /*--}}
@@ -531,15 +611,15 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
-                {{ Form::label('notes', 'Note', array('class' => 'col-md-2 label-padding')) }}
-                <div class="col-md-10">
-                  <div class="input-group">
-                    {{ Form::textarea('notes', $user->notes, array('class' => 'form-control', 'placeholder' => 'Note')) }}
-                    <div></div>
-                  </div>
-                </div>
-              </div>
+              {{--<div class="form-group">--}}
+              {{--{{ Form::label('notes', 'Note', array('class' => 'col-md-2 label-padding')) }}--}}
+              {{--<div class="col-md-10">--}}
+              {{--<div class="input-group">--}}
+              {{--{{ Form::textarea('notes', $user->notes, array('class' => 'form-control', 'placeholder' => 'Note')) }}--}}
+              {{--<div></div>--}}
+              {{--</div>--}}
+              {{--</div>--}}
+              {{--</div>--}}
               <div class="form-group">
                 {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary button-margin no-radius')) }}
               </div>
@@ -739,11 +819,11 @@
     //    $('select#single_number_id').on('change', function () {
     $('#single_number_value').on('change', function () {
       var value = $('#single_number_value').val();
-      if(value == ''){
+      if (value == '') {
         $('#single_number_value').prop('disabled', false);
         $('#complete_series').prop('disabled', false);
         $('#add_single_number').prop('disabled', 'disabled');
-      }else{
+      } else {
         $('#add_single_number').prop('disabled', false);
         $('#complete_series').prop('disabled', 'disabled');
       }
@@ -751,11 +831,11 @@
 
     $('select#complete_series').on('change', function () {
       var value = $('select#complete_series').val();
-      if(value == 0){
+      if (value == 0) {
         $('#single_number_value').prop('disabled', false);
         $('#complete_series').prop('disabled', false);
         $('#add_single_number').prop('disabled', 'disabled');
-      }else if(value == 1){
+      } else if (value == 1) {
         $('#add_single_number').prop('disabled', false);
         $('#single_number_value').prop('disabled', 'disabled');
       }
@@ -784,7 +864,7 @@
         var submit = true;
         //start the check!
         //description
-        var result = checkInputValue(description, "message", 128, 1);
+        var result = checkInputValue(description, "message", 20, 1);
         if (result['status'] == 'ko') {
           $('#alert-1').show();
           $('#alert-1').find('.error').show();
@@ -797,7 +877,7 @@
             htmlElement: $('#alert-1').find('.error'),
             sex: "f",
             elementName: "descrizione",
-            maxLength: 128,
+            maxLength: 20,
             minLength: 1
           };
           showErrorMsg(obj);
@@ -884,7 +964,6 @@
           $('#newsinglecomic').find('#single_series_id').closest('.form-group').addClass('has-success');
           $('#newsinglecomic').find('#single_series_id ~ div').html(success_icon);
         }
-
 
 
         if (complete_insertion == 0) {
