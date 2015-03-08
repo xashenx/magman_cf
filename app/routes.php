@@ -67,6 +67,7 @@ Route::group(array('before' => 'auth'), function () {
             Route::get('boxes', 'AdminController@manageBoxes');
             Route::get('boxes/{box_id}', 'AdminController@manageBox')->where('box_id', '[0-9]+');
             Route::get('boxes/{box_id}/comic/{comic_user_id}', 'AdminController@manageComicUser')->where('box_id', '[0-9]+')->where('comic_user_id', '[0-9]+');
+            Route::get('boxes/{box_id}/voucher/{voucher_id}', 'AdminController@editVoucher')->where('box_id', '[0-9]+')->where('voucher_id', '[0-9]+');
             // routes for the Series pages
             Route::get('series', 'AdminController@manageSeries');
             Route::get('series/{series_id}', 'AdminController@manageSerie')->where('series_id', '[0-9]+');
@@ -80,6 +81,7 @@ Route::group(array('before' => 'auth'), function () {
             Route::post('deleteUser', 'UsersController@delete');
             Route::post('restoreUser', 'UsersController@restore');
             Route::post('renewShopCard', 'UsersController@renewCard');
+            Route::post('editNote', 'UsersController@editNote');
             // route to handle Series model changes
             Route::post('createSeries', 'SeriesController@create');
             Route::post('updateSeries', 'SeriesController@update');
@@ -103,6 +105,7 @@ Route::group(array('before' => 'auth'), function () {
             Route::post('restoreComicUser', 'ComicUserController@restore');
             // route to handle Voucher model changes
             Route::post('createVoucher', 'VouchersController@create');
+            Route::post('updateVoucher', 'VouchersController@update');
             Route::post('deleteVoucher', 'VouchersController@delete');
             // route to handle ShopConf model changes
             Route::post('updateShopConf', 'ShopConfController@update');

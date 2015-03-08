@@ -149,6 +149,14 @@ class AdminController extends BaseController
       $this->layout->content = View::make('admin/viewComicUser', array('comic' => $comicUser));
   }
 
+  public function editVoucher($box_id, $voucher_id){
+    $voucher = Voucher::find($voucher_id);
+    if($voucher == null || $voucher->user_id != $box_id || $voucher->active == 0)
+      return Redirect::to('boxes/' . $box_id);
+    else
+      $this->layout->content = View::make('admin/viewVoucher', array('voucher' => $voucher));
+  }
+
   public function module_state($module_description)
   {
     $modules = Modules::where('description', '=', $module_description)->get();

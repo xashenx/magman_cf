@@ -10,7 +10,7 @@ class Voucher extends Eloquent {
   protected $table = 'bm_vouchers';
   private $rules = array(
       'user_id' => 'required|numeric',
-      'description'  => "regex:/^[A-z 'àèìòù]*$/",
+      'description'  => 'required|max:20|regex:/^[A-z 0-9àèéìòù&\',\.\?\!()\$\€%"£^\@\;\:\r\n\+\-]*$/',
       'amount' => 'required|regex:/^[0-9]{1,8}[\.\,]?[0-9]{0,2}$/',
   );
   private $errors;

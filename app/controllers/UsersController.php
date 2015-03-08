@@ -58,6 +58,23 @@ class UsersController extends BaseController
         }
     }
 
+    public function editNote()
+    {
+        $new = Input::all();
+        $id = Input::get('id');
+        $user = User::find($id);
+
+        $rules = array('notes' => 'regex:/^[A-z 0-9àèéìòù&\',\.\?\!()\$\€%"£^\@\;\:\r\n\+\-]*$/');
+        $validator = Validator::make(Input::all(), $rules);
+        if (!$validator->fails()) {
+            $user->notes = Input::get('notes');
+            $user->update();
+            return Redirect::to('boxes/' . $id);
+        } else {
+            return Redirect::to('boxes/' . $id)->withErrors($validator);
+        }
+    }
+
     public function delete()
     {
         $box_id = Input::get('id');
