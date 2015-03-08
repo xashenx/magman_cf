@@ -26,39 +26,37 @@
     <div class="container">
       <div class="row login_box">
 
-        <div class="col-md-12 col-xs-12" align="center">
+        <div class="col-md-12 col-xs-12" align="center" style="margin-top:220px">
           <br/>
-          <div class="outter"><img src="{{ URL::asset('assets/img/MagMag_piccolo.jpg') }}" class="image-circle"/></div>
-          <h1>Benvenuto Ospite</h1>
-          <span></span>
-          <br/>
+          <!--<div class="outter"><img src="{{ URL::asset('assets/img/MagMag_piccolo.jpg') }}" class="image-circle"/></div>-->
+          <div class="">
+            <h1>Benvenuto!</h1>
+          </div>
         </div>
 
         <div class="col-md-12 col-xs-12 login_control">
           <?php echo Form::open(array('url' => '/login', 'class' => 'box login')); ?>
             <div class="control">
-              <input type="text" class="form-control" name="username" placeholder="Indirizzo Email" required autofocus/>
+              <input type="text" class="form-control transparent-input" name="username" placeholder="Indirizzo Email" required autofocus/>
             </div>
 
             <div class="control">
-              <input type="password" name="password" class="form-control" placeholder="Password" required/>
+              <input type="password" name="password" class="form-control transparent-input" placeholder="Password" required/>
             </div>
-            <div class="control">
-              <div class="label">
-                <input type="checkbox" name="persist" tabindex="3">
-                <span>Ricordami</span>
-              </div>
+            <div class="control squaredThree">
+              <input type="checkbox" value="None" id="squaredThree" name="persist" />
+              <label for="squaredThree"><span class="checkbox-label">Ricordami</span></label>
             </div>
-            <div class="control centerAlign min-height">
+            <div class="control centerAlign min-height-error">
               <?php
                 $message = Session::get('message');
                 if (!empty($message)){
-                  echo $message;
+                  echo "<div class=\"transparent-background-error\">".$message."</div>";
                 }
               ?>
             </div>
             <div align="center">
-              <button class="btn btn-danger btn-orange">LOGIN</button>
+              <button class="btn btn-danger btn-login">ACCEDI</button>
             </div>
           </form>
         </div>

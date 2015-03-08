@@ -40,7 +40,7 @@ Route::post('login', function () {
         // we are now logged in, go to home
         return Redirect::to('home');
     } else {
-        return Redirect::to('login')->with('message', '<span>Indirizzo Email o Password errati!</span>');;
+        return Redirect::to('login')->with('message', '<span>Indirizzo Email o Password errati!<br> Se non ricordi i tuoi dati passa in negozio!</span>');;
     }
 });
 
