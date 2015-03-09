@@ -37,7 +37,7 @@
         <div class="col-md-12 col-xs-12 login_control">
           <?php echo Form::open(array('url' => '/login', 'class' => 'box login')); ?>
             <div class="control">
-              <input type="text" class="form-control transparent-input" name="username" placeholder="Indirizzo Email" required autofocus/>
+              <input type="text" class="form-control transparent-input input-lg" name="username" placeholder="Indirizzo Email" required autofocus/>
             </div>
 
             <div class="control">
