@@ -65,6 +65,64 @@ function checkInputValue(textToCheck, type, maxLength, minLength){
 
 }
 
+function checkInputValueAndRange(textToCheck, type, maxLength, minLength,rangeMin,rangeMax){
+  maxLength = maxLength || null
+  minLength = minLength || null
+  rangeMin = rangeMin || null
+  rangeMax = rangeMax || null
+  var answer = {};
+
+  if (patterns[type] == undefined){
+    answer.status = 'ko';
+    answer.msg = 'invalid type argument';
+    return answer;
+  }
+
+  if (minLength != -1){
+    if (textToCheck.length == 0){
+      answer.status = 'ko';
+      answer.msg = 'empty';
+      return answer;
+    }
+  }
+
+  if (maxLength != null){
+    if(textToCheck.length > maxLength){
+      answer.status = 'ko';
+      answer.msg = 'overflow';
+      return answer;
+    }
+  }
+
+  if (minLength != null && minLength > -1){
+    if(textToCheck.length < minLength){
+      answer.status = 'ko';
+      answer.msg = 'underflow';
+      return answer;
+    }
+  }
+
+  if(patterns[type].test(textToCheck)){
+    if(textToCheck >= rangeMin && textToCheck <= rangeMax) {
+      answer.status = 'ok';
+      return answer;
+    } else if (textToCheck < rangeMin){
+      answer.status = 'ko';
+      answer.msg = 'underrange';
+      return answer;
+    } else {
+      answer.status = 'ko';
+      answer.msg = 'overrange';
+      return answer;
+    }
+  } else {
+    answer.status = 'ko';
+    answer.msg = 'invalid';
+    return answer;
+  }
+
+}
+
 // funzione che scrive dei messaggi uniformi per tutto il tools
 // il parametro obj è un oggetto che può contenere 5 valori
 //
@@ -84,6 +142,8 @@ function showErrorMsg(obj){
   var elementName = obj.elementName;
   var maxLength = obj.maxLength || 1000;
   var minLength = obj.minLength || 0;
+  var rangeMax = obj.rangeMax || 1000;
+  var rangeMin = obj.rangeMin || 0;
 
   // validation
 
@@ -109,6 +169,14 @@ function showErrorMsg(obj){
 
   if (typeof minLength != 'number'){
     return {'status' : 'ko', 'msg' : 'minLength must be a number.'};
+  }
+
+  if (typeof rangeMax != 'number'){
+    return {'status' : 'ko', 'msg' : 'rangeMax must be a number.'};
+  }
+
+  if (typeof rangeMin != 'number'){
+    return {'status' : 'ko', 'msg' : 'rangeMin must be a number.'};
   }
 
   // show errors
@@ -161,6 +229,30 @@ function showErrorMsg(obj){
         htmlElement.append('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> L\'' + elementName + ' inserito non è valido.<br/>');
       } else {
         htmlElement.append('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> L\'' + elementName + ' inserita non è valida.<br/>');
+      }
+
+    } else if (result.msg == 'underrange'){
+
+      if(sex == 'm'){
+        htmlElement.append('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> Il ' + elementName + ' deve essere maggiore di ' + rangeMin + '.<br/>');
+      } else if (sex == 'f') {
+        htmlElement.append('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> La ' + elementName + ' deve essere maggiore di ' + rangeMin + '.<br/>');
+      } else if (sex == 'am') {
+        htmlElement.append('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> L\'' + elementName + ' devono essere maggiori di ' + rangeMin + '.<br/>');
+      } else {
+        htmlElement.append('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> L\'' + elementName + ' devono essere maggiori di ' + rangeMin + '.<br/>');
+      }
+
+    } else if (result.msg == 'overrange'){
+
+      if(sex == 'm'){
+        htmlElement.append('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> Il ' + elementName + ' deve essere minore di ' + rangeMax + '.<br/>');
+      } else if (sex == 'f') {
+        htmlElement.append('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> La ' + elementName + ' deve essere minore di ' + rangeMax + '.<br/>');
+      } else if (sex == 'am') {
+        htmlElement.append('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> L\'' + elementName + ' devono essere minori di ' + rangeMax + '.<br/>');
+      } else {
+        htmlElement.append('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <strong>Attenzione!</strong> L\'' + elementName + ' devono essere minori di ' + rangeMax + '.<br/>');
       }
 
     } else {

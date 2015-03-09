@@ -13,21 +13,22 @@ class ComicUserController extends BaseController
 //      $comics_of_series = $series->listActive->get();
       $comics_of_series = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1')->orderBy('number', 'asc')->get();
       $user_id = Input::get('user_id');
-      $seriesUser = SeriesUser::whereRaw('user_id = ' . $user_id . ' AND series_id = ' . $series_id)->get();
-      if ($series->completed != 1 && count($seriesUser) == 0) {
-        $new_series_user = new SeriesUser();
-        $new_series_user->series_id = $series_id;
-        $new_series_user->user_id = $user_id;
-        $new_series_user->save();
-      } else if (count($seriesUser) > 0) {
-        foreach ($seriesUser as $su) {
-          $su->active = 1;
-          $su->update();
-        }
-      }
 
       if ($complete_series) {
         // insertion of the complete series
+
+        $seriesUser = SeriesUser::whereRaw('user_id = ' . $user_id . ' AND series_id = ' . $series_id)->get();
+        if ($series->completed != 1 && count($seriesUser) == 0) {
+          $new_series_user = new SeriesUser();
+          $new_series_user->series_id = $series_id;
+          $new_series_user->user_id = $user_id;
+          $new_series_user->save();
+        } else if (count($seriesUser) > 0) {
+          foreach ($seriesUser as $su) {
+            $su->active = 1;
+            $su->update();
+          }
+        }
         $comics_counter = 1;
         foreach ($comics_of_series as $comic) {
           while ($comics_counter < $comic->number) {
@@ -49,6 +50,7 @@ class ComicUserController extends BaseController
           $comicUser->comic_id = $comic->id;
           $comicUser->user_id = $user_id;
           $comicUser->price = $comic->price;
+          $comicUser->discount = Input::get('series_discount');
           $comicUser->save();
           $comics_counter++;
         }
@@ -78,6 +80,7 @@ class ComicUserController extends BaseController
         }
 //      $comics = $series->listActive()->where('id', '=', $comic_id)->get();
         $comics = $series->listActive()->where('number', '=', $comic_number)->get();
+        $comicUser = new ComicUser;
         if (count($comics) > 1) {
           //TODO warning, no more than one number for series should be present!
         } else {
@@ -86,11 +89,11 @@ class ComicUserController extends BaseController
             Input::merge(array('comic_id' => $comic_id));
             Input::merge(array('price' => $comic->price));
             $new = Input::all();
-            $comicUser = new ComicUser;
             if ($comicUser->validate($new)) {
               $comicUser->comic_id = $comic_id;
               $comicUser->user_id = $user_id;
               $comicUser->price = $comic->price;
+              $comicUser->discount = Input::get('discount');
               $comicUser->save();
             } else {
               $errors = $comic->errors();
@@ -100,7 +103,7 @@ class ComicUserController extends BaseController
         }
       }
     }
-    return Redirect::to('boxes/' . $user_id);
+    return Redirect::to('boxes/' . $user_id . '/comic/' . $comicUser->id);
   }
 
   public function update()
@@ -109,6 +112,7 @@ class ComicUserController extends BaseController
     $u_id = Input::get('user_id');
     $comicUser = ComicUser::find($cu_id);
     $comicUser->price = Input::get('price');
+    $comicUser->discount = Input::get('discount');
     /*if (Input::get('active'))
       $comicUser -> active = 1;
     else

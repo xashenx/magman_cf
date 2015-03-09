@@ -173,7 +173,7 @@
                   <thead>
                   <tr>
                     <th>Numero</th>
-                    <th>Nome</th>
+                    {{--<th>Nome</th>--}}
                     <th>Cover</th>
                     <th>Prezzo</th>
                     @if($inv_state == 1)
@@ -188,10 +188,10 @@
                     @else
                       <tr class="danger">
                         @endif
-                        <td>{{$comic->number}}</td>
-                        <td>
-                          <a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a>
-                        </td>
+                        <td><a href="{{$series->id}}/{{$comic->id}}">{{$comic->number}}</a></td>
+                        {{--<td>--}}
+                          {{--<a href="{{$series->id}}/{{$comic->id}}">{{$comic->name}}</a>--}}
+                        {{--</td>--}}
                         <td>
                           @if($comic->image)
                             <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt=""

@@ -78,7 +78,7 @@ class AdminController extends BaseController
 //            $active_series = DB::select('SELECT s.id, s.name, s.version, count(*) as comics FROM bm_series as s LEFT JOIN bm_comics as c ON c.series_id = s.id WHERE s.active = 1 and c.active = 1 GROUP BY s.id');
       $not_followed_series = DB::select('SELECT s.id, s.name, s.version FROM bm_series as s WHERE s.active = 1 AND s.id NOT IN (SELECT series_id FROM bm_series_user WHERE user_id = 2)');
       $active_series = DB::select('SELECT s.id, s.name, s.version, count(*) as comics FROM bm_series as s LEFT JOIN bm_comics as c ON c.series_id = s.id WHERE s.active = 1 and c.active = 1 GROUP BY s.id');
-      $comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . $box_id)->orderBy('id','asc')->get();
+      $comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . $box_id)->orderBy('id', 'asc')->get();
       $purchases = ComicUser::whereRaw('state_id = 3 and active = 1 and user_id = ' . $box_id)->get();
       $due = $this->due($user);
       $this->layout->content = View::make('admin/viewBox', array('user' => $user, 'comics' => $comics, 'due' => $due, 'series' => $series, 'purchases' => $purchases, 'active_series' => $active_series, 'not_followed_series' => $not_followed_series, 'renewal_price' => $renewal_price, 'inv_state' => $inv_state));
@@ -90,14 +90,18 @@ class AdminController extends BaseController
   {
     $inv_state = $this->module_state('inventory');
     $due = 0;
-    $discount = $user->discount;
+    //$discount = $user->discount;
     foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
       if ($comic->comic->state == 2) {
-        if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2))
-          $due += round($comic->price, 2);
+        if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2)) {
+          $price = round($comic->price, 2);
+          $due += $price - ($price * $comic->discount / 100);
+        }
+        //$due += round($comic->price, 2);
       }
     }
-    return $due - ($due * $discount / 100);
+    //return $due - ($due * $discount / 100);
+    return $due;
   }
 
   public function buildAvailableArray($boxes)
@@ -129,11 +133,14 @@ class AdminController extends BaseController
       $due_counter = 0;
       foreach ($comics as $comic) {
         if ($comic->comic->state == 2) {
-          if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2))
-            $due_counter += round($comic->price, 2);
+          if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2)) {
+            $price = round($comic->price, 2);
+            $due_counter += $price - ($price * $comic->discount / 100);
+            //$due_counter += round($comic->price, 2);
+          }
         }
       }
-      $due_counter = $due_counter - ($due_counter * $box->discount / 100);
+      //$due_counter = $due_counter - ($due_counter * $box->discount / 100);
       $due = array_add($due, $box->id, $due_counter);
     }
     return $due;
@@ -149,9 +156,10 @@ class AdminController extends BaseController
       $this->layout->content = View::make('admin/viewComicUser', array('comic' => $comicUser));
   }
 
-  public function editVoucher($box_id, $voucher_id){
+  public function editVoucher($box_id, $voucher_id)
+  {
     $voucher = Voucher::find($voucher_id);
-    if($voucher == null || $voucher->user_id != $box_id || $voucher->active == 0)
+    if ($voucher == null || $voucher->user_id != $box_id || $voucher->active == 0)
       return Redirect::to('boxes/' . $box_id);
     else
       $this->layout->content = View::make('admin/viewVoucher', array('voucher' => $voucher));

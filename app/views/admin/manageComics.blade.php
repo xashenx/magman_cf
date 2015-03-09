@@ -20,8 +20,8 @@
                   <tr>
                     <th>Editore</th>
                     <th>Series</th>
-                    <th>Numero</th>
-                    <th>Cover</th>
+                    {{--<th>Numero</th>--}}
+                    {{--<th>Cover</th>--}}
                     <th>Prezzo</th>
                     @if($inv_state == 1)
                     <th>Disponibilità</th>
@@ -37,16 +37,16 @@
                     @endif
                     <td>{{ $comic->series->publisher }}</td>
                     @if($comic->series->version != null)
-                    <td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}} - {{ $comic->series->version}}</a></td>
+                    <td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}} - {{ $comic->series->version}}  nr. {{ $comic->number}}</a></td>
                     @else
-                    <td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}}</a></td>
+                    <td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}} nr. {{ $comic->number}}</a></td>
                     @endif
-                    <td>{{ $comic->number}}</td>
-                    <td>
-                      @if($comic->image)
-                        <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>
-                      @endif
-                    </td>
+                    {{--<td>{{ $comic->number}}</td>--}}
+                    {{--<td>--}}
+                      {{--@if($comic->image)--}}
+                        {{--<a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>--}}
+                      {{--@endif--}}
+                    {{--</td>--}}
                     <td>{{number_format((float)$comic->price, 2, '.', '')}} €</td>
                     @if($inv_state == 1)
                     <td>{{ $comic->available}}</td>
