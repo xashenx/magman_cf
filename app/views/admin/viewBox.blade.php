@@ -474,11 +474,19 @@
                     {{ Form::text('single_number_value','', array('id' => 'single_number_value','disabled' => 'disabled','class' => 'form-control')) }}
                   </div>
                   {{ Form::hidden('user_id', $user->id) }}
+                  {{ Form::hidden('discount', $user->discount) }}
                 </div>
                 <div class="form-group">
                   {{ Form::label('complete_series', 'Tutta la serie', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
                     {{ Form::select('complete_series',array('1' => 'Sì','0' => 'No'),'0',array('id' => 'complete_series','disabled' => 'disabled','class' => 'form-control')) }}
+                    <div></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  {{ Form::label('series_discount', 'Sconto', array('class' => 'col-md-2 label-padding')) }}
+                  <div class="col-md-10">
+                    {{ Form::text('series_discount','', array('id' => 'series_discount','disabled' => 'disabled','class' => 'form-control')) }}
                     <div></div>
                   </div>
                 </div>
@@ -787,8 +795,10 @@
 //        $('select#single_number_id').empty();
                 $('#single_number_value').prop('disabled', 'disabled');
                 $('#single_number_value').empty();
+                $('#series_discount').empty();
                 $('#add_single_number').prop('disabled', 'disabled');
                 $('#complete_series').prop('disabled', 'disabled');
+                $('#series_discount').prop('disabled', 'disabled');
               } else {
 //        $.ajax({
 //          url: '../getNumberFromSeries',
@@ -799,8 +809,10 @@
 //            $('select#single_number_id').prop('disabled', false);
 //            $('select#single_number_id').append('<option value="-1">-- Seleziona un numero --</option>');
                 $('#single_number_value').empty();
+                $('#series_discount').empty();
                 $('#single_number_value').prop('disabled', false);
                 $('#complete_series').prop('disabled', false);
+                $('#series_discount').prop('disabled', 'disabled');
 
 //            $.each(data, function (index, value) {
 //              $('select#single_number_id').append('<option value="' + value.id + '">' + value.number + '</option>');
@@ -822,10 +834,13 @@
       if (value == '') {
         $('#single_number_value').prop('disabled', false);
         $('#complete_series').prop('disabled', false);
+        $('#series_discount').prop('disabled','disabled');
         $('#add_single_number').prop('disabled', 'disabled');
       } else {
         $('#add_single_number').prop('disabled', false);
+        $('#series_discount').empty();
         $('#complete_series').prop('disabled', 'disabled');
+        $('#series_discount').prop('disabled', 'disabled');
       }
     });
 
@@ -834,10 +849,23 @@
       if (value == 0) {
         $('#single_number_value').prop('disabled', false);
         $('#complete_series').prop('disabled', false);
+        $('#series_discount').empty();
+        $('#series_discount').prop('disabled', 'disabled');
         $('#add_single_number').prop('disabled', 'disabled');
       } else if (value == 1) {
-        $('#add_single_number').prop('disabled', false);
+        $('#complete_series').prop('disabled', false);
+        $('#series_discount').prop('disabled', false);
+        $('#add_single_number').prop('disabled', 'disabled');
         $('#single_number_value').prop('disabled', 'disabled');
+      }
+    });
+
+    $('#series_discount').on('change', function () {
+      var value = $('#series_discount').val();
+      if (value == '') {
+        $('#add_single_number').prop('disabled', 'disabled');
+      } else {
+        $('#add_single_number').prop('disabled', false);
       }
     });
   </script>
