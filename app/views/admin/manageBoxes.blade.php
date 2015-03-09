@@ -51,9 +51,9 @@
                                             <th>#</th>
                                             <th>Casellante</th>
                                             <th>Fumetti</th>
-                                            <th>Sconto</th>
+                                            {{--<th>Sconto</th>--}}
                                             <th>Dovuto</th>
-                                            <th>Ultimo Acquisto</th>
+                                            {{--<th>Ultimo Acquisto</th>--}}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -73,18 +73,18 @@
                                                     </td>
                                                     @if (count($box->availableComics) > 0)
                                                         <td>{{array_get($available,$box->id)}}</td>
-                                                        <td>{{$box->discount}} %</td>
+{{--                                                        <td>{{$box->discount}} %</td>--}}
                                                         <td>{{array_get($due,$box->id) != 0 ? number_format((float)array_get($due,$box->id), 2, '.', '') : 0}} €</td>
                                                     @else
                                                         <td>0</td>
-                                                        <td>{{$box->discount}} %</td>
+{{--                                                        <td>{{$box->discount}} %</td>--}}
                                                         <td>0 €</td>
                                                     @endif
-                                                    @if($box->lastBuy->max('buy_time') != null)
-                                                        <td>{{date('d/m/Y',strtotime($box->lastBuy->max('buy_time')))}}</td>
-                                                    @else
-                                                        <td>/</td>
-                                                    @endif
+                                                    {{--@if($box->lastBuy->max('buy_time') != null)--}}
+                                                        {{--<td>{{date('d/m/Y',strtotime($box->lastBuy->max('buy_time')))}}</td>--}}
+                                                    {{--@else--}}
+                                                        {{--<td>/</td>--}}
+                                                    {{--@endif--}}
                                                 </tr>
                                                 @endforeach
                                         </tbody>

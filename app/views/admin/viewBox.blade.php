@@ -140,7 +140,7 @@
                     <tr>
                       <th>Editore</th>
                       <th>Fumetto</th>
-                      <th>Cover</th>
+                      {{--<th>Cover</th>--}}
                       <th>Prezzo</th>
                       <th>Azioni Rapide</th>
                     </tr>
@@ -173,12 +173,12 @@
                             # {{ $comic->comic->number}}
                           </a>
                         </td>
-                        <td>
-                          @if($comic->comic->image)
-                            <a href="{{$comic->comic->image}}" target="_blank"><img src="{{$comic->comic->image}}"
-                                                                                    alt="" height="42" width="42"></a>
-                          @endif
-                        </td>
+                        {{--<td>--}}
+                          {{--@if($comic->comic->image)--}}
+                            {{--<a href="{{$comic->comic->image}}" target="_blank"><img src="{{$comic->comic->image}}"--}}
+                                                                                    {{--alt="" height="42" width="42"></a>--}}
+                          {{--@endif--}}
+                        {{--</td>--}}
                         <td>{{$comic->price != 0 ? number_format((float)$comic->price, 2, '.', '') : 0}} €</td>
                         <td>
                           @if($comic->comic->state == 2)
@@ -287,8 +287,8 @@
                     <tr>
                       <th>Editore</th>
                       <th>Nome</th>
-                      <th>Autore</th>
-                      <th>Numeri</th>
+                      {{--<th>Autore</th>--}}
+                      {{--<th>Numeri</th>--}}
                       <th>Azioni</th>
                     </tr>
                     </thead>
@@ -307,12 +307,12 @@
                           {{$serie->series->name}}
                           {{{ ($serie->series->version != null) ? ' - '.$serie->series->version : '' }}}
                         </td>
-                        <td>
-                          {{$serie->series->author}}
-                        </td>
-                        <td>
-                          {{count($serie->series->listComics)}}
-                        </td>
+                        {{--<td>--}}
+                          {{--{{$serie->series->author}}--}}
+                        {{--</td>--}}
+                        {{--<td>--}}
+                          {{--{{count($serie->series->listComics)}}--}}
+                        {{--</td>--}}
                         <td>
                           @if(!$serie->series->concluded)
                             @if($serie->active)

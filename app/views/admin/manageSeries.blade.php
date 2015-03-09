@@ -47,8 +47,8 @@
                     <tr>
                       <th>Editore</th>
                       <th>Nome</th>
-                      <th>Versione</th>
-                      <th>Autore</th>
+                      {{--<th>Versione</th>--}}
+                      {{--<th>Autore</th>--}}
                       <th>Numeri Usciti</th>
                       <th>Azioni veloci</th>
                       <th># Casellanti</th>
@@ -64,9 +64,14 @@
                         <tr class="odd gradeX">
                           @endif
                           <td>{{$serie->publisher}}</td>
-                          <td><a href="series/{{$serie->id}}">{{$serie->name}}</a></td>
-                          <td>{{$serie->version}}</td>
-                          <td>{{$serie->author}}</td>
+                          @if($serie->version != null)
+                            <td><a href="series/{{$serie->id}}">{{$serie->name}} - {{$serie->version}}</a></td>
+                          @else
+                            <td><a href="series/{{$serie->id}}">{{$serie->name}}</a></td>
+                          @endif
+
+                          {{--<td>{{$serie->version}}</td>--}}
+                          {{--<td>{{$serie->author}}</td>--}}
                           <td>{{$serie->listActive->max('number') != null ? $serie->listActive->max('number') : 0}}</td>
                           <td>
                             @if($serie->active)
