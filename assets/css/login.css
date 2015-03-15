@@ -1,14 +1,40 @@
 body{
- background-color: #544049;
+ background-color: #1f1f1f;
 }
 
 *{
   font-family: 'Open Sans', sans-serif;
   color : #FFF;
 }
+a, a:visited{
+  color:#cb2a0f;
+}
+a:hover, a:active{
+  color:#951224;
+}
+
+.front{
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../img/loginbg.jpg");
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../img/loginbg.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../img/loginbg.jpg");
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  /*background-attachment: fixed;*/
+
+  border-bottom: 3px solid black;
+
+  height: 100%;
+  min-height: 350px;
+}
 
 .login_box{
-  border: 2px solid #ea3520;
+  border: 2px solid #cb2a0f;
   /*background: #e41a23; /* Old browsers */
   /* IE9 SVG, needs conditional override of 'filter' to 'none' */
   background: url("../img/login.jpg") center bottom no-repeat;
@@ -38,10 +64,10 @@ body{
 
 @media (max-width: 900px) {
   body{
-    background-color: #FFF;
+    background-color: #1f1f1f;
   }
   .login_box{
-    border: 0px solid #ea3520;
+    border: 0px solid #cb2a0f;
     /*background: #e41a23; /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
     background: url("../img/login.jpg") center bottom no-repeat;
@@ -66,12 +92,31 @@ body{
     -moz-box-shadow:    0px 0px 0px 0px rgba(50, 50, 50, 0.54);
     box-shadow:         0px 0px 0px 0px rgba(50, 50, 50, 0.54);
   }
+
+  .front{
+    background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../img/login.jpg");
+    background-image: -o-linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../img/login.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../img/login.jpg");
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    background-repeat: no-repeat;
+    background-position: top center;
+    /*background-attachment: fixed;*/
+
+    border-bottom: 3px solid black;
+
+    height: 100%;
+    min-height: 350px;
+  }
 }
 
 .login_control{
   background-color:none;
   padding:10px;
-  margin-top:220px;
 }
 
 @media (max-width: 1200px) {
@@ -110,7 +155,7 @@ input.transparent-input{
 }
 
 .form-control:focus{
-  border: 1px solid #ea3520;
+  border: 1px solid #cb2a0f;
 }
 
 .control {
@@ -123,15 +168,15 @@ input.transparent-input{
 }
 
 .transparent-background-error{
-  border: 1px solid #ea3520;
+  border: 1px solid #cb2a0f;
   padding:5px;
   font-size: 18px;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
 .btn-login{
-  background-color: #ea3520;
-  border: 1px solid #ccc;
+  background-color: #cb2a0f;
+  border: 3px solid #000;
   border-radius: 0px;
   margin: 5px;
   padding: 5px;
@@ -142,7 +187,7 @@ input.transparent-input{
 
 .btn-login:hover {
   background-color: #951224;
-  border: 1px solid #ccc;
+  border: 3px solid #000;
   border-radius: 0px;
   margin: 5px;
   padding: 5px;

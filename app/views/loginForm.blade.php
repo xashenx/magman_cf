@@ -23,11 +23,31 @@
   </head>
 
   <body>
-    <div class="container">
-      <div class="row login_box">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="front">
+          <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-12 col-xs-12 login_control">
+              <?php echo Form::open(array('url' => '/login', 'class' => 'box login')); ?>
+                <div class="control benvenuto">
+                  <span>Benvenuto!</span>
+                </div>
+                <div class="control">
+                  <input type="text" class="form-control transparent-input input-lg" name="username" placeholder="Indirizzo Email" required autofocus/>
+                </div>
 
-        <div class="col-md-12 col-xs-12 login_control">
-            <div class="control centerAlign min-height-error">
+                <div class="control">
+                  <input type="password" name="password" class="form-control transparent-input input-lg" placeholder="Password" required/>
+                </div>
+                <div class="control squaredThree">
+                  <input type="checkbox" value="None" id="squaredThree" name="persist" />
+                  <label for="squaredThree"><span class="checkbox-label">Ricordami</span></label>
+                </div>
+                <div align="center">
+                  <button class="btn btn-danger btn-login">ACCEDI</button>
+                </div>
+              </form>
+                          <div class="control centerAlign">
               <?php
                 $message = Session::get('message');
                 if (!empty($message)){
@@ -35,31 +55,48 @@
                 }
               ?>
             </div>
-          <?php echo Form::open(array('url' => '/login', 'class' => 'box login')); ?>
-            <div class="control benvenuto">
-              <span>Benvenuto!</span>
-            </div>
-            <div class="control">
-              <input type="text" class="form-control transparent-input input-lg" name="username" placeholder="Indirizzo Email" required autofocus/>
             </div>
 
-            <div class="control">
-              <input type="password" name="password" class="form-control transparent-input input-lg" placeholder="Password" required/>
-            </div>
-            <div class="control squaredThree">
-              <input type="checkbox" value="None" id="squaredThree" name="persist" />
-              <label for="squaredThree"><span class="checkbox-label">Ricordami</span></label>
-            </div>
-            <div align="center">
-              <button class="btn btn-danger btn-login">ACCEDI</button>
-            </div>
-
-
-          </form>
+          </div>
         </div>
-
+      </div>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <div class="col-md-4">
+            <p>
+              <b>Magman</b>
+              <br/>
+              Via San Bernardino 9
+              <br/>
+              38122 TRENTO
+            </p>
+          </div>
+          <div class="col-md-4">
+            <p>
+              <b>Contatti</b>
+              <br/>
+              <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+               0461 986112
+              <br/>
+              <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+              <a href="mailto:info@magman.it">info@magman.it</a>
+            </p>
+          </div>
+          <div class="col-md-4">
+            <p>
+              Magic, Cards, Fumetti, Giochi di Ruolo, Tornei, Eventi, Divertimento...a Trento!
+              <br/>
+              P.IVA 02090450228
+            </p>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
-
+    <!-- JQUERY SCRIPTS -->
+    <script src= {{ URL::asset('assets/js/jquery.js') }}></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src= {{ URL::asset('assets/js/bootstrap.min.js') }}></script>
+    <script src= {{ URL::asset('assets/js/login.js') }}></script>
   </body>
 </html>
