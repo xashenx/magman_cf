@@ -7,10 +7,11 @@ body{
   color : #FFF;
 }
 a, a:visited{
-  color:#cb2a0f;
+  color: #fff;
+  text-decoration: underline;
 }
 a:hover, a:active{
-  color:#951224;
+  color:#cb2a0f;
 }
 
 .front{
@@ -30,7 +31,7 @@ a:hover, a:active{
   border-bottom: 3px solid black;
 
   height: 100%;
-  min-height: 350px;
+  min-height: 485px;
 }
 
 .login_box{
@@ -62,7 +63,7 @@ a:hover, a:active{
   box-shadow:         0px 0px 8px 0px rgba(50, 50, 50, 0.54);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   body{
     background-color: #1f1f1f;
   }
@@ -115,8 +116,9 @@ a:hover, a:active{
 }
 
 .login_control{
-  background-color:none;
-  padding:10px;
+  background-color: none;
+  padding: 10px;
+  margin-top: 50px;
 }
 
 @media (max-width: 1200px) {
@@ -168,7 +170,7 @@ input.transparent-input{
 }
 
 .transparent-background-error{
-  border: 1px solid #cb2a0f;
+  border: 1px solid #fff;
   padding:5px;
   font-size: 18px;
   background-color: rgba(0, 0, 0, 0.5);
@@ -267,4 +269,8 @@ input[type=checkbox] {
   color: white;
   font-size: 18px;
   padding: 0px 25px;
+}
+
+.footer{
+  margin-top: 30px;
 }
