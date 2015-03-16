@@ -30,7 +30,7 @@
             <div class="col-md-12 col-xs-12 login_control">
               <?php echo Form::open(array('url' => '/login', 'class' => 'box login')); ?>
                 <div class="control benvenuto">
-                  <img src="assets/img/loginlogo.png" style="width:100%"/>
+                  <img src="assets/img/loginlogo.png" class="logo"/>
                 </div>
                 <div class="control">
                   <input type="text" class="form-control transparent-input input-lg" name="username" placeholder="Indirizzo Email" required autofocus/>
@@ -61,19 +61,15 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <div class="col-md-4 footer">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+          <div class="col-xs-11 col-xs-offset-1 col-sm-4 col-sm-offset-0 footer">
             <p>
-              <b>Magman</b>
-              <br/>
-              Via San Bernardino 9
-              <br/>
-              38122 TRENTO
-              <br/>
-              P.IVA 02090450228
+              <a href="https://www.facebook.com/pages/MAGMAN/61827781800" target="_blank">
+                <img src="assets/img/fb.jpg" width="32px"/>
+              </a>
             </p>
           </div>
-          <div class="col-md-4 footer">
+          <div class="col-xs-11 col-xs-offset-1 col-sm-4 col-sm-offset-0 footer">
             <p>
               <b>Contatti</b>
               <br/>
@@ -84,11 +80,15 @@
               <a href="mailto:info@magman.it">info@magman.it</a>
             </p>
           </div>
-          <div class="col-md-4 footer">
+          <div class="col-xs-11 col-xs-offset-1 col-sm-4 col-sm-offset-0 footer">
             <p>
-              <a href="https://www.facebook.com/pages/MAGMAN/61827781800" target="_blank">
-                <img src="assets/img/fb.jpg" width="32px"/>
-              </a>
+              <b>Magman</b>
+              <br/>
+              Via San Bernardino 9
+              <br/>
+              38122 TRENTO
+              <br/>
+              P.IVA 02090450228
             </p>
           </div>
           </div>

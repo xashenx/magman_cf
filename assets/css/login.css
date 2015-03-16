@@ -14,6 +14,10 @@ a:hover, a:active{
   color:#cb2a0f;
 }
 
+.logo{
+  width: 100%;
+}
+
 .front{
   background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../img/loginbg.jpg");
   background-image: -o-linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../img/loginbg.jpg");
@@ -63,10 +67,19 @@ a:hover, a:active{
   box-shadow:         0px 0px 8px 0px rgba(50, 50, 50, 0.54);
 }
 
+.footer{
+  margin-top: 30px;
+}
+
 @media (max-width: 768px) {
   body{
     background-color: #1f1f1f;
   }
+
+  .logo{
+    width: 60%;
+  }
+
   .login_box{
     border: 0px solid #cb2a0f;
     /*background: #e41a23; /* Old browsers */
@@ -111,7 +124,10 @@ a:hover, a:active{
     border-bottom: 3px solid black;
 
     height: 100%;
-    min-height: 350px;
+    min-height: 500px;
+  }
+  .footer{
+    margin-top: 0px;
   }
 }
 
@@ -269,8 +285,4 @@ input[type=checkbox] {
   color: white;
   font-size: 18px;
   padding: 0px 25px;
-}
-
-.footer{
-  margin-top: 30px;
 }
