@@ -11,7 +11,6 @@ class SeriesUserController extends BaseController {
 			$series_user_collection = SeriesUser::whereRaw('user_id = ' . $user_id .
 			 ' and series_id = ' . $series_id)->get();
 			if (count($series_user_collection) == 0) {
-				echo "sono qui2";
 				$series_user = new SeriesUser;
 				$series_user -> series_id = $series_id;
 				$series_user -> user_id = $user_id;
