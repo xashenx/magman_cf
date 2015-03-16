@@ -47,7 +47,7 @@
               </div>
             </div>
             <div class="form-group">
-              {{ Form::label('insolvency', 'Soglia di Insolvenza', array('class' => 'col-md-2 label-padding')) }}
+              {{ Form::label('insolvency', 'Soglia di Giacenza', array('class' => 'col-md-2 label-padding')) }}
               <div class="col-md-10">
                 <div class="input-group">
                   <span class="input-group-addon no-radius" id="basic-addon1">€</span>

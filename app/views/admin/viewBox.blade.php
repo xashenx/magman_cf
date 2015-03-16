@@ -249,11 +249,12 @@
               {{--@if(count($series)>0)--}}
               <div class="tab-pane fade {{{ $active }}}" id="series">
                 <div class="row">
-                  {{ Form::open(array('action' => 'SeriesUserController@create', 'class' => 'form-horizontal')) }}
+                  {{ Form::open(array('action' => 'SeriesUserController@create', 'class' => 'form-horizontal', 'id' => 'new_follow')) }}
                   <div class="form-group">
                     {{ Form::label('series_id', 'Nuova Serie', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
                       <select name="series_id" id="series_id" class="form-control">
+                      	<option value="-1" selected>-- Seleziona una serie --</option>
                         @foreach($not_followed_series as $serie)
                           <option value="{{ $serie->id }}"
                                   rel="{{ $serie->name }}">
@@ -266,7 +267,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    {{ Form::submit('Aggiungi', array('class' => 'btn btn-primary button-margin no-radius')) }}
+                    {{ Form::submit('Aggiungi', array('disabled' => 'disabled', 'id' => 'follow_series','class' => 'btn btn-primary button-margin no-radius')) }}
                   </div>
                   {{ Form::close() }}
                 </div>
@@ -866,6 +867,15 @@
         $('#add_single_number').prop('disabled', 'disabled');
       } else {
         $('#add_single_number').prop('disabled', false);
+      }
+    });
+    
+    $('select#series_id').on('change', function () {
+      var value = $('select#series_id').val();
+      if (value == '' && value == -1) {
+        $('#follow_series').prop('disabled', 'disabled');
+      } else {
+		$('#follow_series').prop('disabled', false);
       }
     });
   </script>
