@@ -155,7 +155,7 @@ input.transparent-input{
 }
 
 .form-control:focus{
-  border: 1px solid #cb2a0f;
+  border: 1px solid #fff;
 }
 
 .control {
