@@ -63,7 +63,7 @@ class HomePageController extends BaseController
       $due_counter = $due_counter - ($due_counter * $box->discount / 100);
       if ($due_counter > $insolvency_treshold->value) {
 //				$insolvent = array_add($insolvent,'Insolvente (' . $due_counter . '€)',$box);
-        $insolvent = array_add($insolvent, $box->id, 'Insolvente (' . $due_counter . ' €)');
+        $insolvent = array_add($insolvent, $box->id, 'Giacenza (' . $due_counter . ' €)');
         // echo $box->name . " insolvent: " . $due_counter . "<br>";
       }
     }
