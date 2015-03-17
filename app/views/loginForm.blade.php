@@ -62,25 +62,7 @@
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-          <div class="col-xs-11 col-xs-offset-1 col-sm-4 col-sm-offset-0 footer">
-            <p>
-              <a href="https://www.facebook.com/pages/MAGMAN/61827781800" target="_blank">
-                <img src="assets/img/fb.jpg" width="32px"/>
-              </a>
-            </p>
-          </div>
-          <div class="col-xs-11 col-xs-offset-1 col-sm-4 col-sm-offset-0 footer">
-            <p>
-              <b>Contatti</b>
-              <br/>
-              <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
-               0461 986112
-              <br/>
-              <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-              <a href="mailto:info@magman.it">info@magman.it</a>
-            </p>
-          </div>
-          <div class="col-xs-11 col-xs-offset-1 col-sm-4 col-sm-offset-0 footer">
+        <div class="col-xs-11 col-xs-offset-1 col-sm-4 col-sm-offset-2 footer">
             <p>
               <b>Magman</b>
               <br/>
@@ -91,6 +73,18 @@
               P.IVA 02090450228
             </p>
           </div>
+          <div class="col-xs-11 col-xs-offset-1 col-sm-4 col-sm-offset-2 footer">
+            <p>
+              <b>Contatti</b>
+              <br/>
+              <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+               0461 986112
+              <br/>
+              <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+              <a href="mailto:info@magman.it">info@magman.it</a>
+            </p>
+          </div>
+
           </div>
         </div>
       </div>
