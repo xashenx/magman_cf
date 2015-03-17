@@ -36,7 +36,7 @@ a:hover, a:active{
   border-bottom: 3px solid black;
 
   height: 100%;
-  min-height: 485px;
+  min-height: 575px;
 }
 
 .login_box{
@@ -125,7 +125,7 @@ a:hover, a:active{
     border-bottom: 3px solid black;
 
     height: 100%;
-    min-height: 500px;
+    min-height: 530px;
   }
   .footer{
     margin-top: 0px;
