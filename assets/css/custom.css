@@ -18,7 +18,7 @@ body {
 
  #wrapper {
     width: 100%;
-    background:#202020;
+    background:#1f1f1f;
 }
 
 #page-wrapper {
@@ -208,7 +208,7 @@ max-width:170px;
 
 .navbar-cls-top .navbar-brand {
 	color: #fff;
-	background: #202020;
+	background: #1f1f1f;
 	padding-top: 5px;
 	width: 260px;
 	text-align: center;
@@ -264,7 +264,7 @@ max-width:170px;
 
 .sidebar-collapse .nav > li > a {
 	color:#fff;
-	background:#202020;
+	background:#1f1f1f;
 	text-shadow:none;
   height: 60px;
 }
@@ -314,7 +314,7 @@ max-width:170px;
 }
 .navbar-side {
 	border:none;
-	background-color: #202020;
+	background-color: #1f1f1f;
 }
 .navbar-cls-top {
 	background:#4D4D4D;
@@ -323,7 +323,7 @@ max-width:170px;
 }
 
 .navbar-cls-top .navbar-brand:hover {
-  background: #202020;
+  background: #1f1f1f;
   color:#fff;
 }
 

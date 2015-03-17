@@ -129,8 +129,8 @@
                   <strong class="col-md-1 margin-bottom">Cover</strong>
 
                   <div class="col-md-11 margin-bottom">
-                    <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" height="42"
-                                                                     width="42"></a>
+                    <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt=""
+                                                                     class="cover"></a>
                   </div>
                 </div>
               @endif

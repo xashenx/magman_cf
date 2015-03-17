@@ -35,7 +35,7 @@
                     </td>
                     <td>
                       @if($order->image)
-                        <a href="{{$order->image}}" target="_blank"><img src="{{$order->image}}" alt="" height="42" width="42"></a>
+                        <a href="{{$order->image}}" target="_blank"><img src="{{$order->image}}" alt="" class="cover"></a>
                       @endif
                     </td>
                     <td>

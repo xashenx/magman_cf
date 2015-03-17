@@ -44,7 +44,7 @@
                     {{--<td>{{ $comic->number}}</td>--}}
                     {{--<td>--}}
                       {{--@if($comic->image)--}}
-                        {{--<a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" height="42" width="42"></a>--}}
+                        {{--<a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt="" class="cover"></a>--}}
                       {{--@endif--}}
                     {{--</td>--}}
                     <td>{{number_format((float)$comic->price, 2, '.', '')}} €</td>

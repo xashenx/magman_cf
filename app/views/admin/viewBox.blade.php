@@ -176,7 +176,7 @@
                         {{--<td>--}}
                           {{--@if($comic->comic->image)--}}
                             {{--<a href="{{$comic->comic->image}}" target="_blank"><img src="{{$comic->comic->image}}"--}}
-                                                                                    {{--alt="" height="42" width="42"></a>--}}
+                                                                                    {{--alt="" class="cover"></a>--}}
                           {{--@endif--}}
                         {{--</td>--}}
                         <td>{{$comic->price != 0 ? number_format((float)$comic->price, 2, '.', '') : 0}} €</td>
@@ -869,7 +869,7 @@
         $('#add_single_number').prop('disabled', false);
       }
     });
-    
+
     $('select#series_id').on('change', function () {
       var value = $('select#series_id').val();
       if (value == '' && value == -1) {

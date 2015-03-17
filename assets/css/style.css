@@ -4,6 +4,14 @@
   border-radius: 0px;
 }
 
+textarea {
+    resize: none;
+}
+
+.cover{
+  max-height: 42px;
+}
+
 .centerAlign{
   text-align: center;
 }

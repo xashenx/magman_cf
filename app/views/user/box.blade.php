@@ -8,18 +8,20 @@
   @else
     {{--*/ $col = 12 /*--}}
   @endif
+  @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+    {{--*/ $color_header = 'warning' /*--}}
+  @else
+    {{--*/ $color_header = 'default' /*--}}
+  @endif
   <div class="row">
     <div class="col-md-{{$col}}">
-      <div class="panel panel-default no-radius">
+      <div class="panel panel-{{ $color_header }} no-radius">
         <div class="panel-heading no-radius">
           <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Casella
           <strong>
             @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
-              <br/>
-              - <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Rinnovo
-              Tessera: {{ $renewal_price }} € <span class="glyphicon glyphicon-warning-sign"
-                                                    aria-hidden="true"></span>
-              <br/>
+              <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Rinnovo
+              Tessera: {{ $renewal_price }} €
             @endif
             @if($user->show_price && $dueG+$dueNG > 0 )
 
@@ -52,16 +54,6 @@
         </div>
         @if(count($comics)>0)
           <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="legend-green col-xs-2"></div>
-                Disponibilità garantita - <small><i>uscita da meno di un mese</i></small>
-              </div>
-              <div class="col-xs-12">
-                <div class="legend-yellow col-xs-2"></div>
-                Disponibilità non garantita - <small><i>uscita da più di un mese</i></small>
-              </div>
-            </div>
             <table class="table table-striped table-bordered table-hover" id="dataTables-comics">
               <thead>
               <tr>
@@ -103,7 +95,7 @@
                     <td>
                       @if($comic->comic->image)
                         <a href="{{$comic->comic->image}}" target="_blank"><img src="{{$comic->comic->image}}" alt=""
-                                                                                height="42" width="42"></a>
+                                                                                class="cover"></a>
                       @endif
                     </td>
                     @if($user->show_price)
@@ -116,6 +108,16 @@
                   @endforeach
               </tbody>
             </table>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="legend-green col-xs-2"></div>
+                Disponibilità garantita - <small><i>uscita da meno di un mese</i></small>
+              </div>
+              <div class="col-xs-12">
+                <div class="legend-yellow col-xs-2"></div>
+                Disponibilità non garantita - <small><i>uscita da più di un mese</i></small>
+              </div>
+            </div>
           </div>
         @endif
       </div>
@@ -149,6 +151,12 @@
               @endforeach
               </tbody>
             </table>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="legend-green col-xs-2"></div>
+                Serie conclusa
+              </div>
+            </div>
           </div>
         </div>
       </div>

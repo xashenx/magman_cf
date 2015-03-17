@@ -13,7 +13,7 @@
       <!-- BOOTSTRAP STYLES-->
       <link href="{{ URL::asset('assets/css/bootstrap.css') }}" rel="stylesheet"/>
       <!-- FONTAWESOME STYLES-->
-      <link href="{{ URL::asset('assets/css/font-awesome.css') }}" rel="stylesheet"/>
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css", rel="stylesheet"/>
       <!-- CUSTOM STYLES-->
       <link href="{{ URL::asset('assets/css/custom.css') }}" rel="stylesheet"/>
       <!-- OUR STYLES-->

@@ -195,7 +195,7 @@
                         <td>
                           @if($comic->image)
                             <a href="{{$comic->image}}" target="_blank"><img src="{{$comic->image}}" alt=""
-                                                                             height="42" width="42"></a>
+                                                                             class="cover"></a>
                           @endif
                         </td>
                         <td>{{number_format((float)$comic->price, 2, '.', '')}} €</td>
