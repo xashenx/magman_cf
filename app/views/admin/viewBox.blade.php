@@ -255,7 +255,7 @@
                     <div class="col-md-10">
                       <select name="series_id" id="series_id" class="form-control">
                       	<option value="-1" selected>-- Seleziona una serie --</option>
-                        @foreach($not_followed_series as $serie)
+                        @foreach($active_series as $serie)
                           <option value="{{ $serie->id }}"
                                   rel="{{ $serie->name }}">
                             {{ $serie->name }}
