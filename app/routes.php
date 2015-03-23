@@ -115,6 +115,9 @@ Route::group(array('before' => 'auth'), function () {
             Route::post('getNumberFromSeries', 'ComicsController@getNumberFromSeries');
             Route::post('getNewNumbersFromSeries', 'ComicsController@getNewNumbersFromSeries');
             Route::post('mailToCustomer', 'MailController@mailToCustomer');
+            Route::post('buyOldSeries','ComicUserController@buyOldSeries');
+            Route::post('oldComicArrived','ComicUserController@oldComicArrived');
+            Route::post('oldSeriesArrived','ComicUserController@oldSeriesArrived');
         } else {
             Route::get('home', 'UserController@userHome');
             Route::get('box', 'UserController@box');
