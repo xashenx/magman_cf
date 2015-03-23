@@ -10,8 +10,8 @@
           <div class="form-group">
             {{ Form::label('series_id', 'Fumetto', array('class' => 'col-md-2 label-padding')) }}
             <div class="col-md-10">
-              <select name="series_id" id="series_id" class="form-control">
-                <option value="-1" selected>-- Seleziona una serie --</option>
+              <select name="series_id" id="series_id" class="form-control" placeholder="-- Seleziona una serie --">
+                <option value="" selected="selected"></option>
                 @foreach($active_series as $serie)
                   <option value="{{ $serie->id }}" rel="{{ $serie->name }}">
                     {{ $serie->name }}
@@ -27,7 +27,7 @@
           <div class="form-group">
             {{ Form::label('comic_id', 'Numero', array('class' => 'col-md-2 label-padding')) }}
             <div class="col-md-10">
-              <select name="comic_id" id="comic_id" class="form-control" disabled>
+              <select name="comic_id" id="comic_id" class="form-control" disabled placeholder="-- Seleziona un numero --">
               </select>
             </div>
           </div>
@@ -54,6 +54,39 @@
 @include('../layouts/js-include')
 
 <script>
+  var xhr;
+  $('#series_id').selectize({
+    sortField: 'text',
+    onChange: function(value) {
+      if (!value.length) return;
+      select_comic.disable();
+      select_comic.clearOptions();
+      select_comic.load(function(callback) {
+        xhr && xhr.abort();
+        xhr = $.ajax({
+          url: 'getNewNumbersFromSeries',
+          type: 'POST',
+          data: {'series_id': value},
+          success: function(results) {
+            select_comic.enable();
+            callback(results);
+          },
+          error: function() {
+            callback();
+          }
+        })
+      });
+    }
+  });
+  $select_comic = $('#comic_id').selectize({
+    valueField: 'id',
+    labelField: 'number',
+    searchField: ['number']
+  });
+
+  select_comic  = $select_comic[0].selectize;
+
+/*
   $('select#series_id').on('change', function () {
     var selected_id = $('select#series_id').val();
     if (selected_id == -1) {
@@ -68,7 +101,7 @@
         success: function (data) {
           $('select#comic_id').empty();
           $('select#comic_id').prop('disabled', false);
-          $('select#comic_id').append('<option value="-1">-- Seleziona un numero --</option>');
+          $('select#comic_id').append('<option value=""></option>');
           $.each(data, function (index, value) {
             $('select#comic_id').append('<option value="' + value.id + '">' + value.number + '</option>');
           });
@@ -80,7 +113,7 @@
       });
     }
   });
-
+*/
 @if($inv_state == 0)
   $('select#comic_id').on('change', function () {
     var selected_id = $('select#comic_id').val();

@@ -14,6 +14,8 @@
       <link href="{{ URL::asset('assets/css/bootstrap.css') }}" rel="stylesheet"/>
       <!-- FONTAWESOME STYLES-->
       <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css", rel="stylesheet"/>
+      <!-- BOOTSTRAP SELECTIZE STYLES MOD BY TOMU-->
+      <link href="{{ URL::asset('assets/css/selectize.bootstrap3.css') }}" rel="stylesheet"/>
       <!-- CUSTOM STYLES-->
       <link href="{{ URL::asset('assets/css/custom.css') }}" rel="stylesheet"/>
       <!-- OUR STYLES-->
