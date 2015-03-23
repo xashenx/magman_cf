@@ -75,10 +75,10 @@
               {{--*/ $active = '' /*--}}
               {{--@endif--}}
               {{--<li class="{{ $active }}">--}}
-                {{--<a href="#newseries" data-toggle="tab">--}}
-                  {{--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>--}}
-                  {{--<span class="titoli-tab">Nuova Serie</span>--}}
-                {{--</a>--}}
+              {{--<a href="#newseries" data-toggle="tab">--}}
+              {{--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>--}}
+              {{--<span class="titoli-tab">Nuova Serie</span>--}}
+              {{--</a>--}}
               {{--</li>--}}
               {{--*/ $active = '' /*--}}
               <li class="">
@@ -88,10 +88,10 @@
                 </a>
               </li>
               {{--<li class="">--}}
-                {{--<a href="#newvoucher" data-toggle="tab">--}}
-                  {{--<span class="glyphicon glyphicon-gift" aria-hidden="true"></span>--}}
-                  {{--<span class="titoli-tab">Aggiungi Buono</span>--}}
-                {{--</a>--}}
+              {{--<a href="#newvoucher" data-toggle="tab">--}}
+              {{--<span class="glyphicon glyphicon-gift" aria-hidden="true"></span>--}}
+              {{--<span class="titoli-tab">Aggiungi Buono</span>--}}
+              {{--</a>--}}
               {{--</li>--}}
               {{-- <li class=""><a href="#details" data-toggle="tab">Dettagli</a></li> --}}
 
@@ -132,6 +132,10 @@
                       <div class="legend-yellow col-xs-2"></div>
                       Disponibilità non garantita
                     </div>
+                    <div class="col-xs-12">
+                      <div class="legend-yellow col-xs-2"></div>
+                      Arretrato non arrivato (mettere asssurroroo)
+                    </div>
                   </div>
                   <table
                           class="table table-striped table-bordered table-hover"
@@ -146,7 +150,9 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {{-- */ $old_series=0 /* --}}
                     @foreach ($comics as $comic)
+                      {{-- */ $old_series= $comic->comic->series_id /* --}}
                       @if ($inv_state == 1)
                         @if ($comic->comic->available > 1)
                           {{--*/ $tr = 'success' /*--}}
@@ -154,13 +160,17 @@
                           {{--*/ $tr = 'odd gradeX' /*--}}
                         @endif
                       @else
-                        @if ($comic->comic->arrived_at > date('Y-m-d',strtotime('-1 month')))
+                        @if (($comic->comic->arrived_at > date('Y-m-d',strtotime('-1 month')) && !$comic->old_comic) || $comic->old_arrived_at > date('Y-m-d',strtotime('-1 month')))
                           {{--*/ $tr = 'success' /*--}}
                         @else
-                          @if ($comic->comic->state == 2)
+                          @if (($comic->comic->state == 2 && !$comic->old_comic) || $comic->old_arrived_at != NULL)
                             {{--*/ $tr = 'warning' /*--}}
                           @else
-                            {{--*/ $tr = 'odd gradeX' /*--}}
+                            @if($comic->old_comic)
+                              {{--*/ $tr = 'info' /*--}}
+                            @else
+                              {{--*/ $tr = 'odd gradeX' /*--}}
+                            @endif
                           @endif
                         @endif
                       @endif
@@ -174,19 +184,43 @@
                           </a>
                         </td>
                         {{--<td>--}}
-                          {{--@if($comic->comic->image)--}}
-                            {{--<a href="{{$comic->comic->image}}" target="_blank"><img src="{{$comic->comic->image}}"--}}
-                                                                                    {{--alt="" class="cover"></a>--}}
-                          {{--@endif--}}
+                        {{--@if($comic->comic->image)--}}
+                        {{--<a href="{{$comic->comic->image}}" target="_blank"><img src="{{$comic->comic->image}}"--}}
+                        {{--alt="" class="cover"></a>--}}
+                        {{--@endif--}}
                         {{--</td>--}}
                         <td>{{$comic->price != 0 ? number_format((float)$comic->price, 2, '.', '') : 0}} €</td>
                         <td>
-                          @if($comic->comic->state == 2)
+                          @if(($comic->comic->state == 2 && !$comic->old_comic) || ($comic->old_arrived_at != NULL && !$comic->old_series))
                             <button type="button" title="Acquista"
                                     onclick="showConfirmModal({{$comic->id}},{{$user->id}},0)"
                                     class="btn btn-success btn-sm no-radius medium-icon">
                                                             <span class="glyphicon glyphicon-euro"
                                                                   aria-hidden="true"></span>
+                            </button>
+                          @endif
+                          @if($comic->old_arrived_at != NULL && $comic->old_series && $comic->comic->number == 1)
+                            <button type="button" title="Acquista Serie"
+                                    onclick="showConfirmModal({{$comic->id}},{{$user->id}},9)"
+                                    class="btn btn-success btn-sm no-radius medium-icon">
+                                                            <span class="glyphicon glyphicon-euro"
+                                                                  aria-hidden="true"></span>
+                            </button>
+                          @endif
+                          @if($comic->old_comic && $comic->old_arrived_at == NULL && !$comic->old_series)
+                          <button type="button" title="Arrivato"
+                                  onclick="showConfirmModal({{$comic->id}},{{$user->id}},10)"
+                                  class="btn btn-info btn-sm no-radius medium-icon">
+                                                        <span class="glyphicon glyphicon-send"
+                                                              aria-hidden="true"></span>
+                          </button>
+                          @endif
+                          @if($comic->old_comic && $comic->old_arrived_at == NULL && $comic->old_series && $comic->comic->number == 1)
+                            <button type="button" title="Arrivata Serie"
+                                    onclick="showConfirmModal({{$comic->id}},{{$user->id}},11)"
+                                    class="btn btn-info btn-sm no-radius medium-icon">
+                                                        <span class="glyphicon glyphicon-book"
+                                                              aria-hidden="true"></span>
                             </button>
                           @endif
                           <button type="button" title="Rimuovi"
@@ -195,6 +229,7 @@
                                                         <span class="glyphicon glyphicon-trash"
                                                               aria-hidden="true"></span>
                           </button>
+
                           {{--<div class="btn-group">--}}
                           {{--<button data-toggle="dropdown"--}}
                           {{--class="btn btn-primary dropdown-toggle">--}}
@@ -254,8 +289,8 @@
                     {{ Form::label('series_id', 'Nuova Serie', array('class' => 'col-md-2 label-padding')) }}
                     <div class="col-md-10">
                       <select name="series_id" id="series_id" class="form-control">
-                      	<option value="-1" selected>-- Seleziona una serie --</option>
-                        @foreach($not_followed_series as $serie)
+                        <option value="-1" selected>-- Seleziona una serie --</option>
+                        @foreach($to_follow_series as $serie)
                           <option value="{{ $serie->id }}"
                                   rel="{{ $serie->name }}">
                             {{ $serie->name }}
@@ -309,10 +344,10 @@
                           {{{ ($serie->series->version != null) ? ' - '.$serie->series->version : '' }}}
                         </td>
                         {{--<td>--}}
-                          {{--{{$serie->series->author}}--}}
+                        {{--{{$serie->series->author}}--}}
                         {{--</td>--}}
                         {{--<td>--}}
-                          {{--{{count($serie->series->listComics)}}--}}
+                        {{--{{count($serie->series->listComics)}}--}}
                         {{--</td>--}}
                         <td>
                           @if(!$serie->series->concluded)
@@ -427,26 +462,26 @@
               {{--@endif--}}
 
               {{--<div class="tab-pane fade {{{ $active }}}" id="newseries">--}}
-                {{--{{ Form::open(array('action' => 'SeriesUserController@create', 'class' => 'form-horizontal')) }}--}}
-                {{--<div class="form-group">--}}
-                  {{--{{ Form::label('series_id', 'Serie', array('class' => 'col-md-2 label-padding')) }}--}}
-                  {{--<div class="col-md-10">--}}
-                    {{--<select name="series_id" id="series_id" class="form-control">--}}
-                      {{--@foreach($not_followed_series as $serie)--}}
-                        {{--<option value="{{ $serie->id }}"--}}
-                                {{--rel="{{ $serie->name }}">--}}
-                          {{--{{ $serie->name }}--}}
-                          {{--{{{ ($serie->version != null) ? ' - '.$serie->version : '' }}}--}}
-                        {{--</option>--}}
-                      {{--@endforeach--}}
-                    {{--</select>--}}
-                    {{--{{ Form::hidden('user_id', $user->id) }}--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                  {{--{{ Form::submit('Aggiungi', array('class' => 'btn btn-primary button-margin no-radius')) }}--}}
-                {{--</div>--}}
-                {{--{{ Form::close() }}--}}
+              {{--{{ Form::open(array('action' => 'SeriesUserController@create', 'class' => 'form-horizontal')) }}--}}
+              {{--<div class="form-group">--}}
+              {{--{{ Form::label('series_id', 'Serie', array('class' => 'col-md-2 label-padding')) }}--}}
+              {{--<div class="col-md-10">--}}
+              {{--<select name="series_id" id="series_id" class="form-control">--}}
+              {{--@foreach($not_followed_series as $serie)--}}
+              {{--<option value="{{ $serie->id }}"--}}
+              {{--rel="{{ $serie->name }}">--}}
+              {{--{{ $serie->name }}--}}
+              {{--{{{ ($serie->version != null) ? ' - '.$serie->version : '' }}}--}}
+              {{--</option>--}}
+              {{--@endforeach--}}
+              {{--</select>--}}
+              {{--{{ Form::hidden('user_id', $user->id) }}--}}
+              {{--</div>--}}
+              {{--</div>--}}
+              {{--<div class="form-group">--}}
+              {{--{{ Form::submit('Aggiungi', array('class' => 'btn btn-primary button-margin no-radius')) }}--}}
+              {{--</div>--}}
+              {{--{{ Form::close() }}--}}
               {{--</div>--}}
 
               <div class="tab-pane fade" id="newsinglecomic">
@@ -476,6 +511,7 @@
                   </div>
                   {{ Form::hidden('user_id', $user->id) }}
                   {{ Form::hidden('discount', $user->discount) }}
+                  {{ Form::hidden('old_comic','yes') }}
                 </div>
                 <div class="form-group">
                   {{ Form::label('complete_series', 'Tutta la serie', array('class' => 'col-md-2 label-padding')) }}
@@ -502,33 +538,33 @@
               </div>
 
               {{--<div class="tab-pane fade" id="newvoucher">--}}
-                {{--{{ Form::open(array('action' => 'VouchersController@create', 'id' => 'new-voucher', 'class' => 'form-horizontal')) }}--}}
-                {{--<div class="form-group has-feedback">--}}
-                  {{--{{ Form::label('description', 'Descrizione', array('class' => 'col-md-2 label-padding')) }}--}}
-                  {{--<div class="col-md-10">--}}
-                    {{--{{ Form::text('description', '', array('class' => 'form-control', 'placeholder' => 'Descrizione del buono')) }}--}}
-                    {{--<div></div>--}}
-                  {{--</div>--}}
-                  {{--{{ Form::hidden('user_id', $user->id) }}--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                  {{--{{ Form::label('amount', 'Valore', array('class' => 'col-md-2 label-padding')) }}--}}
-                  {{--<div class="col-md-10">--}}
-                    {{--<div class="input-group">--}}
-                      {{--<span class="input-group-addon no-radius" id="basic-addon1">€</span>--}}
-                      {{--{{ Form::text('amount', '', array('class' => 'form-control', 'placeholder' => 'Valore del buono')) }}--}}
-                      {{--<div></div>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                  {{--{{ Form::submit('Aggiungi', array('id' => 'add_voucher', 'class' => 'btn btn-primary button-margin no-radius')) }}--}}
-                {{--</div>--}}
-                {{--{{ Form::close() }}--}}
-                {{--<div class="cAlert" id="alert-1">--}}
-                  {{--<div class="alert alert-success success no-radius"></div>--}}
-                  {{--<div class="alert alert-danger error no-radius"></div>--}}
-                {{--</div>--}}
+              {{--{{ Form::open(array('action' => 'VouchersController@create', 'id' => 'new-voucher', 'class' => 'form-horizontal')) }}--}}
+              {{--<div class="form-group has-feedback">--}}
+              {{--{{ Form::label('description', 'Descrizione', array('class' => 'col-md-2 label-padding')) }}--}}
+              {{--<div class="col-md-10">--}}
+              {{--{{ Form::text('description', '', array('class' => 'form-control', 'placeholder' => 'Descrizione del buono')) }}--}}
+              {{--<div></div>--}}
+              {{--</div>--}}
+              {{--{{ Form::hidden('user_id', $user->id) }}--}}
+              {{--</div>--}}
+              {{--<div class="form-group">--}}
+              {{--{{ Form::label('amount', 'Valore', array('class' => 'col-md-2 label-padding')) }}--}}
+              {{--<div class="col-md-10">--}}
+              {{--<div class="input-group">--}}
+              {{--<span class="input-group-addon no-radius" id="basic-addon1">€</span>--}}
+              {{--{{ Form::text('amount', '', array('class' => 'form-control', 'placeholder' => 'Valore del buono')) }}--}}
+              {{--<div></div>--}}
+              {{--</div>--}}
+              {{--</div>--}}
+              {{--</div>--}}
+              {{--<div class="form-group">--}}
+              {{--{{ Form::submit('Aggiungi', array('id' => 'add_voucher', 'class' => 'btn btn-primary button-margin no-radius')) }}--}}
+              {{--</div>--}}
+              {{--{{ Form::close() }}--}}
+              {{--<div class="cAlert" id="alert-1">--}}
+              {{--<div class="alert alert-success success no-radius"></div>--}}
+              {{--<div class="alert alert-danger error no-radius"></div>--}}
+              {{--</div>--}}
               {{--</div>--}}
               {{--*/ $active = '' /*--}}
             @else
@@ -757,6 +793,21 @@
         document.confirmForm.id.value = object_id;
         document.confirmForm.action = '../deleteVoucher';
         $('#confirmPageName').text('Sei sicuro di voler rimuovere il buono?');
+      } else if (mode == 9) {
+        // buying old series
+        document.confirmForm.id.value = object_id;
+        document.confirmForm.action = '../buyOldSeries';
+        $('#confirmPageName').text('La serie arretrata è stata acquistata?');
+      } else if (mode == 10) {
+        // old comic arrived
+        document.confirmForm.id.value = object_id;
+        document.confirmForm.action = '../oldComicArrived';
+        $('#confirmPageName').text('L\'arretrato è arrivato?');
+      } else if (mode == 11) {
+        // old series arrived
+        document.confirmForm.id.value = object_id;
+        document.confirmForm.action = '../oldSeriesArrived';
+        $('#confirmPageName').text('La serie arretrata è arrivata?');
       }
       $('#modal-confirm').modal({
         show: true
@@ -835,7 +886,7 @@
       if (value == '') {
         $('#single_number_value').prop('disabled', false);
         $('#complete_series').prop('disabled', false);
-        $('#series_discount').prop('disabled','disabled');
+        $('#series_discount').prop('disabled', 'disabled');
         $('#add_single_number').prop('disabled', 'disabled');
       } else {
         $('#add_single_number').prop('disabled', false);
@@ -875,7 +926,7 @@
       if (value == '' && value == -1) {
         $('#follow_series').prop('disabled', 'disabled');
       } else {
-		$('#follow_series').prop('disabled', false);
+        $('#follow_series').prop('disabled', false);
       }
     });
   </script>

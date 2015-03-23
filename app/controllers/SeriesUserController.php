@@ -8,16 +8,16 @@ class SeriesUserController extends BaseController {
 		// check that the series exists and is active!
 		if ($series != null && $series -> active) {
 			// check that the user is not already following that series!
-			$series_user_collection = SeriesUser::whereRaw('user_id = ' . $user_id .
+			/*$series_user_collection = SeriesUser::whereRaw('user_id = ' . $user_id .
 			 ' and series_id = ' . $series_id)->get();
-			if (count($series_user_collection) == 0) {
+			if (count($series_user_collection) == 0) {*/
 				$series_user = new SeriesUser;
 				$series_user -> series_id = $series_id;
 				$series_user -> user_id = $user_id;
 				$series_user -> save();
-			}else{
+			/*}else{
 				// TODO warning already in box
-			}
+			}*/
 		}else{
 			// TODO warning: either the series does not exist or it's disabled
 		}

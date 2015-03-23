@@ -44,12 +44,17 @@ class ComicUserController extends BaseController
             $comicUser->comic_id = $new_comic->id;
             $comicUser->user_id = $user_id;
             $comicUser->price = $comic->price;
+            $comicUser->old_comic = 1;
+            $comicUser->old_series = 1;
+            $comicUser->discount = Input::get('series_discount');
             $comicUser->save();
           }
           $comicUser = new ComicUser;
           $comicUser->comic_id = $comic->id;
           $comicUser->user_id = $user_id;
           $comicUser->price = $comic->price;
+          $comicUser->old_comic = 1;
+          $comicUser->old_series = 1;
           $comicUser->discount = Input::get('series_discount');
           $comicUser->save();
           $comics_counter++;
@@ -90,6 +95,8 @@ class ComicUserController extends BaseController
             Input::merge(array('price' => $comic->price));
             $new = Input::all();
             if ($comicUser->validate($new)) {
+              if(Input::get('old_comic') == 'yes')
+                $comicUser->old_comic = 1;
               $comicUser->comic_id = $comic_id;
               $comicUser->user_id = $user_id;
               $comicUser->price = $comic->price;
@@ -150,6 +157,38 @@ class ComicUserController extends BaseController
     return Redirect::to('boxes/' . $user_id);
   }
 
+  public function buyOldSeries(){
+    $id = Input::get('id');
+    $user_id = Input::get('user_id');
+    $comicUser = ComicUser::find($id);
+    $buy_time = date("Y-m-d H:i:s", time());
+    $series_id = $comicUser->comic->series_id;
+    DB::update('UPDATE bm_comic_user cu LEFT JOIN bm_comics c ON cu.comic_id = c.id
+              SET buy_time = \'' . $buy_time . '\', cu.state_id = 3
+               WHERE cu.user_id = ' . $user_id . ' AND cu.old_series = 1 AND cu.state_id = 1 AND cu.active = 1 AND c.series_id = ' . $series_id);
+    return Redirect::to('boxes/' . $user_id);
+  }
+
+  public function oldComicArrived(){
+    $id = Input::get('id');
+    $user_id = Input::get('user_id');
+    $comicUser = ComicUser::find($id);
+    $comicUser->old_arrived_at = date("Y-m-d H:i:s", time());
+    $comicUser->update();
+    return Redirect::to('boxes/' . $user_id);
+  }
+
+  public function oldSeriesArrived(){
+    $id = Input::get('id');
+    $user_id = Input::get('user_id');
+    $comicUser = ComicUser::find($id);
+    $arrived_at = date("Y-m-d H:i:s", time());
+    $series_id = $comicUser->comic->series_id;
+    DB::update('UPDATE bm_comic_user cu LEFT JOIN bm_comics c ON cu.comic_id = c.id
+              SET old_arrived_at = \'' . $arrived_at . '\'
+               WHERE cu.user_id = ' . $user_id . ' AND cu.old_series = 1 AND cu.state_id = 1 AND cu.active = 1 AND c.series_id = ' . $series_id);
+    return Redirect::to('boxes/' . $user_id);
+  }
 }
 
 ?>
