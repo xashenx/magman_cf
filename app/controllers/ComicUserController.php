@@ -44,6 +44,7 @@ class ComicUserController extends BaseController
             $comicUser->comic_id = $new_comic->id;
             $comicUser->user_id = $user_id;
             $comicUser->price = $comic->price;
+            $comicUser->discount = Input::get('series_discount');
             $comicUser->save();
           }
           $comicUser = new ComicUser;

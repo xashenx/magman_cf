@@ -112,9 +112,11 @@ class ComicsController extends BaseController
   {
     $series_user = SeriesUser::whereRaw('series_id = ' . $series_id . ' and active = 1')->get();
     foreach ($series_user as $user) {
+      $user_details = User::find($user->user_id);
       $comicUser = new ComicUser;
       $comicUser->comic_id = $comic->id;
       $comicUser->user_id = $user->user_id;
+      $comicUser->discount = $user_details->discount;
       $comicUser->price = $comic->price;
       $comicUser->save();
     }
