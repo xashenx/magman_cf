@@ -8,5 +8,8 @@
 <!-- DATA TABLE SCRIPTS -->
 <script src= {{ URL::asset('assets/js/dataTables/jquery.dataTables.js') }}></script>
 <script src= {{ URL::asset('assets/js/dataTables/dataTables.bootstrap.js') }}></script>
+<!-- SELECTIZE -->
+<script src= {{ URL::asset('assets/js/selectize.min.js') }}></script>
+
 <script src= {{ URL::asset('assets/js/control.js') }}></script>
 <script src= {{ URL::asset('assets/js/custom.js') }}></script>
