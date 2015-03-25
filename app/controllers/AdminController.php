@@ -94,7 +94,7 @@ class AdminController extends BaseController
     //$discount = $user->discount;
     foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
       if ($comic->comic->state == 2) {
-        if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2)) {
+        if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2 && (!$comic->old_comic || ($comic->old_arrived_at != NULL)))) {
           $price = round($comic->price, 2);
           $due += $price - ($price * $comic->discount / 100);
         }
@@ -115,7 +115,7 @@ class AdminController extends BaseController
       $available_counter = 0;
       foreach ($comics as $comic) {
         if ($comic->comic->state == 2) {
-          if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2))
+          if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2 && (!$comic->old_comic || ($comic->old_arrived_at != NULL))))
             $available_counter++;
         }
       }
@@ -134,7 +134,7 @@ class AdminController extends BaseController
       $due_counter = 0;
       foreach ($comics as $comic) {
         if ($comic->comic->state == 2) {
-          if (($comic->comic->available > 0 && $inv_state) || (!$inv_state && $comic->comic->state == 2)) {
+          if (($comic->comic->available > 0 && $inv_state && (!$comic->old_comic || ($comic->old_arrived_at != NULL))) || (!$inv_state && $comic->comic->state == 2 && (!$comic->old_comic || ($comic->old_arrived_at != NULL)))) {
             $price = round($comic->price, 2);
             $due_counter += $price - ($price * $comic->discount / 100);
             //$due_counter += round($comic->price, 2);

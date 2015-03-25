@@ -73,10 +73,10 @@
                     {{--*/ $tr = 'odd gradeX'; $skip = 0 /*--}}
                   @endif
                 @else
-                  @if ($comic->comic->arrived_at > date('Y-m-d',strtotime('-1 month')))
+                  @if (($comic->comic->arrived_at > date('Y-m-d',strtotime('-1 month')) && !$comic->old_comic) || $comic->old_arrived_at > date('Y-m-d',strtotime('-1 month')))
                     {{--*/ $tr = 'success'; $skip = 0 /*--}}
                   @else
-                    @if ($comic->comic->state == 2)
+                    @if (($comic->comic->state == 2 && !$comic->old_comic) || $comic->old_arrived_at != NULL)
                       {{--*/ $tr = 'warning'; $skip = 0 /*--}}
                     @else
                       {{--*/ $tr = 'odd gradeX'; $skip = 1 /*--}}

@@ -49,12 +49,11 @@ class UserController extends BaseController
     $discount = $user->discount;
     foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
       if ($comic->comic->state == 2) {
-        if ($comic->comic->available > 0 && $inv_state){
+        if ($comic->comic->available > 0 && $inv_state) {
 //          $due += round($comic->price, 2);
           $price = round($comic->price, 2);
           $due += $price - ($price * $comic->discount / 100);
-        }
-        else if (!$inv_state && $comic->comic->state == 2 && $comic->comic->arrived_at > date('Y-m-d', strtotime('-1 month'))){
+        } else if (!$inv_state && $comic->comic->state == 2 && ((!$comic->old_comic && $comic->comic->arrived_at > date('Y-m-d', strtotime('-1 month'))) || ($comic->old_arrived_at > date('Y-m-d', strtotime('-1 month'))))) {
 //          $due += round($comic->price, 2);
           $price = round($comic->price, 2);
           $due += $price - ($price * $comic->discount / 100);
@@ -71,7 +70,7 @@ class UserController extends BaseController
     $due = 0;
     $discount = $user->discount;
     foreach ($user->listComics()->whereRaw('state_id < 3 and active = 1')->get() as $comic) {
-      if ($comic->comic->state == 2 && !$inv_state && $comic->comic->arrived_at < date('Y-m-d', strtotime('-1 month'))){
+      if (!$inv_state && $comic->comic->state == 2 && ((!$comic->old_comic && $comic->comic->arrived_at < date('Y-m-d', strtotime('-1 month'))) || ($comic->old_arrived_at != NULL && $comic->old_arrived_at < date('Y-m-d', strtotime('-1 month'))))) {
 //          $due += round($comic->price, 2);
         $price = round($comic->price, 2);
         $due += $price - ($price * $comic->discount / 100);

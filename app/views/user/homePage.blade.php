@@ -68,10 +68,10 @@
                       {{--*/ $tr = 'odd gradeX'; $skip = 0 /*--}}
                     @endif
                   @else
-                    @if ($comic->comic->arrived_at > date('Y-m-d',strtotime('-1 month')))
+                    @if (($comic->comic->arrived_at > date('Y-m-d',strtotime('-1 month')) && !$comic->old_comic) || $comic->old_arrived_at > date('Y-m-d',strtotime('-1 month')))
                       {{--*/ $tr = 'success'; $skip = 0 /*--}}
                     @else
-                      @if ($comic->comic->state == 2)
+                      @if (($comic->comic->state == 2 && !$comic->old_comic) || $comic->old_arrived_at != NULL)
                         {{--*/ $tr = 'warning'; $skip = 0 /*--}}
                       @else
                         {{--*/ $tr = 'odd gradeX'; $skip = 1 /*--}}
@@ -132,7 +132,7 @@
               <tr>
                 <th>Fumetto</th>
                 <th>Autore</th>
-                @if(!Auth::user()->child)
+                @if(Auth::user()->child)
                   <th>Cover</th>
                 @endif
               </tr>
@@ -150,14 +150,12 @@
                   <td>
                     {{$new->series->author}}
                   </td>
-                  @if(!Auth::user()->child)
-                    <td>
-                      @if($new->image)
-                        <a href="{{$new->image}}" target="_blank"><img src="{{$new->image}}" alt="" class="cover"
-                                  ></a>
-                      @endif
-                    </td>
-                  @endif
+                  <td>
+                    @if($new->image && Auth::user()->child)
+                      <a href="{{$new->image}}" target="_blank"><img src="{{$new->image}}" alt="" class="cover"
+                                ></a>
+                    @endif
+                  </td>
                 </tr>
               @endforeach
               </tbody>
