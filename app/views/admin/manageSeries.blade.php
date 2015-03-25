@@ -45,8 +45,8 @@
                          id="dataTables-series">
                     <thead>
                     <tr>
-                      <th>Editore</th>
                       <th>Nome</th>
+                      <th>Editore</th>
                       {{--<th>Versione</th>--}}
                       {{--<th>Autore</th>--}}
                       <th>Numeri Usciti</th>
@@ -63,13 +63,12 @@
                       @else
                         <tr class="odd gradeX">
                           @endif
-                          <td>{{$serie->publisher}}</td>
                           @if($serie->version != null)
                             <td><a href="series/{{$serie->id}}">{{$serie->name}} - {{$serie->version}}</a></td>
                           @else
                             <td><a href="series/{{$serie->id}}">{{$serie->name}}</a></td>
                           @endif
-
+                          <td>{{$serie->publisher}}</td>
                           {{--<td>{{$serie->version}}</td>--}}
                           {{--<td>{{$serie->author}}</td>--}}
                           <td>{{$serie->listActive->max('number') != null ? $serie->listActive->max('number') : 0}}</td>

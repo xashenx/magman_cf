@@ -18,8 +18,8 @@
               <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                   <tr>
+                    <th>Fumetto</th>
                     <th>Editore</th>
-                    <th>Series</th>
                     {{--<th>Numero</th>--}}
                     {{--<th>Cover</th>--}}
                     <th>Prezzo</th>
@@ -35,12 +35,12 @@
                     @else
                   <tr class="danger">
                     @endif
-                    <td>{{ $comic->series->publisher }}</td>
                     @if($comic->series->version != null)
-                    <td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}} - {{ $comic->series->version}}  nr. {{ $comic->number}}</a></td>
+                      <td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}} - {{ $comic->series->version}}  nr. {{ $comic->number}}</a></td>
                     @else
-                    <td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}} nr. {{ $comic->number}}</a></td>
+                      <td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}} nr. {{ $comic->number}}</a></td>
                     @endif
+                    <td>{{ $comic->series->publisher }}</td>
                     {{--<td>{{ $comic->number}}</td>--}}
                     {{--<td>--}}
                       {{--@if($comic->image)--}}

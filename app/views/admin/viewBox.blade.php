@@ -142,8 +142,8 @@
                           id="dataTables-comics">
                     <thead>
                     <tr>
-                      <th>Editore</th>
                       <th>Fumetto</th>
+                      <th>Editore</th>
                       {{--<th>Cover</th>--}}
                       <th>Prezzo</th>
                       <th>Azioni Rapide</th>
@@ -175,7 +175,6 @@
                         @endif
                       @endif
                       <tr class="{{{ $tr }}}">
-                        <td>{{ $comic->comic->series->publisher }}</td>
                         <td>
                           <a href="{{$user->id}}/comic/{{$comic->id}}">
                             {{ $comic->comic->series->name}}
@@ -183,6 +182,7 @@
                             # {{ $comic->comic->number}}
                           </a>
                         </td>
+                        <td>{{ $comic->comic->series->publisher }}</td>
                         {{--<td>--}}
                         {{--@if($comic->comic->image)--}}
                         {{--<a href="{{$comic->comic->image}}" target="_blank"><img src="{{$comic->comic->image}}"--}}
