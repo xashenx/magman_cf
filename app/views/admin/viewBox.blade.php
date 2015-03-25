@@ -646,6 +646,13 @@
                   <div></div>
                 </div>
               </div>
+              <div class="form-group has-feedback">
+                {{ Form::label('child', 'Blocco bambini', array('class' => 'col-md-2 label-padding')) }}
+                <div class="col-md-10">
+                  {{ Form::select('child',array('1' => 'Sì','0' => 'No'),$user->child,array('class' => 'form-control')) }}
+                  <div></div>
+                </div>
+              </div>
               <div class="form-group">
                 {{ Form::label('discount', 'Sconto', array('class' => 'col-md-2 label-padding')) }}
                 <div class="col-md-10">
@@ -1201,6 +1208,7 @@
         var newusername = $('#edit-user').find('#newusername').val();
         var newpassword = $('#edit-user').find('#newpassword').val();
         var show_price = $('#edit-user').find('#show_price').val();
+        var child = $('#edit-user').find('#child').val();
         var discount = $('#edit-user').find('#discount').val();
         var notes = $('#edit-user').find('#notes').val();
 
@@ -1352,6 +1360,12 @@
         $('#edit-user').find('#show_price').closest('.form-group').addClass('has-success');
         $('#edit-user').find('#show_price ~ div').html(success_icon_select);
         $('#edit-user').find('#show_price').css('outline-color', '#3c763d');
+
+        //SHOW PRICE
+        $('#edit-user').find('#child').closest('.form-group').removeClass('has-error');
+        $('#edit-user').find('#child').closest('.form-group').addClass('has-success');
+        $('#edit-user').find('#child ~ div').html(success_icon_select);
+        $('#edit-user').find('#child').css('outline-color', '#3c763d');
 
         //DISCOUNT
         var result = checkInputValue(discount, "number", 2, 1);

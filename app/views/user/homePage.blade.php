@@ -15,37 +15,37 @@
         <div class="panel panel-{{ $color_header }} no-radius">
           <div class="panel-heading no-radius">
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Casella
-              @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
-                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Rinnovo
-                Tessera: {{ $renewal_price }} €
-              @endif
-              @if($user->show_price && $dueG+$dueNG > 0 )
+            @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+              <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Rinnovo
+              Tessera: {{ $renewal_price }} €
+            @endif
+            @if($user->show_price && $dueG+$dueNG > 0 )
 
-                <div>
-                  - Saldo disponibili:
-                  @if($dueG > 0)
-                    <div>
-                      <label title="guaranteed"
-                             class="label label-success no-radius medium-icon little-icon-padding">
-                        Garantiti: {{ $dueG }} €
-                      </label>
-                    </div>
-                  @endif
-                  @if($dueNG > 0)
-                    <div>
-                      <label title="not_guaranteed"
-                             class="label label-warning no-radius medium-icon little-icon-padding">
-                        Non garantiti: {{ $dueNG }} €
-                      </label>
-                    </div>
-                  @endif
-                  @if($dueG > 0 && $dueNG > 0)
-                    <div>
-                      <u>Totale</u>: {{ $dueG+$dueNG }} €
-                    </div>
-                  @endif
-                </div>
-              @endif
+              <div>
+                - Saldo disponibili:
+                @if($dueG > 0)
+                  <div>
+                    <label title="guaranteed"
+                           class="label label-success no-radius medium-icon little-icon-padding">
+                      Garantiti: {{ $dueG }} €
+                    </label>
+                  </div>
+                @endif
+                @if($dueNG > 0)
+                  <div>
+                    <label title="not_guaranteed"
+                           class="label label-warning no-radius medium-icon little-icon-padding">
+                      Non garantiti: {{ $dueNG }} €
+                    </label>
+                  </div>
+                @endif
+                @if($dueG > 0 && $dueNG > 0)
+                  <div>
+                    <u>Totale</u>: {{ $dueG+$dueNG }} €
+                  </div>
+                @endif
+              </div>
+            @endif
           </div>
           @if(count($comics)>0)
             <div class="panel-body">
@@ -132,7 +132,9 @@
               <tr>
                 <th>Fumetto</th>
                 <th>Autore</th>
-                <th>Cover</th>
+                @if(!Auth::user()->child)
+                  <th>Cover</th>
+                @endif
               </tr>
               </thead>
               <tbody>
@@ -148,12 +150,14 @@
                   <td>
                     {{$new->series->author}}
                   </td>
-                  <td>
-                    @if($new->image)
-                      <a href="{{$new->image}}" target="_blank"><img src="{{$new->image}}" alt="" class="cover"
-                                ></a>
-                    @endif
-                  </td>
+                  @if(!Auth::user()->child)
+                    <td>
+                      @if($new->image)
+                        <a href="{{$new->image}}" target="_blank"><img src="{{$new->image}}" alt="" class="cover"
+                                  ></a>
+                      @endif
+                    </td>
+                  @endif
                 </tr>
               @endforeach
               </tbody>
