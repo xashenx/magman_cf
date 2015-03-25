@@ -191,7 +191,15 @@
                         {{--</td>--}}
                         <td>{{$comic->price != 0 ? number_format((float)$comic->price, 2, '.', '') : 0}} €</td>
                         <td>
-                          @if(($comic->comic->state == 2 && !$comic->old_comic) || ($comic->old_arrived_at != NULL && !$comic->old_series))
+                          @if($comic->old_arrived_at != NULL && $comic->old_series && $comic->comic->number == 1)
+                            <button type="button" title="Acquista Serie"
+                                    onclick="showConfirmModal({{$comic->id}},{{$user->id}},9)"
+                                    class="btn btn-success btn-sm no-radius medium-icon">
+                                                            <span class="glyphicon glyphicon-book"
+                                                                  aria-hidden="true"></span>
+                            </button>
+                          @endif
+                          @if(($comic->comic->state == 2 && !$comic->old_comic) || ($comic->old_arrived_at != NULL))
                             <button type="button" title="Acquista"
                                     onclick="showConfirmModal({{$comic->id}},{{$user->id}},0)"
                                     class="btn btn-success btn-sm no-radius medium-icon">
@@ -199,27 +207,19 @@
                                                                   aria-hidden="true"></span>
                             </button>
                           @endif
-                          @if($comic->old_arrived_at != NULL && $comic->old_series && $comic->comic->number == 1)
-                            <button type="button" title="Acquista Serie"
-                                    onclick="showConfirmModal({{$comic->id}},{{$user->id}},9)"
-                                    class="btn btn-success btn-sm no-radius medium-icon">
-                                                            <span class="glyphicon glyphicon-euro"
-                                                                  aria-hidden="true"></span>
-                            </button>
-                          @endif
-                          @if($comic->old_comic && $comic->old_arrived_at == NULL && !$comic->old_series)
-                          <button type="button" title="Arrivato"
-                                  onclick="showConfirmModal({{$comic->id}},{{$user->id}},10)"
-                                  class="btn btn-info btn-sm no-radius medium-icon">
-                                                        <span class="glyphicon glyphicon-send"
-                                                              aria-hidden="true"></span>
-                          </button>
-                          @endif
                           @if($comic->old_comic && $comic->old_arrived_at == NULL && $comic->old_series && $comic->comic->number == 1)
                             <button type="button" title="Arrivata Serie"
                                     onclick="showConfirmModal({{$comic->id}},{{$user->id}},11)"
                                     class="btn btn-info btn-sm no-radius medium-icon">
                                                         <span class="glyphicon glyphicon-book"
+                                                              aria-hidden="true"></span>
+                            </button>
+                          @endif
+                          @if($comic->old_comic && $comic->old_arrived_at == NULL)
+                            <button type="button" title="Arrivato"
+                                    onclick="showConfirmModal({{$comic->id}},{{$user->id}},10)"
+                                    class="btn btn-info btn-sm no-radius medium-icon">
+                                                        <span class="glyphicon glyphicon-send"
                                                               aria-hidden="true"></span>
                             </button>
                           @endif

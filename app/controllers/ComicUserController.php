@@ -186,7 +186,7 @@ class ComicUserController extends BaseController
     $series_id = $comicUser->comic->series_id;
     DB::update('UPDATE bm_comic_user cu LEFT JOIN bm_comics c ON cu.comic_id = c.id
               SET old_arrived_at = \'' . $arrived_at . '\'
-               WHERE cu.user_id = ' . $user_id . ' AND cu.old_series = 1 AND cu.state_id = 1 AND cu.active = 1 AND c.series_id = ' . $series_id);
+               WHERE cu.user_id = ' . $user_id . ' AND cu.old_series = 1 AND cu.state_id = 1 AND cu.active = 1 AND cu.old_arrived_at IS NULL AND c.series_id = ' . $series_id);
     return Redirect::to('boxes/' . $user_id);
   }
 }
