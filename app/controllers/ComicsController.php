@@ -18,6 +18,8 @@ class ComicsController extends BaseController
       $comic->number = Input::get('number');
       $comic->price = $comic_price;
       $comic->series_id = $series_id;
+      $comic->arrived_at = date('Y-m-d H:i:s', time());
+      $comic->state = 2;
       $comic->save();
       if (Input::get('auto_insertion')) {
         $this->updateComicUser($series_id, $comic);
@@ -125,7 +127,7 @@ class ComicsController extends BaseController
   public function listAllComics()
   {
     $inv_state = $this->module_state('inventory');
-    $comics = Comic::orderBy('number','asc')->get();
+    $comics = Comic::orderBy('number', 'asc')->get();
     $this->layout->content = View::make('admin/manageComics', array('comics' => $comics, 'inv_state' => $inv_state));
   }
 

@@ -57,7 +57,7 @@ Route::group(array('before' => 'auth'), function () {
         $privilege = Auth::user()->level_id;
         if ($privilege == 1) {
             Route::get('home', 'HomePageController@adminHome');
-            Route::get('newShipment', 'ComicsController@showShipmentLoader');
+//            Route::get('newShipment', 'ComicsController@showShipmentLoader');
             Route::get('addSeries', 'AdminController@addSeries');
             Route::get('addComic', 'AdminController@addComic');
             Route::get('addBox', 'AdminController@addBox');

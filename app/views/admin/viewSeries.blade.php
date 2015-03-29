@@ -153,7 +153,7 @@
                   <tbody>
                   @foreach ($series->inBoxes as $series_user)
                     <tr class="odd GradeX">
-                      <td>{{$series_user->box->name}} {{$series_user->box->surname}}</td>
+                      <td><a href="../boxes/{{$series_user->box->id}}">{{$series_user->box->name}} {{$series_user->box->surname}}</a></td>
                     </tr>
                   @endforeach
                   </tbody>

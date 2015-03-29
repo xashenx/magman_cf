@@ -10,12 +10,12 @@
         </a>
       </li>
       @if(Auth::user()->level_id == 1)
-        <li>
-          <a href="{{ URL::asset('newShipment') }}">
-            <span class="glyphicon glyphicon-plus btn-lg" aria-hidden="true"></span>
-            Nuovi Arrivi
-          </a>
-        </li>
+        {{--<li>--}}
+          {{--<a href="{{ URL::asset('newShipment') }}">--}}
+            {{--<span class="glyphicon glyphicon-plus btn-lg" aria-hidden="true"></span>--}}
+            {{--Nuovi Arrivi--}}
+          {{--</a>--}}
+        {{--</li>--}}
         <li>
           <a href="{{ URL::asset('boxes') }}">
             <span class="glyphicon glyphicon-user btn-lg" aria-hidden="true"></span>
