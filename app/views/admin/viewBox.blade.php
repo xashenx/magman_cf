@@ -321,8 +321,8 @@
                          id="dataTables-series">
                     <thead>
                     <tr>
-                      <th>Editore</th>
                       <th>Nome</th>
+                      <th>Editore</th>
                       {{--<th>Autore</th>--}}
                       {{--<th>Numeri</th>--}}
                       <th>Azioni</th>
@@ -338,11 +338,11 @@
                         {{--*/ $tr = 'danger' /*--}}
                       @endif
                       <tr class="{{{ $tr }}}">
-                        <td>{{ $serie->series->publisher }}</td>
                         <td>
                           {{$serie->series->name}}
                           {{{ ($serie->series->version != null) ? ' - '.$serie->series->version : '' }}}
                         </td>
+                        <td>{{ $serie->series->publisher }}</td>
                         {{--<td>--}}
                         {{--{{$serie->series->author}}--}}
                         {{--</td>--}}
