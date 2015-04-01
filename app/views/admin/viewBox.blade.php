@@ -193,7 +193,7 @@
                         <td>
                           @if($comic->old_arrived_at != NULL && $comic->old_series && $comic->comic->number == 1)
                             <button type="button" title="Acquista Serie"
-                                    onclick="showConfirmModal({{$comic->id}},{{$user->id}},9)"
+                                    onclick="quickActionWithoutConfirm({{$comic->id}},{{$user->id}},9)"
                                     class="btn btn-success btn-sm no-radius medium-icon">
                                                             <span class="glyphicon glyphicon-book"
                                                                   aria-hidden="true"></span>
@@ -201,7 +201,7 @@
                           @endif
                           @if(($comic->comic->state == 2 && !$comic->old_comic) || ($comic->old_arrived_at != NULL))
                             <button type="button" title="Acquista"
-                                    onclick="showConfirmModal({{$comic->id}},{{$user->id}},0)"
+                                    onclick="quickActionWithoutConfirm({{$comic->id}},{{$user->id}},0)"
                                     class="btn btn-success btn-sm no-radius medium-icon">
                                                             <span class="glyphicon glyphicon-euro"
                                                                   aria-hidden="true"></span>
@@ -502,6 +502,13 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  {{ Form::label('mode', 'Modalità', array('class' => 'col-md-2 label-padding')) }}
+                  <div class="col-md-10">
+                    {{ Form::select('mode',array('-1' => '-- Seleziona un\'opzione --','0' => 'Numero singolo','1' => 'Serie completa','2' => 'Blocco'),'-1',array('id' => 'mode','disabled' => 'disabled','class' => 'form-control')) }}
+                    <div></div>
+                  </div>
+                </div>
+                <div class="form-group">
                   {{ Form::label('number', 'Numero', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
                     {{--<select name="single_number_id" id="single_number_id" class="form-control"--}}
@@ -513,10 +520,24 @@
                   {{ Form::hidden('discount', $user->discount) }}
                   {{ Form::hidden('old_comic','yes') }}
                 </div>
+                {{--<div class="form-group">--}}
+                  {{--{{ Form::label('complete_series', 'Tutta la serie', array('class' => 'col-md-2 label-padding')) }}--}}
+                  {{--<div class="col-md-10">--}}
+                    {{--{{ Form::select('complete_series',array('1' => 'Sì','0' => 'No'),'0',array('id' => 'complete_series','disabled' => 'disabled','class' => 'form-control')) }}--}}
+                    {{--<div></div>--}}
+                  {{--</div>--}}
+                {{--</div>--}}
                 <div class="form-group">
-                  {{ Form::label('complete_series', 'Tutta la serie', array('class' => 'col-md-2 label-padding')) }}
+                  {{ Form::label('block_from', 'Blocco da', array('class' => 'col-md-2 label-padding')) }}
                   <div class="col-md-10">
-                    {{ Form::select('complete_series',array('1' => 'Sì','0' => 'No'),'0',array('id' => 'complete_series','disabled' => 'disabled','class' => 'form-control')) }}
+                    {{ Form::text('block_from','', array('id' => 'block_from','disabled' => 'disabled','class' => 'form-control')) }}
+                    <div></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  {{ Form::label('block_to', 'Blocco a', array('class' => 'col-md-2 label-padding')) }}
+                  <div class="col-md-10">
+                    {{ Form::text('block_to','', array('id' => 'block_to','disabled' => 'disabled','class' => 'form-control')) }}
                     <div></div>
                   </div>
                 </div>
@@ -820,6 +841,21 @@
         show: true
       });
     }
+
+    function quickActionWithoutConfirm(object_id, user_id, mode) {
+      document.confirmForm.user_id.value = user_id;
+      if (mode == 0) {
+        // buying the comic
+        document.confirmForm.id.value = object_id;
+        document.confirmForm.action = '../buyComic';
+        document.confirmForm.submit();
+      } else if (mode == 9) {
+        // buying old series
+        document.confirmForm.id.value = object_id;
+        document.confirmForm.action = '../buyOldSeries';
+        document.confirmForm.submit();
+      }
+    }
   </script>
   <script>
     $(document).ready(function () {
@@ -853,11 +889,16 @@
 //        $('select#single_number_id').prop('disabled', 'disabled');
 //        $('select#single_number_id').empty();
                 $('#single_number_value').prop('disabled', 'disabled');
-                $('#single_number_value').empty();
-                $('#series_discount').empty();
                 $('#add_single_number').prop('disabled', 'disabled');
-                $('#complete_series').prop('disabled', 'disabled');
+                $('#mode').prop('disabled', 'disabled');
                 $('#series_discount').prop('disabled', 'disabled');
+                $('#block_from').prop('disabled', 'disabled');
+                $('#block_to').prop('disabled', 'disabled');
+                document.getElementById("series_discount").value = '';
+                document.getElementById("mode").value = '-1';
+                document.getElementById("single_number_value").value = '';
+                document.getElementById("block_from").value = '';
+                document.getElementById("block_to").value = '';
               } else {
 //        $.ajax({
 //          url: '../getNumberFromSeries',
@@ -869,8 +910,9 @@
 //            $('select#single_number_id').append('<option value="-1">-- Seleziona un numero --</option>');
                 $('#single_number_value').empty();
                 $('#series_discount').empty();
-                $('#single_number_value').prop('disabled', false);
-                $('#complete_series').prop('disabled', false);
+//                $('#single_number_value').prop('disabled', false);
+//                $('#complete_series').prop('disabled', false);
+                $('#mode').prop('disabled', false);
                 $('#series_discount').prop('disabled', 'disabled');
 
 //            $.each(data, function (index, value) {
@@ -887,7 +929,31 @@
             }
     );
 
-    //    $('select#single_number_id').on('change', function () {
+    $('#mode').on('change', function () {
+      var value = $('#mode').val();
+      document.getElementById("series_discount").value = '';
+      document.getElementById("single_number_value").value = '';
+      document.getElementById("block_from").value = '';
+      document.getElementById("block_to").value = '';
+      $('#series_discount').prop('disabled', 'disabled');
+      $('#single_number_value').prop('disabled', 'disabled');
+      $('#block_from').prop('disabled', 'disabled');
+      $('#block_to').prop('disabled', 'disabled');
+      if (value == '-1') {
+        $('#single_number_value').prop('disabled', false);
+        $('#complete_series').prop('disabled', false);
+        $('#add_single_number').prop('disabled', 'disabled');
+      } else if (value == 0){
+        $('#single_number_value').prop('disabled', false);
+      } else if (value == 1){
+        $('#series_discount').prop('disabled', false);
+      } else if (value == 2){
+        $('#block_from').prop('disabled', false);
+        $('#block_to').prop('disabled', false);
+        $('#series_discount').prop('disabled', false);
+      }
+    });
+
     $('#single_number_value').on('change', function () {
       var value = $('#single_number_value').val();
       if (value == '') {
@@ -903,27 +969,60 @@
       }
     });
 
-    $('select#complete_series').on('change', function () {
-      var value = $('select#complete_series').val();
-      if (value == 0) {
-        $('#single_number_value').prop('disabled', false);
-        $('#complete_series').prop('disabled', false);
-        $('#series_discount').empty();
-        $('#series_discount').prop('disabled', 'disabled');
-        $('#add_single_number').prop('disabled', 'disabled');
-      } else if (value == 1) {
-        $('#complete_series').prop('disabled', false);
-        $('#series_discount').prop('disabled', false);
-        $('#add_single_number').prop('disabled', 'disabled');
-        $('#single_number_value').prop('disabled', 'disabled');
-      }
-    });
+//    $('select#complete_series').on('change', function () {
+//      var value = $('select#complete_series').val();
+//      if (value == 0) {
+//        $('#single_number_value').prop('disabled', false);
+//        $('#complete_series').prop('disabled', false);
+//        $('#series_discount').empty();
+//        $('#series_discount').prop('disabled', 'disabled');
+//        $('#add_single_number').prop('disabled', 'disabled');
+//      } else if (value == 1) {
+//        $('#complete_series').prop('disabled', false);
+//        $('#series_discount').prop('disabled', false);
+//        $('#add_single_number').prop('disabled', 'disabled');
+//        $('#single_number_value').prop('disabled', 'disabled');
+//      }
+//    });
 
     $('#series_discount').on('change', function () {
       var value = $('#series_discount').val();
-      if (value == '') {
+      var mode = $('#mode').val();
+      if(mode == 1) {
+        if (value == '') {
+          $('#add_single_number').prop('disabled', 'disabled');
+        } else {
+          $('#add_single_number').prop('disabled', false);
+        }
+      } else if (mode == 2){
+        var block_from = $('#block_from').val();
+        var block_to = $('#block_to').val();
+        if (value == '') {
+          $('#add_single_number').prop('disabled', 'disabled');
+        } else if(block_from != '' && block_to != ''){
+          $('#add_single_number').prop('disabled', false);
+        }
+      }
+    });
+
+    $('#block_from').on('change', function () {
+      var block_from = $('#block_from').val();
+      var block_to = $('#block_to').val();
+      var discount = $('#series_discount').val();
+      if (block_from == '') {
         $('#add_single_number').prop('disabled', 'disabled');
-      } else {
+      } else  if (block_to != '' && discount != ''){
+        $('#add_single_number').prop('disabled', false);
+      }
+    });
+
+    $('#block_to').on('change', function () {
+      var block_from = $('#block_from').val();
+      var block_to = $('#block_to').val();
+      var discount = $('#series_discount').val();
+      if (block_to == '') {
+        $('#add_single_number').prop('disabled', 'disabled');
+      } else  if (block_from != '' && discount != ''){
         $('#add_single_number').prop('disabled', false);
       }
     });
@@ -936,6 +1035,7 @@
         $('#follow_series').prop('disabled', false);
       }
     });
+
   </script>
   <script>
     $(document).ready(function () {
@@ -1025,7 +1125,7 @@
         //value
         var series_id = $('#newsinglecomic').find('#single_series_id').val();
         var number = $('#newsinglecomic').find('#single_number_value').val();
-        var complete_insertion = $('#newsinglecomic').find('#complete_series').val();
+        var mode = $('#newsinglecomic').find('#mode').val();
 
         var error_icon = '<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span><span id=\"inputIcon\" class=\"sr-only\">(error)</span>';
         var success_icon = '<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span><span id="inputIcon" class="sr-only">(success)</span>';
@@ -1062,7 +1162,7 @@
         }
 
 
-        if (complete_insertion == 0) {
+        if (mode == 0) {
           //single number
           if (result['status'] == 'ko') {
             $('#alert-2').show();
@@ -1087,28 +1187,28 @@
             $('#newsinglecomic').find('#single_number_value ~ div').html(success_icon);
           }
         } else {
-          //complete series
-          if (complete_insertion != 1) {
+          //complete series or block of comics
+          if (mode != 1 && mode != 2) {
             $('#alert-2').show();
             $('#alert-2').find('.error').show();
-            $('#newsinglecomic').find('#complete_series').closest('.form-group').removeClass('has-success');
-            $('#newsinglecomic').find('#complete_series').closest('.form-group').addClass('has-error');
-            $('#newsinglecomic').find('#complete_series ~ div').html(error_icon);
+            $('#newsinglecomic').find('#mode').closest('.form-group').removeClass('has-success');
+            $('#newsinglecomic').find('#mode').closest('.form-group').addClass('has-error');
+            $('#newsinglecomic').find('#mode ~ div').html(error_icon);
 
             var obj = {
               result: result,
               htmlElement: $('#alert-2').find('.error'),
               sex: "m",
-              elementName: "parametro di inserimento serie completa",
+              elementName: "parametro di modalità",
               maxLength: 150,
               minLength: 1
             };
             showErrorMsg(obj);
             submit = false;
           } else {
-            $('#newsinglecomic').find('#complete_series').closest('.form-group').removeClass('has-error');
-            $('#newsinglecomic').find('#complete_series').closest('.form-group').addClass('has-success');
-            $('#newsinglecomic').find('#complete_series ~ div').html(success_icon);
+            $('#newsinglecomic').find('#mode').closest('.form-group').removeClass('has-error');
+            $('#newsinglecomic').find('#mode').closest('.form-group').addClass('has-success');
+            $('#newsinglecomic').find('#mode ~ div').html(success_icon);
           }
         }
         if (submit) {

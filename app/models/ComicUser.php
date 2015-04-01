@@ -12,7 +12,9 @@ class ComicUser extends Eloquent {
 		'comic_id' => 'required|numeric',
 		'user_id' => 'required|numeric',
 		'price' => 'required|numeric',
-		'discount' => 'required|numeric|between:5,100'
+		'discount' => 'required|numeric|between:5,100',
+		'block_from' => 'numeric',
+		'block_to' => 'numeric'
 		//'series_discount' => 'numeric|digits_between:5,100'
 	);
 	private $errors;

@@ -8,13 +8,16 @@ class ComicUserController extends BaseController
     $this->layout = null;
     $series_id = Input::get('single_series_id');
     $series = Series::find($series_id);
-    $complete_series = Input::get('complete_series');
+    $mode = Input::get('mode');
     if (count($series) > 0) {
 //      $comics_of_series = $series->listActive->get();
-      $comics_of_series = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1')->orderBy('number', 'asc')->get();
+      if ($mode == 2)
+        $comics_of_series = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1 AND number >= ' . Input::get('block_from') . ' AND number <= ' . Input::get('block_to'))->orderBy('number', 'asc')->get();
+      else
+        $comics_of_series = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1')->orderBy('number', 'asc')->get();
       $user_id = Input::get('user_id');
 
-      if ($complete_series) {
+      if ($mode == 1 || $mode == 2) {
         // insertion of the complete series
 
         $seriesUser = SeriesUser::whereRaw('user_id = ' . $user_id . ' AND series_id = ' . $series_id)->get();
@@ -29,7 +32,10 @@ class ComicUserController extends BaseController
             $su->update();
           }
         }
-        $comics_counter = 1;
+        if ($mode == 2)
+          $comics_counter = Input::get('block_from');
+        else
+          $comics_counter = 1;
         foreach ($comics_of_series as $comic) {
           while ($comics_counter < $comic->number) {
             $new_comic = new Comic;
@@ -95,7 +101,7 @@ class ComicUserController extends BaseController
             Input::merge(array('price' => $comic->price));
             $new = Input::all();
             if ($comicUser->validate($new)) {
-              if(Input::get('old_comic') == 'yes')
+              if (Input::get('old_comic') == 'yes')
                 $comicUser->old_comic = 1;
               $comicUser->comic_id = $comic_id;
               $comicUser->user_id = $user_id;
@@ -157,7 +163,8 @@ class ComicUserController extends BaseController
     return Redirect::to('boxes/' . $user_id);
   }
 
-  public function buyOldSeries(){
+  public function buyOldSeries()
+  {
     $id = Input::get('id');
     $user_id = Input::get('user_id');
     $comicUser = ComicUser::find($id);
@@ -169,7 +176,8 @@ class ComicUserController extends BaseController
     return Redirect::to('boxes/' . $user_id);
   }
 
-  public function oldComicArrived(){
+  public function oldComicArrived()
+  {
     $id = Input::get('id');
     $user_id = Input::get('user_id');
     $comicUser = ComicUser::find($id);
@@ -178,7 +186,8 @@ class ComicUserController extends BaseController
     return Redirect::to('boxes/' . $user_id);
   }
 
-  public function oldSeriesArrived(){
+  public function oldSeriesArrived()
+  {
     $id = Input::get('id');
     $user_id = Input::get('user_id');
     $comicUser = ComicUser::find($id);
