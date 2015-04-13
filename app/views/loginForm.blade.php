@@ -23,6 +23,16 @@
   </head>
 
   <body>
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.3";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
     <div class="container-fluid">
       <div class="row">
         <div class="front">
@@ -61,8 +71,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-        <div class="col-xs-11 col-xs-offset-1 col-sm-5 col-sm-offset-1 footer">
+        <div class="col-xs-12 col-sm-offset-1 col-sm-3 footer">
             <p>
               <b>Magman</b>
               <br/>
@@ -72,8 +81,8 @@
               <br/>
               P.IVA 02090450228
             </p>
-          </div>
-          <div class="col-xs-11 col-xs-offset-1 col-sm-5 footer">
+        </div>
+        <div class="col-xs-12 col-sm-offset-1 col-sm-3 footer">
             <p>
               <b>Contatti</b>
               <br/>
@@ -83,9 +92,9 @@
               <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
               <a href="mailto:info@magman.it">info@magman.it</a>
             </p>
-          </div>
-
-          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 footer">
+<div class="fb-page" data-href="https://www.facebook.com/pages/MAGMAN/61827781800" data-hide-cover="false" data-show-facepile="false" data-show-posts="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/pages/MAGMAN/61827781800"><a href="https://www.facebook.com/pages/MAGMAN/61827781800">MAGMAN</a></blockquote></div></div>
         </div>
       </div>
     </div>
