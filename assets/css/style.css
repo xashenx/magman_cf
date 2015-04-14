@@ -200,3 +200,9 @@ select.input-sm{
   background-color: #f2dede;
   border: 1px solid #ddd;
 }
+
+/*Footer*/
+.disclaimer{
+  text-align: right;
+  font-size: 10px;
+}

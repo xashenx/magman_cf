@@ -46,9 +46,11 @@
         <!-- /. ROW  -->
       </div>
       <!-- /. PAGE INNER  -->
+      <div class="disclaimer">
+        Le immagini e gli screenshots su queste pagine sono di proprietà dei relativi autori.
+      </div>
     </div>
     <!-- /. PAGE WRAPPER  -->
-
   </div>
   <!-- /. WRAPPER  -->
   </body>
