@@ -47,7 +47,8 @@
       </div>
       <!-- /. PAGE INNER  -->
       <div class="disclaimer">
-        Le immagini e gli screenshots su queste pagine sono di proprietà dei relativi autori.
+        Le immagini e gli screenshots su queste pagine sono di proprietà dei relativi autori.<br/>
+        Leggi l'<a href="{{ URL::asset('assets/file/privacy.pdf') }}" target="_blank">informativa sulla privacy</a>.
       </div>
     </div>
     <!-- /. PAGE WRAPPER  -->
