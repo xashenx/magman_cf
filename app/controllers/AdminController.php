@@ -102,7 +102,7 @@ class AdminController extends BaseController
       }
     }
     //return $due - ($due * $discount / 100);
-    return $due;
+    return $this->roundTo5($due);
   }
 
   public function buildAvailableArray($boxes)
@@ -181,6 +181,36 @@ class AdminController extends BaseController
   public function shopSettings()
   {
     $this->layout->content = View::make('admin/shopSettings', array());
+  }
+
+  public function roundTo5($value)
+  {
+    $new_digit = 0;
+    $stringVal = explode('.', strval(number_format((float)$value, 2, '.', '')));
+    if ($stringVal[1][1] < 3 || $stringVal[1][1] > 7) {
+      if ($stringVal[1][1] > 7) {
+        if ($stringVal[1][0] == 9) {
+          $stringVal[1][0] = 0;
+          if($stringVal[0][strlen($stringVal[0])-1] != 9)
+            $stringVal[0][strlen($stringVal[0])-1] = $stringVal[0][strlen($stringVal[0])-1] +1;
+          for ($i = strlen($stringVal[0]) - 1; $i > -1 && $stringVal[0][$i] == 9; $i--) {
+            $stringVal[0][$i] = 0;
+            if ($i == 0) //last digit
+              $new_digit = 1;
+            else if ($stringVal[0][$i - 1] != 9)
+              $stringVal[0][$i - 1] = $stringVal[0][$i - 1] + 1;
+          }
+        } else
+          $stringVal[1][0] = $stringVal[1][0] + 1;
+      }
+      $stringVal[1][1] = 0;
+    } else {
+      $stringVal[1][1] = 5;
+    }
+    if ($new_digit)
+      return $new_digit . $stringVal[0] . '.' . $stringVal[1];
+    else
+      return $stringVal[0] . '.' . $stringVal[1];
   }
 }
 

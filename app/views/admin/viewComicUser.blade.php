@@ -56,7 +56,7 @@
               <div class="col-md-10">
                 <div class="input-group">
                   <span class="input-group-addon no-radius" id="basic-addon1">%</span>
-                  {{ Form::text('discount', $comic->discount ? $comic->discount : $box->discount, array('class' => 'form-control', 'placeholder' => 'Sconto per questo fumetto')) }}
+                  {{ Form::text('discount', $comic->discount, array('class' => 'form-control', 'placeholder' => 'Sconto per questo fumetto')) }}
                   <div></div>
                 </div>
               </div>
