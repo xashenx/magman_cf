@@ -182,7 +182,7 @@
                             # {{ $comic->comic->number}}
                           </a>
                         </td>
-                        <td>{{ $comic->comic->series->publisher }}</td>
+                        <td>{{ $comic->comic->series->publisher->name }}</td>
                         {{--<td>--}}
                         {{--@if($comic->comic->image)--}}
                         {{--<a href="{{$comic->comic->image}}" target="_blank"><img src="{{$comic->comic->image}}"--}}
@@ -342,7 +342,7 @@
                           {{$serie->series->name}}
                           {{{ ($serie->series->version != null) ? ' - '.$serie->series->version : '' }}}
                         </td>
-                        <td>{{ $serie->series->publisher }}</td>
+                        <td>{{ $serie->series->publisher->name }}</td>
                         {{--<td>--}}
                         {{--{{$serie->series->author}}--}}
                         {{--</td>--}}

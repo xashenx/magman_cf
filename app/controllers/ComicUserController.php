@@ -11,10 +11,10 @@ class ComicUserController extends BaseController
     $mode = Input::get('mode');
     if (count($series) > 0) {
 //      $comics_of_series = $series->listActive->get();
-      if ($mode == 2)
-        $comics_of_series = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1 AND number >= ' . Input::get('block_from') . ' AND number <= ' . Input::get('block_to'))->orderBy('number', 'asc')->get();
-      else
-        $comics_of_series = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1')->orderBy('number', 'asc')->get();
+//      if ($mode == 2)
+//        $comics_of_series = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1 AND number >= ' . Input::get('block_from') . ' AND number <= ' . Input::get('block_to'))->orderBy('number', 'asc')->get();
+//      else
+      $comics_of_series = Comic::whereRaw('series_id = ' . $series_id . ' AND active = 1')->orderBy('number', 'asc')->get();
       $user_id = Input::get('user_id');
 
       if ($mode == 1 || $mode == 2) {
@@ -32,38 +32,63 @@ class ComicUserController extends BaseController
             $su->update();
           }
         }
-        if ($mode == 2)
+        if ($mode == 2) {
           $comics_counter = Input::get('block_from');
-        else
+        } else {
           $comics_counter = 1;
+        }
         foreach ($comics_of_series as $comic) {
-          while ($comics_counter < $comic->number) {
-            $new_comic = new Comic;
-            $new_comic->series_id = $series_id;
-            $new_comic->number = $comics_counter++;
-            $new_comic->price = $comic->price;
-            $new_comic->state = 2;
-            $new_comic->arrived_at = date('Y-m-d H:i:s', strtotime('-2 week'));
-            $new_comic->save();
+          if($mode == 2 && $comic->number > Input::get('block_to') && $comics_counter < Input::get('block_to')){
+            echo "sono qua! " . $comics_counter  . '|' . $comic->number . '|' . Input::get('block_to');
+            while($comics_counter < Input::get('block_to')+1) {
+              $new_comic = new Comic;
+              $new_comic->series_id = $series_id;
+              $new_comic->number = $comics_counter++;
+              $new_comic->price = $comic->price;
+              $new_comic->state = 2;
+              $new_comic->arrived_at = date('Y-m-d H:i:s', strtotime('-2 week'));
+              $new_comic->save();
 
+              $comicUser = new ComicUser;
+              $comicUser->comic_id = $new_comic->id;
+              $comicUser->user_id = $user_id;
+              $comicUser->price = $comic->price;
+              $comicUser->old_comic = 1;
+              $comicUser->old_series = 1;
+              $comicUser->discount = Input::get('series_discount');
+              $comicUser->save();
+            }
+          }
+          else if($mode == 1 || ($mode == 2 && $comic->number < Input::get('block_to') && $comic->number > Input::get('block_from'))) {
+            while ($comics_counter < $comic->number) {
+              $new_comic = new Comic;
+              $new_comic->series_id = $series_id;
+              $new_comic->number = $comics_counter++;
+              $new_comic->price = $comic->price;
+              $new_comic->state = 2;
+              $new_comic->arrived_at = date('Y-m-d H:i:s', strtotime('-2 week'));
+              $new_comic->save();
+
+              $comicUser = new ComicUser;
+              $comicUser->comic_id = $new_comic->id;
+              $comicUser->user_id = $user_id;
+              $comicUser->price = $comic->price;
+              $comicUser->old_comic = 1;
+              $comicUser->old_series = 1;
+              $comicUser->discount = Input::get('series_discount');
+              $comicUser->save();
+            }
             $comicUser = new ComicUser;
-            $comicUser->comic_id = $new_comic->id;
+            $comicUser->comic_id = $comic->id;
             $comicUser->user_id = $user_id;
             $comicUser->price = $comic->price;
             $comicUser->old_comic = 1;
             $comicUser->old_series = 1;
             $comicUser->discount = Input::get('series_discount');
             $comicUser->save();
+            $comics_counter++;
           }
-          $comicUser = new ComicUser;
-          $comicUser->comic_id = $comic->id;
-          $comicUser->user_id = $user_id;
-          $comicUser->price = $comic->price;
-          $comicUser->old_comic = 1;
-          $comicUser->old_series = 1;
-          $comicUser->discount = Input::get('series_discount');
-          $comicUser->save();
-          $comics_counter++;
+
         }
         return Redirect::to('boxes/' . $user_id);
       } else {

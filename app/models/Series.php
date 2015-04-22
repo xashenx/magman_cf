@@ -62,6 +62,10 @@ class Series extends Eloquent
     // this matches the Eloquent model
   }
 
+  public function publisher() {
+    return $this->hasOne('Publisher', 'id', 'publisher_id');
+  }
+
 }
 
 ?>

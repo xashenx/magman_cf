@@ -132,10 +132,10 @@
               <tr>
                 <th>Fumetto</th>
                 <th>Autore</th>
-                @if(Auth::user()->child)
-                  <th>Cover</th>
+                @if(!Auth::user()->child)
+                <th>Cover</th>
                 @endif
-              </tr>
+                </tr>
               </thead>
               <tbody>
               @foreach ($news as $new)
@@ -151,7 +151,7 @@
                     {{$new->series->author}}
                   </td>
                   <td>
-                    @if($new->image && Auth::user()->child)
+                    @if($new->image && !Auth::user()->child)
                       <a href="{{$new->image}}" target="_blank"><img src="{{$new->image}}" alt="" class="cover"
                                 ></a>
                     @endif

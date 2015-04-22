@@ -144,7 +144,7 @@
                   {{--*/ $tr = 'odd GradeX' /*--}}
                 @endif
                 <tr class="{{$tr}}">
-                  <td>{{$serie->series->publisher}}</td>
+                  <td>{{$serie->series->publisher->name}}</td>
                   <td>{{ $serie->series->name}}
                     {{{ ($serie->series->version != null) ? ' - '.$serie->series->version : '' }}}</td>
                 </tr>

@@ -30,9 +30,9 @@ class HomePageController extends BaseController
     $defaulting_threshold = ShopConf::find(2);
     $inv_status = $this->module_state('inventory');
     if ($inv_status == 1)
-      $toOrder = DB::select('SELECT s.id as sid,c.id as cid,s.name, s.version,c.number, c.available, c.image as image, cu.to_order, (cu.to_order-c.available) as need, s.publisher as publisherFROM ((SELECT count(*) as to_order, comic_id FROM bm_comic_user WHERE state_id = 1 and active = 1 GROUP BY comic_id) as cu LEFT JOIN bm_comics as c ON cu.comic_id = c.id) LEFT JOIN bm_series as s ON  s.id = series_id WHERE  (cu.to_order-c.available) > 0');
+      $toOrder = DB::select('SELECT s.id as sid,c.id as cid,s.name, s.version,c.number, c.available, c.image as image, cu.to_order, (cu.to_order-c.available) as need FROM ((SELECT count(*) as to_order, comic_id FROM bm_comic_user WHERE state_id = 1 and active = 1 GROUP BY comic_id) as cu LEFT JOIN bm_comics as c ON cu.comic_id = c.id) LEFT JOIN bm_series as s ON  s.id = series_id WHERE  (cu.to_order-c.available) > 0');
     else
-      $toOrder = DB::select('SELECT s.id as sid,c.id as cid,s.name, s.version,c.number, c.available, c.image as image, cu.to_order, cu.to_order as need, s.publisher as publisher FROM ((SELECT count(*) as to_order, comic_id FROM bm_comic_user WHERE state_id = 1 and active = 1 GROUP BY comic_id) as cu LEFT JOIN bm_comics as c ON cu.comic_id = c.id) LEFT JOIN bm_series as s ON  s.id = series_id');
+      $toOrder = DB::select('SELECT s.id as sid,c.id as cid,s.name, s.version,c.number, c.available, c.image as image, cu.to_order, cu.to_order as need, pub.name as publisher FROM (((SELECT count(*) as to_order, comic_id FROM bm_comic_user WHERE state_id = 1 and active = 1 GROUP BY comic_id) as cu LEFT JOIN bm_comics as c ON cu.comic_id = c.id) LEFT JOIN bm_series as s ON  s.id = series_id) LEFT JOIN bm_publishers as pub ON s.publisher_id = pub.id');
     $insolvents = $this->buildInsolventArray($boxes, $insolvency_threshold);
     $insolvent_boxes = $this->buildInsolventBoxesArray($insolvents);
     $defaultings = $this->buildDefaultingArray($boxes, $defaulting_threshold);

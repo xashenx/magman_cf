@@ -7,11 +7,23 @@ class SeriesController extends BaseController
   {
     $new = Input::all();
     $series = new Series;
+
     if ($series->validate($new)) {
       $series->name = Input::get('name');
       $series->version = Input::get('version');
       $series->author = Input::get('author');
-      $series->publisher = Input::get('publisher');
+      $pub_on_db = Publisher::where('name','=',Input::get('publisher'))->get();
+      if (count($pub_on_db) == 0) {
+        $publisher = new Publisher;
+        $publisher->name = Input::get('publisher');
+        $publisher->save();
+        $series->publisher_id = $publisher->id;
+      }else {
+        foreach($pub_on_db as $publisher){
+          $series->publisher_id = $publisher->id;
+        }
+      }
+//      $series->publisher;
 //      if (Input::get('type_id') != null)
 //        $series->type_id = Input::get('type_id');
 //      if (Input::get('subtype_id') != null)
@@ -33,7 +45,8 @@ class SeriesController extends BaseController
       $series->name = Input::get('name');
       $series->version = Input::get('version');
       $series->author = Input::get('author');
-      $series->publisher = Input::get('publisher');
+      $publisher = $series->publisher;
+      $publisher->name = Input::get('publisher');
       $concluded = Input::get('concluded');
       if ($concluded != $series->concluded)
         $series->concluded = $concluded;
@@ -42,6 +55,7 @@ class SeriesController extends BaseController
 ////    if (Input::get('subtype_id') != null)
 ////      $series->subtype_id = Input::get('subtype_id');
       $series->update();
+      $publisher->update();
       return Redirect::to('series/' . $id);
     } else {
       $errors = $series->errors();
@@ -69,7 +83,8 @@ class SeriesController extends BaseController
     }
   }
 
-  public function delete2(){
+  public function delete2()
+  {
     // second level logic deletion
     $series_id = Input::get('id');
     $path = Input::get('return');

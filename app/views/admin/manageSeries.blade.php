@@ -68,7 +68,7 @@
                           @else
                             <td><a href="series/{{$serie->id}}">{{$serie->name}}</a></td>
                           @endif
-                          <td>{{$serie->publisher}}</td>
+                          <td>{{$serie->publisher->name}}</td>
                           {{--<td>{{$serie->version}}</td>--}}
                           {{--<td>{{$serie->author}}</td>--}}
                           <td>{{$serie->listActive->max('number') != null ? $serie->listActive->max('number') : 0}}</td>

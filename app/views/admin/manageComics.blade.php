@@ -40,7 +40,7 @@
                     @else
                       <td><a href="comics/{{ $comic->id }}">{{ $comic->series->name}} nr. {{ $comic->number}}</a></td>
                     @endif
-                    <td>{{ $comic->series->publisher }}</td>
+                    <td>{{ $comic->series->publisher->name }}</td>
                     {{--<td>{{ $comic->number}}</td>--}}
                     {{--<td>--}}
                       {{--@if($comic->image)--}}

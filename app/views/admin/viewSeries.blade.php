@@ -101,7 +101,7 @@
                   <strong class="col-md-1 margin-bottom">Editore</strong>
 
                   <div class="col-md-11 margin-bottom">
-                    {{$series->publisher}}
+                    {{$series->publisher->name}}
                   </div>
                 </div>
                 @if($series->active)
@@ -310,7 +310,7 @@
                 <div class="form-group has-feedback">
                   {{ Form::label('publisher', 'Editore', array('class' => 'col-md-1 label-padding')) }}
                   <div class="col-md-11">
-                    {{ Form::text('publisher', $series->subtype_id, array('class' => 'form-control', 'placeholder' => 'Editore della serie')) }}
+                    {{ Form::text('publisher', $series->publisher->name, array('class' => 'form-control', 'placeholder' => 'Editore della serie')) }}
                     <div></div>
                   </div>
                 </div>
