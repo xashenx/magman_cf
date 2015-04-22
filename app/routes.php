@@ -86,6 +86,7 @@ Route::group(array('before' => 'auth'), function () {
             Route::post('createSeries', 'SeriesController@create');
             Route::post('updateSeries', 'SeriesController@update');
             Route::post('deleteSeries', 'SeriesController@delete');
+            Route::post('delete2Series', 'SeriesController@delete2');
             Route::post('restoreSeries', 'SeriesController@restore');
             // route to handle SeriesUser model changes
             Route::post('createSeriesUser', 'SeriesUserController@create');

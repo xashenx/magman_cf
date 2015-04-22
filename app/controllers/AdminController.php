@@ -19,6 +19,7 @@ class AdminController extends BaseController
   public function manageSeries()
   {
     $series = Series::all();
+    $series = Series::whereRaw('active < 2')->get();
     $this->layout->content = View::make('admin/manageSeries', array('series' => $series));
   }
 
@@ -41,14 +42,16 @@ class AdminController extends BaseController
     $inv_state = $this->module_state('inventory');
     $series = Series::find($series_id);
     if ($series != null) {
-      $comics = $series->listActive;
-      $last_comic = null;
-      if (count($comics) > 0) {
-        $last_comic = Comic::find($comics->max('id'));
-        $last_comic->price = round($last_comic->price, 2);
-      }
-
-      $this->layout->content = View::make('admin/viewSeries', array('series' => $series, 'last_comic' => $last_comic, 'inv_state' => $inv_state));
+      if($series->active != 2) {
+        $comics = $series->listActive;
+        $last_comic = null;
+        if (count($comics) > 0) {
+          $last_comic = Comic::find($comics->max('id'));
+          $last_comic->price = round($last_comic->price, 2);
+        }
+        $this->layout->content = View::make('admin/viewSeries', array('series' => $series, 'last_comic' => $last_comic, 'inv_state' => $inv_state));
+      } else
+        return Redirect::to('series');
     } else
       return Redirect::to('series');
   }

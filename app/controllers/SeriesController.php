@@ -51,6 +51,7 @@ class SeriesController extends BaseController
 
   public function delete()
   {
+    // first level logic deletion
     $series_id = Input::get('id');
     $path = Input::get('return');
     $rules = array('id' => 'required|numeric|exists:bm_series,id,active,1');
@@ -65,6 +66,25 @@ class SeriesController extends BaseController
       $this->deleteComics($comics);
       $this->deleteSeriesUser($series_id);
       return Redirect::to($path);
+    }
+  }
+
+  public function delete2(){
+    // second level logic deletion
+    $series_id = Input::get('id');
+    $path = Input::get('return');
+    $rules = array('id' => 'required|numeric|exists:bm_series,id,active,1');
+    $validator = Validator::make(Input::all(), $rules);
+    if ($validator->fails()) {
+      return Redirect::to($path)->withErrors($validator);
+    } else {
+      $series = Series::find($series_id);
+      $series->active = 2;
+      $series->update();
+      $comics = $series->listComics;
+      $this->deleteComics2($comics);
+      $this->deleteSeriesUser2($series_id);
+      return Redirect::to('series');
     }
   }
 
@@ -99,6 +119,25 @@ class SeriesController extends BaseController
   public function deleteSeriesUser($series_id)
   {
     DB::table('bm_series_user')->where('series_id', $series_id)->update(array('active' => 0));
+    // $seriesUser = SeriesUser::where('series_id',$series_id)->get();
+    // foreach ($seriesUser as $box) {
+    // $box -> active = 0;
+    // $box -> update();
+    // }
+  }
+
+  public function deleteComics2($comics)
+  {
+    foreach ($comics as $comic) {
+      DB::table('bm_comic_user')->where('comic_id', $comic->id)->update(array('active' => 2));
+      $comic->active = 2;
+      $comic->update();
+    }
+  }
+
+  public function deleteSeriesUser2($series_id)
+  {
+    DB::table('bm_series_user')->where('series_id', $series_id)->update(array('active' => 2));
     // $seriesUser = SeriesUser::where('series_id',$series_id)->get();
     // foreach ($seriesUser as $box) {
     // $box -> active = 0;

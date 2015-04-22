@@ -73,7 +73,7 @@
                           {{--<td>{{$serie->author}}</td>--}}
                           <td>{{$serie->listActive->max('number') != null ? $serie->listActive->max('number') : 0}}</td>
                           <td>
-                            @if($serie->active)
+                            @if($serie->active == 1)
                               <button type="button" title="Disabilita"
                                       onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},0)"
                                       class="btn btn-danger btn-sm no-radius medium-icon little-icon-padding">
@@ -94,6 +94,12 @@
                                                                       aria-hidden="true"></span>
                               </button>
                             @endif
+                              <button type="button" title="Cancella"
+                                      onclick="showConfirmModal('{{$serie->name}}','{{$serie->version}}',{{$serie->id}},3)"
+                                      class="btn btn-danger btn-sm no-radius medium-icon little-icon-padding">
+                                                                <span class="glyphicon glyphicon-trash"
+                                                                      aria-hidden="true"></span>
+                              </button>
                             {{--<div class="btn-group">--}}
                             {{--<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">--}}
                             {{--Azioni <span class="caret"></span>--}}
@@ -192,18 +198,21 @@
       document.confirmForm.id.value = serie_id;
       document.confirmForm.return.value = 'series';
       if (mode == 0) {
-          document.confirmForm.action = 'deleteSeries';
-          $('#confirmPageName').text('Sei sicuro di voler disabilitare la serie ' + "'" + name + " - " + version + "'?");
+        document.confirmForm.action = 'deleteSeries';
+        $('#confirmPageName').text('Sei sicuro di voler disabilitare la serie ' + "'" + name + " - " + version + "'?");
       } else if (mode == 1) {
-          document.confirmForm.action = 'restoreSeries';
-          $('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "'?");
-      } else {
-          document.confirmForm.action = 'restoreSeries';
-          document.confirmForm.comics.value = '1';
-          $('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "' e i relativi fumetti?");
+        document.confirmForm.action = 'restoreSeries';
+        $('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "'?");
+      } else if (mode == 2){
+        document.confirmForm.action = 'restoreSeries';
+        document.confirmForm.comics.value = '1';
+        $('#confirmPageName').text('Sei sicuro di voler abilitare la serie ' + "'" + name + " - " + version + "' e i relativi fumetti?");
+      } else if (mode == 3){
+        document.confirmForm.action = 'delete2Series';
+        $('#confirmPageName').text('Sei sicuro di voler cancellare la serie ' + "'" + name + " - " + version + "' e i relativi fumetti?");
       }
       $('#modal-confirm').modal({
-          show: true
+        show: true
       });
     }
   </script>
