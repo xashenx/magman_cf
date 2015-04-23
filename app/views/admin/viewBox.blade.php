@@ -46,7 +46,7 @@
             </div>
             @if(Cart::instance($user->id)->count()>0)
               <div class="col-sm-6 text-right">
-                <a href="../cart/{{$user->id}}">{{Cart::instance($user->id)->count()}}
+                <a href="../cart/{{$user->id}}">Carrello: {{Cart::instance($user->id)->count()}}
                   <span class="glyphicon glyphicon-shopping-cart"
                         aria-hidden="true"></span></a>
               </div>
