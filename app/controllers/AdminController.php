@@ -73,6 +73,13 @@ class AdminController extends BaseController
    */
   public function manageBox($box_id)
   {
+    /* CART MODULE */
+    $cart = Cart::instance($box_id)->content();
+    $cartItems = array();
+    foreach($cart as $row){
+      $cartItems = array_add($cartItems, $row->rowid, $row->id);
+    }
+    /* CART MODULE */
     $inv_state = $this->module_state('inventory');
     $user = User::find($box_id);
     $renewal_price = ShopConf::find(4)->value;
@@ -85,7 +92,7 @@ class AdminController extends BaseController
       $comics = ComicUser::whereRaw('state_id < 3 and active = 1 and user_id = ' . $box_id)->orderBy('id', 'asc')->get();
       $purchases = ComicUser::whereRaw('state_id = 3 and active = 1 and user_id = ' . $box_id)->get();
       $due = $this->due($user);
-      $this->layout->content = View::make('admin/viewBox', array('user' => $user, 'comics' => $comics, 'due' => $due, 'series' => $series, 'purchases' => $purchases, 'active_series' => $active_series, 'to_follow_series' => $to_follow_series, 'renewal_price' => $renewal_price, 'inv_state' => $inv_state));
+      $this->layout->content = View::make('admin/viewBox', array('user' => $user, 'comics' => $comics, 'due' => $due, 'series' => $series, 'purchases' => $purchases, 'active_series' => $active_series, 'to_follow_series' => $to_follow_series, 'renewal_price' => $renewal_price, 'inv_state' => $inv_state, 'cart_items' => $cartItems));
     } else
       return Redirect::to('boxes');
   }

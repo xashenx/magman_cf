@@ -104,12 +104,18 @@ Route::group(array('before' => 'auth'), function () {
             Route::post('updateComicUser', 'ComicUserController@update');
             Route::post('deleteComicUser', 'ComicUserController@delete');
             Route::post('restoreComicUser', 'ComicUserController@restore');
+
             // route to handle Voucher model changes
             Route::post('createVoucher', 'VouchersController@create');
             Route::post('updateVoucher', 'VouchersController@update');
             Route::post('deleteVoucher', 'VouchersController@delete');
             // route to handle ShopConf model changes
             Route::post('updateShopConf', 'ShopConfController@update');
+            //route to handle Shopping Cart events
+            Route::post('addToCart', 'ShoppingCart@addToCart');
+            Route::post('removeFromCart', 'ShoppingCart@removeFromCart');
+            Route::post('confirmCart', 'ShoppingCart@confirmCart');
+            Route::get('cart/{box_id}', 'ShoppingCart@show')->where('comic_id', '[0-9]+');
             // special events routes
             Route::post('buyComic', 'ComicUserController@buy');
             Route::post('loadShipment', 'ComicsController@loadShipment');

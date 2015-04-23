@@ -12,33 +12,45 @@
   @else
     {{--*/ $color_header = 'danger' /*--}}
   @endif
+
   <div class="row">
     <div class="col-md-12 col-sm-12">
       <div class="panel panel-{{ $color_header }} no-radius">
         <div class="panel-heading no-radius">
-          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-          Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
-          (<i>Saldo</i> : {{$due != 0 ? number_format((float)$due, 2, '.', '') : 0}}€)
-          <div class="btn-group">
-            <button data-toggle="dropdown"
-                    class="btn btn-default dropdown-toggle little-icon little-icon-padding no-radius"
-                    aria-expanded="false"><span class="caret"></span></button>
-            <ul class="dropdown-menu no-radius">
-              @if($user->active)
-                @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
-                  <li><a href="#" onclick="showConfirmModal({{$user->id}},0,6)">
-                      <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-                      Rinnova Casella</a></li>
-                @endif
-                <li><a href="#" onclick="showConfirmModal({{$user->id}},0,4)">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Disattiva Casella</a></li>
-              @else
-                <li><a href="#" onclick="showConfirmModal({{$user->id}},0,5)">
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                    Riattiva Casella</a></li>
-              @endif
-            </ul>
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              Casella {{$user->number}}: {{$user -> name}} {{$user->surname}}
+              (<i>Saldo</i> : {{$due != 0 ? number_format((float)$due, 2, '.', '') : 0}}€)
+              <div class="btn-group">
+                <button data-toggle="dropdown"
+                        class="btn btn-default dropdown-toggle little-icon little-icon-padding no-radius"
+                        aria-expanded="false"><span class="caret"></span></button>
+                <ul class="dropdown-menu no-radius">
+                  @if($user->active)
+                    @if(date('Y-m-d', strtotime($user->shop_card_validity)) < date('Y-m-d',strtotime('now')))
+                      <li><a href="#" onclick="showConfirmModal({{$user->id}},0,6)">
+                          <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                          Rinnova Casella</a></li>
+                    @endif
+                    <li><a href="#" onclick="showConfirmModal({{$user->id}},0,4)">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        Disattiva Casella</a></li>
+                  @else
+                    <li><a href="#" onclick="showConfirmModal({{$user->id}},0,5)">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        Riattiva Casella</a></li>
+                  @endif
+                </ul>
+              </div>
+            </div>
+            @if(Cart::instance($user->id)->count()>0)
+              <div class="col-sm-6 text-right">
+                <a href="../cart/{{$user->id}}">{{Cart::instance($user->id)->count()}}
+                  <span class="glyphicon glyphicon-shopping-cart"
+                        aria-hidden="true"></span></a>
+              </div>
+            @endif
           </div>
         </div>
 
@@ -200,6 +212,21 @@
                             </button>
                           @endif
                           @if(($comic->comic->state == 2 && !$comic->old_comic) || ($comic->old_arrived_at != NULL))
+                            @if(!array_search($comic->id,$cart_items))
+                              <button type="button" title="Inserisci nel carrello"
+                                      onclick="quickActionWithoutConfirm({{$comic->id}},{{$user->id}},12)"
+                                      class="btn btn-success btn-sm no-radius medium-icon">
+                                                            <span class="glyphicon glyphicon-shopping-cart"
+                                                                  aria-hidden="true"></span>
+                              </button>
+                            @else
+                              <button type="button" title="Rimuovi dal carrello"
+                                      onclick="quickActionWithoutConfirm({{$comic->id}},{{$user->id}},13)"
+                                      class="btn btn-danger btn-sm no-radius medium-icon">
+                                                            <span class="glyphicon glyphicon-shopping-cart"
+                                                                  aria-hidden="true"></span>
+                              </button>
+                            @endif
                             <button type="button" title="Acquista"
                                     onclick="quickActionWithoutConfirm({{$comic->id}},{{$user->id}},0)"
                                     class="btn btn-success btn-sm no-radius medium-icon">
@@ -521,11 +548,11 @@
                   {{ Form::hidden('old_comic','yes') }}
                 </div>
                 {{--<div class="form-group">--}}
-                  {{--{{ Form::label('complete_series', 'Tutta la serie', array('class' => 'col-md-2 label-padding')) }}--}}
-                  {{--<div class="col-md-10">--}}
-                    {{--{{ Form::select('complete_series',array('1' => 'Sì','0' => 'No'),'0',array('id' => 'complete_series','disabled' => 'disabled','class' => 'form-control')) }}--}}
-                    {{--<div></div>--}}
-                  {{--</div>--}}
+                {{--{{ Form::label('complete_series', 'Tutta la serie', array('class' => 'col-md-2 label-padding')) }}--}}
+                {{--<div class="col-md-10">--}}
+                {{--{{ Form::select('complete_series',array('1' => 'Sì','0' => 'No'),'0',array('id' => 'complete_series','disabled' => 'disabled','class' => 'form-control')) }}--}}
+                {{--<div></div>--}}
+                {{--</div>--}}
                 {{--</div>--}}
                 <div class="form-group">
                   {{ Form::label('block_from', 'Blocco da', array('class' => 'col-md-2 label-padding')) }}
@@ -760,6 +787,7 @@
           {{ Form::open(array('name' => 'confirmForm')) }}
           {{ Form::hidden('id') }}
           {{ Form::hidden('user_id') }}
+          {{ Form::hidden('path') }}
           {{ Form::button('Annulla', array(
           'data-dismiss' => 'modal',
           'class' => 'btn btn-danger btn-sm')) }}
@@ -854,6 +882,17 @@
         document.confirmForm.id.value = object_id;
         document.confirmForm.action = '../buyOldSeries';
         document.confirmForm.submit();
+      } else if (mode == 12) {
+        // add a comic to the cart
+        document.confirmForm.id.value = object_id;
+        document.confirmForm.action = '../addToCart';
+        document.confirmForm.submit();
+      } else if (mode == 13) {
+        // remove a comic from the cart
+        document.confirmForm.id.value = object_id;
+        document.confirmForm.path.value = 'boxes';
+        document.confirmForm.action = '../removeFromCart';
+        document.confirmForm.submit();
       }
     }
   </script>
@@ -943,11 +982,11 @@
         $('#single_number_value').prop('disabled', false);
         $('#complete_series').prop('disabled', false);
         $('#add_single_number').prop('disabled', 'disabled');
-      } else if (value == 0){
+      } else if (value == 0) {
         $('#single_number_value').prop('disabled', false);
-      } else if (value == 1){
+      } else if (value == 1) {
         $('#series_discount').prop('disabled', false);
-      } else if (value == 2){
+      } else if (value == 2) {
         $('#block_from').prop('disabled', false);
         $('#block_to').prop('disabled', false);
         $('#series_discount').prop('disabled', false);
@@ -969,37 +1008,37 @@
       }
     });
 
-//    $('select#complete_series').on('change', function () {
-//      var value = $('select#complete_series').val();
-//      if (value == 0) {
-//        $('#single_number_value').prop('disabled', false);
-//        $('#complete_series').prop('disabled', false);
-//        $('#series_discount').empty();
-//        $('#series_discount').prop('disabled', 'disabled');
-//        $('#add_single_number').prop('disabled', 'disabled');
-//      } else if (value == 1) {
-//        $('#complete_series').prop('disabled', false);
-//        $('#series_discount').prop('disabled', false);
-//        $('#add_single_number').prop('disabled', 'disabled');
-//        $('#single_number_value').prop('disabled', 'disabled');
-//      }
-//    });
+    //    $('select#complete_series').on('change', function () {
+    //      var value = $('select#complete_series').val();
+    //      if (value == 0) {
+    //        $('#single_number_value').prop('disabled', false);
+    //        $('#complete_series').prop('disabled', false);
+    //        $('#series_discount').empty();
+    //        $('#series_discount').prop('disabled', 'disabled');
+    //        $('#add_single_number').prop('disabled', 'disabled');
+    //      } else if (value == 1) {
+    //        $('#complete_series').prop('disabled', false);
+    //        $('#series_discount').prop('disabled', false);
+    //        $('#add_single_number').prop('disabled', 'disabled');
+    //        $('#single_number_value').prop('disabled', 'disabled');
+    //      }
+    //    });
 
     $('#series_discount').on('change', function () {
       var value = $('#series_discount').val();
       var mode = $('#mode').val();
-      if(mode == 1) {
+      if (mode == 1) {
         if (value == '') {
           $('#add_single_number').prop('disabled', 'disabled');
         } else {
           $('#add_single_number').prop('disabled', false);
         }
-      } else if (mode == 2){
+      } else if (mode == 2) {
         var block_from = $('#block_from').val();
         var block_to = $('#block_to').val();
         if (value == '') {
           $('#add_single_number').prop('disabled', 'disabled');
-        } else if(block_from != '' && block_to != ''){
+        } else if (block_from != '' && block_to != '') {
           $('#add_single_number').prop('disabled', false);
         }
       }
@@ -1011,7 +1050,7 @@
       var discount = $('#series_discount').val();
       if (block_from == '') {
         $('#add_single_number').prop('disabled', 'disabled');
-      } else  if (block_to != '' && discount != ''){
+      } else if (block_to != '' && discount != '') {
         $('#add_single_number').prop('disabled', false);
       }
     });
@@ -1022,7 +1061,7 @@
       var discount = $('#series_discount').val();
       if (block_to == '') {
         $('#add_single_number').prop('disabled', 'disabled');
-      } else  if (block_from != '' && discount != ''){
+      } else if (block_from != '' && discount != '') {
         $('#add_single_number').prop('disabled', false);
       }
     });

@@ -11,7 +11,8 @@
     "laravel/framework": "4.2.*",
     "components/jquery": "*",
     "twitter/bootstrap": "*",
-    "phpmailer/phpmailer": "dev-master"
+    "phpmailer/phpmailer": "dev-master",
+	"gloudemans/shoppingcart": "~1.2"
   },
   "autoload": {
     "classmap": [

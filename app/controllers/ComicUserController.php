@@ -38,9 +38,9 @@ class ComicUserController extends BaseController
           $comics_counter = 1;
         }
         foreach ($comics_of_series as $comic) {
-          if($mode == 2 && $comic->number > Input::get('block_to') && $comics_counter < Input::get('block_to')){
-            echo "sono qua! " . $comics_counter  . '|' . $comic->number . '|' . Input::get('block_to');
-            while($comics_counter < Input::get('block_to')+1) {
+          if ($mode == 2 && $comic->number > Input::get('block_to') && $comics_counter < Input::get('block_to')) {
+            echo "sono qua! " . $comics_counter . '|' . $comic->number . '|' . Input::get('block_to');
+            while ($comics_counter < Input::get('block_to') + 1) {
               $new_comic = new Comic;
               $new_comic->series_id = $series_id;
               $new_comic->number = $comics_counter++;
@@ -58,8 +58,7 @@ class ComicUserController extends BaseController
               $comicUser->discount = Input::get('series_discount');
               $comicUser->save();
             }
-          }
-          else if($mode == 1 || ($mode == 2 && $comic->number < Input::get('block_to') && $comic->number > Input::get('block_from'))) {
+          } else if ($mode == 1 || ($mode == 2 && $comic->number < Input::get('block_to') && $comic->number > Input::get('block_from'))) {
             while ($comics_counter < $comic->number) {
               $new_comic = new Comic;
               $new_comic->series_id = $series_id;
@@ -223,6 +222,7 @@ class ComicUserController extends BaseController
                WHERE cu.user_id = ' . $user_id . ' AND cu.old_series = 1 AND cu.state_id = 1 AND cu.active = 1 AND cu.old_arrived_at IS NULL AND c.series_id = ' . $series_id);
     return Redirect::to('boxes/' . $user_id);
   }
+
 }
 
 ?>
