@@ -29,6 +29,9 @@ class HomePageController extends BaseController
     $insolvency_threshold = ShopConf::find(1);
     $defaulting_threshold = ShopConf::find(2);
     $inv_status = $this->module_state('inventory');
+    /* BEGIN SHOP CART MODULE */
+    $carts = $this->checkForAbandonedCarts($boxes);
+    /* END SHOP CART MODULE */
     if ($inv_status == 1)
       $toOrder = DB::select('SELECT s.id as sid,c.id as cid,s.name, s.version,c.number, c.available, c.image as image, cu.to_order, (cu.to_order-c.available) as need FROM ((SELECT count(*) as to_order, comic_id FROM bm_comic_user WHERE state_id = 1 and active = 1 GROUP BY comic_id) as cu LEFT JOIN bm_comics as c ON cu.comic_id = c.id) LEFT JOIN bm_series as s ON  s.id = series_id WHERE  (cu.to_order-c.available) > 0');
     else
@@ -37,7 +40,7 @@ class HomePageController extends BaseController
     $insolvent_boxes = $this->buildInsolventBoxesArray($insolvents);
     $defaultings = $this->buildDefaultingArray($boxes, $defaulting_threshold);
     $defaulting_boxes = $this->buildDefaultingBoxesArray($defaultings);
-    $this->layout->content = View::make('admin/homePage', array('insolvents' => $insolvents, 'defaultings' => $defaultings, 'to_order' => $toOrder, 'defaultingBoxes' => $defaulting_boxes, 'insolventBoxes' => $insolvent_boxes));
+    $this->layout->content = View::make('admin/homePage', array('insolvents' => $insolvents, 'defaultings' => $defaultings, 'to_order' => $toOrder, 'defaultingBoxes' => $defaulting_boxes, 'insolventBoxes' => $insolvent_boxes,'abb_carts' => $carts));
   }
 
   /*
@@ -113,6 +116,17 @@ class HomePageController extends BaseController
     }
     return $state;
   }
+
+  /* BEGIN SHOP CART MODULE */
+  public function checkForAbandonedCarts($boxes){
+    $abandoned_carts = array();
+    foreach($boxes as $box){
+      if(Cart::instance($box->id)->count()>0)
+        $abandoned_carts = array_add($abandoned_carts,$box->id,Cart::instance($box->id)->count());
+    }
+    return $abandoned_carts;
+  }
+  /* END SHOP CART MODULE */
 
 }
 
