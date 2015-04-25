@@ -2,7 +2,6 @@
 
 class ShopConfController extends BaseController
 {
-
   public function update()
   {
     $new = Input::all();
@@ -24,6 +23,11 @@ class ShopConfController extends BaseController
       DB::table('bm_shop_configurations')->where('id', 5)->update(array('value' => Input::get('shop_card_duration')));
       return Redirect::to('shop');
     }
+  }
+
+  public function saveDb(){
+    $manager = App::make('BigName\BackupManager\Manager');
+    $manager->makeBackup()->run('mysql', 'local', 'prova222.sql', 'null');
   }
 }
 

@@ -109,6 +109,7 @@ Route::group(array('before' => 'auth'), function () {
             Route::post('deleteVoucher', 'VouchersController@delete');
             // route to handle ShopConf model changes
             Route::post('updateShopConf', 'ShopConfController@update');
+            Route::post('saveDb', 'ShopConfController@saveDb');
             // special events routes
             Route::post('buyComic', 'ComicUserController@buy');
             Route::post('loadShipment', 'ComicsController@loadShipment');

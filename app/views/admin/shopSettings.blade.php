@@ -73,6 +73,9 @@
               {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary no-radius')) }}
             </div>
             {{ Form::close() }}
+            {{ Form::open(array('url' => 'saveDb', 'class' => 'form-horizontal')) }}
+              {{ Form::submit('Aggiorna', array('class' => 'btn btn-primary no-radius')) }}
+            {{ Form::close() }}
             <div class="cAlert" id="alert-1">
               <div class="alert alert-success success no-radius"></div>
               <div class="alert alert-danger error no-radius"></div>
